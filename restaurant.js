@@ -86,6 +86,17 @@ function sanitizeCommentText(value, fallback = "") {
   return cleaned.length > 0 ? cleaned.slice(0, 500) : fallback;
 }
 
+function sanitizeStringArray(value, limit = 8) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => sanitizeText(String(item || ""), ""))
+    .filter(Boolean)
+    .slice(0, limit);
+}
+
 function toTitleCaseTr(value) {
   return String(value || "")
     .split(/([\s\-\/()&,."]+)/)
@@ -162,6 +173,13 @@ function normalizeVenueRecord(record) {
     phone: sanitizeText(record.phone, ""),
     email: sanitizeText(record.email, ""),
     website: sanitizeText(record.website || record.web || record.url, ""),
+    mapsUrl: sanitizeText(record.mapsUrl || record.googleMapsUri || "", ""),
+    editorialSummary: sanitizeText(record.editorialSummary, ""),
+    menuCapabilities: sanitizeStringArray(record.menuCapabilities, 12),
+    serviceCapabilities: sanitizeStringArray(record.serviceCapabilities, 12),
+    atmosphereCapabilities: sanitizeStringArray(record.atmosphereCapabilities, 12),
+    reviewSnippets: sanitizeStringArray(record.reviewSnippets, 3),
+    photoReferences: sanitizeStringArray(record.photoReferences, 10),
     sourcePlaceId: sanitizeText(record.sourcePlaceId, ""),
   };
 }
@@ -724,9 +742,18 @@ function renderVenue(venue) {
   const addressText = venue.address || `${venue.district}, ${venue.city}`;
   restaurantMeta.textContent = `Kategori: ${venue.cuisine} · Ortalama bütçe: ${priceMap[venue.budget] || venue.budget}`;
 
-  const overview = `${venue.name}, ${venue.city} şehrinde özellikle ${venue.cuisine.toLocaleLowerCase(
-    "tr",
-  )} sevenler için tercih edilen bir durak. Bu sayfa ilk sürüm detay düzenidir; menü, yorum ve fotoğraf bölümleri sonraki iterasyonda daha kapsamlı olacak.`;
+  const summaryBase =
+    sanitizeText(venue.editorialSummary || "", "") ||
+    `${venue.name}, ${venue.city} şehrinde özellikle ${venue.cuisine.toLocaleLowerCase(
+      "tr",
+    )} sevenler için tercih edilen bir durak.`;
+  const atmosphereText = Array.isArray(venue.atmosphereCapabilities) && venue.atmosphereCapabilities.length > 0
+    ? `Mekan özellikleri: ${venue.atmosphereCapabilities.join(", ")}.`
+    : "";
+  const menuText = Array.isArray(venue.menuCapabilities) && venue.menuCapabilities.length > 0
+    ? `Menü/servis: ${venue.menuCapabilities.join(", ")}.`
+    : "";
+  const overview = [summaryBase, atmosphereText, menuText].filter(Boolean).join(" ");
   restaurantOverviewText.textContent = overview;
 
   restaurantMainImage.src = buildImageUrl(venue, "main");
