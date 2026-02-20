@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeredeYenir | Restoran</title>
+    <meta name="description" content="Restoran detaylarını, puanını ve rezervasyon panelini görüntüle." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="restaurant.css" />
+  </head>
+  <body class="restaurant-page">
+    <div class="texture"></div>
+
+    <header class="global-header-band">
+      <nav class="topbar global-topbar">
+        <a class="brand" href="index.html" aria-label="NeredeYenir">
+          <span class="brand-wordmark">nerede yenir</span>
+        </a>
+        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Restoran arama">
+          <label class="visually-hidden" for="headerSearchInput">Restoran adı</label>
+          <input
+            id="headerSearchInput"
+            class="header-search-input"
+            type="search"
+            name="mekan"
+            placeholder="Restoran ara"
+            autocomplete="off"
+          />
+          <button class="header-search-btn" type="submit">Ara</button>
+        </form>
+        <div class="auth-actions" aria-label="Hesap işlemleri">
+          <button class="auth-btn auth-link-btn auth-btn-outline" type="button">
+            <svg class="auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M13 5l7 7-7 7" />
+              <path d="M20 12H9" />
+              <path d="M9 19H4V5h5" />
+            </svg>
+            <span class="auth-link-text">Giriş yap</span>
+          </button>
+          <button class="auth-btn auth-link-btn auth-btn-solid" type="button">
+            <svg class="auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 19a5 5 0 0 0-10 0" />
+              <circle cx="10" cy="8" r="3.5" />
+              <path d="M19 8v6" />
+              <path d="M16 11h6" />
+            </svg>
+            <span class="auth-link-text">Kayıt ol</span>
+          </button>
+        </div>
+      </nav>
+      <div class="global-topline"></div>
+    </header>
+
+    <main class="restaurant-shell">
+      <nav id="restaurantBreadcrumb" class="restaurant-breadcrumb" aria-label="Breadcrumb"></nav>
+
+      <section class="restaurant-hero">
+        <p id="restaurantLead" class="restaurant-lead"></p>
+        <h1 id="restaurantName" class="restaurant-name"></h1>
+        <div class="restaurant-rating-row">
+          <span id="restaurantStars" class="restaurant-stars"></span>
+          <strong id="restaurantScore" class="restaurant-score"></strong>
+          <span id="restaurantScoreLabel" class="restaurant-score-label">Çok iyi</span>
+          <a id="restaurantReviews" href="#" class="restaurant-reviews"></a>
+        </div>
+        <p id="restaurantMeta" class="restaurant-meta"></p>
+      </section>
+
+      <nav class="restaurant-tabs" aria-label="Detay sekmeleri">
+        <button type="button" class="restaurant-tab active" data-panel="overview">Genel Bilgi</button>
+        <button type="button" class="restaurant-tab" data-panel="location">Konum</button>
+        <button type="button" class="restaurant-tab" data-panel="comments">Yorumlar</button>
+        <button type="button" class="restaurant-tab" data-panel="overview">Photos</button>
+      </nav>
+
+      <section class="restaurant-panel" data-panel="overview">
+        <section class="restaurant-content">
+          <div class="restaurant-gallery">
+            <img id="restaurantMainImage" class="restaurant-main-image" alt="Restoran ana görseli" loading="eager" />
+            <div class="restaurant-thumb-row">
+              <img class="restaurant-thumb" alt="Restoran detay görseli" loading="lazy" />
+              <img class="restaurant-thumb" alt="Restoran detay görseli" loading="lazy" />
+              <img class="restaurant-thumb" alt="Restoran detay görseli" loading="lazy" />
+            </div>
+            <article class="restaurant-overview">
+              <h2>Özet</h2>
+              <p id="restaurantOverviewText"></p>
+            </article>
+          </div>
+
+          <aside class="restaurant-booking">
+            <p class="restaurant-address-label">Adres</p>
+            <p class="restaurant-address" data-info-field="address"></p>
+            <p class="restaurant-phone-label">Telefon</p>
+            <p class="restaurant-phone" data-info-field="phone"></p>
+            <p class="restaurant-email-label">E-posta</p>
+            <p class="restaurant-email" data-info-field="email"></p>
+            <p class="restaurant-website-label">Web Sitesi</p>
+            <p class="restaurant-website" data-info-field="website"></p>
+          </aside>
+        </section>
+      </section>
+
+      <section class="restaurant-panel" data-panel="comments" hidden>
+        <article class="restaurant-comments-card">
+          <h2 class="restaurant-comments-title">Yorumlar</h2>
+          <p id="restaurantCommentsEmpty" class="restaurant-comments-empty">İlk yorumu sen yaz.</p>
+          <ul id="restaurantCommentsList" class="restaurant-comments-list"></ul>
+
+          <form id="restaurantCommentForm" class="restaurant-comment-form">
+            <label for="commentAuthor">Adın</label>
+            <input id="commentAuthor" name="author" type="text" maxlength="60" placeholder="Adını yaz" />
+
+            <label for="commentText">Yorumun</label>
+            <textarea
+              id="commentText"
+              name="comment"
+              rows="4"
+              maxlength="500"
+              placeholder="Deneyimini paylaş"
+              required
+            ></textarea>
+
+            <button type="submit" class="restaurant-comment-submit">Yorumu Gönder</button>
+            <p id="restaurantCommentMessage" class="restaurant-comment-message" aria-live="polite"></p>
+          </form>
+        </article>
+      </section>
+
+      <section class="restaurant-panel" data-panel="location" hidden>
+        <section class="restaurant-content">
+          <article class="restaurant-map-card">
+            <h2 class="restaurant-map-title">Konum</h2>
+            <div id="restaurantMapCanvas" class="restaurant-map-canvas" aria-label="Restoran konum haritası"></div>
+            <p id="restaurantMapStatus" class="restaurant-map-status" hidden></p>
+            <a id="restaurantMapLink" class="restaurant-map-link" href="#" target="_blank" rel="noopener noreferrer">
+              Google Haritalar'da aç
+            </a>
+          </article>
+
+          <aside class="restaurant-booking">
+            <p class="restaurant-address-label">Adres</p>
+            <p class="restaurant-address" data-info-field="address"></p>
+            <p class="restaurant-phone-label">Telefon</p>
+            <p class="restaurant-phone" data-info-field="phone"></p>
+            <p class="restaurant-email-label">E-posta</p>
+            <p class="restaurant-email" data-info-field="email"></p>
+            <p class="restaurant-website-label">Web Sitesi</p>
+            <p class="restaurant-website" data-info-field="website"></p>
+          </aside>
+        </section>
+      </section>
+    </main>
+
+    <footer class="yr-footer" aria-label="Alt Bant">
+      <div class="yr-footer-inner">
+        <div class="yr-footer-grid">
+          <section class="yr-footer-col">
+            <h4>NeredeYenir'i indir!</h4>
+            <a class="store-badge" href="#" aria-label="App Store">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">App Store</span>
+            </a>
+            <a class="store-badge" href="#" aria-label="Google Play">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">Google Play</span>
+            </a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>NeredeYenir'i keşfet</h4>
+            <a href="#">Hakkımızda</a>
+            <a href="#">Kariyer</a>
+            <a href="#">Teknoloji</a>
+            <a href="#">İletişim</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>Yardım mı lazım?</h4>
+            <a href="#">Sıkça Sorulan Sorular</a>
+            <a href="#">Kişisel Verilerin Korunması</a>
+            <a href="#">Gizlilik Politikası</a>
+            <a href="#">Kullanım Koşulları</a>
+            <a href="#">Çerez Politikası</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>İş ortaklığımız</h4>
+            <a href="#">Restoran ekle</a>
+            <a href="#">Fiyat ekle</a>
+            <a href="#">İş birliği</a>
+          </section>
+
+        </div>
+
+        <div class="yr-footer-bottom">
+          <p>© 2026 NeredeYenir</p>
+          <div class="yr-footer-social" aria-label="Sosyal">
+            <a href="#" aria-label="Instagram">○</a>
+            <a href="#" aria-label="Ara">◌</a>
+            <a href="#" aria-label="Dünya">◍</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="header-search.js"></script>
+    <script src="restaurant.js"></script>
+  </body>
+</html>

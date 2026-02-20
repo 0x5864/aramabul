@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeredeYenir | Şehir Restoranları</title>
+    <meta
+      name="description"
+      content="Seçtiğin il için restoranları bölge, kategori ve bütçe filtreleri ile incele."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="city.css" />
+  </head>
+  <body class="city-page">
+    <div class="texture"></div>
+
+    <header class="city-header">
+      <nav class="topbar city-topbar">
+        <a class="brand" href="index.html" aria-label="NeredeYenir">
+          <span class="brand-wordmark">nerede yenir</span>
+        </a>
+        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Restoran arama">
+          <label class="visually-hidden" for="headerSearchInput">Restoran adı</label>
+          <input
+            id="headerSearchInput"
+            class="header-search-input"
+            type="search"
+            name="mekan"
+            placeholder="Restoran ara"
+            autocomplete="off"
+          />
+          <button class="header-search-btn" type="submit">Ara</button>
+        </form>
+        <div class="auth-actions" aria-label="Hesap işlemleri">
+          <p id="authWelcome" class="auth-welcome is-hidden" aria-live="polite"></p>
+          <button id="loginBtn" class="auth-btn auth-link-btn auth-btn-outline" type="button">
+            <svg class="auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M13 5l7 7-7 7" />
+              <path d="M20 12H9" />
+              <path d="M9 19H4V5h5" />
+            </svg>
+            <span class="auth-link-text">Giriş yap</span>
+          </button>
+          <button id="signupBtn" class="auth-btn auth-link-btn auth-btn-solid" type="button">
+            <svg class="auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 19a5 5 0 0 0-10 0" />
+              <circle cx="10" cy="8" r="3.5" />
+              <path d="M19 8v6" />
+              <path d="M16 11h6" />
+            </svg>
+            <span class="auth-link-text">Kayıt ol</span>
+          </button>
+          <button id="logoutBtn" class="auth-btn auth-btn-outline is-hidden" type="button">
+            Çıkış yap
+          </button>
+        </div>
+      </nav>
+      <div class="city-topline">
+        <div class="city-topline-inner">
+          <a href="index.html">Anasayfa</a>
+          <span>/</span>
+          <span id="cityToplineName">Şehir</span>
+          <span>restoranları</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="city-shell">
+      <div class="city-layout">
+        <aside class="city-sidebar" aria-label="Filtreler">
+          <section class="filter-card filter-card-district">
+            <div class="filter-card-head">
+              <h3>İlçeye göre ara</h3>
+            </div>
+            <div id="districtPicker" class="district-picker">
+              <button
+                id="districtPickerTrigger"
+                class="district-picker-trigger"
+                type="button"
+                aria-label="İlçe seçimini aç"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span id="districtCurrent">Tüm ilçeler</span>
+                <span class="district-picker-caret" aria-hidden="true">▸</span>
+              </button>
+              <aside id="districtFlyout" class="district-flyout" aria-label="İlçe listesi">
+                <header class="district-flyout-head">
+                  <strong>İlçeler</strong>
+                  <span id="districtFlyoutCity" class="district-flyout-city">Şehir</span>
+                </header>
+                <div
+                  id="districtFlyoutList"
+                  class="district-flyout-list"
+                  role="listbox"
+                  aria-label="İlçe seçenekleri"
+                ></div>
+              </aside>
+            </div>
+          </section>
+
+          <section class="filter-card filter-card-category">
+            <div class="filter-card-head">
+              <h3>Kategoriye göre ara</h3>
+            </div>
+            <div id="categoryPicker" class="category-picker">
+              <button
+                id="categoryPickerTrigger"
+                class="category-picker-trigger"
+                type="button"
+                aria-label="Kategori seçimini aç"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span id="categoryCurrent">Tüm kategoriler</span>
+                <span class="category-picker-caret" aria-hidden="true">▸</span>
+              </button>
+              <aside id="categoryFlyout" class="category-flyout" aria-label="Kategori listesi">
+                <header class="category-flyout-head">
+                  <strong>Kategoriler</strong>
+                  <span id="categoryFlyoutCity" class="category-flyout-city">Şehir</span>
+                </header>
+                <div
+                  id="categoryFlyoutList"
+                  class="category-flyout-list"
+                  role="listbox"
+                  aria-label="Kategori seçenekleri"
+                ></div>
+              </aside>
+            </div>
+          </section>
+
+          <section class="filter-card">
+            <div class="filter-card-head">
+              <h3>Ortalama fiyat</h3>
+            </div>
+            <select id="budgetSelect" class="sidebar-select" aria-label="Bütçe seç">
+              <option value="all">Tüm fiyatlar</option>
+              <option value="₺">₺</option>
+              <option value="₺₺">₺₺</option>
+              <option value="₺₺₺">₺₺₺</option>
+              <option value="₺₺₺₺">₺₺₺₺</option>
+            </select>
+          </section>
+        </aside>
+
+        <section class="city-main">
+          <header class="city-main-head">
+            <h1 id="cityTitle">Restoranlar</h1>
+            <p id="cityResultMeta" class="city-total-meta">Toplam 0 restoran</p>
+          </header>
+
+          <div class="city-sort-tabs" role="tablist" aria-label="Sıralama">
+            <button type="button" class="city-sort-tab active" data-sort="traveler">En çok tercih edilen</button>
+            <button type="button" class="city-sort-tab" data-sort="locals">Yerel favoriler</button>
+            <button type="button" class="city-sort-tab" data-sort="viewed">En çok görüntülenen</button>
+            <button type="button" class="city-sort-tab" data-sort="rated">En yüksek puan</button>
+          </div>
+
+          <nav id="cityPaginationTop" class="city-pagination" aria-label="Sayfa gezinme (üst)"></nav>
+          <section id="cityVenueList" class="city-venue-list" aria-live="polite"></section>
+          <nav id="cityPaginationBottom" class="city-pagination" aria-label="Sayfa gezinme (alt)"></nav>
+        </section>
+      </div>
+    </main>
+
+    <footer class="yr-footer" aria-label="Alt Bant">
+      <div class="yr-footer-inner">
+        <div class="yr-footer-grid">
+          <section class="yr-footer-col">
+            <h4>NeredeYenir'i indir!</h4>
+            <a class="store-badge" href="#" aria-label="App Store">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">App Store</span>
+            </a>
+            <a class="store-badge" href="#" aria-label="Google Play">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">Google Play</span>
+            </a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>NeredeYenir'i keşfet</h4>
+            <a href="#">Hakkımızda</a>
+            <a href="#">Kariyer</a>
+            <a href="#">Teknoloji</a>
+            <a href="#">İletişim</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>Yardım mı lazım?</h4>
+            <a href="#">Sıkça Sorulan Sorular</a>
+            <a href="#">Kişisel Verilerin Korunması</a>
+            <a href="#">Gizlilik Politikası</a>
+            <a href="#">Kullanım Koşulları</a>
+            <a href="#">Çerez Politikası</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>İş ortaklığımız</h4>
+            <a href="#">Restoran ekle</a>
+            <a href="#">Fiyat ekle</a>
+            <a href="#">İş birliği</a>
+          </section>
+
+        </div>
+
+        <div class="yr-footer-bottom">
+          <p>© 2026 NeredeYenir</p>
+          <div class="yr-footer-social" aria-label="Sosyal">
+            <a href="#" aria-label="Instagram">○</a>
+            <a href="#" aria-label="Ara">◌</a>
+            <a href="#" aria-label="Dünya">◍</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div id="authModal" class="auth-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+      <div class="auth-modal-panel">
+        <button id="authModalClose" class="auth-modal-close" type="button" aria-label="Kapat">×</button>
+        <p class="eyebrow">Hesap</p>
+        <h3 id="authModalTitle">Giriş yap</h3>
+        <p id="authModalText" class="auth-modal-text">Hesabına girerek favori mekanlarını kaydet.</p>
+
+        <form id="loginForm" class="auth-form">
+          <label>
+            E-posta
+            <input id="loginEmail" type="email" required autocomplete="email" />
+          </label>
+          <label>
+            Şifre
+            <input id="loginPassword" type="password" required autocomplete="current-password" />
+          </label>
+          <button class="auth-submit" type="submit">Giriş yap</button>
+        </form>
+
+        <form id="signupForm" class="auth-form is-hidden">
+          <label>
+            Ad soyad
+            <input id="signupName" type="text" required minlength="2" autocomplete="name" />
+          </label>
+          <label>
+            E-posta
+            <input id="signupEmail" type="email" required autocomplete="email" />
+          </label>
+          <label>
+            Şifre
+            <input id="signupPassword" type="password" required minlength="6" autocomplete="new-password" />
+          </label>
+          <label>
+            Şifre tekrar
+            <input id="signupPasswordRepeat" type="password" required minlength="6" autocomplete="new-password" />
+          </label>
+          <button class="auth-submit" type="submit">Kaydol</button>
+        </form>
+
+        <p id="authMessage" class="auth-message" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <template id="cityVenueTemplate">
+      <article class="city-venue-card">
+        <div class="city-venue-media">
+          <img class="city-venue-main-image" alt="Mekan görseli" loading="lazy" />
+          <div class="city-venue-thumb-row">
+            <img class="city-venue-thumb" alt="Mekan detay görseli" loading="lazy" />
+            <img class="city-venue-thumb" alt="Mekan detay görseli" loading="lazy" />
+            <img class="city-venue-thumb" alt="Mekan detay görseli" loading="lazy" />
+          </div>
+        </div>
+        <div class="city-venue-body">
+          <h3 class="city-venue-title"><a class="city-venue-title-link" href="#"></a></h3>
+          <p class="city-venue-subtitle"></p>
+          <p class="city-venue-description"></p>
+          <div class="city-venue-score-row">
+            <span class="city-venue-stars"></span>
+            <strong class="city-venue-rating"></strong>
+            <span class="city-venue-views"></span>
+          </div>
+          <div class="city-venue-chip-row">
+            <span class="city-venue-chip"></span>
+            <span class="city-venue-chip"></span>
+            <span class="city-venue-chip"></span>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="header-search.js"></script>
+    <script src="city.js"></script>
+  </body>
+</html>

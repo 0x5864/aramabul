@@ -1,0 +1,22 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1200 210"
+  role="img"
+  aria-labelledby="title"
+>
+  <title id="title">NeredeYenir Logo</title>
+  <g transform="translate(18 158) skewX(-13)">
+    <text
+      x="0"
+      y="0"
+      fill="#000000"
+      font-family="'Plus Jakarta Sans', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+      font-size="176"
+      font-style="italic"
+      font-weight="900"
+      letter-spacing="-6"
+    >
+      neredeyenir
+    </text>
+  </g>
+</svg>
