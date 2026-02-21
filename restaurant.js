@@ -35,7 +35,7 @@ const restaurantThumbs = [...document.querySelectorAll(".restaurant-thumb")];
 const restaurantOverviewText = document.querySelector("#restaurantOverviewText");
 const restaurantAddressFields = [...document.querySelectorAll('[data-info-field="address"]')];
 const restaurantPhoneFields = [...document.querySelectorAll('[data-info-field="phone"]')];
-const restaurantEmailFields = [...document.querySelectorAll('[data-info-field="email"]')];
+const restaurantInstagramFields = [...document.querySelectorAll('[data-info-field="instagram"]')];
 const restaurantWebsiteFields = [...document.querySelectorAll('[data-info-field="website"]')];
 const restaurantTabs = [...document.querySelectorAll(".restaurant-tab")];
 const restaurantPanels = [...document.querySelectorAll(".restaurant-panel")];
@@ -84,6 +84,34 @@ function sanitizeCommentText(value, fallback = "") {
 
   const cleaned = value.trim();
   return cleaned.length > 0 ? cleaned.slice(0, 500) : fallback;
+}
+
+function sanitizeUrl(value, fallback = "") {
+  if (typeof value !== "string") {
+    return fallback;
+  }
+
+  const cleaned = value.trim();
+  if (cleaned.length === 0 || cleaned.length > 3000) {
+    return fallback;
+  }
+
+  if (!/^https?:\/\//i.test(cleaned)) {
+    return fallback;
+  }
+
+  return cleaned;
+}
+
+function sanitizeUrlArray(value, limit = 8) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => sanitizeUrl(String(item || ""), ""))
+    .filter(Boolean)
+    .slice(0, limit);
 }
 
 function sanitizeStringArray(value, limit = 8) {
@@ -142,10 +170,19 @@ function sanitizeRating(value) {
   const numeric = Number(value);
 
   if (!Number.isFinite(numeric)) {
-    return 4;
+    return null;
   }
 
   return Math.min(5, Math.max(0, numeric));
+}
+
+function sanitizeRatingCount(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric) || numeric < 0) {
+    return null;
+  }
+
+  return Math.round(numeric);
 }
 
 function normalizeVenueRecord(record) {
@@ -169,10 +206,19 @@ function normalizeVenueRecord(record) {
     cuisine,
     budget: sanitizeText(record.budget, "₺₺"),
     rating: sanitizeRating(record.rating),
+    userRatingCount: sanitizeRatingCount(record.userRatingCount),
     address: sanitizeText(record.address, ""),
     phone: sanitizeText(record.phone, ""),
-    email: sanitizeText(record.email, ""),
-    website: sanitizeText(record.website || record.web || record.url, ""),
+    website: sanitizeUrl(record.website || record.web || record.url, ""),
+    instagram: sanitizeUrl(
+      record.instagram ||
+        (sanitizeUrl(record.website || record.web || record.url, "").includes("instagram.com")
+          ? record.website || record.web || record.url
+          : ""),
+      "",
+    ),
+    photoUri: sanitizeUrl(record.photoUri || "", ""),
+    galleryPhotoUris: sanitizeUrlArray(record.galleryPhotoUris, 6),
     mapsUrl: sanitizeText(record.mapsUrl || record.googleMapsUri || "", ""),
     editorialSummary: sanitizeText(record.editorialSummary, ""),
     menuCapabilities: sanitizeStringArray(record.menuCapabilities, 12),
@@ -268,6 +314,20 @@ function hashSeed(seed) {
 function buildImageUrl(venue, suffix) {
   const seed = toSlug(`${venue.city}-${venue.name}-${suffix}-${venue.sourcePlaceId || "npid"}`);
   return `https://picsum.photos/seed/${seed}/1400/900`;
+}
+
+function resolveVenuePhotoUrl(venue, preferredIndex, suffix) {
+  const gallery = Array.isArray(venue.galleryPhotoUris) ? venue.galleryPhotoUris : [];
+
+  if (gallery.length > 0) {
+    return gallery[Math.min(Math.max(preferredIndex, 0), gallery.length - 1)];
+  }
+
+  if (venue.photoUri) {
+    return venue.photoUri;
+  }
+
+  return buildImageUrl(venue, suffix);
 }
 
 function starText(rating) {
@@ -720,14 +780,8 @@ function buildBreadcrumb(venue) {
 }
 
 function renderVenue(venue) {
-  const seed = hashSeed(`${venue.city}-${venue.district}-${venue.name}`);
-  const reviewCount = 120 + (seed % 1400);
-  const priceMap = {
-    "₺": "₺100 - ₺299",
-    "₺₺": "₺300 - ₺699",
-    "₺₺₺": "₺700 - ₺1499",
-    "₺₺₺₺": "₺1500+",
-  };
+  const hasRating = Number.isFinite(venue.rating);
+  const hasReviewCount = Number.isFinite(venue.userRatingCount);
 
   document.title = `NeredeYenir | ${venue.name}`;
 
@@ -735,12 +789,16 @@ function renderVenue(venue) {
 
   restaurantLead.textContent = `${venue.city} / ${formatDistrictLabel(venue.district)}`;
   restaurantName.textContent = venue.name;
-  restaurantStars.textContent = starText(venue.rating);
-  restaurantScore.textContent = venue.rating.toFixed(1);
-  restaurantScoreLabel.textContent = scoreLabel(venue.rating);
-  restaurantReviews.textContent = `${reviewCount} değerlendirme`;
+  restaurantStars.textContent = hasRating ? starText(venue.rating) : "Bilgi bulunamamıştır";
+  restaurantScore.textContent = hasRating ? venue.rating.toFixed(1) : "";
+  restaurantScoreLabel.textContent = hasRating ? scoreLabel(venue.rating) : "";
+  restaurantScore.hidden = !hasRating;
+  restaurantScoreLabel.hidden = !hasRating;
+  restaurantReviews.textContent = hasReviewCount
+    ? `${venue.userRatingCount.toLocaleString("tr-TR")} değerlendirme`
+    : "Değerlendirme bilgisi bulunamamıştır";
   const addressText = venue.address || `${venue.district}, ${venue.city}`;
-  restaurantMeta.textContent = `Kategori: ${venue.cuisine} · Ortalama bütçe: ${priceMap[venue.budget] || venue.budget}`;
+  restaurantMeta.textContent = `Kategori: ${venue.cuisine}`;
 
   const summaryBase =
     sanitizeText(venue.editorialSummary || "", "") ||
@@ -756,9 +814,9 @@ function renderVenue(venue) {
   const overview = [summaryBase, atmosphereText, menuText].filter(Boolean).join(" ");
   restaurantOverviewText.textContent = overview;
 
-  restaurantMainImage.src = buildImageUrl(venue, "main");
+  restaurantMainImage.src = resolveVenuePhotoUrl(venue, 0, "main");
   restaurantThumbs.forEach((image, index) => {
-    image.src = buildImageUrl(venue, `thumb-${index + 1}`);
+    image.src = resolveVenuePhotoUrl(venue, index + 1, `thumb-${index + 1}`);
   });
 
   const formattedPhone = formatTurkishPhone(venue.phone);
@@ -770,13 +828,13 @@ function renderVenue(venue) {
     field.textContent = formattedPhone || "Telefon bilgisi bulunamadı";
   });
 
-  const emailText = sanitizeText(venue.email || "", "");
-  restaurantEmailFields.forEach((field) => {
-    field.classList.toggle("is-missing", !emailText);
-    field.textContent = emailText || "Bilgi bulunamamıştır";
+  const instagramText = sanitizeUrl(venue.instagram || "", "");
+  restaurantInstagramFields.forEach((field) => {
+    field.classList.toggle("is-missing", !instagramText);
+    field.textContent = instagramText || "Bilgi bulunamamıştır";
   });
 
-  const websiteText = sanitizeText(venue.website || venue.web || venue.url, "");
+  const websiteText = sanitizeUrl(venue.website || venue.web || venue.url, "");
   restaurantWebsiteFields.forEach((field) => {
     field.classList.toggle("is-missing", !websiteText);
     field.textContent = websiteText || "Bilgi bulunamamıştır";

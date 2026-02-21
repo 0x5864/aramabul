@@ -262,6 +262,9 @@ function sanitizeVenue(candidate) {
     name,
     cuisine,
     rating: normalizeRating(candidate.rating),
+    userRatingCount: Number.isFinite(Number(candidate.userRatingCount))
+      ? Math.max(0, Math.round(Number(candidate.userRatingCount)))
+      : null,
     budget: budgetFromPriceLevel(candidate.priceLevel ?? candidate.price_level),
     address: normalizeText(candidate.formattedAddress || candidate.shortFormattedAddress),
     phone: normalizeText(candidate.nationalPhoneNumber || candidate.internationalPhoneNumber),
@@ -298,7 +301,7 @@ async function fetchTextSearch(query, pageToken = '') {
       Accept: 'application/json',
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask':
-        'places.id,places.displayName,places.rating,places.priceLevel,places.types,places.formattedAddress,places.shortFormattedAddress,places.nationalPhoneNumber,places.internationalPhoneNumber,places.websiteUri,nextPageToken',
+        'places.id,places.displayName,places.rating,places.userRatingCount,places.priceLevel,places.types,places.formattedAddress,places.shortFormattedAddress,places.nationalPhoneNumber,places.internationalPhoneNumber,places.websiteUri,nextPageToken',
     },
     body: JSON.stringify(payload),
   });
@@ -436,6 +439,7 @@ async function run() {
             place.types,
           ),
           rating: place.rating,
+          userRatingCount: place.userRatingCount,
           price_level: place.price_level,
           priceLevel: place.priceLevel,
           formattedAddress: placeAddress,

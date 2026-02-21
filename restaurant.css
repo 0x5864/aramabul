@@ -113,7 +113,7 @@
 .restaurant-tabs {
   margin-top: 0.78rem;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border: 1px solid rgba(22, 33, 35, 0.14);
   border-radius: 6px;
   overflow: hidden;
@@ -370,7 +370,7 @@
 
 .restaurant-phone-label,
 .restaurant-address-label,
-.restaurant-email-label,
+.restaurant-instagram-label,
 .restaurant-website-label {
   margin: 0;
   font-size: 1.08rem;
@@ -383,7 +383,7 @@
 
 .restaurant-address-label::before,
 .restaurant-phone-label::before,
-.restaurant-email-label::before,
+.restaurant-instagram-label::before,
 .restaurant-website-label::before {
   content: "";
   width: 15px;
@@ -402,8 +402,8 @@
   background-image: url("assets/telefon.png");
 }
 
-.restaurant-email-label::before {
-  background-image: url("assets/eposta.png");
+.restaurant-instagram-label::before {
+  background-image: url("assets/insta.png");
 }
 
 .restaurant-website-label::before {
@@ -436,7 +436,7 @@
   color: #1f262c;
 }
 
-.restaurant-email {
+.restaurant-instagram {
   margin: 0.16rem 0 0.6rem;
   width: 100%;
   border: 1px solid rgba(22, 33, 35, 0.18);
@@ -460,7 +460,7 @@
   color: #1f262c;
 }
 
-.restaurant-email.is-missing {
+.restaurant-instagram.is-missing {
   color: rgba(22, 33, 35, 0.72);
 }
 
@@ -527,7 +527,7 @@
 
 @media (max-width: 980px) {
   .restaurant-tabs {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .restaurant-content {

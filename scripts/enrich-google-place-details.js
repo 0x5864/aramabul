@@ -36,6 +36,8 @@ const FIELD_MASK = [
   'servesDessert',
   'servesCoffee',
   'servesVegetarianFood',
+  'rating',
+  'userRatingCount',
 ].join(',');
 
 const MAX_DETAILS = Number.parseInt(process.env.MAX_DETAILS || '0', 10);
@@ -47,6 +49,7 @@ const ONLY_MISSING = process.env.ONLY_MISSING !== '0';
 const OVERWRITE_EXISTING = process.env.OVERWRITE_EXISTING === '1';
 const CONCURRENCY = Math.max(1, Number.parseInt(process.env.CONCURRENCY || '6', 10));
 const PHOTO_REFERENCE_LIMIT = Math.max(1, Number.parseInt(process.env.PHOTO_REFERENCE_LIMIT || '8', 10));
+const SYNC_RATING_FIELDS = process.env.SYNC_RATING_FIELDS !== '0';
 
 function readDotEnvFile(filePath) {
   try {
@@ -246,6 +249,8 @@ function normalizeDetails(payload) {
       email: '',
       mapsUrl: '',
       editorialSummary: '',
+      rating: null,
+      userRatingCount: null,
       reviewSnippets: [],
       photoReferences: [],
       menuCapabilities: [],
@@ -303,6 +308,10 @@ function normalizeDetails(payload) {
     email: normalizeText(payload.email || payload.emailAddress || payload.contact?.email),
     mapsUrl: normalizeText(payload.googleMapsUri),
     editorialSummary: normalizeText(payload.editorialSummary && payload.editorialSummary.text),
+    rating: Number.isFinite(Number(payload.rating)) ? Math.min(5, Math.max(0, Number(payload.rating))) : null,
+    userRatingCount: Number.isFinite(Number(payload.userRatingCount))
+      ? Math.max(0, Math.round(Number(payload.userRatingCount)))
+      : null,
     reviewSnippets,
     photoReferences,
     menuCapabilities,
@@ -347,6 +356,26 @@ function shouldWriteArray(existingValue, nextValue) {
   }
 
   return existing.length === 0;
+}
+
+function numericChanged(existingValue, nextValue) {
+  const current = Number(existingValue);
+  const hasCurrent = Number.isFinite(current);
+  const hasNext = Number.isFinite(nextValue);
+
+  if (!hasNext && !hasCurrent) {
+    return false;
+  }
+
+  if (!hasNext && hasCurrent) {
+    return true;
+  }
+
+  if (hasNext && !hasCurrent) {
+    return true;
+  }
+
+  return current !== nextValue;
 }
 
 function buildPlaceIndex(venues) {
@@ -487,6 +516,16 @@ async function run() {
 
       if (shouldWriteField(venue.editorialSummary, details.editorialSummary)) {
         venue.editorialSummary = details.editorialSummary;
+        changed = true;
+      }
+
+      if (SYNC_RATING_FIELDS && numericChanged(venue.rating, details.rating)) {
+        venue.rating = Number.isFinite(details.rating) ? details.rating : null;
+        changed = true;
+      }
+
+      if (SYNC_RATING_FIELDS && numericChanged(venue.userRatingCount, details.userRatingCount)) {
+        venue.userRatingCount = Number.isFinite(details.userRatingCount) ? details.userRatingCount : null;
         changed = true;
       }
 

@@ -20,11 +20,15 @@ const turkishCharMap = {
 };
 
 const mahalleTokenPattern = /\b(mahallesi|mah\.?|mh\.?)\b/iu;
-const caddeTokenPattern = /\b(caddesi|cadde|cad\.?|cd\.?|bulvarı|bulvari|bulvar|blv\.?|yolu|yol)\b/iu;
-const sokakTokenPattern = /\b(sokağı|sokagi|sokak|sok\.?|sk\.?)\b/iu;
+const caddeTokenPattern = /(caddesi|cadde|cad\.?|cd\.?|bulvarı|bulvari|bulvar|blv\.?|yolu|yol)/iu;
+const sokakTokenPattern = /(sokağı|sokagi|sokak|sok\.?|sk\.?)/iu;
 const noPattern = /\bno\s*[:;.,]?\s*([0-9a-zçğıöşüA-ZÇĞİÖŞÜ\/-]+)/iu;
 const postCodePattern = /\b\d{5}\b/g;
-const strictFormatPattern = /^[^,]+ Mah\., .+ No:[^ ]+ [0-9]{5} [^/]+\/[^.]+\.$/u;
+const streetSuffixPattern = /(?:Cad\.|Sok\.|Blv\.|Yolu)/u;
+const strictFormatPattern = new RegExp(
+  `^[^,]+ Mah\\., .+ ${streetSuffixPattern.source}(?: \\(.+ ${streetSuffixPattern.source}\\))? No:[^ ]+ [0-9]{5} [^/]+\\/[^.]+\\.$`,
+  'u',
+);
 
 function readJson(filePath, fallbackValue) {
   try {
@@ -234,19 +238,65 @@ function extractNo(parts) {
   };
 }
 
-function normalizeStreetToken(value) {
-  return normalizeText(value)
-    .replace(/\b(caddesi|cadde|cad\.?|cd\.?)\b/giu, 'Cd.')
-    .replace(/\b(bulvarı|bulvari|bulvar|blv\.?)\b/giu, 'Blv.')
-    .replace(/\b(sokağı|sokagi|sokak|sok\.?|sk\.?)\b/giu, 'Sok.')
+function ensureStreetSuffix(value, fallbackSuffix) {
+  let cleaned = normalizeText(value)
+    .replace(/caddesi|cadde|cad\.?|cd\.?/giu, 'Cad.')
+    .replace(/bulvarı|bulvari|bulvar|blv\.?/giu, 'Blv.')
+    .replace(/sokağı|sokagi|sokak|sok\.?|sk\.?/giu, 'Sok.')
+    .replace(/\byolu\b/giu, 'Yolu')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  cleaned = cleaned.replace(/[.,;:]+$/gu, '').trim();
+  cleaned = cleaned.replace(/\b(Blv|Cad|Sok)\.[ıi]/giu, '$1.');
+  cleaned = cleaned.replace(/(\d+)\.\s*(Cad\.|Sok\.|Blv\.|Yolu)/gu, '$1 $2');
+  cleaned = cleaned.replace(/(Cad\.|Sok\.|Blv\.|Yolu)(\d)/gu, '$1 $2');
+  cleaned = cleaned.replace(/([A-Za-zÇĞİÖŞÜçğıöşü])\.(Cad\.|Sok\.|Blv\.|Yolu)/gu, '$1 $2');
+  cleaned = cleaned.replace(/([A-Za-zÇĞİÖŞÜçğıöşü0-9)])(Cad\.|Sok\.|Blv\.|Yolu)/gu, '$1 $2');
+  cleaned = cleaned.replace(/(^|\s)\.(Cad\.|Sok\.|Blv\.|Yolu)/gu, '$1Adres $2');
+  cleaned = cleaned.replace(/\bYolu\./giu, 'Yolu');
+
+  if (/\b(Cad|Sok|Blv)$/u.test(cleaned)) {
+    cleaned = `${cleaned}.`;
+  }
+
+  if (/^(Cad\.|Sok\.|Blv\.|Yolu)$/u.test(cleaned)) {
+    cleaned = `Adres ${cleaned}`;
+  }
+
+  if (!/\b(Cad\.|Sok\.|Blv\.|Yolu)$/u.test(cleaned)) {
+    return `${cleaned || 'Adres'} ${fallbackSuffix}`.trim();
+  }
+
+  return cleaned;
+}
+
+function normalizeStreetToken(value, fallbackSuffix = 'Cad.') {
+  const cleaned = normalizeText(value)
+    .replace(/caddesi|cadde|cad\.?|cd\.?/giu, 'Cad.')
+    .replace(/bulvarı|bulvari|bulvar|blv\.?/giu, 'Blv.')
+    .replace(/sokağı|sokagi|sokak|sok\.?|sk\.?/giu, 'Sok.')
+    .replace(/\byolu\b/giu, 'Yolu')
     .replace(/\b(d|daire|kat)\s*[:;.]?\s*[0-9a-zçğıöşüA-ZÇĞİÖŞÜ/-]+\b/giu, ' ')
     .replace(/\s*\.\s*\./g, '.')
+    .replace(/\.\s+\./g, '.')
     .replace(/\s*\.\s*,/g, ',')
     .replace(/\s+,/g, ',')
     .replace(/\.\s*\./g, '.')
-    .replace(/^\.+|\.+$/g, '')
+    .replace(/\.{2,}/g, '.')
+    .replace(/([A-Za-zÇĞİÖŞÜçğıöşü])\.\.+/gu, '$1.')
+    .replace(/\b(Cad|Sok|Blv)\.\./gu, '$1.')
+    .replace(/\b(Blv|Cad|Sok)\.[ıi]/giu, '$1.')
+    .replace(/(\d+)\.\s*(Cad\.|Sok\.|Blv\.|Yolu)/gu, '$1 $2')
+    .replace(/(Cad\.|Sok\.|Blv\.|Yolu)(\d)/gu, '$1 $2')
+    .replace(/([A-Za-zÇĞİÖŞÜçğıöşü])\.(Cad\.|Sok\.|Blv\.|Yolu)/gu, '$1 $2')
+    .replace(/([A-Za-zÇĞİÖŞÜçğıöşü0-9)])(Cad\.|Sok\.|Blv\.|Yolu)/gu, '$1 $2')
+    .replace(/(^|\s)\.(Cad\.|Sok\.|Blv\.|Yolu)/gu, '$1Adres $2')
+    .replace(/\bYolu\./giu, 'Yolu')
     .replace(/\s+/g, ' ')
     .trim();
+
+  return ensureStreetSuffix(cleaned, fallbackSuffix);
 }
 
 function extractTrailingNumber(street) {
@@ -314,8 +364,11 @@ function pickStreets(parts, venue) {
     secondaryStreet = '';
   }
 
-  mainStreet = normalizeStreetToken(mainStreet);
-  secondaryStreet = normalizeStreetToken(secondaryStreet);
+  mainStreet = normalizeStreetToken(mainStreet, 'Cad.');
+  secondaryStreet = secondaryStreet ? normalizeStreetToken(secondaryStreet, 'Sok.') : '';
+  if (/^Adres (Cad\.|Sok\.|Blv\.|Yolu)$/u.test(secondaryStreet)) {
+    secondaryStreet = '';
+  }
 
   return {
     mainStreet,
@@ -332,7 +385,7 @@ function districtCityFromVenue(venue) {
 function normalizeAddressToStrictFormat(venue) {
   const rawAddress = normalizeText(venue.address);
   if (!rawAddress) {
-    return `${normalizeMahalleName('Merkez')}, Adres No:00 00000 ${districtCityFromVenue(venue)}.`;
+    return `${normalizeMahalleName('Merkez')}, Adres Cad. No:00 00000 ${districtCityFromVenue(venue)}.`;
   }
 
   if (strictFormatPattern.test(rawAddress)) {
@@ -349,7 +402,7 @@ function normalizeAddressToStrictFormat(venue) {
   const { mainStreet: rawMainStreet, secondaryStreet } = pickStreets(partsAfterNo, venue);
 
   const mainStreetNoSplit = extractTrailingNumber(rawMainStreet);
-  const mainStreet = normalizeStreetToken(mainStreetNoSplit.street || rawMainStreet || 'Adres');
+  const mainStreet = normalizeStreetToken(mainStreetNoSplit.street || rawMainStreet || 'Adres', 'Cad.');
 
   let houseNumber = extractedNo || mainStreetNoSplit.number || '00';
   houseNumber = normalizeText(houseNumber).replace(/^NO\s*:?\s*/iu, '').trim();
@@ -361,6 +414,7 @@ function normalizeAddressToStrictFormat(venue) {
     .toLocaleUpperCase('tr')
     .replace(/\s+/g, '')
     .replace(/[^0-9A-ZÇĞİÖŞÜ\/-]/gu, '');
+  houseNumber = houseNumber.replace(/^\/+|\/+$/g, '');
   if (!houseNumber) {
     houseNumber = '00';
   }
@@ -383,7 +437,11 @@ function normalizeAddressToStrictFormat(venue) {
     ? `${mainStreet} (${secondaryStreet})`
     : mainStreet;
 
-  return `${mahalle}, ${streetWithOptionalSok} No:${houseNumber} ${normalizedPostalCode} ${districtCity}.`;
+  return `${mahalle}, ${streetWithOptionalSok} No:${houseNumber} ${normalizedPostalCode} ${districtCity}.`
+    .replace(/\b(Cad|Sok|Blv)\.\./gu, '$1.')
+    .replace(/\.{2,}/g, '.')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function run() {

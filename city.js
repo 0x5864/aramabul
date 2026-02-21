@@ -228,6 +228,34 @@ function sanitizeAddress(value, fallback = "") {
   return cleaned.length > 0 ? cleaned.slice(0, 180) : fallback;
 }
 
+function sanitizeUrl(value, fallback = "") {
+  if (typeof value !== "string") {
+    return fallback;
+  }
+
+  const cleaned = value.trim();
+  if (cleaned.length === 0 || cleaned.length > 3000) {
+    return fallback;
+  }
+
+  if (!/^https?:\/\//i.test(cleaned)) {
+    return fallback;
+  }
+
+  return cleaned;
+}
+
+function sanitizeUrlArray(values, limit = 6) {
+  if (!Array.isArray(values)) {
+    return [];
+  }
+
+  return values
+    .map((value) => sanitizeUrl(String(value || ""), ""))
+    .filter(Boolean)
+    .slice(0, limit);
+}
+
 function sanitizeRating(value) {
   const numeric = Number(value);
 
@@ -266,6 +294,8 @@ function normalizeVenueRecord(record) {
     budget: sanitizeBudget(record.budget),
     address: sanitizeAddress(record.address, ""),
     sourcePlaceId: sanitizeText(record.sourcePlaceId, ""),
+    photoUri: sanitizeUrl(record.photoUri || "", ""),
+    galleryPhotoUris: sanitizeUrlArray(record.galleryPhotoUris, 4),
     cuisineIndex: normalizeForSearch(cuisine),
     searchIndex: normalizeForSearch(`${name} ${cuisine} ${city} ${district}`),
   };
@@ -499,6 +529,23 @@ function starText(rating) {
 }
 
 function venueImageUrl(venue, suffix) {
+  const suffixOrder = {
+    main: 0,
+    "thumb-a": 1,
+    "thumb-b": 2,
+    "thumb-c": 3,
+  };
+  const requestedIndex = Number.isInteger(suffixOrder[suffix]) ? suffixOrder[suffix] : 0;
+  const gallery = Array.isArray(venue.galleryPhotoUris) ? venue.galleryPhotoUris : [];
+
+  if (gallery.length > 0) {
+    return gallery[Math.min(requestedIndex, gallery.length - 1)];
+  }
+
+  if (venue.photoUri) {
+    return venue.photoUri;
+  }
+
   const seed = toSlug(`${state.city}-${venue.name}-${suffix}`);
   return `https://picsum.photos/seed/${seed}/900/600`;
 }
