@@ -831,13 +831,41 @@ function renderVenue(venue) {
   const instagramText = sanitizeUrl(venue.instagram || "", "");
   restaurantInstagramFields.forEach((field) => {
     field.classList.toggle("is-missing", !instagramText);
-    field.textContent = instagramText || "Bilgi bulunamamıştır";
+    field.innerHTML = "";
+
+    if (!instagramText) {
+      field.textContent = "Bilgi bulunamamıştır";
+      return;
+    }
+
+    const instagramLink = document.createElement("a");
+    instagramLink.className = "restaurant-instagram-link";
+    instagramLink.href = instagramText;
+    instagramLink.target = "_blank";
+    instagramLink.rel = "noopener noreferrer";
+    instagramLink.textContent = instagramText;
+    instagramLink.setAttribute("aria-label", "Instagram profilini yeni sekmede aç");
+    field.append(instagramLink);
   });
 
   const websiteText = sanitizeUrl(venue.website || venue.web || venue.url, "");
   restaurantWebsiteFields.forEach((field) => {
     field.classList.toggle("is-missing", !websiteText);
-    field.textContent = websiteText || "Bilgi bulunamamıştır";
+    field.innerHTML = "";
+
+    if (!websiteText) {
+      field.textContent = "Bilgi bulunamamıştır";
+      return;
+    }
+
+    const websiteLink = document.createElement("a");
+    websiteLink.className = "restaurant-website-link";
+    websiteLink.href = websiteText;
+    websiteLink.target = "_blank";
+    websiteLink.rel = "noopener noreferrer";
+    websiteLink.textContent = websiteText;
+    websiteLink.setAttribute("aria-label", "Web sitesini yeni sekmede aç");
+    field.append(websiteLink);
   });
 
   const mapUrls = buildMapUrls(venue);

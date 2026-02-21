@@ -414,6 +414,7 @@
   font: inherit;
   font-size: 0.88rem;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .city-sort-tab:last-child {
@@ -426,8 +427,13 @@
 }
 
 .city-sort-tab:hover {
-  color: #c6542f;
-  background: #fff5f0;
+  color: var(--hover-blue);
+  background: #fcfcfc;
+}
+
+.city-sort-tab.active:hover {
+  color: #ffffff;
+  background: #797252;
 }
 
 .city-pagination {
@@ -587,11 +593,6 @@
 
 .city-venue-rating {
   font-size: 1.6rem;
-}
-
-.city-venue-views {
-  color: rgba(22, 33, 35, 0.72);
-  font-size: 0.92rem;
 }
 
 .city-venue-chip-row {

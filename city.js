@@ -88,6 +88,10 @@ const mainPageCategoryTags = [
   "Börek",
 ];
 
+const sortedMainPageCategoryTags = [...mainPageCategoryTags].sort((left, right) =>
+  left.localeCompare(right, "tr"),
+);
+
 const cityTitle = document.querySelector("#cityTitle");
 const cityToplineName = document.querySelector("#cityToplineName");
 const cityBreadcrumbName = document.querySelector("#cityBreadcrumbName");
@@ -106,7 +110,6 @@ const categoryPickerTrigger = document.querySelector("#categoryPickerTrigger");
 const categoryCurrent = document.querySelector("#categoryCurrent");
 const categoryFlyoutCity = document.querySelector("#categoryFlyoutCity");
 const categoryFlyoutList = document.querySelector("#categoryFlyoutList");
-const budgetSelect = document.querySelector("#budgetSelect");
 const sortTabs = [...document.querySelectorAll(".city-sort-tab")];
 
 const loginBtn = document.querySelector("#loginBtn");
@@ -141,7 +144,6 @@ const state = {
   city: "",
   district: "all",
   category: "all",
-  budget: "all",
   sort: "traveler",
   page: 1,
 };
@@ -595,9 +597,7 @@ function filteredVenues() {
     const matchesCategory =
       state.category === "all" ||
       venue.cuisineIndex.includes(categoryQuery);
-    const matchesBudget = state.budget === "all" || venue.budget === state.budget;
-
-    return matchesCategory && matchesBudget;
+    return matchesCategory;
   });
 
   switch (state.sort) {
@@ -656,12 +656,7 @@ function updateUrl() {
   } else {
     url.searchParams.set("kategori", toSlug(state.category));
   }
-
-  if (state.budget === "all") {
-    url.searchParams.delete("butce");
-  } else {
-    url.searchParams.set("butce", state.budget);
-  }
+  url.searchParams.delete("butce");
 
   if (state.sort === "traveler") {
     url.searchParams.delete("sirala");
@@ -682,12 +677,11 @@ function applyExtraUrlState() {
   const url = new URL(window.location.href);
   const districtSlug = url.searchParams.get("ilce");
   const categorySlug = url.searchParams.get("kategori");
-  const budget = url.searchParams.get("butce");
   const sort = url.searchParams.get("sirala");
   const pageValue = Number.parseInt(url.searchParams.get("sayfa") || "1", 10);
 
   const districts = districtsForCity(state.city);
-  const categories = mainPageCategoryTags;
+  const categories = sortedMainPageCategoryTags;
 
   if (districtSlug) {
     const matchedDistrict = districts.find((district) => toSlug(district) === toSlug(districtSlug));
@@ -697,10 +691,6 @@ function applyExtraUrlState() {
   if (categorySlug) {
     const matchedCategory = categories.find((category) => toSlug(category) === toSlug(categorySlug));
     state.category = matchedCategory || "all";
-  }
-
-  if (budget && /^₺{1,4}$/.test(budget)) {
-    state.budget = budget;
   }
 
   if (["traveler", "locals", "viewed", "rated"].includes(sort || "")) {
@@ -720,6 +710,53 @@ function renderPageHeader() {
   if (cityBreadcrumbName) {
     cityBreadcrumbName.textContent = titleText;
   }
+}
+
+function districtFlyoutColumnCount() {
+  if (window.matchMedia("(max-width: 620px)").matches) {
+    return 1;
+  }
+
+  if (window.matchMedia("(max-width: 980px)").matches) {
+    return 2;
+  }
+
+  return 3;
+}
+
+function reorderForVerticalAlphabetical(items, columnCount) {
+  const safeItems = Array.isArray(items) ? items.slice() : [];
+  const columns = Math.max(1, Number(columnCount) || 1);
+
+  if (columns <= 1 || safeItems.length <= 1) {
+    return safeItems;
+  }
+
+  const total = safeItems.length;
+  const baseRowsPerColumn = Math.floor(total / columns);
+  const extraRows = total % columns;
+  const maxRows = baseRowsPerColumn + (extraRows > 0 ? 1 : 0);
+  const columnSlices = [];
+  let cursor = 0;
+
+  for (let column = 0; column < columns; column += 1) {
+    const columnSize = baseRowsPerColumn + (column < extraRows ? 1 : 0);
+    columnSlices.push(safeItems.slice(cursor, cursor + columnSize));
+    cursor += columnSize;
+  }
+
+  const ordered = [];
+
+  for (let row = 0; row < maxRows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      const item = columnSlices[column][row];
+      if (typeof item !== "undefined") {
+        ordered.push(item);
+      }
+    }
+  }
+
+  return ordered;
 }
 
 function renderDistrictOptions() {
@@ -744,7 +781,12 @@ function renderDistrictOptions() {
   districtFlyoutCity.textContent = state.city;
 
   const allDistricts = ["all", ...districts];
-  allDistricts.forEach((district) => {
+  const orderedDistricts = reorderForVerticalAlphabetical(
+    allDistricts,
+    districtFlyoutColumnCount(),
+  );
+
+  orderedDistricts.forEach((district) => {
     const optionButton = document.createElement("button");
     optionButton.type = "button";
     optionButton.className = "district-option";
@@ -780,7 +822,7 @@ function renderSidebarCategories() {
     return;
   }
 
-  const categories = mainPageCategoryTags;
+  const categories = sortedMainPageCategoryTags;
   categoryFlyoutList.innerHTML = "";
 
   if (state.category !== "all" && !categories.includes(state.category)) {
@@ -859,12 +901,11 @@ function renderVenueCard(venue) {
     venue.address || `${venue.district}, ${venue.city}`;
   card.querySelector(".city-venue-stars").textContent = starText(venue.rating);
   card.querySelector(".city-venue-rating").textContent = venue.rating.toFixed(1);
-  card.querySelector(".city-venue-views").textContent = `${viewsForVenue(venue)} görüntüleme`;
 
-  const chips = [...card.querySelectorAll(".city-venue-chip")];
-  chips[0].textContent = venue.budget;
-  chips[1].textContent = venue.cuisine;
-  chips[2].textContent = venue.district;
+  const cuisineChip = card.querySelector(".city-venue-chip");
+  if (cuisineChip) {
+    cuisineChip.textContent = venue.cuisine;
+  }
 
   card.querySelector(".city-venue-main-image").src = venueImageUrl(venue, "main");
   thumbs[0].src = venueImageUrl(venue, "thumb-a");
@@ -1336,19 +1377,6 @@ function attachFilterEvents() {
     });
   }
 
-  budgetSelect.addEventListener("change", (event) => {
-    const target = event.target;
-
-    if (!(target instanceof HTMLSelectElement)) {
-      return;
-    }
-
-    state.budget = target.value;
-    state.page = 1;
-    renderVenues();
-    updateUrl();
-  });
-
   sortTabs.forEach((button) => {
     button.addEventListener("click", () => {
       const nextSort = button.dataset.sort || "traveler";
@@ -1358,6 +1386,10 @@ function attachFilterEvents() {
       renderVenues();
       updateUrl();
     });
+  });
+
+  window.addEventListener("resize", () => {
+    renderDistrictOptions();
   });
 }
 
@@ -1373,7 +1405,6 @@ async function initializeCityPage() {
   state.city = resolveCityFromUrl(cities);
   state.district = "all";
   state.category = "all";
-  state.budget = "all";
   state.sort = "traveler";
   state.page = 1;
 
@@ -1389,7 +1420,6 @@ async function initializeCityPage() {
   renderDistrictOptions();
   renderSidebarCategories();
 
-  budgetSelect.value = state.budget;
   updateSortTabs();
   renderVenues();
   updateUrl();

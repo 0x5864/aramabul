@@ -444,8 +444,10 @@
   background: #f9fafb;
   padding: 0.38rem 0.52rem;
   font-size: 0.92rem;
-  line-height: 1.2;
+  line-height: 1.3;
   color: #1f262c;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .restaurant-website {
@@ -462,6 +464,36 @@
 
 .restaurant-instagram.is-missing {
   color: rgba(22, 33, 35, 0.72);
+}
+
+.restaurant-instagram-link {
+  display: block;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.restaurant-instagram-link:hover,
+.restaurant-instagram-link:focus-visible {
+  color: #009dff;
+  outline: none;
+}
+
+.restaurant-website-link {
+  display: block;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.restaurant-website-link:hover,
+.restaurant-website-link:focus-visible {
+  color: #009dff;
+  outline: none;
 }
 
 .restaurant-website.is-missing {
