@@ -268,6 +268,15 @@ function sanitizeRating(value) {
   return Math.min(5, Math.max(0, numeric));
 }
 
+function sanitizeRatingCount(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric) || numeric < 0) {
+    return null;
+  }
+
+  return Math.round(numeric);
+}
+
 function sanitizeBudget(value) {
   const cleaned = sanitizeText(value, "₺₺");
   return /^₺{1,4}$/.test(cleaned) ? cleaned : "₺₺";
@@ -293,6 +302,7 @@ function normalizeVenueRecord(record) {
     name,
     cuisine,
     rating: sanitizeRating(record.rating),
+    userRatingCount: sanitizeRatingCount(record.userRatingCount),
     budget: sanitizeBudget(record.budget),
     address: sanitizeAddress(record.address, ""),
     sourcePlaceId: sanitizeText(record.sourcePlaceId, ""),
@@ -526,7 +536,7 @@ function travelerScore(venue) {
 }
 
 function starText(rating) {
-  const full = Math.max(1, Math.min(5, Math.round(rating)));
+  const full = Math.max(0, Math.min(5, Math.round(rating)));
   return `${"★".repeat(full)}${"☆".repeat(5 - full)}`;
 }
 
@@ -890,6 +900,8 @@ function renderVenueCard(venue) {
   const card = cityVenueTemplate.content.firstElementChild.cloneNode(true);
   const thumbs = [...card.querySelectorAll(".city-venue-thumb")];
   const titleLink = card.querySelector(".city-venue-title-link");
+  const hasReviewCount = Number.isFinite(venue.userRatingCount) && venue.userRatingCount > 1;
+  const displayRating = hasReviewCount ? venue.rating : 0;
 
   if (titleLink) {
     titleLink.textContent = venue.name;
@@ -899,8 +911,8 @@ function renderVenueCard(venue) {
   card.querySelector(".city-venue-subtitle").textContent = `${venue.district} / ${venue.cuisine}`;
   card.querySelector(".city-venue-description").textContent =
     venue.address || `${venue.district}, ${venue.city}`;
-  card.querySelector(".city-venue-stars").textContent = starText(venue.rating);
-  card.querySelector(".city-venue-rating").textContent = venue.rating.toFixed(1);
+  card.querySelector(".city-venue-stars").textContent = starText(displayRating);
+  card.querySelector(".city-venue-rating").textContent = displayRating.toFixed(1);
 
   const cuisineChip = card.querySelector(".city-venue-chip");
   if (cuisineChip) {
@@ -1009,16 +1021,7 @@ function renderVenues() {
   const visible = filtered.slice(startIndex, startIndex + VENUES_PER_PAGE);
 
   cityVenueList.innerHTML = "";
-  let districtForMeta = "";
-
-  if (state.district !== "all") {
-    districtForMeta = state.district;
-  } else if (state.city === "İstanbul") {
-    const istanbulDistricts = districtsForCity(state.city);
-    districtForMeta = istanbulDistricts.includes("Adalar") ? "Adalar" : istanbulDistricts[0] || "";
-  } else {
-    districtForMeta = districtsForCity(state.city)[0] || "";
-  }
+  const districtForMeta = state.district !== "all" ? state.district : "";
 
   cityResultMeta.textContent = districtForMeta
     ? `${state.city} ilinde toplam ${cityVenues.length} restoran bulunmaktadır. ${districtForMeta} İlçesinde de ${districtVenueCount(

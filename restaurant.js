@@ -331,7 +331,7 @@ function resolveVenuePhotoUrl(venue, preferredIndex, suffix) {
 }
 
 function starText(rating) {
-  const full = Math.max(1, Math.min(5, Math.round(rating)));
+  const full = Math.max(0, Math.min(5, Math.round(rating)));
   return `${"★".repeat(full)}${"☆".repeat(5 - full)}`;
 }
 
@@ -781,7 +781,8 @@ function buildBreadcrumb(venue) {
 
 function renderVenue(venue) {
   const hasRating = Number.isFinite(venue.rating);
-  const hasReviewCount = Number.isFinite(venue.userRatingCount);
+  const hasReviewCount = Number.isFinite(venue.userRatingCount) && venue.userRatingCount > 1;
+  const displayRating = hasRating && hasReviewCount ? venue.rating : 0;
 
   document.title = `NeredeYenir | ${venue.name}`;
 
@@ -789,11 +790,11 @@ function renderVenue(venue) {
 
   restaurantLead.textContent = `${venue.city} / ${formatDistrictLabel(venue.district)}`;
   restaurantName.textContent = venue.name;
-  restaurantStars.textContent = hasRating ? starText(venue.rating) : "Bilgi bulunamamıştır";
-  restaurantScore.textContent = hasRating ? venue.rating.toFixed(1) : "";
-  restaurantScoreLabel.textContent = hasRating ? scoreLabel(venue.rating) : "";
-  restaurantScore.hidden = !hasRating;
-  restaurantScoreLabel.hidden = !hasRating;
+  restaurantStars.textContent = starText(displayRating);
+  restaurantScore.textContent = displayRating.toFixed(1);
+  restaurantScore.hidden = false;
+  restaurantScoreLabel.textContent = hasReviewCount ? scoreLabel(displayRating) : "";
+  restaurantScoreLabel.hidden = !hasReviewCount;
   restaurantReviews.textContent = hasReviewCount
     ? `${venue.userRatingCount.toLocaleString("tr-TR")} değerlendirme`
     : "Değerlendirme bilgisi bulunamamıştır";
