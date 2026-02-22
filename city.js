@@ -1,5 +1,32 @@
 const VENUES_JSON_PATH = "data/venues.json";
 const DISTRICTS_JSON_PATH = "data/districts.json";
+const API_BASE_URL = (() => {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  if (typeof window.NEREDEYENIR_API_BASE === "string" && window.NEREDEYENIR_API_BASE.trim()) {
+    return window.NEREDEYENIR_API_BASE.trim().replace(/\/+$/u, "");
+  }
+
+  if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+    return `${window.location.protocol}//${window.location.hostname}:8787`;
+  }
+
+  return window.location.origin;
+})();
+const VENUES_API_ENDPOINT =
+  typeof window !== "undefined" && typeof window.NEREDEYENIR_VENUES_API === "string"
+    ? window.NEREDEYENIR_VENUES_API.trim()
+    : API_BASE_URL
+      ? `${API_BASE_URL}/api/venues?limit=50000`
+      : "";
+const DISTRICTS_API_ENDPOINT =
+  typeof window !== "undefined" && typeof window.NEREDEYENIR_DISTRICTS_API === "string"
+    ? window.NEREDEYENIR_DISTRICTS_API.trim()
+    : API_BASE_URL
+      ? `${API_BASE_URL}/api/districts`
+      : "";
 const AUTH_USERS_KEY = "neredeyenir.auth.users.v1";
 const AUTH_SESSION_KEY = "neredeyenir.auth.session.v1";
 const VENUES_PER_PAGE = 50;
@@ -70,9 +97,7 @@ const mainPageCategoryTags = [
   "Deniz Ürünleri",
   "Sokak Lezzetleri",
   "Dondurma",
-  "Baklava",
   "Tatlı",
-  "Künefe",
   "Kahvaltı",
   "Vegan",
   "Vejetaryen",
@@ -178,6 +203,17 @@ function sanitizeText(value, fallback = "") {
 
   const cleaned = value.trim();
   return cleaned.length > 0 ? cleaned.slice(0, 80) : fallback;
+}
+
+function normalizeCuisineLabel(value, fallback = "Yerel") {
+  const cleaned = sanitizeText(value, fallback);
+  const normalized = normalizeForSearch(cleaned);
+
+  if (normalized === "baklava" || normalized === "kunefe") {
+    return "Tatlı";
+  }
+
+  return cleaned;
 }
 
 function toTitleCaseTr(value) {
@@ -290,7 +326,7 @@ function normalizeVenueRecord(record) {
   const city = sanitizeText(record.city);
   const district = sanitizeText(record.district, "Merkez");
   const name = sanitizeVenueName(record.name);
-  const cuisine = sanitizeText(record.cuisine, "Yerel");
+  const cuisine = normalizeCuisineLabel(record.cuisine, "Yerel");
 
   if (!city || !name) {
     return null;
@@ -438,6 +474,15 @@ async function fetchJson(url) {
 }
 
 async function loadVenues() {
+  if (VENUES_API_ENDPOINT) {
+    const apiPayload = await fetchJson(VENUES_API_ENDPOINT);
+    const apiRecords = normalizeVenueCollection(apiPayload);
+
+    if (apiRecords.length > 0) {
+      return apiRecords;
+    }
+  }
+
   const payload = await fetchJson(VENUES_JSON_PATH);
   const records = normalizeVenueCollection(payload);
 
@@ -449,6 +494,15 @@ async function loadVenues() {
 }
 
 async function loadDistricts(records) {
+  if (DISTRICTS_API_ENDPOINT) {
+    const apiPayload = await fetchJson(DISTRICTS_API_ENDPOINT);
+    const apiDistricts = normalizeDistrictCollection(apiPayload);
+
+    if (Object.keys(apiDistricts).length > 0) {
+      return apiDistricts;
+    }
+  }
+
   const payload = await fetchJson(DISTRICTS_JSON_PATH);
   const normalized = normalizeDistrictCollection(payload);
 
@@ -535,31 +589,85 @@ function travelerScore(venue) {
   return venue.rating * 100 + viewsForVenue(venue) / 12;
 }
 
+function reviewCountForSort(venue) {
+  const count = Number(venue && venue.userRatingCount);
+  return Number.isFinite(count) && count > 1 ? count : 0;
+}
+
+function hasVenuePhotoData(venue) {
+  if (!venue || typeof venue !== "object") {
+    return false;
+  }
+
+  if (typeof venue.photoUri === "string" && venue.photoUri.trim()) {
+    return true;
+  }
+
+  return Array.isArray(venue.galleryPhotoUris) && venue.galleryPhotoUris.length > 0;
+}
+
+function compareTravelerPriority(left, right) {
+  const rightHasPhoto = hasVenuePhotoData(right) ? 1 : 0;
+  const leftHasPhoto = hasVenuePhotoData(left) ? 1 : 0;
+  if (rightHasPhoto !== leftHasPhoto) {
+    return rightHasPhoto - leftHasPhoto;
+  }
+
+  const rightReviewCount = reviewCountForSort(right);
+  const leftReviewCount = reviewCountForSort(left);
+  if (rightReviewCount !== leftReviewCount) {
+    return rightReviewCount - leftReviewCount;
+  }
+
+  if (right.rating !== left.rating) {
+    return right.rating - left.rating;
+  }
+
+  const travelerOrder = travelerScore(right) - travelerScore(left);
+  if (travelerOrder !== 0) {
+    return travelerOrder;
+  }
+
+  return left.name.localeCompare(right.name, "tr");
+}
+
 function starText(rating) {
   const full = Math.max(0, Math.min(5, Math.round(rating)));
   return `${"★".repeat(full)}${"☆".repeat(5 - full)}`;
 }
 
-function venueImageUrl(venue, suffix) {
-  const suffixOrder = {
-    main: 0,
-    "thumb-a": 1,
-    "thumb-b": 2,
-    "thumb-c": 3,
-  };
-  const requestedIndex = Number.isInteger(suffixOrder[suffix]) ? suffixOrder[suffix] : 0;
+function venueImageUrls(venue) {
+  if (!venue || typeof venue !== "object") {
+    return [];
+  }
+
   const gallery = Array.isArray(venue.galleryPhotoUris) ? venue.galleryPhotoUris : [];
+  const urls = gallery
+    .map((value) => (typeof value === "string" ? value.trim() : ""))
+    .filter(Boolean);
 
-  if (gallery.length > 0) {
-    return gallery[Math.min(requestedIndex, gallery.length - 1)];
+  const photoUri = typeof venue.photoUri === "string" ? venue.photoUri.trim() : "";
+  if (photoUri) {
+    urls.push(photoUri);
   }
 
-  if (venue.photoUri) {
-    return venue.photoUri;
+  return [...new Set(urls)];
+}
+
+function setVenueImage(imageElement, imageUrl) {
+  if (!imageElement) {
+    return false;
   }
 
-  const seed = toSlug(`${state.city}-${venue.name}-${suffix}`);
-  return `https://picsum.photos/seed/${seed}/900/600`;
+  if (typeof imageUrl === "string" && imageUrl.trim().length > 0) {
+    imageElement.src = imageUrl;
+    imageElement.classList.remove("is-empty");
+    return true;
+  }
+
+  imageElement.removeAttribute("src");
+  imageElement.classList.add("is-empty");
+  return false;
 }
 
 function restaurantDetailUrl(venue) {
@@ -633,7 +741,7 @@ function filteredVenues() {
       break;
     case "traveler":
     default:
-      filtered = filtered.sort((left, right) => travelerScore(right) - travelerScore(left));
+      filtered = filtered.sort(compareTravelerPriority);
       break;
   }
 
@@ -900,6 +1008,9 @@ function renderVenueCard(venue) {
   const card = cityVenueTemplate.content.firstElementChild.cloneNode(true);
   const thumbs = [...card.querySelectorAll(".city-venue-thumb")];
   const titleLink = card.querySelector(".city-venue-title-link");
+  const emptyImageNote = card.querySelector(".city-venue-image-empty");
+  const thumbRow = card.querySelector(".city-venue-thumb-row");
+  const imageUrls = venueImageUrls(venue);
   const hasReviewCount = Number.isFinite(venue.userRatingCount) && venue.userRatingCount > 1;
   const displayRating = hasReviewCount ? venue.rating : 0;
 
@@ -908,7 +1019,7 @@ function renderVenueCard(venue) {
     titleLink.href = restaurantDetailUrl(venue);
     titleLink.setAttribute("aria-label", `${venue.name} sayfasını aç`);
   }
-  card.querySelector(".city-venue-subtitle").textContent = `${venue.district} / ${venue.cuisine}`;
+  card.querySelector(".city-venue-subtitle").textContent = venue.district;
   card.querySelector(".city-venue-description").textContent =
     venue.address || `${venue.district}, ${venue.city}`;
   card.querySelector(".city-venue-stars").textContent = starText(displayRating);
@@ -919,10 +1030,18 @@ function renderVenueCard(venue) {
     cuisineChip.textContent = venue.cuisine;
   }
 
-  card.querySelector(".city-venue-main-image").src = venueImageUrl(venue, "main");
-  thumbs[0].src = venueImageUrl(venue, "thumb-a");
-  thumbs[1].src = venueImageUrl(venue, "thumb-b");
-  thumbs[2].src = venueImageUrl(venue, "thumb-c");
+  const hasMainImage = setVenueImage(card.querySelector(".city-venue-main-image"), imageUrls[0] || "");
+  setVenueImage(thumbs[0], imageUrls[1] || "");
+  setVenueImage(thumbs[1], imageUrls[2] || "");
+  setVenueImage(thumbs[2], imageUrls[3] || "");
+
+  if (emptyImageNote) {
+    emptyImageNote.classList.toggle("is-hidden", hasMainImage);
+  }
+
+  if (thumbRow) {
+    thumbRow.classList.toggle("is-hidden", imageUrls.length <= 1);
+  }
 
   return card;
 }

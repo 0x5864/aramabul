@@ -24,10 +24,16 @@
 .restaurant-breadcrumb a {
   color: var(--link-base);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .restaurant-breadcrumb a:visited {
   color: var(--link-base);
+}
+
+.restaurant-breadcrumb a:hover,
+.restaurant-breadcrumb a:focus-visible {
+  color: var(--hover-blue);
 }
 
 .restaurant-hero {
@@ -280,6 +286,15 @@
   height: 560px;
   border: 1px solid rgba(22, 33, 35, 0.13);
   border-radius: 6px;
+  overflow: hidden;
+  background: #f8fafb;
+}
+
+.restaurant-map-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .restaurant-map-status {

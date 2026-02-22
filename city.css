@@ -514,10 +514,36 @@
   border-radius: 5px;
 }
 
+.city-venue-main-image.is-empty {
+  display: none;
+}
+
+.city-venue-image-empty {
+  height: 170px;
+  border-radius: 5px;
+  border: 1px dashed rgba(22, 33, 35, 0.2);
+  background: rgba(22, 33, 35, 0.03);
+  color: rgba(22, 33, 35, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.7rem;
+  font-size: 0.86rem;
+}
+
+.city-venue-image-empty.is-hidden {
+  display: none;
+}
+
 .city-venue-thumb-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.3rem;
+}
+
+.city-venue-thumb-row.is-hidden {
+  display: none;
 }
 
 .city-venue-thumb {
@@ -525,6 +551,10 @@
   height: 58px;
   object-fit: cover;
   border-radius: 4px;
+}
+
+.city-venue-thumb.is-empty {
+  display: none;
 }
 
 .city-venue-body {

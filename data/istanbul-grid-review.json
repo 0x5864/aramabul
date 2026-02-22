@@ -1,0 +1,6067 @@
+{
+  "generatedAt": "2026-02-21T13:13:44.292Z",
+  "mode": "istanbul-grid",
+  "grid": {
+    "rows": 13,
+    "cols": 13,
+    "usedCells": 117,
+    "radiusScale": 1.28,
+    "maxResultCount": 20
+  },
+  "stats": {
+    "requests": 117,
+    "rawResults": 1684,
+    "accepted": 1393,
+    "rejected": 291,
+    "uniqueVenues": 41305,
+    "rejectionReasonCount": {
+      "outside_istanbul_polygon": 114,
+      "city_not_istanbul": 271
+    }
+  },
+  "reviewQueue": [
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJ2UQakL7dyhQRjfDH0fF07Mo",
+      "name": "Tuzla Balıkçısı",
+      "formattedAddress": "Postane, Manastır Yolu No:6, 34940 Tuzla/İstanbul",
+      "types": [
+        "seafood_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8170082,
+        "longitude": 29.297446
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ86-cA1XeyhQR6ZUZamRspLI",
+      "name": "McDonald's Çayırova",
+      "formattedAddress": "Çayırova BP Yanı Gebze, Cumhuriyet, 41480 Gebze/Kocaeli",
+      "types": [
+        "fast_food_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.810078999999995,
+        "longitude": 29.369320499999997
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJma5pit3YyhQR6VHLZQoZ4_g",
+      "name": "McDonald's Şekerpınar DT",
+      "formattedAddress": "Cumhuriyet, Muhsin Yazıcıoğlu Cd. No: 113, 41400 Çayırova/Kocaeli",
+      "types": [
+        "fast_food_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8651073,
+        "longitude": 29.378893700000003
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJ0ZW6tXbdyhQR7pVcg66WTPY",
+      "name": "Tuzla Belediyesi | Yakamoz Balık Evi Sosyal Tesisleri",
+      "formattedAddress": "Postane, Öğüt Sk. No:1, 34940 Tuzla/İstanbul",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8131385,
+        "longitude": 29.2741634
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ-bgiOjLfyhQRP920j1UB7rY",
+      "name": "Çayırova Belediyesi Sevince Restaurant",
+      "formattedAddress": "Atatürk, 364/2. Sk. No:9, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "breakfast_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8411216,
+        "longitude": 29.385676699999998
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJubLDgMXZyhQRLiNP1rQNygQ",
+      "name": "Köfteci Yusuf",
+      "formattedAddress": "Cumhuriyet, Muhsin Yazıcıoğlu Cd. No:117A, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8662,
+        "longitude": 29.378000000000004
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJuYmZLAvdyhQR_PQ9nCPM1Rg",
+      "name": "Tuzla Yat Kulubu",
+      "formattedAddress": "Postane, Cafer Bey Sk. No:12, 34940 Tuzla/İstanbul",
+      "types": [
+        "mediterranean_restaurant",
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.819814,
+        "longitude": 29.275258
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ2W3MENHfyhQRr6BmYkl4ows",
+      "name": "Köfteci Yusuf",
+      "formattedAddress": "Atatürk, Adnan Kahveci Cd. NO: 65T, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8331976,
+        "longitude": 29.3791628
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJC2guAXPdyhQRgwxC2BstTsQ",
+      "name": "Angel Mercan",
+      "formattedAddress": "Postane, Cafer Bey Sk. No: 18, 34940 Tuzla/İstanbul",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.819995999999996,
+        "longitude": 29.274611999999998
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJAWFsE_LfyhQRnAgHii7CMyI",
+      "name": "Şelale Park Sosyal Tesisleri",
+      "formattedAddress": "Özgürlük, Uğur Mumcu Cd. No:72, 41420 Gebze Osb 3/Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "park",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8242109,
+        "longitude": 29.382068399999998
+      },
+      "cellId": "1-9"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ7UvFnh4hyxQRMpVY1KHN7BQ",
+      "name": "Edo Cağ Kebap",
+      "formattedAddress": "No:, Barış, Marmara Nakliyeciler Terminali No:6, 41400 Gebze/Kocaeli",
+      "types": [
+        "kebab_shop",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7987086,
+        "longitude": 29.4683477
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJma5pit3YyhQR6VHLZQoZ4_g",
+      "name": "McDonald's Şekerpınar DT",
+      "formattedAddress": "Cumhuriyet, Muhsin Yazıcıoğlu Cd. No: 113, 41400 Çayırova/Kocaeli",
+      "types": [
+        "fast_food_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8651073,
+        "longitude": 29.378893700000003
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJqaCkXHkgyxQRb21FWIhY34s",
+      "name": "Tarihi Karaköy Fırını",
+      "formattedAddress": "Osman Yılmaz, 607/1. Sk. 17-17/A, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "breakfast_restaurant",
+        "dessert_shop",
+        "confectionery",
+        "bakery",
+        "food_store",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7916319,
+        "longitude": 29.4230607
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ-bgiOjLfyhQRP920j1UB7rY",
+      "name": "Çayırova Belediyesi Sevince Restaurant",
+      "formattedAddress": "Atatürk, 364/2. Sk. No:9, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "breakfast_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8411216,
+        "longitude": 29.385676699999998
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJHVE53lnfyhQRZaMJF9k3vZk",
+      "name": "Şehri Adana Kebap",
+      "formattedAddress": "Akse Mh Park Panorama Residance, Akse, Veysel Karani Cd. No:77, 41420 Çayırova/Kocaeli",
+      "types": [
+        "kebab_shop",
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.82717950000001,
+        "longitude": 29.413723899999997
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJlX0e5hcmyxQRnhPPtiZZKl4",
+      "name": "Doğa Çiftlik",
+      "formattedAddress": "Istanbul Cad. No:35 Mollafenari Koyu Girisi Akviran Agil Korusu Mevkii, Mollafenari, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "zoo",
+        "hotel",
+        "lodging",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8788476,
+        "longitude": 29.4848152
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJubLDgMXZyhQRLiNP1rQNygQ",
+      "name": "Köfteci Yusuf",
+      "formattedAddress": "Cumhuriyet, Muhsin Yazıcıoğlu Cd. No:117A, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8662,
+        "longitude": 29.378000000000004
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ2W3MENHfyhQRr6BmYkl4ows",
+      "name": "Köfteci Yusuf",
+      "formattedAddress": "Atatürk, Adnan Kahveci Cd. NO: 65T, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8331976,
+        "longitude": 29.3791628
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJAWFsE_LfyhQRnAgHii7CMyI",
+      "name": "Şelale Park Sosyal Tesisleri",
+      "formattedAddress": "Özgürlük, Uğur Mumcu Cd. No:72, 41420 Gebze Osb 3/Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "park",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8242109,
+        "longitude": 29.382068399999998
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJF0DnFAkhyxQR-4kxjvGQy2s",
+      "name": "MAMİKLER KÜNEFE",
+      "formattedAddress": "Köşklü Çeşme, Yeni Bağdat Cd. No:471C, 41400 Gebze/Kocaeli",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7958588,
+        "longitude": 29.4222073
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJW9W87lnfyhQRkvNTZEgzuCw",
+      "name": "Yusufoğulları Et Mangal",
+      "formattedAddress": "Yenikent, Veysel Karani Cd. No:108, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8252728,
+        "longitude": 29.413807400000003
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJmQLXgd3YyhQR-80xzYrrXZo",
+      "name": "Çardak Cağ - Kebap - Pide - Çorba",
+      "formattedAddress": "Şekerpınar, Muhsin Yazıcıoğlu Cd. no:107, 41420 Çayırova/Kocaeli",
+      "types": [
+        "kebab_shop",
+        "soup_restaurant",
+        "middle_eastern_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8645851,
+        "longitude": 29.380228599999995
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJo98NjiPfyhQRqu_nh9naI_g",
+      "name": "Çağdaşkent Sosyal Tesisleri",
+      "formattedAddress": "Akse, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.838434899999996,
+        "longitude": 29.3921972
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJoz9JFerYyhQRZOPansaWbmg",
+      "name": "Nokta Steak House",
+      "formattedAddress": "Şekerpınar, Anadolu Cd. No:12, 41420 Çayırova/Kocaeli",
+      "types": [
+        "steak_house",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8630102,
+        "longitude": 29.3903752
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJh_y7xXkgyxQR5_Z5DHt3IEY",
+      "name": "Fesa Business Hotel",
+      "formattedAddress": "1 İstasyon Cad. & 633 Sok, Osman Yılmaz, 41400 Gebze/Kocaeli",
+      "types": [
+        "hotel",
+        "fitness_center",
+        "lodging",
+        "gym",
+        "sports_activity_location",
+        "restaurant",
+        "food",
+        "hospital",
+        "health",
+        "point_of_interest",
+        "service",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7894855,
+        "longitude": 29.421831400000002
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJDQ1CKvglyxQRB_YE3Dtoh7o",
+      "name": "Cevizaltı Kahvaltı ve Gözleme",
+      "formattedAddress": "Tavşanlı, Atatürk Cd. No:101, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.820296,
+        "longitude": 29.5118033
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ1cMsL3whyxQR7WlhQ0-3vPk",
+      "name": "BEYAZ SANDAL BALIKÇISI",
+      "formattedAddress": "Alyans Site, Akse, Karasu Cad. 28/R, 41420 Çayırova/Kocaeli",
+      "types": [
+        "seafood_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.828899299999996,
+        "longitude": 29.416335999999998
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ33e2rEghyxQRBoFltkvG_5U",
+      "name": "GEBZE ASPAVA DÖNER PİDE VE KEBAP",
+      "formattedAddress": "İstasyon, Güney Yanyol Cd. No:110, 41000, 41000 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "kebab_shop",
+        "middle_eastern_restaurant",
+        "turkish_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7905516,
+        "longitude": 29.404689500000003
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJjZjVnowgyxQRjZusZY98Qoo",
+      "name": "Kristal Fırın",
+      "formattedAddress": "Mahallesi, Sultan Orhan, Hükümet Cd. No:127, 41400 Gebze/Kocaeli",
+      "types": [
+        "bakery",
+        "fine_dining_restaurant",
+        "banquet_hall",
+        "dessert_restaurant",
+        "breakfast_restaurant",
+        "pastry_shop",
+        "dessert_shop",
+        "confectionery",
+        "event_venue",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7975017,
+        "longitude": 29.43951
+      },
+      "cellId": "1-10"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJJ8pnYi01yxQR9WDABT-ot8c",
+      "name": "Marina Cafe Restaurant",
+      "formattedAddress": "Körfez Sahil Yolu Cad. Hereke Sahili Hereke, Hacı Akif, 41800 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "cafe",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7827632,
+        "longitude": 29.617404699999994
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJa0n0UebPyhQRVTOMsbvKYw8",
+      "name": "Nail Bey Restoran",
+      "formattedAddress": "Çerkeşli OSB Mah. İmes 2 Bulvarı No:3, Çerkeşli OSB, D:1, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8269882,
+        "longitude": 29.572031000000003
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJNwhu0OIkyxQRbCmp4TDlsDA",
+      "name": "ÜÇEL RESTAURANT",
+      "formattedAddress": "Cerkesli Osb Mahallesi Imes Osb Bulvarı, Çerkeşli OSB, Imes1 Bulvarı No:11, 41455 ÇERKESLİ/Kocaeli",
+      "types": [
+        "restaurant",
+        "lodging",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.82856650000001,
+        "longitude": 29.569331199999997
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJCxkXojQ7yxQRZCbAGeNSTqs",
+      "name": "Hereke Balık Restaurant",
+      "formattedAddress": "Agah Ateş, Tayyar Yıldırım Cd. No: 31 E, 41800 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.783748200000005,
+        "longitude": 29.6182999
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJke0OH8AkyxQRTazflDdl6f0",
+      "name": "Közde Döner Metin Usta",
+      "formattedAddress": "Çerkeşli, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8097894,
+        "longitude": 29.5805726
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ0Vq9OGolyxQRh9FXCBgg1WY",
+      "name": "Dilovasi imes",
+      "formattedAddress": "Çerkeşli, Yeniköy Sk. 67/1, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8116592,
+        "longitude": 29.575826300000003
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJZ8OJxYklyxQR9HUN5CkeW5I",
+      "name": "Metin Usta Cağ Kebap İMES",
+      "formattedAddress": "Çerkeşli, Valiler Blv. çınar sok No:9/1, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "kebab_shop",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8100181,
+        "longitude": 29.566954799999998
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJi4D0oMc7yxQRwolOvJqtgSU",
+      "name": "Halit Balık Restoran",
+      "formattedAddress": "Agah Ateş, Tayyar Yıldırım Cd. No: 31 D, 41800 Körfez/Kocaeli",
+      "types": [
+        "seafood_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7837994,
+        "longitude": 29.618465799999996
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJT1qOgARbyxQRjM2TxzG9FP0",
+      "name": "Güllüova Et Restoran",
+      "formattedAddress": "Demirciler Mahallesi Hafizehanım Sokak No:11 Dilovası KOCAELİ Çerkeşli İmes Osb, Demirciler, Hafize Hanım Sk. No:11, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8458678,
+        "longitude": 29.556326199999997
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ3acp1eIkyxQRpyW_F8t3Smw",
+      "name": "Dimes Cafe Restorant",
+      "formattedAddress": "Demirciler, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.828381799999995,
+        "longitude": 29.568888899999997
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ1d4KYO4vyxQRrywza5dax0A",
+      "name": "Beytat Restoran",
+      "formattedAddress": "Mermerciler OSB Köşeler Mahallesi 3.Cadde No:19M, Organize Sanayi Bölgesi, 41229 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8725805,
+        "longitude": 29.567299499999994
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJUURjgcYlyxQRfAQLxHcAI04",
+      "name": "PACKET BURGER DİLOVASI ŞUBESİ",
+      "formattedAddress": "DEMIRCLER OSB MAH. VALILER BLV. DUKKANLAR BLOK, Demirciler OSB, NO:3/2/3, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8109204,
+        "longitude": 29.566282399999995
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJReh_R74lyxQRSUD3IeVuQYE",
+      "name": "Köy Sofrası Köseler",
+      "formattedAddress": "Köseler, Gültepe Sk. 81/1, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8622052,
+        "longitude": 29.572455999999995
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ5S7lPh8vyxQR7X4JFJz8sd8",
+      "name": "Gebze Huzur Köyü",
+      "formattedAddress": "40.895377, 29.549292, Denizli, Kocaeli Çayırova Yolu üzeri no:100, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "event_venue",
+        "tour_agency",
+        "travel_agency",
+        "food",
+        "service",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8951973,
+        "longitude": 29.548422499999997
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ6X6CEVIlyxQRBiBEl3GAglM",
+      "name": "Avşa büfe",
+      "formattedAddress": "Çerkeşli OSB, 16. Cad., 41455 Dilovası/Kocaeli",
+      "types": [
+        "buffet_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8226571,
+        "longitude": 29.5706032
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJE07c22clyxQR1IaMRXQUFNU",
+      "name": "Divan Restoran",
+      "formattedAddress": "Çerkeşli, Caddesi No:102/D, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8063729,
+        "longitude": 29.5550996
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJm9ffPVclyxQRsVbof8L7DKk",
+      "name": "Çerkeşli Köy Sofrası",
+      "formattedAddress": "Çerkeşli, Çevizdibi Sk., 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.814205,
+        "longitude": 29.5820944
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ18XbefglyxQR7iIoz7jPWvw",
+      "name": "Hanımeli ev lezzetleri",
+      "formattedAddress": "Demirciler, Konak Cd. No:9, 41455 Dilovası/Kocaeli",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.847353399999996,
+        "longitude": 29.553935099999997
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJhUGPAhslyxQRnqVLBRmelOM",
+      "name": "ULAŞ DÜRÜM",
+      "formattedAddress": "Çerkeşli, Yeniköy Sk. 67/1, 41455 Dilovası/Kocaeli",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8116767,
+        "longitude": 29.575871600000003
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJjSNdC1o7yxQRLfGQUDIazyU",
+      "name": "Asmaaltı Kebap Lahmacun Salonu",
+      "formattedAddress": "Hacı Akif, Sümer Cd. No:44, 41800 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "kebab_shop",
+        "middle_eastern_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.786114999999995,
+        "longitude": 29.615464099999997
+      },
+      "cellId": "1-11"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJwUmkOLZHyxQREdZCJdh6BGo",
+      "name": "Hünkar Künefe Körfez",
+      "formattedAddress": "Yavuz Sultan Selim, Mevlana Cd. No: 222D, 41780 Körfez/Kocaeli",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7749927,
+        "longitude": 29.8012824
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ9c8EorpHyxQRSpWdRhVDYiU",
+      "name": "Sevilmiş Çorba",
+      "formattedAddress": "Yavuz Sultan Selim, Mevlana Cd. No:222/C, 41780 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7748856,
+        "longitude": 29.8009346
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJaaDqhrY3yxQRoygsOIYtEEo",
+      "name": "Vadizmit Canlı Alabalık Tesisi",
+      "formattedAddress": "Kalburcu, Merkez Mevki, No:151, Kalburcu, 41780 Körfez/Kocaeli",
+      "types": [
+        "picnic_ground",
+        "breakfast_restaurant",
+        "ranch",
+        "farm",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "service",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8240438,
+        "longitude": 29.733628000000003
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJb6NJumZHyxQRCsZQe6YznZc",
+      "name": "Yakamoz Tantuni",
+      "formattedAddress": "Yavuz Sultan Selim, Mevlana Cd. No:244/a, 41780 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7743514,
+        "longitude": 29.804007499999997
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJMTvOFnRHyxQRRBWxxNw05rg",
+      "name": "Pizzabulls Körfez - Kocaeli",
+      "formattedAddress": "Yavuz Sultan Selim, Mevlana Blv. No:114, 41780 Körfez/Kocaeli",
+      "types": [
+        "pizza_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7758433,
+        "longitude": 29.7902407
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJZd72v5dHyxQR0K0Q9TuQu4s",
+      "name": "Ekleristan Körfezkent",
+      "formattedAddress": "Yavuz Sultan Selim, Mevlana Cd. No:181, 41780 Körfez/Kocaeli",
+      "types": [
+        "dessert_restaurant",
+        "ice_cream_shop",
+        "dessert_shop",
+        "confectionery",
+        "restaurant",
+        "point_of_interest",
+        "food_store",
+        "store",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7753587,
+        "longitude": 29.8019052
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ3-Hj85BHyxQRMOTzgLTsj-M",
+      "name": "Ustam Pide Lahmacun Pizza",
+      "formattedAddress": "Yavuz Sultan Selim, Reyhan Cd. No:3, 41780 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "pizza_restaurant",
+        "middle_eastern_restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7751259,
+        "longitude": 29.803792599999998
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ5W6Dr545yxQR39vAgpphMkU",
+      "name": "ELMASLAR PIDE LAHMACUN VE KEBAP SALONU",
+      "formattedAddress": "İlimtepe, İlim Cd., 41780 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "kebab_shop",
+        "middle_eastern_restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.801689599999996,
+        "longitude": 29.768312100000003
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJQ11I-e9HyxQRbUfPuGH9PiU",
+      "name": "Brown Life",
+      "formattedAddress": "Yavuz Sultan Selim, Mevlana Cd. no:173/A, 41780 Körfez/Kocaeli",
+      "types": [
+        "cafe",
+        "playground",
+        "dessert_restaurant",
+        "breakfast_restaurant",
+        "wedding_venue",
+        "live_music_venue",
+        "coffee_shop",
+        "event_venue",
+        "restaurant",
+        "point_of_interest",
+        "food_store",
+        "store",
+        "food",
+        "service",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7753237,
+        "longitude": 29.801053499999995
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJU320Q7lHyxQRPkH_eITdR50",
+      "name": "Pasaport Pizza Körfezkent",
+      "formattedAddress": "mahallesi, Yavuz Sultan Selim, Mevlana Cd. 244/a, 41780 Körfez/Kocaeli",
+      "types": [
+        "pizza_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7743128,
+        "longitude": 29.803951400000003
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJN6vH6Dc1yxQR3KQw40nDEt4",
+      "name": "Onur Lahmacun",
+      "formattedAddress": "Sevindikli Köyü Merkez Mevkii, Sevindikli, Eski İstanbul Yolu No:121C, 41780 Körfez/Kocaeli",
+      "types": [
+        "middle_eastern_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8905721,
+        "longitude": 29.767975199999995
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJwxgbgf1HyxQR5MO2ZIVC-C4",
+      "name": "Katıkçı Baba",
+      "formattedAddress": "Yenikent Mah. Venüs İş Merkezi Zemin Kat No.93, Yenikent, 41900 Derince/Kocaeli",
+      "types": [
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7743008,
+        "longitude": 29.811183200000002
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJg1Uk8sxHyxQRtmx6YX8PQxM",
+      "name": "Çorbacı Hüseyin Usta",
+      "formattedAddress": "Yenikent Ertuğrul Gazi Bulvarı, Migros yanı, Yenikent, Tural Sk. No: 159, 41900 Derince/Kocaeli",
+      "types": [
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7773416,
+        "longitude": 29.816101699999997
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJz_cB7NtHyxQRTjfHqIJZl3Y",
+      "name": "PWB Peanut Waffle Belgium Körfez",
+      "formattedAddress": "Yavuz Sultan Selim, OSMAN GAZİ CAD EMLAK KONUT KÖRFEZ KENT 4. ETAP A5 BLOK NO: 49 G, 41780 Körfez/Kocaeli",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.773454,
+        "longitude": 29.7958969
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJPTVzgwBHyxQR2LpsBRYc1Fw",
+      "name": "Helvacı Ali Kocaeli Körfez",
+      "formattedAddress": "Yavuz Sultan Selim, Mevlana Cd. No:203, 41001 Körfez/Kocaeli",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7748519,
+        "longitude": 29.8035
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJbZJvKw45yxQR3dawZcZXKhc",
+      "name": "Dönerci Mehmet usta",
+      "formattedAddress": "Çamlıtepe, Yunus Emre Cd. No:96, 41780 Körfez/Kocaeli",
+      "types": [
+        "bar_and_grill",
+        "turkish_restaurant",
+        "bar",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7745563,
+        "longitude": 29.775682699999997
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJUYxHiY9HyxQR6KrCNtdhJVE",
+      "name": "KÖRFEZKENT Kardeşler kasap ve ızgara",
+      "formattedAddress": "175, Yavuz Sultan Selim, Mevlana Cd., 41780 Körfez/Kocaeli",
+      "types": [
+        "butcher_shop",
+        "bar_and_grill",
+        "bar",
+        "manufacturer",
+        "restaurant",
+        "point_of_interest",
+        "food_store",
+        "store",
+        "food",
+        "service",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.775301400000004,
+        "longitude": 29.798452799999996
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJp2fJCXBHyxQRT3Q3j-ocJ3s",
+      "name": "Bostan’ın Yeri",
+      "formattedAddress": "Yenikent Mahallesi Mehmet Akif Ersoy caddesi, Yenikent, Ebru Sk., 41900 Derince/Kocaeli",
+      "types": [
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.774582099999996,
+        "longitude": 29.80576
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ24E_IDxHyxQRZt1YDV2Y-ec",
+      "name": "sarmaşık meze",
+      "formattedAddress": "Yenikent, Ertuğrul Gazi Blv. 173\\h, 41900 Derince/Kocaeli",
+      "types": [
+        "fast_food_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7777734,
+        "longitude": 29.813096299999998
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ-bd81AtHyxQR3fstaTqWEqY",
+      "name": "Komagene Körfez Yavuz Sultan Selim",
+      "formattedAddress": "Yavuz Sultan Selim, Reyhan Cd. No:3, 41320 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "fast_food_restaurant",
+        "turkish_restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.7750117,
+        "longitude": 29.8037653
+      },
+      "cellId": "1-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJma5pit3YyhQR6VHLZQoZ4_g",
+      "name": "McDonald's Şekerpınar DT",
+      "formattedAddress": "Cumhuriyet, Muhsin Yazıcıoğlu Cd. No: 113, 41400 Çayırova/Kocaeli",
+      "types": [
+        "fast_food_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8651073,
+        "longitude": 29.378893700000003
+      },
+      "cellId": "2-9"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJubLDgMXZyhQRLiNP1rQNygQ",
+      "name": "Köfteci Yusuf",
+      "formattedAddress": "Cumhuriyet, Muhsin Yazıcıoğlu Cd. No:117A, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8662,
+        "longitude": 29.378000000000004
+      },
+      "cellId": "2-9"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJlX0e5hcmyxQRnhPPtiZZKl4",
+      "name": "Doğa Çiftlik",
+      "formattedAddress": "Istanbul Cad. No:35 Mollafenari Koyu Girisi Akviran Agil Korusu Mevkii, Mollafenari, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "zoo",
+        "hotel",
+        "lodging",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8788476,
+        "longitude": 29.4848152
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJoz9JFerYyhQRZOPansaWbmg",
+      "name": "Nokta Steak House",
+      "formattedAddress": "Şekerpınar, Anadolu Cd. No:12, 41420 Çayırova/Kocaeli",
+      "types": [
+        "steak_house",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8630102,
+        "longitude": 29.3903752
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJIcbI9bvYyhQRNjANlXZxWI8",
+      "name": "Köşk Meşhur Erzurum Cağ Kebap",
+      "formattedAddress": "Şekerpınar, Muhsin Yazıcıoğlu Cd. No:29, 41420 Çayırova/Kocaeli",
+      "types": [
+        "kebab_shop",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8540608,
+        "longitude": 29.401697900000002
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJY23gAWknyxQRAsRr14YiCW8",
+      "name": "Limon Buryan Kebap ve Pide Evi",
+      "formattedAddress": "Pelitli koyu pelitli yolu uzeri No: 165 Kocaeli- Gebze, Pelitli, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "kebab_shop",
+        "middle_eastern_restaurant",
+        "banquet_hall",
+        "event_venue",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8527512,
+        "longitude": 29.4323728
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJW0vDYWjfyhQRKiUcecte39s",
+      "name": "Erkonyalılar Fevzi Güvenç Şekerpınar",
+      "formattedAddress": "Şekerpınar, Muhsin Yazıcıoğlu Cd. no:32, 41050 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.852653499999995,
+        "longitude": 29.4045467
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJMRj260UnyxQRbsorIz8KWok",
+      "name": "Yöre Desti Ve Tandır Lokantası",
+      "formattedAddress": "Güzeller Organize Sanayi Bölgesi Bıg center Bp petrol içi, İnönü, Atatürk Blv. 2/B, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.841172,
+        "longitude": 29.434289
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJb8TdLmTfyhQR0ZUi_uovvPo",
+      "name": "YILDIZ KÖŞK Meşhur Erzurum Cağ Kebap",
+      "formattedAddress": "Şekerpınar mah Anadolu Caddesi, Şekerpınar, Yosun Sk. No:2, 41400 Çayırova/Kocaeli",
+      "types": [
+        "kebab_shop",
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.863497699999996,
+        "longitude": 29.3901866
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ2xi2FponyxQRjcuio1oXDd8",
+      "name": "DOYUM ET MANGAL",
+      "formattedAddress": "Balçık, Atatürk Cd. 42/B, 41400 Gebze/Kocaeli",
+      "types": [
+        "barbecue_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8765748,
+        "longitude": 29.434233499999998
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJL-rHP-rYyhQRZ5TXE0Oikig",
+      "name": "Mahzen Cağ & Kebap",
+      "formattedAddress": "Şekerpınar, Yosun Sk. No:1, 41420 Çayırova/Kocaeli",
+      "types": [
+        "restaurant",
+        "family_restaurant",
+        "middle_eastern_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8632366,
+        "longitude": 29.3900357
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJQ3--AZsnyxQRkzNBhbqtGiU",
+      "name": "Tat Pidex",
+      "formattedAddress": "Balçık, Mustafa Kemal Cad No:63/A, 41400 Gebze/Kocaeli",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8756258,
+        "longitude": 29.4323184
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ2ZQHi1snyxQRTYHxJ3vPmwg",
+      "name": "Egro | Cafe - Bistro - Restaurant",
+      "formattedAddress": "Bankalar ve Çarşı Merkezi, Gebze OSB, 1600. Sk. No:1601/9, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8474183,
+        "longitude": 29.425323699999996
+      },
+      "cellId": "2-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJj-UTFn8zyxQRjii5R2LqHH4",
+      "name": "Velioğlu Çiftliği Bungalov ve Restoran",
+      "formattedAddress": "Kargalı, Cad No: 146/1, 41400 Gebze/Kocaeli",
+      "types": [
+        "camping_cabin",
+        "lodging",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9452666,
+        "longitude": 29.6739476
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ1d4KYO4vyxQRrywza5dax0A",
+      "name": "Beytat Restoran",
+      "formattedAddress": "Mermerciler OSB Köşeler Mahallesi 3.Cadde No:19M, Organize Sanayi Bölgesi, 41229 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8725805,
+        "longitude": 29.567299499999994
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJReh_R74lyxQRSUD3IeVuQYE",
+      "name": "Köy Sofrası Köseler",
+      "formattedAddress": "Köseler, Gültepe Sk. 81/1, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8622052,
+        "longitude": 29.572455999999995
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ5S7lPh8vyxQR7X4JFJz8sd8",
+      "name": "Gebze Huzur Köyü",
+      "formattedAddress": "40.895377, 29.549292, Denizli, Kocaeli Çayırova Yolu üzeri no:100, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "tour_agency",
+        "travel_agency",
+        "event_venue",
+        "food",
+        "point_of_interest",
+        "service",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8951973,
+        "longitude": 29.548422499999997
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJVSltg3kxyxQRHMQjWt_bGRw",
+      "name": "Eltiler Ticaret Ekşi Maya Köy Ekmeği/günlük yumurta ve kahvaltı",
+      "formattedAddress": "Yağcılar, cumuriyet mah D:NO 75/A, 41400 Gebze/Kocaeli",
+      "types": [
+        "rest_stop",
+        "breakfast_restaurant",
+        "grocery_store",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9102506,
+        "longitude": 29.655107400000002
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJC-luGTclyxQR1uNryC9M_yI",
+      "name": "Pasaport Pizza Köseler",
+      "formattedAddress": "Köseler, Gültepe Sk. No:51/A İç Kapı No:A, 41455 Dilovası/Kocaeli",
+      "types": [
+        "pizza_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8634365,
+        "longitude": 29.577060600000003
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJj3W0DkEvyxQRJccwS1UD9TE",
+      "name": "Denizli Köyü Ekmek Firini",
+      "formattedAddress": "Denizli, Kocaeli Çayırova Yolu, 41400 Gebze/Kocaeli",
+      "types": [
+        "bakery",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.893688499999996,
+        "longitude": 29.530692799999997
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJt4WO26AzyxQR57-PLq9pniI",
+      "name": "Sarımsaklı Güneş Restaurant",
+      "formattedAddress": "Kargalı, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.948983899999995,
+        "longitude": 29.6686716
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJkUS_PU0lyxQRS0ojXxUwp5g",
+      "name": "TOKLAR KEBAP VE LAHMACUN",
+      "formattedAddress": "Köseler, 41455 Dilovası/Kocaeli",
+      "types": [
+        "kebab_shop",
+        "middle_eastern_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8619091,
+        "longitude": 29.575541
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJbZfzzu4zyxQRFPAr8q-vxOQ",
+      "name": "Ressam KASIM KOÇAK",
+      "formattedAddress": "Kargalı, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9228187,
+        "longitude": 29.6793548
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ9-IsOmElyxQRkbGutew3hOc",
+      "name": "Çınaraltı Köfte Solonu",
+      "formattedAddress": "Köseler Mahallesi, kocaeli/dilovasi, no = 9/A, Köseler, Gültepe Sk., 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.861536199999996,
+        "longitude": 29.576372799999998
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJnx1DB9cxyxQRq1OY0vA2p_Y",
+      "name": "Merkez Kasap & Izgara Tepecik Şubesi",
+      "formattedAddress": "Tepecik, Bilge Atataş Caddesi No: 04, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.890022099999996,
+        "longitude": 29.6170968
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJf_z-gHkxyxQRQbXqDyF-Qfw",
+      "name": "Zeytindalım",
+      "formattedAddress": "Cumhuriyet Cad. No:78, Yağcılar, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9101423,
+        "longitude": 29.655543299999998
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJXe7-wsIlyxQRQwQAJb7arbU",
+      "name": "Alasya mutfak",
+      "formattedAddress": "Köseler, kuyubaşı sokak no 26/B, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "meal_takeaway",
+        "food",
+        "point_of_interest",
+        "service",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8607805,
+        "longitude": 29.5772607
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ99hxXnMvyxQRL5PvVWPxEPQ",
+      "name": "Tarhan hazır مطعم",
+      "formattedAddress": "Organize Sanayi Bölgesi, 3. Cd. No:5, 41455 Dilovası/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.872126699999995,
+        "longitude": 29.565576200000002
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJcRkAVN4vyxQRJmwPTLFx6Bw",
+      "name": "FOTO MEMO DAYI",
+      "formattedAddress": "Denizli, Orman Bölgesi Küme Evleri No:11, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.915724399999995,
+        "longitude": 29.577705800000004
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJJZFRJAAzyxQRbuavFhOOo7g",
+      "name": "Gülay's kitchen",
+      "formattedAddress": "Kargalı, WMR8+32, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9397692,
+        "longitude": 29.6647419
+      },
+      "cellId": "2-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJN6vH6Dc1yxQR3KQw40nDEt4",
+      "name": "Onur Lahmacun",
+      "formattedAddress": "Sevindikli Köyü Merkez Mevkii, Sevindikli, Eski İstanbul Yolu No:121C, 41780 Körfez/Kocaeli",
+      "types": [
+        "middle_eastern_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8905721,
+        "longitude": 29.767975199999995
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ29ZLLOc1yxQReX7DaqbeFL8",
+      "name": "Fikri Dayı'nın Yeri",
+      "formattedAddress": "No:4, Sevindikli, Sevindikli Köyü İç Yolu, 41780 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8902764,
+        "longitude": 29.768151099999994
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJv_VQ2OA1yxQRm5JILC-0CvA",
+      "name": "Yaman Lokantası",
+      "formattedAddress": "Sevindikli, Kocaeli Çayırova Yolu, 41780 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.889252,
+        "longitude": 29.768518999999994
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJI8gB3Q5LyxQRordekoN1-rk",
+      "name": "KIRMA LAHMACUN",
+      "formattedAddress": "İshakçılar mahallesi, 41900 Derince/Kocaeli",
+      "types": [
+        "middle_eastern_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9048344,
+        "longitude": 29.8501999
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJJTYv0eA1yxQRtRauJrbmzIA",
+      "name": "As Lokanta",
+      "formattedAddress": "Sevindikli, Kocaeli Çayırova Yolu, 41780 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8896605,
+        "longitude": 29.7682166
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJj47wYtBLyxQRJsHaHkHWCBs",
+      "name": "FİKONUN YERİ",
+      "formattedAddress": "Çavuşlu mah. İshakçılar muharremli mevkii sokak 34/1, Çavuşlu, 41900 Derince/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.904528299999996,
+        "longitude": 29.852453
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ8QHsng5LyxQRzdFRkidkvs0",
+      "name": "Şirin Izgara & Şi̇ri̇n Kasap",
+      "formattedAddress": "Çavuşlu, 41900 Derince/Kocaeli, Türkiye",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.904494299999996,
+        "longitude": 29.8523435
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJQxiE1pmv3xQRxy4UDWMgSaM",
+      "name": "Ye-ye Döner",
+      "formattedAddress": "Boğaz Mh., İskele Çayırova Yolu, 41780 İskele/Kıbrıs",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.8864746,
+        "longitude": 29.7145047
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJAQCXBQA1yxQRjK_C5gJxATQ",
+      "name": "The Menemenci",
+      "formattedAddress": "Kutluca, 41780 Körfez/Kocaeli",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.913481,
+        "longitude": 29.748312
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJz3kTS5I1yxQRDWaprZaa_5c",
+      "name": "Afacanlar ızgara salonu",
+      "formattedAddress": "Alihocalar, merkez mevki küme evleri, 41780 Körfez/Kocaeli",
+      "types": [
+        "bar_and_grill",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9626952,
+        "longitude": 29.751449899999997
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJR-OmYgA3yxQR-ixUX6_Q3Xk",
+      "name": "The Menemenci",
+      "formattedAddress": "Kutluca, Kuzey Marmara Otoyolu No:25, 41780 Körfez/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.889003599999995,
+        "longitude": 29.710418899999997
+      },
+      "cellId": "2-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJS7JfWEIsyxQRxalP2rsYlxg",
+      "name": "Volkan Et Mangal Piknik Yeri",
+      "formattedAddress": "Ovacık, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9757727,
+        "longitude": 29.5356044
+      },
+      "cellId": "3-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJa6IGfsQpyxQR3Z9r1YgkBwo",
+      "name": "CUMAKÖY BESİ ÇİFTLİĞİ",
+      "formattedAddress": "Cumaköy Mh, 3340. Sk No:8, 41400, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.912471,
+        "longitude": 29.505517899999997
+      },
+      "cellId": "3-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJO6t8Wk4pyxQRbX5UarhVfWs",
+      "name": "Velinin Yeri",
+      "formattedAddress": "Kadıllı, Şile caddesi no 161, 41400 Gebze/Kocaeli",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.932373500000004,
+        "longitude": 29.463569600000003
+      },
+      "cellId": "3-10"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJj-UTFn8zyxQRjii5R2LqHH4",
+      "name": "Velioğlu Çiftliği Bungalov ve Restoran",
+      "formattedAddress": "Kargalı, Cad No: 146/1, 41400 Gebze/Kocaeli",
+      "types": [
+        "camping_cabin",
+        "lodging",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9452666,
+        "longitude": 29.6739476
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJS7JfWEIsyxQRxalP2rsYlxg",
+      "name": "Volkan Et Mangal Piknik Yeri",
+      "formattedAddress": "Ovacık, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9757727,
+        "longitude": 29.5356044
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJVSltg3kxyxQRHMQjWt_bGRw",
+      "name": "Eltiler Ticaret Ekşi Maya Köy Ekmeği/günlük yumurta ve kahvaltı",
+      "formattedAddress": "Yağcılar, cumuriyet mah D:NO 75/A, 41400 Gebze/Kocaeli",
+      "types": [
+        "rest_stop",
+        "breakfast_restaurant",
+        "grocery_store",
+        "food_store",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "store",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9102506,
+        "longitude": 29.655107400000002
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJt4WO26AzyxQR57-PLq9pniI",
+      "name": "Sarımsaklı Güneş Restaurant",
+      "formattedAddress": "Kargalı, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.948983899999995,
+        "longitude": 29.6686716
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJbZfzzu4zyxQRFPAr8q-vxOQ",
+      "name": "Ressam KASIM KOÇAK",
+      "formattedAddress": "Kargalı, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9228187,
+        "longitude": 29.6793548
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJf_z-gHkxyxQRQbXqDyF-Qfw",
+      "name": "Zeytindalım",
+      "formattedAddress": "Cumhuriyet Cad. No:78, Yağcılar, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9101423,
+        "longitude": 29.655543299999998
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJB3sO9p0hyxQRoXdk0v99-T4",
+      "name": "TAHANIN BAHÇESİ",
+      "formattedAddress": "Mustafa kemal, atatürk caddesi No 20 / 1, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0081126,
+        "longitude": 29.5552075
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJcRkAVN4vyxQRJmwPTLFx6Bw",
+      "name": "FOTO MEMO DAYI",
+      "formattedAddress": "Denizli, Orman Bölgesi Küme Evleri No:11, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.915724399999995,
+        "longitude": 29.577705800000004
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJJZFRJAAzyxQRbuavFhOOo7g",
+      "name": "Gülay's kitchen",
+      "formattedAddress": "Kargalı, WMR8+32, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9397692,
+        "longitude": 29.6647419
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJXS0EReczyxQRM_5I3GMlQN4",
+      "name": "Mutlu ayse gözleme evi",
+      "formattedAddress": "Kargalı, Kargalı Köyü İç Yolu, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.952703299999996,
+        "longitude": 29.669375000000002
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJNYk7jjwtyxQRSGajLEDzvR0",
+      "name": "Birdilekcafeveizgara",
+      "formattedAddress": "Mudarlı, Kemal Atatürk Caddesi 3 km 3 km, 41400 Gebze/Kocaeli",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.991303099999996,
+        "longitude": 29.5524348
+      },
+      "cellId": "3-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJz3kTS5I1yxQRDWaprZaa_5c",
+      "name": "Afacanlar ızgara salonu",
+      "formattedAddress": "Alihocalar, merkez mevki küme evleri, 41780 Körfez/Kocaeli",
+      "types": [
+        "bar_and_grill",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9626952,
+        "longitude": 29.751449899999997
+      },
+      "cellId": "3-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJAQCXBQA1yxQRjK_C5gJxATQ",
+      "name": "The Menemenci",
+      "formattedAddress": "Kutluca, 41780 Körfez/Kocaeli",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.913481,
+        "longitude": 29.748312
+      },
+      "cellId": "3-12"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJkaXr7BFNyxQRJM5SzU-37ZE",
+      "name": "Beşdivan Tesisleri",
+      "formattedAddress": "Tahtalı, İshakçılar Mevkii, 41900 Derince/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.909998,
+        "longitude": 29.9033785
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ3xVAXAhHyxQR-L9kINPdXQk",
+      "name": "Gölet Cafe & Restaurant & Kamp Alanı",
+      "formattedAddress": "Tahtalı Köyü, Omurlar Mevkii, Küme Evler, No:16, Tahtalı, 41900 Derince/Kocaeli",
+      "types": [
+        "restaurant",
+        "cafe",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9095893,
+        "longitude": 29.897299599999997
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJUWWQKPUbnkARxBShfyREmpI",
+      "name": "OKTAYLAR MARKET",
+      "formattedAddress": "Deliveli, Deliveli Köyü Yolu, 41600 Kandıra/Kocaeli",
+      "types": [
+        "general_store",
+        "convenience_store",
+        "buffet_restaurant",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9758408,
+        "longitude": 30.0014962
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJS2ujgOYYnkARl5rXkfbLEFE",
+      "name": "Hisar Restoran",
+      "formattedAddress": "Teksen, Teksen Köyü İç Yolu, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0156121,
+        "longitude": 29.9110022
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJpX_Nfl0ZnkARw-6NJFE-8t4",
+      "name": "Lezzet Restaurant (HasanPub)",
+      "formattedAddress": "Akçaova, Kandıra Şile Yolu No:120, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.038086899999996,
+        "longitude": 29.952358399999998
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJA7j3IBodnkARVN_y36iLJpI",
+      "name": "DAĞLU KASAP&IZGARA",
+      "formattedAddress": "Süverler, küme evler no:296, 41001 İzmit/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9205326,
+        "longitude": 29.935251499999996
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJE31s64wbnkAR-V3_GYi3XTU",
+      "name": "Erkuzu Kasap Izgara Köfte",
+      "formattedAddress": "Deliveli, X2G2+7M, 41600 Kandıra/Kocaeli",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.975647699999996,
+        "longitude": 30.001714799999995
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJvfuUzrYZnkARDAn9xVCxFXk",
+      "name": "Durmuş Tekel",
+      "formattedAddress": "Akçaova, Akçaova Köyü İç Yolu, 41600 Kandıra/Kocaeli",
+      "types": [
+        "buffet_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.037713200000006,
+        "longitude": 29.9531575
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJN-pXAQAZnkARPM0P3hVTZrM",
+      "name": "KÖFTECİ İLKER",
+      "formattedAddress": "Akçaova, Kandıra Şile Yolu No:95, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.03819000000001,
+        "longitude": 29.9526785
+      },
+      "cellId": "3-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJB3sO9p0hyxQRoXdk0v99-T4",
+      "name": "TAHANIN BAHÇESİ",
+      "formattedAddress": "Mustafa kemal, atatürk caddesi No 20 / 1, 41400 Gebze/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0081126,
+        "longitude": 29.5552075
+      },
+      "cellId": "4-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJNYk7jjwtyxQRSGajLEDzvR0",
+      "name": "Birdilekcafeveizgara",
+      "formattedAddress": "Mudarlı, Kemal Atatürk Caddesi 3 km 3 km, 41400 Gebze/Kocaeli",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.991303099999996,
+        "longitude": 29.5524348
+      },
+      "cellId": "4-11"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJz3kTS5I1yxQRDWaprZaa_5c",
+      "name": "Afacanlar ızgara salonu",
+      "formattedAddress": "Alihocalar, merkez mevki küme evleri, 41780 Körfez/Kocaeli",
+      "types": [
+        "bar_and_grill",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9626952,
+        "longitude": 29.751449899999997
+      },
+      "cellId": "4-12"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJUWWQKPUbnkARxBShfyREmpI",
+      "name": "OKTAYLAR MARKET",
+      "formattedAddress": "Deliveli, Deliveli Köyü Yolu, 41600 Kandıra/Kocaeli",
+      "types": [
+        "general_store",
+        "convenience_store",
+        "buffet_restaurant",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.9758408,
+        "longitude": 30.0014962
+      },
+      "cellId": "4-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJS2ujgOYYnkARl5rXkfbLEFE",
+      "name": "Hisar Restoran",
+      "formattedAddress": "Teksen, Teksen Köyü İç Yolu, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0156121,
+        "longitude": 29.9110022
+      },
+      "cellId": "4-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJpX_Nfl0ZnkARw-6NJFE-8t4",
+      "name": "Lezzet Restaurant (HasanPub)",
+      "formattedAddress": "Akçaova, Kandıra Şile Yolu No:120, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.038086899999996,
+        "longitude": 29.952358399999998
+      },
+      "cellId": "4-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJvfuUzrYZnkARDAn9xVCxFXk",
+      "name": "Durmuş Tekel",
+      "formattedAddress": "Akçaova, Akçaova Köyü İç Yolu, 41600 Kandıra/Kocaeli",
+      "types": [
+        "buffet_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.037713200000006,
+        "longitude": 29.9531575
+      },
+      "cellId": "4-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJE31s64wbnkAR-V3_GYi3XTU",
+      "name": "Erkuzu Kasap Izgara Köfte",
+      "formattedAddress": "Deliveli, X2G2+7M, 41600 Kandıra/Kocaeli",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 40.975647699999996,
+        "longitude": 30.001714799999995
+      },
+      "cellId": "4-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJN-pXAQAZnkARPM0P3hVTZrM",
+      "name": "KÖFTECİ İLKER",
+      "formattedAddress": "Akçaova, Kandıra Şile Yolu No:95, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.03819000000001,
+        "longitude": 29.9526785
+      },
+      "cellId": "4-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJu9iML4UVtRQRYCYgy1HkLnY",
+      "name": "Silivri Sahil",
+      "formattedAddress": "Piri Mehmet Paşa, Atatürk Cd. No:43/A, 34570 Silivri/İstanbul",
+      "types": [
+        "restaurant",
+        "park",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.07213530000001,
+        "longitude": 28.2438143
+      },
+      "cellId": "5-3"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJibIyk5wVtRQRzKALrr06iJM",
+      "name": "Silivri Kale Park",
+      "formattedAddress": "Fatih, Şaban Demiray Cd. No:6, 34570 Silivri/İstanbul",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.069491899999996,
+        "longitude": 28.2483605
+      },
+      "cellId": "5-3"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJaUk045oVtRQRyh40NYqtOuE",
+      "name": "Olta Balık Restorant",
+      "formattedAddress": "Piri Mehmet Paşa, Hüseyin Tufan Sk., 34570 Silivri/İstanbul",
+      "types": [
+        "seafood_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0704346,
+        "longitude": 28.243679
+      },
+      "cellId": "5-3"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJAaqYs4UVtRQRqWh20A8YvLo",
+      "name": "Silivri Park Hotel",
+      "formattedAddress": "Piri Mehmet Paşa, Sanatkarlar Cd. No:2, 34570 Silivri/İstanbul",
+      "types": [
+        "hotel",
+        "scenic_spot",
+        "breakfast_restaurant",
+        "resort_hotel",
+        "parking_lot",
+        "parking",
+        "rest_stop",
+        "lodging",
+        "transportation_service",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "service",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.075326499999996,
+        "longitude": 28.2438693
+      },
+      "cellId": "5-3"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJtbxtmn8VtRQRqrvP01718mo",
+      "name": "Adsom Döner",
+      "formattedAddress": "Piri Mehmet Paşa, Hacı Pervaneçeşme Sk. No:3, 34570 Silivri/İstanbul",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0741673,
+        "longitude": 28.246527999999998
+      },
+      "cellId": "5-3"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJpweyC4UVtRQRkL_2Hqqd7Pw",
+      "name": "Küpeşte Cafe-Bar",
+      "formattedAddress": "Piri Mehmet Paşa, Kazım Koyuncu Yürüyüş Yolu No:36, 34570 Silivri/İstanbul",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0736326,
+        "longitude": 28.2404332
+      },
+      "cellId": "5-3"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJGbO659MVnkARnv6TE5r7SXw",
+      "name": "Mekan Taflan Restaurant - Beach - Cafe",
+      "formattedAddress": "Bağırganlı, Dinç Sokak No:13, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.1351978,
+        "longitude": 30.0229669
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJA-IK9vsVnkARDBRSEmdGPVY",
+      "name": "Miyar Güverte Balık Restaurant",
+      "formattedAddress": "limanüstü, Bağırganlı, Liman Cd No: 90/1, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.134952399999996,
+        "longitude": 30.001522299999998
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJm-MepZYVnkARg8pwcJ4jc-Q",
+      "name": "Girne restaurant cafe bar",
+      "formattedAddress": "Bağırganlı, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.1330439,
+        "longitude": 30.0218398
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJnx84cGQVnkARYB5NHmIJHYY",
+      "name": "Bağırganlı Balıkçılık",
+      "formattedAddress": "Bağırganlı, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food_store",
+        "food",
+        "point_of_interest",
+        "store",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.1351219,
+        "longitude": 30.001811000000004
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJpX_Nfl0ZnkARw-6NJFE-8t4",
+      "name": "Lezzet Restaurant (HasanPub)",
+      "formattedAddress": "Akçaova, Kandıra Şile Yolu No:120, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.038086899999996,
+        "longitude": 29.952358399999998
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJvfuUzrYZnkARDAn9xVCxFXk",
+      "name": "Durmuş Tekel",
+      "formattedAddress": "Akçaova, Akçaova Köyü İç Yolu, 41600 Kandıra/Kocaeli",
+      "types": [
+        "buffet_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.037713200000006,
+        "longitude": 29.9531575
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJh1XmRZEVnkARItqAcqnCbxo",
+      "name": "Kumpir (Deniz Gunes Kumpir)",
+      "formattedAddress": "Bağırganlı, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.1337894,
+        "longitude": 30.020443399999998
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ-dPBsZYVnkARiZAeb6iaG2M",
+      "name": "Yali aile balik restaurant",
+      "formattedAddress": "Bağırganlı, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.1332343,
+        "longitude": 30.0214875
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJdTGWRw8VnkARCiCSDBzhTgE",
+      "name": "Turgay öz",
+      "formattedAddress": "Bağırganlı, 41600 Kandıra/Kocaeli",
+      "types": [
+        "fine_dining_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.126740999999996,
+        "longitude": 30.010676999999998
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJN-pXAQAZnkARPM0P3hVTZrM",
+      "name": "KÖFTECİ İLKER",
+      "formattedAddress": "Akçaova, Kandıra Şile Yolu No:95, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.03819000000001,
+        "longitude": 29.9526785
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ4V9LGPI7nkARkeEMqtdrY3A",
+      "name": "Şarap Evi",
+      "formattedAddress": "Bucaklı, Riverside Hotel No:17, 34980 Şile/Istanbul - Asia",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.139148999999996,
+        "longitude": 29.866831
+      },
+      "cellId": "5-13"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJa1kHV_AXtRQR3CjpFVmjw9o",
+      "name": "Villa Restaurant Silivri",
+      "formattedAddress": "Mimar Sinan, Fahrettin Berktaş Sk. No:3, 34570 Silivri/İstanbul",
+      "types": [
+        "restaurant",
+        "steak_house",
+        "halal_restaurant",
+        "breakfast_restaurant",
+        "turkish_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0803132,
+        "longitude": 28.196726299999998
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJLQ6SZwAXtRQRSEkRNK5n6wc",
+      "name": "Marmara Ceza İnfaz Kurumları Lojmanları Lokantası",
+      "formattedAddress": "Semizkumlar, Silivri Ceza İnfaz Kurumları Kampüsü Lojmanları, 34570 Silivri/İstanbul",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0947695,
+        "longitude": 28.1565129
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJ_cL1avQVtRQRS5s8ffb7B9M",
+      "name": "Kilis Kebapçısı",
+      "formattedAddress": "Mimarsinan Silivri, Fatih Sultan Mehmet Cd, 34570 Silivri/İstanbul",
+      "types": [
+        "kebab_shop",
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0843852,
+        "longitude": 28.2101956
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJe_ViMAAXtRQRW416WKBSQF8",
+      "name": "McDonald's Silivri DT",
+      "formattedAddress": "Mimar Sinan, Silivri Maxi City, 34570 Silivri/İstanbul",
+      "types": [
+        "fast_food_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0808033,
+        "longitude": 28.2050187
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJ9S8lawgWtRQRxpYZEkjVMYI",
+      "name": "Burger King",
+      "formattedAddress": "Mimar Sinan, Ahmet Hamoğlu Cd. No:14, 34570 Silivri/İstanbul",
+      "types": [
+        "hamburger_restaurant",
+        "fast_food_restaurant",
+        "american_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.082077999999996,
+        "longitude": 28.203877199999997
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJW5TfM7YjtRQRzfkXPulpOqY",
+      "name": "Gölbaşı Restaurant",
+      "formattedAddress": "Çeltik, aydınlık sok no 1, 34570 Silivri/İstanbul",
+      "types": [
+        "eastern_european_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.142844,
+        "longitude": 28.1029008
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJRwmzJwgWtRQRV9SWfpFW7wI",
+      "name": "Dürümcü Kilisli Bülent Usta",
+      "formattedAddress": "Mimar Sinan, 15. Cd., 34570 Silivri/İstanbul",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.0806354,
+        "longitude": 28.2056234
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJZX_PIwgWtRQRydNuWsT6KLA",
+      "name": "Dürümcü Müslüm",
+      "formattedAddress": "Mimar Sinan, 15. Cd., 34570 Silivri/İstanbul",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.080647899999995,
+        "longitude": 28.205660199999997
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJV6hX5-8VtRQRWQqPebuApM4",
+      "name": "Karadeniz Pide ve Lahmacun",
+      "formattedAddress": "Alipaşa, Fatih Sultan Mehmet Cd Sancak Özsoy Sanayi Sitesi No 1, 34250 Silivri/İstanbul",
+      "types": [
+        "middle_eastern_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.084395,
+        "longitude": 28.2101249
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon"
+      ],
+      "placeId": "ChIJ86T2qJCvyhQRarkmw0RjVCg",
+      "name": "Sivaslı Dönerci Emin - Vega AVM",
+      "formattedAddress": "Vega AVM, Mimar Sinan, Ahmet Hamoğlu Cd. No: 1, 34570 Silivri/İstanbul",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.082382599999995,
+        "longitude": 28.2043276
+      },
+      "cellId": "6-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJGbO659MVnkARnv6TE5r7SXw",
+      "name": "Mekan Taflan Restaurant - Beach - Cafe",
+      "formattedAddress": "Bağırganlı, Dinç Sokak No:13, 41600 Kandıra/Kocaeli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.1351978,
+        "longitude": 30.0229669
+      },
+      "cellId": "6-13"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJg-9VTutItRQR6FiI7MLeQ1U",
+      "name": "Kabakça Restorant",
+      "formattedAddress": "34000, Kabakça, Turkey, 65066 Çatalca/Missouri",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2166472,
+        "longitude": 28.3645326
+      },
+      "cellId": "7-3"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJMXvwnabYtBQRckFoSqsr9iI",
+      "name": "Yalı Restaurant",
+      "formattedAddress": "Veliköy, 68. cad No 15/A, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2530029,
+        "longitude": 27.919305400000002
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJbd1riVwhtRQR6C1PV0iIylc",
+      "name": "Hafa Dinlenme Tesisleri Edirne-İstanbul",
+      "formattedAddress": "Seymen, 59850 Çorlu/Tekirdağ",
+      "types": [
+        "rest_stop",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.203021,
+        "longitude": 28.0095682
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJvw_LyD0mtRQRC1hWTT1a8R8",
+      "name": "Çerkezköy Bafra Pidecisi",
+      "formattedAddress": "Fevzi Paşa OSB, Güveniş Cd. No:69, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "middle_eastern_restaurant",
+        "turkish_restaurant",
+        "meal_takeaway",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.281844199999995,
+        "longitude": 27.990502
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ9YL7PHAntRQRJ8hpbuskvsg",
+      "name": "Tokoçin Restaurant",
+      "formattedAddress": "İstasyon, Cengiz topal Cad No:141, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "turkish_restaurant",
+        "steak_house",
+        "barbecue_restaurant",
+        "brunch_restaurant",
+        "hamburger_restaurant",
+        "kebab_shop",
+        "breakfast_restaurant",
+        "american_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2667083,
+        "longitude": 28.031666400000002
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJY4Rbbu8ltRQRudoXsbwHtG8",
+      "name": "BAFRA PİDE TEPE ŞUBESİ",
+      "formattedAddress": "Cumhuriyet, Çağlayan Sk. No:2, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2670464,
+        "longitude": 28.024386999999997
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ5R_JA4wotRQRTU1wTsZBw44",
+      "name": "Çerkezköy Business Hotel",
+      "formattedAddress": "İsmet Paşa, Bülent Ecevit Cd 33. SOKAK, 59510 Çerkezköy/Tekirdağ",
+      "types": [
+        "hotel",
+        "family_restaurant",
+        "sauna",
+        "turkish_restaurant",
+        "swimming_pool",
+        "public_bath",
+        "sports_activity_location",
+        "spa",
+        "lodging",
+        "health",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.318325,
+        "longitude": 27.979204
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ3WV2vg0ptRQRXDKBk4Ivevo",
+      "name": "Tuba Mantı ve Unlu Mamulleri",
+      "formattedAddress": "Gazi Mustafa Kemalpaşa, Tokuşlar Sk. No:12 D:1A, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "dumpling_restaurant",
+        "dessert_restaurant",
+        "pastry_shop",
+        "dessert_shop",
+        "confectionery",
+        "bakery",
+        "food_store",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "store",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2901692,
+        "longitude": 28.0000224
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJtaGSIxkmtRQRbZdyS25nHLc",
+      "name": "Pera Villa",
+      "formattedAddress": "Gazi Osman Paşa, Makascı Sk. No:5, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "cafe",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.289654899999995,
+        "longitude": 27.998528099999998
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ5bYmv1EntRQRZzMlA4YZrjg",
+      "name": "Hot Döner Çerkezköy",
+      "formattedAddress": "Gazi Mustafa Kemalpaşa, Öztrak Cd. NO:40, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2872692,
+        "longitude": 28.001398199999997
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ0_gg-tcntRQRcFmi3Yd7_og",
+      "name": "BES DREAMLAND",
+      "formattedAddress": "Cumhuriyet mahallesi Beyaz kanarya sokak numara, Cumhuriyet, D:2, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "amusement_center",
+        "pastry_shop",
+        "dessert_shop",
+        "confectionery",
+        "bakery",
+        "toy_store",
+        "wedding_venue",
+        "breakfast_restaurant",
+        "food_store",
+        "cafe",
+        "event_venue",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "service",
+        "store",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.261932699999996,
+        "longitude": 28.0151562
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ1_edRigntRQR5F-N5NniMiY",
+      "name": "Köfteci Muammer 2",
+      "formattedAddress": "Gazi Mustafa Kemalpaşa, Malkoçoğlu Cd. No:16, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.286216599999996,
+        "longitude": 28.003041999999997
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJs8V10bkntRQR_P-WonTOkdA",
+      "name": "Antephan Künefe Çerkezköy",
+      "formattedAddress": "Gazi Osman Paşa, Atatürk Cd. No:91, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.292443999999996,
+        "longitude": 27.997881999999997
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJTfBkLFQntRQR4ZEc7fBNBXM",
+      "name": "Eatford Express",
+      "formattedAddress": "Burger King yanı, Gazi Mustafa Kemalpaşa, Edip Arıcan Sokak No: 4/B, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "mediterranean_restaurant",
+        "coffee_shop",
+        "pizza_restaurant",
+        "breakfast_restaurant",
+        "food_store",
+        "cafe",
+        "food",
+        "point_of_interest",
+        "store",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2861976,
+        "longitude": 28.0001653
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJkfGB_G4ptRQR5Hywyrab3pI",
+      "name": "TUNÇ STEAK RESTAURANT & BİSTRO",
+      "formattedAddress": "Çerkezköy Organize Sanayii Bölgesi, İsmetpaşa mahallesi, Atatürk Cd. No:6, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3153666,
+        "longitude": 27.9766433
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJc1DxRK4ntRQR2GJ0HLI4Z9Q",
+      "name": "Şırdancı Mehmet Çerkezköy",
+      "formattedAddress": "Fevzi Paşa OSB, Güveniş Cd. 64B, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2821654,
+        "longitude": 27.990719199999997
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJofBmtw0mtRQRoSDZIVNd0qA",
+      "name": "SC Beyaz Konak",
+      "formattedAddress": "İstasyon, Hakim Sami Sk. No:33/A, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2742921,
+        "longitude": 28.0061865
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJuzZpn6gntRQR9XiIxMW3KeM",
+      "name": "Shell",
+      "formattedAddress": "Kızılpınar Atatürk, Velimeşe Çerkezköy Yolu No:2, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "gas_station",
+        "sandwich_shop",
+        "convenience_store",
+        "car_wash",
+        "food_store",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "service",
+        "store",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.27123100000001,
+        "longitude": 27.960652
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJqd-mPSkntRQRBocQItZGKcU",
+      "name": "Tatlıköy",
+      "formattedAddress": "Gazi Osman Paşa, Namık Kemal Blv. No:99, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2882563,
+        "longitude": 27.991
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJQX1mE6kntRQRlIZ2shKqi_M",
+      "name": "Kanatçı Hamza",
+      "formattedAddress": "Kızılpınar Atatürk, Garaj sokak, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.270420099999996,
+        "longitude": 27.964506099999998
+      },
+      "cellId": "8-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJg-9VTutItRQR6FiI7MLeQ1U",
+      "name": "Kabakça Restorant",
+      "formattedAddress": "34000, Kabakça, Turkey, 65066 Çatalca/Missouri",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2166472,
+        "longitude": 28.3645326
+      },
+      "cellId": "8-3"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJvw_LyD0mtRQRC1hWTT1a8R8",
+      "name": "Çerkezköy Bafra Pidecisi",
+      "formattedAddress": "Fevzi Paşa OSB, Güveniş Cd. No:69, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "turkish_restaurant",
+        "middle_eastern_restaurant",
+        "meal_takeaway",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.281844199999995,
+        "longitude": 27.990502
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ9YL7PHAntRQRJ8hpbuskvsg",
+      "name": "Tokoçin Restaurant",
+      "formattedAddress": "İstasyon, Cengiz topal Cad No:141, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "turkish_restaurant",
+        "hamburger_restaurant",
+        "barbecue_restaurant",
+        "brunch_restaurant",
+        "breakfast_restaurant",
+        "kebab_shop",
+        "american_restaurant",
+        "steak_house",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2667083,
+        "longitude": 28.031666400000002
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJY4Rbbu8ltRQRudoXsbwHtG8",
+      "name": "BAFRA PİDE TEPE ŞUBESİ",
+      "formattedAddress": "Cumhuriyet, Çağlayan Sk. No:2, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2670464,
+        "longitude": 28.024386999999997
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ5R_JA4wotRQRTU1wTsZBw44",
+      "name": "Çerkezköy Business Hotel",
+      "formattedAddress": "İsmet Paşa, Bülent Ecevit Cd 33. SOKAK, 59510 Çerkezköy/Tekirdağ",
+      "types": [
+        "hotel",
+        "family_restaurant",
+        "sauna",
+        "public_bath",
+        "turkish_restaurant",
+        "spa",
+        "swimming_pool",
+        "lodging",
+        "health",
+        "sports_activity_location",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.318325,
+        "longitude": 27.979204
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ3WV2vg0ptRQRXDKBk4Ivevo",
+      "name": "Tuba Mantı ve Unlu Mamulleri",
+      "formattedAddress": "Gazi Mustafa Kemalpaşa, Tokuşlar Sk. No:12 D:1A, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "dumpling_restaurant",
+        "dessert_restaurant",
+        "pastry_shop",
+        "bakery",
+        "dessert_shop",
+        "confectionery",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2901692,
+        "longitude": 28.0000224
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJtaGSIxkmtRQRbZdyS25nHLc",
+      "name": "Pera Villa",
+      "formattedAddress": "Gazi Osman Paşa, Makascı Sk. No:5, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "cafe",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.289654899999995,
+        "longitude": 27.998528099999998
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ5bYmv1EntRQRZzMlA4YZrjg",
+      "name": "Hot Döner Çerkezköy",
+      "formattedAddress": "Gazi Mustafa Kemalpaşa, Öztrak Cd. NO:40, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2872692,
+        "longitude": 28.001398199999997
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ1xRfV_IptRQR6qL83tz0P1o",
+      "name": "Ayı Restoran",
+      "formattedAddress": "Aziziye, D567, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3843381,
+        "longitude": 27.932402699999997
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ1_edRigntRQR5F-N5NniMiY",
+      "name": "Köfteci Muammer 2",
+      "formattedAddress": "Gazi Mustafa Kemalpaşa, Malkoçoğlu Cd. No:16, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.286216599999996,
+        "longitude": 28.003041999999997
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJs8V10bkntRQR_P-WonTOkdA",
+      "name": "Antephan Künefe Çerkezköy",
+      "formattedAddress": "Gazi Osman Paşa, Atatürk Cd. No:91, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.292443999999996,
+        "longitude": 27.997881999999997
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ0_gg-tcntRQRcFmi3Yd7_og",
+      "name": "BES DREAMLAND",
+      "formattedAddress": "Cumhuriyet mahallesi Beyaz kanarya sokak numara, Cumhuriyet, D:2, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "wedding_venue",
+        "breakfast_restaurant",
+        "toy_store",
+        "cafe",
+        "pastry_shop",
+        "bakery",
+        "dessert_shop",
+        "confectionery",
+        "food_store",
+        "amusement_center",
+        "restaurant",
+        "food",
+        "store",
+        "event_venue",
+        "service",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.261932699999996,
+        "longitude": 28.0151562
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJTfBkLFQntRQR4ZEc7fBNBXM",
+      "name": "Eatford Express",
+      "formattedAddress": "Burger King yanı, Gazi Mustafa Kemalpaşa, Edip Arıcan Sokak No: 4/B, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "pizza_restaurant",
+        "mediterranean_restaurant",
+        "breakfast_restaurant",
+        "coffee_shop",
+        "cafe",
+        "food_store",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2861976,
+        "longitude": 28.0001653
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJkfGB_G4ptRQR5Hywyrab3pI",
+      "name": "TUNÇ STEAK RESTAURANT & BİSTRO",
+      "formattedAddress": "Çerkezköy Organize Sanayii Bölgesi, İsmetpaşa mahallesi, Atatürk Cd. No:6, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3153666,
+        "longitude": 27.9766433
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJc1DxRK4ntRQR2GJ0HLI4Z9Q",
+      "name": "Şırdancı Mehmet Çerkezköy",
+      "formattedAddress": "Fevzi Paşa OSB, Güveniş Cd. 64B, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2821654,
+        "longitude": 27.990719199999997
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJofBmtw0mtRQRoSDZIVNd0qA",
+      "name": "SC Beyaz Konak",
+      "formattedAddress": "İstasyon, Hakim Sami Sk. No:33/A, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2742921,
+        "longitude": 28.0061865
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJqd-mPSkntRQRBocQItZGKcU",
+      "name": "Tatlıköy",
+      "formattedAddress": "Gazi Osman Paşa, Namık Kemal Blv. No:99, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2882563,
+        "longitude": 27.991
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJWdRZphkmtRQRAiSNqAVIr4g",
+      "name": "Güneşler Otel",
+      "formattedAddress": "Gazi Osman Paşa, Topcular Sk. No:3, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "hotel",
+        "lodging",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.287555999999995,
+        "longitude": 27.998745099999997
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJAaWe8x8mtRQRS4WMja3jFHE",
+      "name": "Faruk Güllü",
+      "formattedAddress": "Gaziosmanpaşa Mh. Namık Kemal Blv., N:13 Çerkezköy, Gazi Osman Paşa, 59500 Tekirdağ/Çerkezköy/Tekirdağ",
+      "types": [
+        "dessert_restaurant",
+        "pastry_shop",
+        "bakery",
+        "dessert_shop",
+        "confectionery",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.294709399999995,
+        "longitude": 27.995681599999998
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJf0mkhDMntRQRk4Bi_DtKlKo",
+      "name": "Esto Lahmacun",
+      "formattedAddress": "Gazi Mustafa Kemalpaşa, Atatürk Cd. NO:104/A, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.2932254,
+        "longitude": 27.998160799999997
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJuzZpn6gntRQR9XiIxMW3KeM",
+      "name": "Shell",
+      "formattedAddress": "Kızılpınar Atatürk, Velimeşe Çerkezköy Yolu No:2, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "gas_station",
+        "sandwich_shop",
+        "convenience_store",
+        "car_wash",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "service",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.27123100000001,
+        "longitude": 27.960652
+      },
+      "cellId": "9-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ1xRfV_IptRQR6qL83tz0P1o",
+      "name": "Ayı Restoran",
+      "formattedAddress": "Aziziye, D567, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3843381,
+        "longitude": 27.932402699999997
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJGYXkJ-MotRQRs0Lt3Hx18PQ",
+      "name": "Canan Usta Bafra Pide",
+      "formattedAddress": "Vatan, Vatan Cd. No: 89/b, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "family_restaurant",
+        "middle_eastern_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3336779,
+        "longitude": 27.983977099999997
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJA0er0FgptRQR2UoA_T72qJU",
+      "name": "Oses Çiğ Köfte Kapaklı",
+      "formattedAddress": "Cumhuriyet, Yıldız Cd. No:35, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3319772,
+        "longitude": 27.979343
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ_RQNUvcotRQRW-t7EjxQzYU",
+      "name": "Kanatçı Erdal",
+      "formattedAddress": "Cumhuriyet, Yaşardoğu Cd. No:9, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3279375,
+        "longitude": 27.9773936
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJh54F3G4ptRQRgQfGHHS2We8",
+      "name": "KANATÇI YUSUF",
+      "formattedAddress": "Ömer Halisdemir, Şumnu Sok. no 1, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "chicken_wings_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3394632,
+        "longitude": 27.975609199999997
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJA7bj1vkotRQRqDfBZimeaGk",
+      "name": "Domino's Pizza Kapaklı",
+      "formattedAddress": "Atatürk, Atatürk Cd. 118 120 D:B, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "pizza_restaurant",
+        "pizza_delivery",
+        "meal_delivery",
+        "food_delivery",
+        "meal_takeaway",
+        "fast_food_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.330515999999996,
+        "longitude": 27.9720272
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJR0XGbB8mtRQRRTtuxlWWxUg",
+      "name": "Cihan Ocakbaşı",
+      "formattedAddress": "Cumhuriyet, Bircan Sk. a7, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.327370099999996,
+        "longitude": 27.9789773
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ_Wb_oPkotRQRIyvwRa1crbI",
+      "name": "Kral Kokoreç Kapaklı",
+      "formattedAddress": "Atatürk, 59500 Çerkezköy/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3309347,
+        "longitude": 27.976080600000003
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJfyLhJN0ptRQR9TNsRSr5CmI",
+      "name": "Meşhur Kanatçı Kapaklı",
+      "formattedAddress": "Cumhuriyet, Vatan Cd. No:141, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "chicken_wings_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3375911,
+        "longitude": 27.987236700000004
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJybifEwAptRQRgkl19i0eryk",
+      "name": "Tekirdağ Büyükşehir Belediyesi Kapaklı Kent Lokantası",
+      "formattedAddress": "Vatan, Akyer Sk. No:9, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.336138899999995,
+        "longitude": 27.9850556
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJCxXoXu4otRQRez6NTnhAwJw",
+      "name": "Balkan Restaurant",
+      "formattedAddress": "Bahçelievler, Mehmet Akif Ersoy Cd. No:46, 59510 Kapaklı Belediyesi/Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3227731,
+        "longitude": 27.986167899999998
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJJd3XkzAntRQRmlzWU9n9Juw",
+      "name": "Bol Bol Çiğköfte ve Sokak lezzetleri",
+      "formattedAddress": "Cumhuriyet, Pınar Blv 82/b, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "mediterranean_restaurant",
+        "coffee_shop",
+        "meal_delivery",
+        "cafe",
+        "food_delivery",
+        "turkish_restaurant",
+        "fast_food_restaurant",
+        "food_store",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "store",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3282233,
+        "longitude": 27.975669900000003
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJUbsLQc0ptRQRTplkL_qjVx4",
+      "name": "Kapaklı Sardunya Kahvaltı ve Mantı Evi",
+      "formattedAddress": "Bahçelievler, Çınar Sk. no:24/A, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "dumpling_restaurant",
+        "breakfast_restaurant",
+        "turkish_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3227792,
+        "longitude": 27.984666899999997
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJR4pYqGZ5oEARDdoa9XFFjko",
+      "name": "Safaalan manda Yoğurdu ve kahvaltı salonu",
+      "formattedAddress": "Sefaalan, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4287573,
+        "longitude": 28.0975742
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJn_mVDosptRQRMD1yWEYZX6o",
+      "name": "Adıyaman Çiğköfte Fabrikası Gurme",
+      "formattedAddress": "Cumhuriyet, Pınar Blv No:50 D:54D, 59500 Kapaklı/Tekirdağ",
+      "types": [
+        "turkish_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.3261046,
+        "longitude": 27.9768206
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJwduwwXsptRQRVZLdpyJk1Ac",
+      "name": "PizzaLazza - Kapaklı",
+      "formattedAddress": "İnönü, Saray Cd. No:2A, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "fast_food_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.330171,
+        "longitude": 27.972088
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJoyqLfPcotRQRJVfSbVmkotw",
+      "name": "Baksan Antepliğolu Sıcak Tatlı ve Baklava",
+      "formattedAddress": "İnönü, Yiğit Sk. No:2, 59510 Çerkezköy/Tekirdağ",
+      "types": [
+        "dessert_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.32871,
+        "longitude": 27.975057999999997
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJi0p6ivEptRQR_x1DrjIiYiI",
+      "name": "Tekirdağ kapaklı",
+      "formattedAddress": "Cumhuriyet, Ceyhun Sk., 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.329147899999995,
+        "longitude": 27.9794573
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJUXCXs-EvtRQRu0-4CtEwy_8",
+      "name": "By kokorec",
+      "formattedAddress": "Pınarca, Pınarca Köyü İç Yolu, 59510 Çerkezköy/Tekirdağ",
+      "types": [
+        "barbecue_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.33838,
+        "longitude": 28.019064699999998
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJA38jNmoptRQRUGGzffXX_HI",
+      "name": "Şanlıurfa Şehzade Kebap Ve Pide Salonu",
+      "formattedAddress": "Garanti Bankası Yanı, Atatürk, Hürriyet Cd. No:29, 59510 Kapaklı/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.330860099999995,
+        "longitude": 27.9757061
+      },
+      "cellId": "10-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJR4pYqGZ5oEARDdoa9XFFjko",
+      "name": "Safaalan manda Yoğurdu ve kahvaltı salonu",
+      "formattedAddress": "Sefaalan, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4287573,
+        "longitude": 28.0975742
+      },
+      "cellId": "10-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJI6iANAx5oEARIbdx_egEuk8",
+      "name": "Lavantalı Bahçenin Ürünleri",
+      "formattedAddress": "Sefaalan, Geçit Cad, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.447498100000004,
+        "longitude": 28.0976002
+      },
+      "cellId": "10-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJD_644Rx5oEARP4lWmgVx1XE",
+      "name": "Mis börek",
+      "formattedAddress": "Sefaalan, Safalan sokak, 59600 Saray/Tekirdağ",
+      "types": [
+        "bakery",
+        "food_store",
+        "restaurant",
+        "food",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.428356,
+        "longitude": 28.0983093
+      },
+      "cellId": "10-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJiXIqViB5oEARuzXYwYg9pMk",
+      "name": "Cafe Barni",
+      "formattedAddress": "Cafe Barni, Sefaalan, Sincap Evler, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.425063699999995,
+        "longitude": 28.1083334
+      },
+      "cellId": "10-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJgUD_QAB5oEARszDVu48unXo",
+      "name": "Bizim Lokanta",
+      "formattedAddress": "Sefaalan, 59600 Saray/Tekirdağ",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.428581699999995,
+        "longitude": 28.0978018
+      },
+      "cellId": "10-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJy58xcch_oEARwmpWthAHQ84",
+      "name": "KANYON KAHVALTI IZGARA CANLI ALABALIK",
+      "formattedAddress": "Güngörmez, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "bar_and_grill",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4789477,
+        "longitude": 27.9694674
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJl6FgJeh_oEARbjRf_Ogl1ek",
+      "name": "saray restorant",
+      "formattedAddress": "Pazarcık, Saray Kıyıköy Yolu, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.462466400000004,
+        "longitude": 27.947312600000004
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ62g83vV_oEARSRL6DtWZGto",
+      "name": "Onur Restaurant Koru",
+      "formattedAddress": "Pazarcık, Saray Kıyıköy Yolu, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.45884710000001,
+        "longitude": 27.9437356
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJCdsfaJ7VtBQRaZcgXExhGrY",
+      "name": "Sardunya Bahçe Mantı & Kahvaltı Evi",
+      "formattedAddress": "Ayaspaşa, Çukuryurt Yolu NO:19, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "breakfast_restaurant",
+        "turkish_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4401467,
+        "longitude": 27.910566799999998
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJj7guY-qBoEARnSmMldCAeGM",
+      "name": "Mercan Restaurant & Cafe (Et & Şarküteri)",
+      "formattedAddress": "Pazarcık, Tahir Efendi Korusu Küme Evleri 3/2, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4647196,
+        "longitude": 27.9261469
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJiY7an2x_oEARbWfWtFt_dHE",
+      "name": "Beyaz çiftlik boutique otel restaurant",
+      "formattedAddress": "Pazarcık, ayvacık yolu kümeevler no 1, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.471140999999996,
+        "longitude": 27.936767999999997
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJSaHJmKYqtRQRiOXZWiKtDgM",
+      "name": "Karaca Kasap&Et&Mangal",
+      "formattedAddress": "Pazarcık, Midye Cd. No:17A, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4480218,
+        "longitude": 27.9297966
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJzUaRP2HVtBQR87iREwogQVM",
+      "name": "Bayraktar Köfte Salonu",
+      "formattedAddress": "Ayaspaşa, Gürsel Paşa Cd. No:10, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4418487,
+        "longitude": 27.9203908
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJx6srfWTVtBQRW5GxmM68fRM",
+      "name": "SEZEN OTEL",
+      "formattedAddress": "Ayaspaşa, Çerkezköy Cd. No:72, 59600 Saray/Tekirdağ",
+      "types": [
+        "hotel",
+        "steak_house",
+        "lodging",
+        "store",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "transportation_service",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.439209299999995,
+        "longitude": 27.9187019
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJBf_IX2HVtBQR77dQ3HQlnyo",
+      "name": "SARAY MUTFAĞI",
+      "formattedAddress": "Ayaspaşa, Çarşı Cd. no:26, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.440574399999996,
+        "longitude": 27.920430300000003
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJP7BcUWHVtBQRxDSZZeuz-uI",
+      "name": "Ayaspaşa Köftecisi",
+      "formattedAddress": "Ayaspaşa, Cumhuriyet Cd. No:5, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.441235999999996,
+        "longitude": 27.919451199999997
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJM8IXfX3VtBQRQS41Dnv4sOc",
+      "name": "Saray Şehir Restoran",
+      "formattedAddress": "Yeni, Rüzgar Sk. No:16 D:28, 59610 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4446193,
+        "longitude": 27.920256
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJR4pYqGZ5oEARDdoa9XFFjko",
+      "name": "Safaalan manda Yoğurdu ve kahvaltı salonu",
+      "formattedAddress": "Sefaalan, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4287573,
+        "longitude": 28.0975742
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJfSmHTGTVtBQRu8uKkSsScfE",
+      "name": "KEBAPÇI ALİ USTA SARAY",
+      "formattedAddress": "Ayaspaşa, Çarşı Cd. No:7 D:59600, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4411076,
+        "longitude": 27.920083800000004
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJk8Caga8qtRQRyFoPFUKhQvc",
+      "name": "onur restaurant koru",
+      "formattedAddress": "Pazarcık, Midye Cd. No:113, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.451396900000006,
+        "longitude": 27.9321117
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJp73QRpIrtRQR8OkNUhThjGI",
+      "name": "Konya Lezzet Sofram Aile Restoranı Saray",
+      "formattedAddress": "Yeni, CWWG+5J, 59610 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4454375,
+        "longitude": 27.926562500000003
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJJZRUdER5oEARf9NvOm9fSYQ",
+      "name": "Saklı Köşk",
+      "formattedAddress": "Sefaalan, Safaalan Yolu Üzeri, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.439799199999996,
+        "longitude": 28.0655994
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJn8ihS3gqtRQRckvzEsCRgT8",
+      "name": "Saraylı Bağ Evi",
+      "formattedAddress": "Ayaspaşa, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4169595,
+        "longitude": 27.927632
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJaaXnUvbVtBQRYh5KgsP0AAs",
+      "name": "DAPİX CHICKEN döner SARAY Dapiks",
+      "formattedAddress": "Ayaspaşa, İstanbul Cd. 10 k D:1, 59600 Saray/Tekirdağ",
+      "types": [
+        "hamburger_restaurant",
+        "fast_food_restaurant",
+        "turkish_restaurant",
+        "american_restaurant",
+        "bar_and_grill",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4413623,
+        "longitude": 27.9219194
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJu7WnQf3VtBQR0MBrgErrFl8",
+      "name": "The Pizza Fuego",
+      "formattedAddress": "Baby hupy bebek giyim mazasi yani, Yeni mahalle, Cami Cd. 32 A, 59610 Saray/Tekirdağ",
+      "types": [
+        "meal_takeaway",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.442902499999995,
+        "longitude": 27.9219869
+      },
+      "cellId": "11-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJR4pYqGZ5oEARDdoa9XFFjko",
+      "name": "Safaalan manda Yoğurdu ve kahvaltı salonu",
+      "formattedAddress": "Sefaalan, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4287573,
+        "longitude": 28.0975742
+      },
+      "cellId": "11-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJI6iANAx5oEARIbdx_egEuk8",
+      "name": "Lavantalı Bahçenin Ürünleri",
+      "formattedAddress": "Sefaalan, Geçit Cad, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.447498100000004,
+        "longitude": 28.0976002
+      },
+      "cellId": "11-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJD_644Rx5oEARP4lWmgVx1XE",
+      "name": "Mis börek",
+      "formattedAddress": "Sefaalan, Safalan sokak, 59600 Saray/Tekirdağ",
+      "types": [
+        "bakery",
+        "food_store",
+        "store",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.428356,
+        "longitude": 28.0983093
+      },
+      "cellId": "11-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJiXIqViB5oEARuzXYwYg9pMk",
+      "name": "Cafe Barni",
+      "formattedAddress": "Cafe Barni, Sefaalan, Sincap Evler, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.425063699999995,
+        "longitude": 28.1083334
+      },
+      "cellId": "11-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJgUD_QAB5oEARszDVu48unXo",
+      "name": "Bizim Lokanta",
+      "formattedAddress": "Sefaalan, 59600 Saray/Tekirdağ",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.428581699999995,
+        "longitude": 28.0978018
+      },
+      "cellId": "11-2"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJy58xcch_oEARwmpWthAHQ84",
+      "name": "KANYON KAHVALTI IZGARA CANLI ALABALIK",
+      "formattedAddress": "Güngörmez, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "bar_and_grill",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4789477,
+        "longitude": 27.9694674
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJl6FgJeh_oEARbjRf_Ogl1ek",
+      "name": "saray restorant",
+      "formattedAddress": "Pazarcık, Saray Kıyıköy Yolu, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.462466400000004,
+        "longitude": 27.947312600000004
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJeSqUTZ2BoEARsmn71nDR6-Q",
+      "name": "Küçük Hasanın Yeri Oğlak Çevirme",
+      "formattedAddress": "ERGNE PIKNIK ALANINA GIDERKEN SAĞDA KASABASI, Zafer, 39400 Çakıllı/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.5231669,
+        "longitude": 27.918562899999998
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJiY7an2x_oEARbWfWtFt_dHE",
+      "name": "Beyaz çiftlik boutique otel restaurant",
+      "formattedAddress": "Pazarcık, ayvacık yolu kümeevler no 1, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.471140999999996,
+        "longitude": 27.936767999999997
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJzeZFfwx9oEARyECxs-31_RM",
+      "name": "İrem Kahvaltı ve Gözleme Evi",
+      "formattedAddress": "Bahçeköy, sultanbahçe caddesi no 45, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.5456281,
+        "longitude": 28.0486175
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJORwvwz1_oEARSkexyvg9NaU",
+      "name": "ER KASAP - RESTORAN",
+      "formattedAddress": "Güngörmez, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.495357399999996,
+        "longitude": 27.9847486
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJnWqbEQB9oEAR9I0A5dHIs1s",
+      "name": "BAHÇEKÖY KÖFTECİSİ SÜLEYMAN USTA",
+      "formattedAddress": "Bahçeköy, Saray Kıyıköy Yolu No:65, 59600 Saray/Tekirdağ",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.5465018,
+        "longitude": 28.0489873
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ2YNXnQt_oEAR4QPXtGcEy6M",
+      "name": "Saray Dereye Karşı",
+      "formattedAddress": "Güngörmez, Saray yolu üzeri no:191/2, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.468897999999996,
+        "longitude": 27.951207699999998
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJoVCIjvh_oEARvVi84B99_xM",
+      "name": "Limos'un Mutfagi",
+      "formattedAddress": "Güngörmez, Güngörmez Köyü İç Yolu, 59600 Saray/Tekirdağ",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4948366,
+        "longitude": 27.9837904
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJUSO1CZ5_oEARgJXcRe9joi4",
+      "name": "Park Kokoreç Sedanın Yeri Canlı Alabalık",
+      "formattedAddress": "Kambur söğüt mevkii, Bahçeköy, Saray Kıyıköy Yolu 3. Km, 59600 Saray/Tekirdağ",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4735845,
+        "longitude": 27.954833999999998
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJG0XoTgB_oEARKKQhjF71DfY",
+      "name": "Ahmet aganin yeri",
+      "formattedAddress": "Güngörmez, FXM5+5V, 59600 Saray/Tekirdağ",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4829893,
+        "longitude": 27.959725
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJ0fexilh_oEARNSQELNkxOs4",
+      "name": "THE LIFE NEST HOTEL&RESTAURANT",
+      "formattedAddress": "Pazarcık, AYVACIK MEVKİ KÜME EVLERİ NO:1/1, 59600 Saray/Tekirdağ",
+      "types": [
+        "hotel",
+        "lodging",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.4713433,
+        "longitude": 27.9367903
+      },
+      "cellId": "12-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJW3APrF6JoEARRfmf0LFl5k0",
+      "name": "Etno Köy",
+      "formattedAddress": "Aksicim yolu üzeri, Yenesuyu köprüsü, 39402 Balkaya/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.6149693,
+        "longitude": 27.9833508
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJPWrMNkyPoEARB-wrxyTamx0",
+      "name": "Balkaya Alabalık Çiftliği",
+      "formattedAddress": "Balkaya Köyü İç Yolu Aksicim, Yolu Üzeri, 39400 Balkaya/Vize/Kırklareli",
+      "types": [
+        "farm",
+        "restaurant",
+        "food",
+        "service",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.6159266,
+        "longitude": 27.9833505
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJcToKdciIoEARfTYooELEfdQ",
+      "name": "Balkaya Alabalık Restorant",
+      "formattedAddress": "Balkaya, 39400 Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.616026,
+        "longitude": 27.982260399999998
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJzeZFfwx9oEARyECxs-31_RM",
+      "name": "İrem Kahvaltı ve Gözleme Evi",
+      "formattedAddress": "Bahçeköy, sultanbahçe caddesi no 45, 59600 Saray/Tekirdağ",
+      "types": [
+        "breakfast_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.5456281,
+        "longitude": 28.0486175
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJW31F0s-IoEARcxVWSInwhCQ",
+      "name": "Kartalkaya Alabalik Uretim Tesisi",
+      "formattedAddress": "Balkaya Köyü İç Yolu, 39400 Balkaya/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.622094,
+        "longitude": 27.986655
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJz_XTLy6JoEARNJrsvrmp7_I",
+      "name": "Mekan 39",
+      "formattedAddress": "39402 Aksicim/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.6128673,
+        "longitude": 28.0320611
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJdbKM2aSJoEAR20euCFagBu8",
+      "name": "Eser Restaurant ve Konaklama",
+      "formattedAddress": "Güven, balım sk no 10, 39400 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "hotel",
+        "lodging",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.625192899999995,
+        "longitude": 28.091807799999998
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJSySWeFiJoEAR_2lJ6kiuaMg",
+      "name": "Lydia Cafe Bistro Kıyıköy",
+      "formattedAddress": "Güven, Vize yolu Caddesi No:69, 39400 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "cafe",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.6321461,
+        "longitude": 28.0844864
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJnWqbEQB9oEAR9I0A5dHIs1s",
+      "name": "BAHÇEKÖY KÖFTECİSİ SÜLEYMAN USTA",
+      "formattedAddress": "Bahçeköy, Saray Kıyıköy Yolu No:65, 59600 Saray/Tekirdağ",
+      "types": [
+        "family_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.5465018,
+        "longitude": 28.0489873
+      },
+      "cellId": "13-1"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJAe3Rl2SJoEARN54Td7dRvGo",
+      "name": "Erkan'ın Yeri Kıyıköy",
+      "formattedAddress": "Güven, 39402 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.629625,
+        "longitude": 28.0983512
+      },
+      "cellId": "13-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJMWBXqr2JoEARnwr6Zd-XQjg",
+      "name": "Mercan cafe restruant",
+      "formattedAddress": "Kıyıköy Bld. (Cumhuriyet Mh, Begonya Sk No:3, 39402 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.633547799999995,
+        "longitude": 28.0986054
+      },
+      "cellId": "13-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJW_X3l7yJoEARJgl0CJotb-k",
+      "name": "Liman Balık Restoran",
+      "formattedAddress": "Güven, 39400 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.6307676,
+        "longitude": 28.0976176
+      },
+      "cellId": "13-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJWbEbF_uJoEAROIKlNYeaQAk",
+      "name": "Çapoğlu Aile Çay Bahçesi",
+      "formattedAddress": "Güven, 39400 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.6321037,
+        "longitude": 28.0963902
+      },
+      "cellId": "13-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJdbKM2aSJoEAR20euCFagBu8",
+      "name": "Eser Restaurant ve Konaklama",
+      "formattedAddress": "Güven, balım sk no 10, 39400 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "hotel",
+        "lodging",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.625192899999995,
+        "longitude": 28.091807799999998
+      },
+      "cellId": "13-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJM7pyjTSJoEARPXpKZly8HFY",
+      "name": "KIYIKÖY KOKOREÇ ÇORBA",
+      "formattedAddress": "Güven, LİMAN MEVKİ, 39400 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.630098499999995,
+        "longitude": 28.0989814
+      },
+      "cellId": "13-2"
+    },
+    {
+      "reasons": [
+        "outside_istanbul_polygon",
+        "city_not_istanbul"
+      ],
+      "placeId": "ChIJDYTsIbCJoEARG0Y4cxjtPnE",
+      "name": "AHMET ABİNİN YERİ",
+      "formattedAddress": "köprünün yanı, liman yolu, Güven, 39402 Kıyıköy/Vize/Kırklareli",
+      "types": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "location": {
+        "latitude": 41.629588700000006,
+        "longitude": 28.0984803
+      },
+      "cellId": "13-2"
+    }
+  ]
+}

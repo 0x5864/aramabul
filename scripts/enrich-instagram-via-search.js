@@ -16,6 +16,7 @@ const REQUEST_TIMEOUT_MS = Math.max(1000, Number.parseInt(process.env.REQUEST_TI
 const SAVE_EVERY = Math.max(50, Number.parseInt(process.env.SAVE_EVERY || '300', 10));
 const RETRY_LIMIT = Math.max(1, Number.parseInt(process.env.RETRY_LIMIT || '2', 10));
 const USE_DDG_FALLBACK = process.env.USE_DDG_FALLBACK !== '0';
+const USE_GOOGLE_FIRST = process.env.USE_GOOGLE_FIRST === '1';
 
 const GENERIC_TOKENS = new Set([
   'restaurant',
@@ -226,6 +227,20 @@ function extractFromDdgHtml(html) {
   return [...links];
 }
 
+function extractFromBraveHtml(html) {
+  const text = String(html || '');
+  const links = new Set();
+
+  const directRegex = /https?:\/\/(?:www\.)?(?:instagram\.com|instagr\.am)\/[A-Za-z0-9._\-/?=&%]+/gi;
+  let directMatch = directRegex.exec(text);
+  while (directMatch) {
+    links.add(directMatch[0]);
+    directMatch = directRegex.exec(text);
+  }
+
+  return [...links];
+}
+
 function scoreCandidate(candidateUrl, tokens, venue) {
   const normalized = normalizeInstagramUrl(candidateUrl);
   if (!normalized) {
@@ -371,6 +386,35 @@ async function searchDdg(query) {
   return [];
 }
 
+async function searchBrave(query) {
+  const endpoint = `https://search.brave.com/search?q=${encodeURIComponent(query)}&source=web`;
+  let attempt = 0;
+
+  while (attempt < RETRY_LIMIT) {
+    attempt += 1;
+    try {
+      const response = await fetchWithTimeout(endpoint);
+      if (!response.ok) {
+        if (attempt >= RETRY_LIMIT) {
+          return [];
+        }
+        await sleep(350 * attempt);
+        continue;
+      }
+
+      const html = await response.text();
+      return extractFromBraveHtml(html);
+    } catch (_error) {
+      if (attempt >= RETRY_LIMIT) {
+        return [];
+      }
+      await sleep(350 * attempt);
+    }
+  }
+
+  return [];
+}
+
 async function findInstagramForVenue(venue) {
   const baseName = normalizeText(venue.name);
   const city = normalizeText(venue.city);
@@ -382,10 +426,18 @@ async function findInstagramForVenue(venue) {
   ];
 
   for (const query of queries) {
-    const googleCandidates = await searchGoogle(query);
-    const bestFromGoogle = bestInstagramCandidate(googleCandidates, venue);
-    if (bestFromGoogle) {
-      return bestFromGoogle;
+    if (USE_GOOGLE_FIRST) {
+      const googleCandidates = await searchGoogle(query);
+      const bestFromGoogle = bestInstagramCandidate(googleCandidates, venue);
+      if (bestFromGoogle) {
+        return bestFromGoogle;
+      }
+    }
+
+    const braveCandidates = await searchBrave(query);
+    const bestFromBrave = bestInstagramCandidate(braveCandidates, venue);
+    if (bestFromBrave) {
+      return bestFromBrave;
     }
 
     if (USE_DDG_FALLBACK) {
@@ -463,7 +515,7 @@ async function run() {
         }
         venue.instagram = instagramUrl;
         venue.instagramFetchedAt = fetchedAtStamp;
-        venue.instagramSource = 'search_google';
+        venue.instagramSource = USE_GOOGLE_FIRST ? 'search_google_or_brave' : 'search_brave';
         updatedRows += 1;
       });
     }
@@ -501,4 +553,3 @@ async function run() {
 }
 
 run();
-

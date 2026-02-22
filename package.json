@@ -1,0 +1,19 @@
+{
+  "name": "neredeyenir",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NeredeYenir frontend + PostgreSQL API",
+  "scripts": {
+    "api": "node backend/server.js",
+    "db:migrate": "node backend/scripts/migrate.js",
+    "db:import:venues": "node backend/scripts/import-venues.js",
+    "db:setup": "npm run db:migrate && npm run db:import:venues",
+    "fetch:pastaneler": "node scripts/fetch-google-pastaneler.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "pg": "^8.16.3"
+  }
+}

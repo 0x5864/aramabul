@@ -1,4 +1,25 @@
 const VENUES_JSON_PATH = "data/venues.json";
+const API_BASE_URL = (() => {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  if (typeof window.NEREDEYENIR_API_BASE === "string" && window.NEREDEYENIR_API_BASE.trim()) {
+    return window.NEREDEYENIR_API_BASE.trim().replace(/\/+$/u, "");
+  }
+
+  if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+    return `${window.location.protocol}//${window.location.hostname}:8787`;
+  }
+
+  return window.location.origin;
+})();
+const VENUES_API_ENDPOINT =
+  typeof window !== "undefined" && typeof window.NEREDEYENIR_VENUES_API === "string"
+    ? window.NEREDEYENIR_VENUES_API.trim()
+    : API_BASE_URL
+      ? `${API_BASE_URL}/api/venues?limit=50000`
+      : "";
 
 const fallbackVenue = {
   city: "İstanbul",
@@ -54,6 +75,7 @@ let leafletMarker = null;
 let latestMapToken = "";
 let activeCommentsKey = "";
 let activeComments = [];
+let activeVenue = null;
 
 function normalizeForSearch(value) {
   return String(value || "")
@@ -77,6 +99,17 @@ function sanitizeText(value, fallback = "") {
   return cleaned.length > 0 ? cleaned.slice(0, 120) : fallback;
 }
 
+function normalizeCuisineLabel(value, fallback = "Restoran") {
+  const cleaned = sanitizeText(value, fallback);
+  const normalized = normalizeForSearch(cleaned);
+
+  if (normalized === "baklava" || normalized === "kunefe") {
+    return "Tatlı";
+  }
+
+  return cleaned;
+}
+
 function sanitizeCommentText(value, fallback = "") {
   if (typeof value !== "string") {
     return fallback;
@@ -84,6 +117,15 @@ function sanitizeCommentText(value, fallback = "") {
 
   const cleaned = value.trim();
   return cleaned.length > 0 ? cleaned.slice(0, 500) : fallback;
+}
+
+function sanitizeAddress(value, fallback = "") {
+  if (typeof value !== "string") {
+    return fallback;
+  }
+
+  const cleaned = value.trim();
+  return cleaned.length > 0 ? cleaned.slice(0, 220) : fallback;
 }
 
 function sanitizeUrl(value, fallback = "") {
@@ -193,7 +235,7 @@ function normalizeVenueRecord(record) {
   const city = sanitizeText(record.city);
   const district = sanitizeText(record.district, "Merkez");
   const name = sanitizeVenueName(record.name);
-  const cuisine = sanitizeText(record.cuisine, "Restoran");
+  const cuisine = normalizeCuisineLabel(record.cuisine, "Restoran");
 
   if (!city || !name) {
     return null;
@@ -207,7 +249,7 @@ function normalizeVenueRecord(record) {
     budget: sanitizeText(record.budget, "₺₺"),
     rating: sanitizeRating(record.rating),
     userRatingCount: sanitizeRatingCount(record.userRatingCount),
-    address: sanitizeText(record.address, ""),
+    address: sanitizeAddress(record.address, ""),
     phone: sanitizeText(record.phone, ""),
     website: sanitizeUrl(record.website || record.web || record.url, ""),
     instagram: sanitizeUrl(
@@ -219,7 +261,7 @@ function normalizeVenueRecord(record) {
     ),
     photoUri: sanitizeUrl(record.photoUri || "", ""),
     galleryPhotoUris: sanitizeUrlArray(record.galleryPhotoUris, 6),
-    mapsUrl: sanitizeText(record.mapsUrl || record.googleMapsUri || "", ""),
+    mapsUrl: sanitizeUrl(record.mapsUrl || record.googleMapsUri || "", ""),
     editorialSummary: sanitizeText(record.editorialSummary, ""),
     menuCapabilities: sanitizeStringArray(record.menuCapabilities, 12),
     serviceCapabilities: sanitizeStringArray(record.serviceCapabilities, 12),
@@ -231,14 +273,47 @@ function normalizeVenueRecord(record) {
 }
 
 function normalizeVenueCollection(payload) {
-  if (!Array.isArray(payload)) {
-    return [];
+  if (Array.isArray(payload)) {
+    return payload.map(normalizeVenueRecord).filter((record) => record !== null);
   }
 
-  return payload.map(normalizeVenueRecord).filter((record) => record !== null);
+  if (payload && typeof payload === "object") {
+    const collection = Array.isArray(payload.venues)
+      ? payload.venues
+      : Array.isArray(payload.data)
+        ? payload.data
+        : null;
+
+    if (collection) {
+      return collection.map(normalizeVenueRecord).filter((record) => record !== null);
+    }
+  }
+
+  return [];
 }
 
 async function loadVenues() {
+  if (VENUES_API_ENDPOINT) {
+    try {
+      const apiResponse = await fetch(VENUES_API_ENDPOINT, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        credentials: "omit",
+      });
+
+      if (apiResponse.ok) {
+        const apiPayload = await apiResponse.json();
+        const apiRecords = normalizeVenueCollection(apiPayload);
+
+        if (apiRecords.length > 0) {
+          return apiRecords;
+        }
+      }
+    } catch (_error) {
+      // Local JSON fallback below keeps the detail page usable.
+    }
+  }
+
   try {
     const response = await fetch(VENUES_JSON_PATH, {
       method: "GET",
@@ -408,10 +483,11 @@ function buildMapQuery(venue) {
 function buildMapUrls(venue) {
   const query = buildMapQuery(venue);
   const encodedQuery = encodeURIComponent(query);
+  const mapsUrl = sanitizeUrl(venue.mapsUrl || "", "");
 
   return {
     iframeUrl: `https://www.google.com/maps?q=${encodedQuery}&output=embed`,
-    externalUrl: `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`,
+    externalUrl: mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`,
   };
 }
 
@@ -584,15 +660,25 @@ function setMapStatus(text = "") {
 }
 
 async function geocodeWithNominatim(query) {
+  const controller = new AbortController();
+  const timeoutHandle = setTimeout(() => controller.abort(), 6000);
   const endpoint =
     `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=tr&q=${encodeURIComponent(
       query,
     )}`;
 
-  const response = await fetch(endpoint, {
-    method: "GET",
-    headers: { Accept: "application/json" },
-  });
+  let response;
+  try {
+    response = await fetch(endpoint, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+  } catch (_error) {
+    clearTimeout(timeoutHandle);
+    return null;
+  }
+  clearTimeout(timeoutHandle);
 
   if (!response.ok) {
     return null;
@@ -613,9 +699,106 @@ async function geocodeWithNominatim(query) {
   return { lat, lng };
 }
 
+function parseCoordinatePair(textValue) {
+  const text = sanitizeText(String(textValue || ""), "");
+  if (!text) {
+    return null;
+  }
+
+  const match = text.match(/(-?\d{1,2}(?:\.\d+)?)\s*,\s*(-?\d{1,3}(?:\.\d+)?)/);
+  if (!match) {
+    return null;
+  }
+
+  const lat = Number(match[1]);
+  const lng = Number(match[2]);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return null;
+  }
+
+  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+    return null;
+  }
+
+  return { lat, lng };
+}
+
+function extractCoordinatesFromMapsUrl(mapsUrl) {
+  const normalizedUrl = sanitizeUrl(mapsUrl || "", "");
+  if (!normalizedUrl) {
+    return null;
+  }
+
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(normalizedUrl);
+  } catch (_error) {
+    return null;
+  }
+
+  const fromParams = [
+    parsedUrl.searchParams.get("q"),
+    parsedUrl.searchParams.get("query"),
+    parsedUrl.searchParams.get("destination"),
+  ];
+
+  for (const candidate of fromParams) {
+    const parsed = parseCoordinatePair(candidate || "");
+    if (parsed) {
+      return parsed;
+    }
+  }
+
+  const rawUrl = parsedUrl.toString();
+  const atMatch = rawUrl.match(/@(-?\d{1,2}(?:\.\d+)?),(-?\d{1,3}(?:\.\d+)?)/);
+  if (atMatch) {
+    return parseCoordinatePair(`${atMatch[1]},${atMatch[2]}`);
+  }
+
+  const dMatch = rawUrl.match(/!3d(-?\d{1,2}(?:\.\d+)?)!4d(-?\d{1,3}(?:\.\d+)?)/);
+  if (dMatch) {
+    return parseCoordinatePair(`${dMatch[1]},${dMatch[2]}`);
+  }
+
+  return null;
+}
+
+function disposeLeafletMap() {
+  if (leafletMap) {
+    leafletMap.remove();
+    leafletMap = null;
+    leafletMarker = null;
+  }
+}
+
+function renderMapIframe(mapUrls) {
+  if (!restaurantMapCanvas || !mapUrls || !mapUrls.iframeUrl) {
+    return false;
+  }
+
+  disposeLeafletMap();
+  restaurantMapCanvas.innerHTML = "";
+
+  const iframe = document.createElement("iframe");
+  iframe.className = "restaurant-map-iframe";
+  iframe.src = mapUrls.iframeUrl;
+  iframe.loading = "lazy";
+  iframe.referrerPolicy = "no-referrer-when-downgrade";
+  iframe.title = "Restoran konum haritası";
+  iframe.setAttribute("aria-label", "Restoran konum haritası");
+
+  restaurantMapCanvas.append(iframe);
+  return true;
+}
+
 function ensureLeafletMap(center, venueName) {
   if (!restaurantMapCanvas || typeof window.L === "undefined") {
     return false;
+  }
+
+  if (restaurantMapCanvas.querySelector("iframe")) {
+    restaurantMapCanvas.innerHTML = "";
   }
 
   if (!leafletMap) {
@@ -667,22 +850,32 @@ async function renderLocationMap(venue) {
     return;
   }
 
-  if (typeof window.L === "undefined") {
-    setMapStatus("Harita yüklenemedi. Lütfen tekrar dene.");
-    return;
-  }
+  const mapUrls = buildMapUrls(venue);
+  const iframeRendered = renderMapIframe(mapUrls);
+  setMapStatus(iframeRendered ? "" : "Konum yükleniyor...");
 
-  setMapStatus("Konum yükleniyor...");
+  let center = extractCoordinatesFromMapsUrl(venue.mapsUrl);
 
-  const primaryQuery = buildMapQuery(venue);
-  let center = await geocodeWithNominatim(primaryQuery);
+  try {
+    if (!center) {
+      const primaryQuery = buildMapQuery(venue);
+      center = await geocodeWithNominatim(primaryQuery);
+    }
 
-  if (!center) {
-    const fallbackQuery = `${venue.name}, ${venue.city}, Türkiye`;
-    center = await geocodeWithNominatim(fallbackQuery);
+    if (!center) {
+      const fallbackQuery = `${venue.name}, ${venue.city}, Türkiye`;
+      center = await geocodeWithNominatim(fallbackQuery);
+    }
+  } catch (_error) {
+    center = null;
   }
 
   if (latestMapToken !== token) {
+    return;
+  }
+
+  if (!center && renderMapIframe(mapUrls)) {
+    setMapStatus("");
     return;
   }
 
@@ -693,6 +886,10 @@ async function renderLocationMap(venue) {
 
   const ready = ensureLeafletMap(center, venue.name);
   if (!ready) {
+    if (renderMapIframe(mapUrls)) {
+      setMapStatus("");
+      return;
+    }
     setMapStatus("Harita yüklenemedi. Lütfen tekrar dene.");
     return;
   }
@@ -714,6 +911,10 @@ function setActivePanel(panelName, activeButton = null) {
     setTimeout(() => {
       leafletMap?.invalidateSize();
     }, 80);
+  }
+
+  if (panelName === "location" && activeVenue) {
+    void renderLocationMap(activeVenue);
   }
 }
 
@@ -755,7 +956,7 @@ function buildBreadcrumb(venue) {
 
   const cityLink = document.createElement("a");
   cityLink.href = cityUrl.toString();
-  cityLink.textContent = `${venue.city} restoranları`;
+  cityLink.textContent = `${venue.city} İli`;
 
   const dividerTwo = document.createElement("span");
   dividerTwo.textContent = "/";
@@ -780,6 +981,7 @@ function buildBreadcrumb(venue) {
 }
 
 function renderVenue(venue) {
+  activeVenue = venue;
   const hasRating = Number.isFinite(venue.rating);
   const hasReviewCount = Number.isFinite(venue.userRatingCount) && venue.userRatingCount > 1;
   const displayRating = hasRating && hasReviewCount ? venue.rating : 0;
@@ -788,7 +990,8 @@ function renderVenue(venue) {
 
   buildBreadcrumb(venue);
 
-  restaurantLead.textContent = `${venue.city} / ${formatDistrictLabel(venue.district)}`;
+  restaurantLead.textContent = "";
+  restaurantLead.hidden = true;
   restaurantName.textContent = venue.name;
   restaurantStars.textContent = starText(displayRating);
   restaurantScore.textContent = displayRating.toFixed(1);

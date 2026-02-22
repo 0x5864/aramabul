@@ -11,6 +11,23 @@
   }
 
   const VENUES_JSON_PATH = "data/venues.json";
+  const API_BASE_URL = (() => {
+    if (typeof window.NEREDEYENIR_API_BASE === "string" && window.NEREDEYENIR_API_BASE.trim()) {
+      return window.NEREDEYENIR_API_BASE.trim().replace(/\/+$/u, "");
+    }
+
+    if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+      return `${window.location.protocol}//${window.location.hostname}:8787`;
+    }
+
+    return window.location.origin;
+  })();
+  const VENUES_API_ENDPOINT =
+    typeof window.NEREDEYENIR_VENUES_API === "string" && window.NEREDEYENIR_VENUES_API.trim()
+      ? window.NEREDEYENIR_VENUES_API.trim()
+      : API_BASE_URL
+        ? `${API_BASE_URL}/api/venues?limit=50000`
+        : "";
   const turkishCharMap = {
     ç: "c",
     ğ: "g",
@@ -75,11 +92,23 @@
   }
 
   function normalizeVenueCollection(payload) {
-    if (!Array.isArray(payload)) {
-      return [];
+    if (Array.isArray(payload)) {
+      return payload.map(normalizeVenueRecord).filter((venue) => venue !== null);
     }
 
-    return payload.map(normalizeVenueRecord).filter((venue) => venue !== null);
+    if (payload && typeof payload === "object") {
+      const collection = Array.isArray(payload.venues)
+        ? payload.venues
+        : Array.isArray(payload.data)
+          ? payload.data
+          : null;
+
+      if (collection) {
+        return collection.map(normalizeVenueRecord).filter((venue) => venue !== null);
+      }
+    }
+
+    return [];
   }
 
   async function loadVenues() {
@@ -87,7 +116,7 @@
       return venuesPromise;
     }
 
-    venuesPromise = fetch(VENUES_JSON_PATH, {
+    venuesPromise = fetch(VENUES_API_ENDPOINT || VENUES_JSON_PATH, {
       method: "GET",
       headers: { Accept: "application/json" },
       credentials: "omit",
@@ -100,7 +129,27 @@
         return response.json();
       })
       .then((payload) => normalizeVenueCollection(payload))
-      .catch(() => []);
+      .catch(() => [])
+      .then((records) => {
+        if (records.length > 0 || !VENUES_API_ENDPOINT) {
+          return records;
+        }
+
+        return fetch(VENUES_JSON_PATH, {
+          method: "GET",
+          headers: { Accept: "application/json" },
+          credentials: "omit",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              return [];
+            }
+
+            return response.json();
+          })
+          .then((payload) => normalizeVenueCollection(payload))
+          .catch(() => []);
+      });
 
     return venuesPromise;
   }

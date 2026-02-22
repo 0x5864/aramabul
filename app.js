@@ -409,9 +409,7 @@ const categoryTags = [
   "Deniz Ürünleri",
   "Sokak Lezzetleri",
   "Dondurma",
-  "Baklava",
   "Tatlı",
-  "Künefe",
   "Kahvaltı",
   "Vegan",
   "Vejetaryen",
@@ -470,11 +468,33 @@ const signupPasswordRepeat = document.querySelector("#signupPasswordRepeat");
 
 const VENUES_JSON_PATH = "data/venues.json";
 const DISTRICTS_JSON_PATH = "data/districts.json";
+const API_BASE_URL = (() => {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  if (typeof window.NEREDEYENIR_API_BASE === "string" && window.NEREDEYENIR_API_BASE.trim()) {
+    return window.NEREDEYENIR_API_BASE.trim().replace(/\/+$/u, "");
+  }
+
+  if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+    return `${window.location.protocol}//${window.location.hostname}:8787`;
+  }
+
+  return window.location.origin;
+})();
 const VENUES_API_ENDPOINT =
-  typeof window !== "undefined" &&
-  typeof window.NEREDEYENIR_VENUES_API === "string"
+  typeof window !== "undefined" && typeof window.NEREDEYENIR_VENUES_API === "string"
     ? window.NEREDEYENIR_VENUES_API.trim()
-    : "";
+    : API_BASE_URL
+      ? `${API_BASE_URL}/api/venues?limit=50000`
+      : "";
+const DISTRICTS_API_ENDPOINT =
+  typeof window !== "undefined" && typeof window.NEREDEYENIR_DISTRICTS_API === "string"
+    ? window.NEREDEYENIR_DISTRICTS_API.trim()
+    : API_BASE_URL
+      ? `${API_BASE_URL}/api/districts`
+      : "";
 const AUTH_USERS_KEY = "neredeyenir.auth.users.v1";
 const AUTH_SESSION_KEY = "neredeyenir.auth.session.v1";
 const USER_CITY_CACHE_KEY = "neredeyenir.user.city.cache.v1";
@@ -667,6 +687,17 @@ function sanitizeText(value, fallback = "") {
   return cleaned.length > 0 ? cleaned.slice(0, 80) : fallback;
 }
 
+function normalizeCuisineLabel(value, fallback = "Yerel") {
+  const cleaned = sanitizeText(value, fallback);
+  const normalized = normalizeForSearch(cleaned);
+
+  if (normalized === "baklava" || normalized === "kunefe") {
+    return "Tatlı";
+  }
+
+  return cleaned;
+}
+
 function toTitleCaseTr(value) {
   return String(value || "")
     .split(/([\s\-\/()&,."]+)/)
@@ -731,7 +762,7 @@ function normalizeVenueRecord(record) {
   const city = sanitizeText(record.city);
   const district = sanitizeText(record.district, "Merkez");
   const name = sanitizeVenueName(record.name);
-  const cuisine = sanitizeText(record.cuisine, "Yerel");
+  const cuisine = normalizeCuisineLabel(record.cuisine, "Yerel");
 
   if (!city || !name) {
     return null;
@@ -920,6 +951,15 @@ async function loadVenuesData() {
 }
 
 async function loadDistrictData(records) {
+  if (DISTRICTS_API_ENDPOINT) {
+    const apiPayload = await fetchJson(DISTRICTS_API_ENDPOINT);
+    const apiDistricts = normalizeDistrictCollection(apiPayload);
+
+    if (Object.keys(apiDistricts).length > 0) {
+      return apiDistricts;
+    }
+  }
+
   const payload = await fetchJson(DISTRICTS_JSON_PATH);
   const localDistricts = normalizeDistrictCollection(payload);
 
