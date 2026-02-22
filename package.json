@@ -4,10 +4,12 @@
   "private": true,
   "description": "NeredeYenir frontend + PostgreSQL API",
   "scripts": {
+    "start": "node backend/server.js",
     "api": "node backend/server.js",
     "db:migrate": "node backend/scripts/migrate.js",
     "db:import:venues": "node backend/scripts/import-venues.js",
     "db:setup": "npm run db:migrate && npm run db:import:venues",
+    "db:setup:prod": "npm run db:migrate",
     "fetch:pastaneler": "node scripts/fetch-google-pastaneler.js"
   },
   "dependencies": {

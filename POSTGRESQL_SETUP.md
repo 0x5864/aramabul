@@ -30,31 +30,24 @@ npm run db:setup
 
 Bu adım, `data/venues.json` içindeki kayıtları PostgreSQL'e taşır.
 
-## 5) API'yi başlat
+## 5) Uygulamayı başlat
 
 """bash
-npm run api
+npm run start
 """
 
-API varsayılan olarak `http://127.0.0.1:8787` adresinde açılır.
+Uygulama varsayılan olarak `http://127.0.0.1:8787` adresinde açılır.
+Bu sunucu hem web sayfalarını hem API'yi sunar.
 
 ## 6) Siteyi aç
 
-Statik siteyi eskisi gibi açabilirsin.
+Tarayıcı: `http://127.0.0.1:8787`
 
-"""bash
-cd /Users/metintuncgenc/Documents/neredeyenir
-python3 -m http.server 5500 --bind 127.0.0.1
-"""
-
-Tarayıcı: `http://127.0.0.1:5500`
-
-Frontend, yerelde otomatik olarak `http://127.0.0.1:8787/api` endpointlerini dener.
-API çalışmazsa eski `data/*.json` dosyalarına geri düşer.
+Opsiyonel: İstersen statik dosyayı eski yöntemle de açabilirsin (`python3 -m http.server`).
+Bu durumda frontend yine API için `127.0.0.1:8787` adresini dener.
 
 ## Notlar
 
-- API sağlık kontrolü: `http://127.0.0.1:8787/api/health`
+- Sağlık kontrolü: `http://127.0.0.1:8787/api/health`
 - İl ve ilçe listesi: `http://127.0.0.1:8787/api/districts`
 - Restoran listesi örneği: `http://127.0.0.1:8787/api/venues?limit=100`
-
