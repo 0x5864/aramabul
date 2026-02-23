@@ -510,7 +510,378 @@ const state = {
 
 const authState = {
   user: null,
+  mode: "login",
 };
+
+const LANGUAGE_STORAGE_KEY = "neredeyenir.selectedLanguage.v1";
+const SUPPORTED_LANGUAGES = new Set(["TR", "EN", "RU", "DE", "ZH"]);
+const LANGUAGE_LOCALES = {
+  TR: "tr-TR",
+  EN: "en-US",
+  RU: "ru-RU",
+  DE: "de-DE",
+  ZH: "zh-CN",
+};
+
+const UI_TRANSLATIONS = {
+  TR: {
+    "meta.title": "NeredeYenir | Türkiye'nin Lezzet Haritası",
+    "meta.description":
+      "Türkiye'nin 81 ilinde yemek yenilecek yerleri keşfet. Şehir, mutfak ve bütçe filtresi ile en iyi mekanları bul.",
+    "brand.ariaLabel": "NeredeYenir",
+    "search.formAria": "Restoran arama",
+    "search.inputLabel": "Restoran adı",
+    "search.placeholder": "Restoran ara",
+    "search.button": "Ara",
+    "language.selectorAria": "Dil seçimi",
+    "auth.actionsAria": "Hesap işlemleri",
+    "auth.login": "Giriş yap",
+    "auth.signup": "Kayıt ol",
+    "auth.logout": "Çıkış yap",
+    "auth.close": "Kapat",
+    "auth.account": "Hesap",
+    "auth.modalLoginText": "Hesabına girerek favori mekanlarını kaydet.",
+    "auth.modalSignupText": "Yeni hesabını oluştur, şehir rotalarını kaydetmeye başla.",
+    "auth.email": "E-posta",
+    "auth.password": "Şifre",
+    "auth.fullName": "Ad soyad",
+    "auth.passwordRepeat": "Şifre tekrar",
+    "auth.welcome": "Merhaba, {name}",
+    "auth.errorEmailPasswordRequired": "E-posta ve şifre girmen gerekiyor.",
+    "auth.errorInvalidCredentials": "E-posta veya şifre hatalı.",
+    "auth.errorUserNotFound": "Bu e-posta ile kayıt bulunamadı.",
+    "auth.errorWrongPassword": "Şifre hatalı görünüyor.",
+    "auth.errorFillAll": "Tüm alanları doldurman gerekiyor.",
+    "auth.errorNameMin": "Ad soyad en az 2 karakter olmalı.",
+    "auth.errorInvalidEmail": "Geçerli bir e-posta gir.",
+    "auth.errorPasswordMin": "Şifre en az 6 karakter olmalı.",
+    "auth.errorPasswordRepeat": "Şifre tekrarı uyuşmuyor.",
+    "auth.errorEmailExists": "Bu e-posta zaten kayıtlı.",
+    "home.regionSearch": "Bölgelere göre ara",
+    "home.topCitiesAria": "En kalabalık 6 il",
+    "footer.ariaLabel": "Alt Bant",
+    "footer.downloadTitle": "NeredeYenir'i indir!",
+    "footer.downloadNow": "Hemen indirin",
+    "footer.appStoreAria": "App Store",
+    "footer.googlePlayAria": "Google Play",
+    "footer.discoverTitle": "NeredeYenir'i keşfet",
+    "footer.about": "Hakkımızda",
+    "footer.career": "Kariyer",
+    "footer.tech": "Teknoloji",
+    "footer.contact": "İletişim",
+    "footer.helpTitle": "Yardım mı lazım?",
+    "footer.faq": "Sıkça Sorulan Sorular",
+    "footer.kvkk": "Kişisel Verilerin Korunması",
+    "footer.privacy": "Gizlilik Politikası",
+    "footer.terms": "Kullanım Koşulları",
+    "footer.cookies": "Çerez Politikası",
+    "footer.partnerTitle": "İş ortaklığımız",
+    "footer.addRestaurant": "Restoran ekle",
+    "footer.addPrice": "Fiyat ekle",
+    "footer.collab": "İş birliği",
+    "footer.copyright": "© 2026 NeredeYenir",
+    "footer.socialAria": "Sosyal",
+    "footer.searchAria": "Ara",
+    "footer.worldAria": "Dünya",
+    "unit.restaurants": "restoran",
+    "region.selectCityTitle": "{city} şehrini seç",
+    "region.areaTitle": "{region} bölgesi",
+    "venue.meta": "Yerel yorumlarla öne çıktı. Akşam saatlerinde yoğun olabilir.",
+    "venue.openPageAria": "{name} sayfasını aç",
+    "venue.emptyDistrict": "{city} / {district} için eşleşen mekan bulunamadı.",
+    "venue.emptyCity":
+      "Bu şehir için henüz mekan eklenmedi. Sonraki adımda bu ile özel veri seti hazırlayabiliriz.",
+    "share.city": "{city} linkini paylaş",
+    "share.cityDistrict": "{city} / {district} linkini paylaş",
+    "share.copied": "Link kopyalandı",
+  },
+  EN: {
+    "meta.title": "NeredeYenir | Food Map of Turkey",
+    "meta.description":
+      "Discover places to eat in all 81 cities of Turkey. Find the best spots with city, cuisine, and budget filters.",
+    "brand.ariaLabel": "NeredeYenir",
+    "search.formAria": "Restaurant search",
+    "search.inputLabel": "Restaurant name",
+    "search.placeholder": "Search restaurant",
+    "search.button": "Search",
+    "language.selectorAria": "Language selection",
+    "auth.actionsAria": "Account actions",
+    "auth.login": "Sign in",
+    "auth.signup": "Sign up",
+    "auth.logout": "Sign out",
+    "auth.close": "Close",
+    "auth.account": "Account",
+    "auth.modalLoginText": "Sign in to save your favorite places.",
+    "auth.modalSignupText": "Create your account and start saving city routes.",
+    "auth.email": "Email",
+    "auth.password": "Password",
+    "auth.fullName": "Full name",
+    "auth.passwordRepeat": "Repeat password",
+    "auth.welcome": "Hi, {name}",
+    "auth.errorEmailPasswordRequired": "Please enter your email and password.",
+    "auth.errorInvalidCredentials": "Email or password is incorrect.",
+    "auth.errorUserNotFound": "No account found with this email.",
+    "auth.errorWrongPassword": "The password looks incorrect.",
+    "auth.errorFillAll": "Please fill in all fields.",
+    "auth.errorNameMin": "Full name must be at least 2 characters.",
+    "auth.errorInvalidEmail": "Please enter a valid email.",
+    "auth.errorPasswordMin": "Password must be at least 6 characters.",
+    "auth.errorPasswordRepeat": "Password confirmation does not match.",
+    "auth.errorEmailExists": "This email is already registered.",
+    "home.regionSearch": "Search by regions",
+    "home.topCitiesAria": "Top 6 most populated cities",
+    "footer.ariaLabel": "Footer",
+    "footer.downloadTitle": "Download NeredeYenir!",
+    "footer.downloadNow": "Download now",
+    "footer.appStoreAria": "App Store",
+    "footer.googlePlayAria": "Google Play",
+    "footer.discoverTitle": "Discover NeredeYenir",
+    "footer.about": "About us",
+    "footer.career": "Careers",
+    "footer.tech": "Technology",
+    "footer.contact": "Contact",
+    "footer.helpTitle": "Need help?",
+    "footer.faq": "Frequently Asked Questions",
+    "footer.kvkk": "Personal Data Protection",
+    "footer.privacy": "Privacy Policy",
+    "footer.terms": "Terms of Use",
+    "footer.cookies": "Cookie Policy",
+    "footer.partnerTitle": "Partnership",
+    "footer.addRestaurant": "Add restaurant",
+    "footer.addPrice": "Add price",
+    "footer.collab": "Collaboration",
+    "footer.copyright": "© 2026 NeredeYenir",
+    "footer.socialAria": "Social",
+    "footer.searchAria": "Search",
+    "footer.worldAria": "World",
+    "unit.restaurants": "restaurants",
+    "region.selectCityTitle": "Select {city}",
+    "region.areaTitle": "{region} region",
+    "venue.meta": "Popular in local reviews. It may be busy in the evening.",
+    "venue.openPageAria": "Open {name} page",
+    "venue.emptyDistrict": "No matching venues for {city} / {district}.",
+    "venue.emptyCity": "No venues have been added for this city yet.",
+    "share.city": "Share {city} link",
+    "share.cityDistrict": "Share {city} / {district} link",
+    "share.copied": "Link copied",
+  },
+  RU: {
+    "meta.title": "NeredeYenir | Гастрокарта Турции",
+    "meta.description":
+      "Откройте места для еды во всех 81 провинциях Турции. Фильтруйте по городу, кухне и бюджету.",
+    "brand.ariaLabel": "NeredeYenir",
+    "search.formAria": "Поиск ресторана",
+    "search.inputLabel": "Название ресторана",
+    "search.placeholder": "Найти ресторан",
+    "search.button": "Поиск",
+    "language.selectorAria": "Выбор языка",
+    "auth.actionsAria": "Действия аккаунта",
+    "auth.login": "Войти",
+    "auth.signup": "Регистрация",
+    "auth.logout": "Выйти",
+    "auth.close": "Закрыть",
+    "auth.account": "Аккаунт",
+    "auth.modalLoginText": "Войдите, чтобы сохранять любимые места.",
+    "auth.modalSignupText": "Создайте аккаунт и сохраняйте маршруты по городам.",
+    "auth.email": "Эл. почта",
+    "auth.password": "Пароль",
+    "auth.fullName": "Имя и фамилия",
+    "auth.passwordRepeat": "Повторите пароль",
+    "auth.welcome": "Здравствуйте, {name}",
+    "auth.errorEmailPasswordRequired": "Введите эл. почту и пароль.",
+    "auth.errorUserNotFound": "Аккаунт с этой почтой не найден.",
+    "auth.errorWrongPassword": "Пароль неверный.",
+    "auth.errorFillAll": "Пожалуйста, заполните все поля.",
+    "auth.errorPasswordMin": "Пароль должен быть не менее 6 символов.",
+    "auth.errorPasswordRepeat": "Пароли не совпадают.",
+    "auth.errorEmailExists": "Эта почта уже зарегистрирована.",
+    "home.regionSearch": "Поиск по регионам",
+    "home.topCitiesAria": "6 крупнейших городов по населению",
+    "footer.ariaLabel": "Нижняя панель",
+    "footer.downloadTitle": "Скачайте NeredeYenir!",
+    "footer.downloadNow": "Скачать",
+    "footer.appStoreAria": "App Store",
+    "footer.googlePlayAria": "Google Play",
+    "footer.discoverTitle": "О NeredeYenir",
+    "footer.about": "О нас",
+    "footer.career": "Карьера",
+    "footer.tech": "Технологии",
+    "footer.contact": "Контакты",
+    "footer.helpTitle": "Нужна помощь?",
+    "footer.faq": "Частые вопросы",
+    "footer.kvkk": "Защита персональных данных",
+    "footer.privacy": "Политика конфиденциальности",
+    "footer.terms": "Условия использования",
+    "footer.cookies": "Политика cookies",
+    "footer.partnerTitle": "Партнерство",
+    "footer.addRestaurant": "Добавить ресторан",
+    "footer.addPrice": "Добавить цену",
+    "footer.collab": "Сотрудничество",
+    "footer.copyright": "© 2026 NeredeYenir",
+    "footer.socialAria": "Соцсети",
+    "footer.searchAria": "Поиск",
+    "footer.worldAria": "Мир",
+    "unit.restaurants": "ресторанов",
+    "region.selectCityTitle": "Выбрать {city}",
+    "region.areaTitle": "Регион {region}",
+    "venue.meta": "Популярно в местных отзывах. Вечером может быть занято.",
+    "venue.emptyDistrict": "Нет совпадений для {city} / {district}.",
+    "venue.emptyCity": "Для этого города пока нет заведений.",
+    "share.city": "Поделиться ссылкой {city}",
+    "share.cityDistrict": "Поделиться ссылкой {city} / {district}",
+    "share.copied": "Ссылка скопирована",
+  },
+  DE: {
+    "meta.title": "NeredeYenir | Genusskarte der Türkei",
+    "meta.description":
+      "Entdecke Essensorte in allen 81 Provinzen der Türkei. Filtere nach Stadt, Küche und Budget.",
+    "brand.ariaLabel": "NeredeYenir",
+    "search.formAria": "Restaurantsuche",
+    "search.inputLabel": "Restaurantname",
+    "search.placeholder": "Restaurant suchen",
+    "search.button": "Suchen",
+    "language.selectorAria": "Sprachauswahl",
+    "auth.actionsAria": "Kontoaktionen",
+    "auth.login": "Anmelden",
+    "auth.signup": "Registrieren",
+    "auth.logout": "Abmelden",
+    "auth.close": "Schließen",
+    "auth.account": "Konto",
+    "auth.modalLoginText": "Melde dich an, um Favoriten zu speichern.",
+    "auth.modalSignupText": "Erstelle ein Konto und speichere Städterouten.",
+    "auth.email": "E-Mail",
+    "auth.password": "Passwort",
+    "auth.fullName": "Vor- und Nachname",
+    "auth.passwordRepeat": "Passwort wiederholen",
+    "auth.welcome": "Hallo, {name}",
+    "auth.errorEmailPasswordRequired": "Bitte E-Mail und Passwort eingeben.",
+    "auth.errorUserNotFound": "Kein Konto mit dieser E-Mail gefunden.",
+    "auth.errorWrongPassword": "Das Passwort ist falsch.",
+    "auth.errorFillAll": "Bitte alle Felder ausfüllen.",
+    "auth.errorPasswordMin": "Das Passwort muss mindestens 6 Zeichen haben.",
+    "auth.errorPasswordRepeat": "Passwortbestätigung stimmt nicht überein.",
+    "auth.errorEmailExists": "Diese E-Mail ist bereits registriert.",
+    "home.regionSearch": "Suche nach Regionen",
+    "home.topCitiesAria": "Top 6 nach Bevölkerungszahl",
+    "footer.ariaLabel": "Fußbereich",
+    "footer.downloadTitle": "NeredeYenir herunterladen!",
+    "footer.downloadNow": "Jetzt herunterladen",
+    "footer.appStoreAria": "App Store",
+    "footer.googlePlayAria": "Google Play",
+    "footer.discoverTitle": "NeredeYenir entdecken",
+    "footer.about": "Über uns",
+    "footer.career": "Karriere",
+    "footer.tech": "Technologie",
+    "footer.contact": "Kontakt",
+    "footer.helpTitle": "Brauchst du Hilfe?",
+    "footer.faq": "Häufige Fragen",
+    "footer.kvkk": "Datenschutz personenbezogener Daten",
+    "footer.privacy": "Datenschutzrichtlinie",
+    "footer.terms": "Nutzungsbedingungen",
+    "footer.cookies": "Cookie-Richtlinie",
+    "footer.partnerTitle": "Partnerschaft",
+    "footer.addRestaurant": "Restaurant hinzufügen",
+    "footer.addPrice": "Preis hinzufügen",
+    "footer.collab": "Zusammenarbeit",
+    "footer.copyright": "© 2026 NeredeYenir",
+    "footer.socialAria": "Sozial",
+    "footer.searchAria": "Suche",
+    "footer.worldAria": "Welt",
+    "unit.restaurants": "Restaurants",
+    "region.selectCityTitle": "{city} auswählen",
+    "region.areaTitle": "{region} Region",
+    "venue.meta": "In lokalen Bewertungen beliebt. Abends kann es voll sein.",
+    "venue.emptyDistrict": "Keine passenden Orte für {city} / {district}.",
+    "venue.emptyCity": "Für diese Stadt wurden noch keine Orte hinzugefügt.",
+    "share.city": "{city} Link teilen",
+    "share.cityDistrict": "{city} / {district} Link teilen",
+    "share.copied": "Link kopiert",
+  },
+  ZH: {
+    "meta.title": "NeredeYenir | 土耳其美食地图",
+    "meta.description":
+      "探索土耳其81个城市的餐厅。可按城市、菜系和预算筛选优质餐厅。",
+    "brand.ariaLabel": "NeredeYenir",
+    "search.formAria": "餐厅搜索",
+    "search.inputLabel": "餐厅名称",
+    "search.placeholder": "搜索餐厅",
+    "search.button": "搜索",
+    "language.selectorAria": "语言选择",
+    "auth.actionsAria": "账户操作",
+    "auth.login": "登录",
+    "auth.signup": "注册",
+    "auth.logout": "退出",
+    "auth.close": "关闭",
+    "auth.account": "账户",
+    "auth.modalLoginText": "登录后可保存你喜欢的餐厅。",
+    "auth.modalSignupText": "创建账户并开始保存城市路线。",
+    "auth.email": "电子邮箱",
+    "auth.password": "密码",
+    "auth.fullName": "姓名",
+    "auth.passwordRepeat": "确认密码",
+    "auth.welcome": "你好，{name}",
+    "auth.errorEmailPasswordRequired": "请输入邮箱和密码。",
+    "auth.errorUserNotFound": "未找到该邮箱对应账户。",
+    "auth.errorWrongPassword": "密码不正确。",
+    "auth.errorFillAll": "请填写所有字段。",
+    "auth.errorPasswordMin": "密码至少需要6个字符。",
+    "auth.errorPasswordRepeat": "两次密码不一致。",
+    "auth.errorEmailExists": "该邮箱已注册。",
+    "home.regionSearch": "按地区搜索",
+    "home.topCitiesAria": "人口最多的6个城市",
+    "footer.ariaLabel": "页脚",
+    "footer.downloadTitle": "下载 NeredeYenir！",
+    "footer.downloadNow": "立即下载",
+    "footer.appStoreAria": "App Store",
+    "footer.googlePlayAria": "Google Play",
+    "footer.discoverTitle": "了解 NeredeYenir",
+    "footer.about": "关于我们",
+    "footer.career": "招聘",
+    "footer.tech": "技术",
+    "footer.contact": "联系",
+    "footer.helpTitle": "需要帮助？",
+    "footer.faq": "常见问题",
+    "footer.kvkk": "个人数据保护",
+    "footer.privacy": "隐私政策",
+    "footer.terms": "使用条款",
+    "footer.cookies": "Cookie 政策",
+    "footer.partnerTitle": "合作伙伴",
+    "footer.addRestaurant": "添加餐厅",
+    "footer.addPrice": "添加价格",
+    "footer.collab": "合作",
+    "footer.copyright": "© 2026 NeredeYenir",
+    "footer.socialAria": "社交",
+    "footer.searchAria": "搜索",
+    "footer.worldAria": "世界",
+    "unit.restaurants": "家餐厅",
+    "region.selectCityTitle": "选择 {city}",
+    "region.areaTitle": "{region} 地区",
+    "venue.meta": "本地评价热门，晚间可能较拥挤。",
+    "venue.emptyDistrict": "{city} / {district} 没有匹配结果。",
+    "venue.emptyCity": "该城市暂未添加餐厅。",
+    "share.city": "分享 {city} 链接",
+    "share.cityDistrict": "分享 {city} / {district} 链接",
+    "share.copied": "链接已复制",
+  },
+};
+
+const REGION_TRANSLATIONS = {
+  Marmara: { TR: "Marmara", EN: "Marmara", RU: "Мраморный", DE: "Marmara", ZH: "马尔马拉" },
+  "İç Anadolu": { TR: "İç Anadolu", EN: "Central Anatolia", RU: "Центральная Анатолия", DE: "Zentralanatolien", ZH: "中安纳托利亚" },
+  Ege: { TR: "Ege", EN: "Aegean", RU: "Эгейский", DE: "Ägäis", ZH: "爱琴" },
+  Akdeniz: { TR: "Akdeniz", EN: "Mediterranean", RU: "Средиземноморский", DE: "Mittelmeer", ZH: "地中海" },
+  Karadeniz: { TR: "Karadeniz", EN: "Black Sea", RU: "Черноморский", DE: "Schwarzmeer", ZH: "黑海" },
+  "Doğu Anadolu": { TR: "Doğu Anadolu", EN: "Eastern Anatolia", RU: "Восточная Анатолия", DE: "Ostanatolien", ZH: "东安纳托利亚" },
+  "Güneydoğu Anadolu": {
+    TR: "Güneydoğu Anadolu",
+    EN: "Southeastern Anatolia",
+    RU: "Юго-Восточная Анатолия",
+    DE: "Südostanatolien",
+    ZH: "东南安纳托利亚",
+  },
+};
+
+let activeLanguage = "TR";
 
 const regionOrder = [
   "Marmara",
@@ -664,6 +1035,93 @@ const turkishCharMap = {
 const cityBySlug = new Map(
   provinces.map((province) => [toSlug(province), province]),
 );
+
+function normalizeLanguageCode(code) {
+  const normalized = String(code || "").trim().toUpperCase();
+  return SUPPORTED_LANGUAGES.has(normalized) ? normalized : "TR";
+}
+
+function readLanguageFromStorage() {
+  try {
+    return normalizeLanguageCode(localStorage.getItem(LANGUAGE_STORAGE_KEY));
+  } catch (_error) {
+    return "TR";
+  }
+}
+
+function currentLanguage() {
+  if (typeof window.NEREDEYENIR_GET_LANGUAGE === "function") {
+    return normalizeLanguageCode(window.NEREDEYENIR_GET_LANGUAGE());
+  }
+
+  return activeLanguage;
+}
+
+function currentLocale() {
+  return LANGUAGE_LOCALES[currentLanguage()] || LANGUAGE_LOCALES.TR;
+}
+
+function t(key, replacements = {}) {
+  const lang = currentLanguage();
+  const languagePack = UI_TRANSLATIONS[lang] || UI_TRANSLATIONS.TR;
+  const template = languagePack[key] || UI_TRANSLATIONS.TR[key] || "";
+
+  return Object.entries(replacements).reduce((output, [token, value]) => {
+    return output.replaceAll(`{${token}}`, String(value));
+  }, template);
+}
+
+function translatedRegionName(regionName) {
+  const source = REGION_TRANSLATIONS[regionName];
+  if (!source) {
+    return regionName;
+  }
+
+  return source[currentLanguage()] || source.TR || regionName;
+}
+
+function applyStaticTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    const key = element.getAttribute("data-i18n");
+    if (!key) {
+      return;
+    }
+
+    element.textContent = t(key);
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-placeholder");
+    if (!key || !(element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement)) {
+      return;
+    }
+
+    element.placeholder = t(key);
+  });
+
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-aria-label");
+    if (!key) {
+      return;
+    }
+
+    element.setAttribute("aria-label", t(key));
+  });
+
+  document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+    const key = element.getAttribute("data-i18n-title");
+    if (!key || element.tagName !== "TITLE") {
+      return;
+    }
+
+    element.textContent = t(key);
+  });
+
+  const descriptionMeta = document.querySelector('meta[name="description"]');
+  if (descriptionMeta) {
+    descriptionMeta.setAttribute("content", t("meta.description"));
+  }
+}
 
 function normalizeForSearch(value) {
   return value
@@ -1250,12 +1708,13 @@ function toggleAuthForms(mode) {
   }
 
   const isLoginMode = mode === "login";
+  authState.mode = isLoginMode ? "login" : "signup";
   loginForm.classList.toggle("is-hidden", !isLoginMode);
   signupForm.classList.toggle("is-hidden", isLoginMode);
-  authModalTitle.textContent = isLoginMode ? "Giriş yap" : "Kaydol";
+  authModalTitle.textContent = isLoginMode ? t("auth.login") : t("auth.signup");
   authModalText.textContent = isLoginMode
-    ? "Hesabına girerek favori mekanlarını kaydet."
-    : "Yeni hesabını oluştur, şehir rotalarını kaydetmeye başla.";
+    ? t("auth.modalLoginText")
+    : t("auth.modalSignupText");
   setAuthMessage("");
 }
 
@@ -1292,7 +1751,7 @@ function renderAuthBar() {
 
   if (authWelcome) {
     authWelcome.classList.toggle("is-hidden", !hasUser);
-    authWelcome.textContent = hasUser ? `Merhaba, ${authState.user.name}` : "";
+    authWelcome.textContent = hasUser ? t("auth.welcome", { name: authState.user.name }) : "";
   }
 
   if (loginBtn) {
@@ -1324,7 +1783,7 @@ async function handleLoginSubmit(event) {
   );
 
   if (!matchingUser) {
-    setAuthMessage("E-posta veya şifre hatalı.", true);
+    setAuthMessage(t("auth.errorInvalidCredentials"), true);
     return;
   }
 
@@ -1350,22 +1809,22 @@ async function handleSignupSubmit(event) {
   const repeated = String(signupPasswordRepeat.value || "");
 
   if (name.length < 2) {
-    setAuthMessage("Ad soyad en az 2 karakter olmalı.", true);
+    setAuthMessage(t("auth.errorNameMin"), true);
     return;
   }
 
   if (!email.includes("@") || email.length < 6) {
-    setAuthMessage("Geçerli bir e-posta gir.", true);
+    setAuthMessage(t("auth.errorInvalidEmail"), true);
     return;
   }
 
   if (password.length < 6) {
-    setAuthMessage("Şifre en az 6 karakter olmalı.", true);
+    setAuthMessage(t("auth.errorPasswordMin"), true);
     return;
   }
 
   if (password !== repeated) {
-    setAuthMessage("Şifreler aynı değil.", true);
+    setAuthMessage(t("auth.errorPasswordRepeat"), true);
     return;
   }
 
@@ -1373,7 +1832,7 @@ async function handleSignupSubmit(event) {
   const emailExists = users.some((user) => normalizeEmail(user.email) === email);
 
   if (emailExists) {
-    setAuthMessage("Bu e-posta ile kayıtlı bir hesap zaten var.", true);
+    setAuthMessage(t("auth.errorEmailExists"), true);
     return;
   }
 
@@ -1802,7 +2261,7 @@ function renderTopPopulationCities() {
     card.type = "button";
     card.className = "top-city-card";
     card.dataset.city = cityData.name;
-    card.title = `${cityData.name} şehrini seç`;
+    card.title = t("region.selectCityTitle", { city: cityData.name });
 
     if (state.city === cityData.name) {
       card.classList.add("active");
@@ -1821,7 +2280,7 @@ function renderTopPopulationCities() {
     name.className = "top-city-name";
     name.textContent = cityData.name;
     stat.className = "top-city-population";
-    stat.textContent = `${venueCount.toLocaleString("tr-TR")} restoran`;
+    stat.textContent = `${venueCount.toLocaleString(currentLocale())} ${t("unit.restaurants")}`;
 
     content.append(name, stat);
     card.append(thumb, content);
@@ -1843,7 +2302,7 @@ function renderProvinces() {
 
     const regionTitle = document.createElement("h4");
     regionTitle.className = "province-region";
-    regionTitle.textContent = regionName;
+    regionTitle.textContent = translatedRegionName(regionName);
 
     const citiesWrap = document.createElement("div");
     citiesWrap.className = "province-cities";
@@ -1855,7 +2314,7 @@ function renderProvinces() {
       button.type = "button";
       button.className = "province-pill";
       button.dataset.city = cityData.name;
-      button.title = `${regionName} bölgesi`;
+      button.title = t("region.areaTitle", { region: translatedRegionName(regionName) });
       cityName.className = "province-city";
       cityName.textContent = cityData.name;
 
@@ -1966,10 +2425,9 @@ function createVenueCard(venue, index) {
   if (nameLink) {
     nameLink.textContent = venue.name;
     nameLink.href = restaurantPageUrl(venue);
-    nameLink.setAttribute("aria-label", `${venue.name} sayfasını aç`);
+    nameLink.setAttribute("aria-label", t("venue.openPageAria", { name: venue.name }));
   }
-  card.querySelector(".meta").textContent =
-    "Yerel yorumlarla öne çıktı. Akşam saatlerinde yoğun olabilir.";
+  card.querySelector(".meta").textContent = t("venue.meta");
   card.querySelector(".rating").textContent = `⭐ ${venue.rating.toFixed(1)}`;
   card.querySelector(".budget").textContent = venue.budget;
 
@@ -2000,10 +2458,12 @@ function renderEmptyState() {
   const emptyState = document.createElement("article");
   emptyState.className = "empty-state";
   if (state.city !== "all" && state.district !== "all") {
-    emptyState.textContent = `${state.city} / ${state.district} için eşleşen mekan bulunamadı.`;
+    emptyState.textContent = t("venue.emptyDistrict", {
+      city: state.city,
+      district: state.district,
+    });
   } else {
-    emptyState.textContent =
-      "Bu şehir için henüz mekan eklenmedi. Sonraki adımda bu ile özel veri seti hazırlayabiliriz.";
+    emptyState.textContent = t("venue.emptyCity");
   }
   venueGrid.append(emptyState);
 }
@@ -2084,8 +2544,8 @@ function renderCityDetail() {
   cityShareLink.href = shareUrl;
   cityShareLink.textContent =
     state.district === "all"
-      ? `${city} linkini paylaş`
-      : `${city} / ${state.district} linkini paylaş`;
+      ? t("share.city", { city })
+      : t("share.cityDistrict", { city, district: state.district });
 
   cityDetail.classList.remove("is-hidden");
 }
@@ -2190,12 +2650,15 @@ if (cityShareLink) {
       navigator.clipboard
         .writeText(shareTarget)
         .then(() => {
-          cityShareLink.textContent = "Link kopyalandı";
+          cityShareLink.textContent = t("share.copied");
           window.setTimeout(() => {
             cityShareLink.textContent =
               state.district === "all"
-                ? `${state.city} linkini paylaş`
-                : `${state.city} / ${state.district} linkini paylaş`;
+                ? t("share.city", { city: state.city })
+                : t("share.cityDistrict", {
+                    city: state.city,
+                    district: state.district,
+                  });
           }, 1400);
         })
         .catch(() => {
@@ -2223,7 +2686,28 @@ window.addEventListener("popstate", () => {
   renderCityDetail();
 });
 
+function applyLanguageToPage() {
+  applyStaticTranslations();
+  renderAuthBar();
+  renderProvinces();
+  renderDistrictFilter();
+  renderVenues();
+  renderCityDetail();
+
+  if (authModal && !authModal.classList.contains("is-hidden")) {
+    toggleAuthForms(authState.mode);
+  }
+}
+
+document.addEventListener("neredeyenir:languagechange", (event) => {
+  const requested = event && event.detail ? event.detail.language : "TR";
+  activeLanguage = normalizeLanguageCode(requested);
+  applyLanguageToPage();
+});
+
 async function initializeApp() {
+  activeLanguage = currentLanguage() || readLanguageFromStorage();
+  applyStaticTranslations();
   initializeAuth();
   venues = await loadVenuesData();
   buildVenueIndexes(venues);
@@ -2253,6 +2737,8 @@ async function initializeApp() {
   if (!hasUrlCity && state.city === "all") {
     void detectAndApplyUserCityFromBrowser();
   }
+
+  applyLanguageToPage();
 }
 
 initializeApp();

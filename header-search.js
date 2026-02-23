@@ -1,4 +1,253 @@
 (() => {
+  const LANG_STORAGE_KEY = "neredeyenir.selectedLanguage.v1";
+  const LANGUAGE_OPTIONS = {
+    TR: { htmlLang: "tr" },
+    EN: { htmlLang: "en" },
+    RU: { htmlLang: "ru" },
+    DE: { htmlLang: "de" },
+    ZH: { htmlLang: "zh" },
+  };
+  const SEARCH_BUTTON_TEXT = {
+    TR: { idle: "Ara", loading: "Aranıyor..." },
+    EN: { idle: "Search", loading: "Searching..." },
+    RU: { idle: "Поиск", loading: "Поиск..." },
+    DE: { idle: "Suchen", loading: "Suche..." },
+    ZH: { idle: "搜索", loading: "搜索中..." },
+  };
+  const SEARCH_PLACEHOLDER_TEXT = {
+    TR: "Restoran ara",
+    EN: "Search restaurant",
+    RU: "Найти ресторан",
+    DE: "Restaurant suchen",
+    ZH: "搜索餐厅",
+  };
+  const SEARCH_FORM_ARIA_TEXT = {
+    TR: "Restoran arama",
+    EN: "Restaurant search",
+    RU: "Поиск ресторана",
+    DE: "Restaurantsuche",
+    ZH: "餐厅搜索",
+  };
+  const SEARCH_INPUT_LABEL_TEXT = {
+    TR: "Restoran adı",
+    EN: "Restaurant name",
+    RU: "Название ресторана",
+    DE: "Restaurantname",
+    ZH: "餐厅名称",
+  };
+  const HOVER_CLOSE_DELAY_MS = 180;
+  const hoverCloseTimers = new WeakMap();
+
+  function clearHoverCloseTimer(container) {
+    if (!container) {
+      return;
+    }
+
+    const activeTimer = hoverCloseTimers.get(container);
+    if (activeTimer) {
+      window.clearTimeout(activeTimer);
+      hoverCloseTimers.delete(container);
+    }
+  }
+
+  function scheduleHoverClose(container) {
+    if (!container) {
+      return;
+    }
+
+    clearHoverCloseTimer(container);
+    const timerId = window.setTimeout(() => {
+      closeLanguageMenu(container);
+      hoverCloseTimers.delete(container);
+    }, HOVER_CLOSE_DELAY_MS);
+    hoverCloseTimers.set(container, timerId);
+  }
+
+  function isKnownLanguage(code) {
+    return Boolean(code && Object.prototype.hasOwnProperty.call(LANGUAGE_OPTIONS, code));
+  }
+
+  function readStoredLanguage() {
+    try {
+      const raw = window.localStorage.getItem(LANG_STORAGE_KEY);
+      const code = String(raw || "").trim().toUpperCase();
+      return isKnownLanguage(code) ? code : "TR";
+    } catch (_error) {
+      return "TR";
+    }
+  }
+
+  function persistLanguage(code) {
+    try {
+      window.localStorage.setItem(LANG_STORAGE_KEY, code);
+    } catch (_error) {
+      // Ignore.
+    }
+  }
+
+  function closeLanguageMenu(container) {
+    if (!container) {
+      return;
+    }
+
+    clearHoverCloseTimer(container);
+
+    const menu = container.querySelector("[data-lang-menu]");
+    const trigger = container.querySelector("[data-lang-trigger]");
+    if (menu) {
+      menu.hidden = true;
+    }
+    if (trigger) {
+      trigger.setAttribute("aria-expanded", "false");
+    }
+    container.classList.remove("is-open");
+  }
+
+  function closeAllLanguageMenus() {
+    const containers = [...document.querySelectorAll("[data-lang-switch]")];
+    containers.forEach((container) => {
+      closeLanguageMenu(container);
+    });
+  }
+
+  function openLanguageMenu(container) {
+    if (!container) {
+      return;
+    }
+
+    clearHoverCloseTimer(container);
+
+    const menu = container.querySelector("[data-lang-menu]");
+    const trigger = container.querySelector("[data-lang-trigger]");
+    if (!menu || !trigger) {
+      return;
+    }
+
+    closeAllLanguageMenus();
+    menu.hidden = false;
+    trigger.setAttribute("aria-expanded", "true");
+    container.classList.add("is-open");
+  }
+
+  function applyLanguage(code, persist = true) {
+    const selectedCode = isKnownLanguage(code) ? code : "TR";
+    document.documentElement.lang = LANGUAGE_OPTIONS[selectedCode].htmlLang;
+    window.NEREDEYENIR_CURRENT_LANGUAGE = selectedCode;
+
+    const switches = [...document.querySelectorAll("[data-lang-switch]")];
+    switches.forEach((container) => {
+      const current = container.querySelector("[data-lang-current]");
+      if (current) {
+        current.textContent = selectedCode;
+      }
+
+      const options = [...container.querySelectorAll("[data-lang-option]")];
+      options.forEach((option) => {
+        const optionCode = String(option.dataset.langOption || "").toUpperCase();
+        const isActive = optionCode === selectedCode;
+        option.classList.toggle("active", isActive);
+        option.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+    });
+
+    if (persist) {
+      persistLanguage(selectedCode);
+    }
+
+    document.dispatchEvent(
+      new CustomEvent("neredeyenir:languagechange", {
+        detail: { language: selectedCode },
+      }),
+    );
+  }
+
+  function initializeLanguageSwitcher() {
+    const switches = [...document.querySelectorAll("[data-lang-switch]")];
+    applyLanguage(readStoredLanguage(), false);
+
+    if (switches.length === 0) {
+      return;
+    }
+
+    switches.forEach((container) => {
+      const trigger = container.querySelector("[data-lang-trigger]");
+      const menu = container.querySelector("[data-lang-menu]");
+      const options = [...container.querySelectorAll("[data-lang-option]")];
+
+      if (!trigger || !menu || options.length === 0) {
+        return;
+      }
+
+      trigger.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (menu.hidden) {
+          openLanguageMenu(container);
+          return;
+        }
+
+        closeLanguageMenu(container);
+      });
+
+      container.addEventListener("mouseenter", () => {
+        clearHoverCloseTimer(container);
+        openLanguageMenu(container);
+      });
+
+      container.addEventListener("mouseleave", () => {
+        scheduleHoverClose(container);
+      });
+
+      menu.addEventListener("mouseenter", () => {
+        clearHoverCloseTimer(container);
+      });
+
+      trigger.addEventListener("focus", () => {
+        openLanguageMenu(container);
+      });
+
+      container.addEventListener("focusout", (event) => {
+        const nextFocus = event.relatedTarget;
+        if (nextFocus && container.contains(nextFocus)) {
+          return;
+        }
+
+        closeLanguageMenu(container);
+      });
+
+      options.forEach((option) => {
+        option.addEventListener("click", () => {
+          const selected = String(option.dataset.langOption || "").toUpperCase();
+          applyLanguage(selected, true);
+          closeLanguageMenu(container);
+        });
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.target && event.target.closest("[data-lang-switch]")) {
+        return;
+      }
+      closeAllLanguageMenus();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeAllLanguageMenus();
+      }
+    });
+  }
+
+  window.NEREDEYENIR_GET_LANGUAGE = () => {
+    const code = String(window.NEREDEYENIR_CURRENT_LANGUAGE || "").toUpperCase();
+    if (isKnownLanguage(code)) {
+      return code;
+    }
+
+    return readStoredLanguage();
+  };
+
+  initializeLanguageSwitcher();
+
   const form = document.querySelector(".header-search");
   if (!form) {
     return;
@@ -9,6 +258,33 @@
   if (!input || !submitButton) {
     return;
   }
+
+  const inputLabel = form.querySelector('label[for="headerSearchInput"]');
+
+  function applySearchUiLanguage() {
+    const lang =
+      typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
+        ? window.NEREDEYENIR_GET_LANGUAGE()
+        : readStoredLanguage();
+
+    const buttonText = SEARCH_BUTTON_TEXT[lang] || SEARCH_BUTTON_TEXT.TR;
+    const placeholderText = SEARCH_PLACEHOLDER_TEXT[lang] || SEARCH_PLACEHOLDER_TEXT.TR;
+    const formAriaText = SEARCH_FORM_ARIA_TEXT[lang] || SEARCH_FORM_ARIA_TEXT.TR;
+    const inputLabelText = SEARCH_INPUT_LABEL_TEXT[lang] || SEARCH_INPUT_LABEL_TEXT.TR;
+
+    form.setAttribute("aria-label", formAriaText);
+    input.setAttribute("placeholder", placeholderText);
+    submitButton.textContent = buttonText.idle;
+
+    if (inputLabel) {
+      inputLabel.textContent = inputLabelText;
+    }
+  }
+
+  applySearchUiLanguage();
+  document.addEventListener("neredeyenir:languagechange", () => {
+    applySearchUiLanguage();
+  });
 
   const VENUES_JSON_PATH = "data/venues.json";
   const API_BASE_URL = (() => {
@@ -197,9 +473,14 @@
   }
 
   function setLoadingState(isLoading) {
+    const lang =
+      typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
+        ? window.NEREDEYENIR_GET_LANGUAGE()
+        : readStoredLanguage();
+    const labels = SEARCH_BUTTON_TEXT[lang] || SEARCH_BUTTON_TEXT.TR;
     input.disabled = isLoading;
     submitButton.disabled = isLoading;
-    submitButton.textContent = isLoading ? "Aranıyor..." : "Ara";
+    submitButton.textContent = isLoading ? labels.loading : labels.idle;
   }
 
   form.addEventListener("submit", async (event) => {

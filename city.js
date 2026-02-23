@@ -136,6 +136,16 @@ const categoryCurrent = document.querySelector("#categoryCurrent");
 const categoryFlyoutCity = document.querySelector("#categoryFlyoutCity");
 const categoryFlyoutList = document.querySelector("#categoryFlyoutList");
 const sortTabs = [...document.querySelectorAll(".city-sort-tab")];
+const cityToplineHomeLink = document.querySelector(".city-topline-inner a");
+const cityToplineSuffix = document.querySelector(".city-topline-inner span:last-child");
+const districtHeading = document.querySelector(".filter-card-district .filter-card-head h3");
+const categoryHeading = document.querySelector(".filter-card-category .filter-card-head h3");
+const districtFlyoutTitle = document.querySelector(".district-flyout-head strong");
+const categoryFlyoutTitle = document.querySelector(".category-flyout-head strong");
+const footerColumns = [...document.querySelectorAll(".yr-footer-col")];
+const footerBottomText = document.querySelector(".yr-footer-bottom p");
+const footerSocial = document.querySelector(".yr-footer-social");
+const footerSocialLinks = [...document.querySelectorAll(".yr-footer-social a")];
 
 const loginBtn = document.querySelector("#loginBtn");
 const signupBtn = document.querySelector("#signupBtn");
@@ -177,6 +187,290 @@ const authState = {
   user: null,
   mode: "login",
 };
+
+const LANGUAGE_STORAGE_KEY = "neredeyenir.selectedLanguage.v1";
+const SUPPORTED_LANGUAGES = new Set(["TR", "EN", "RU", "DE", "ZH"]);
+const LANGUAGE_LOCALES = {
+  TR: "tr-TR",
+  EN: "en-US",
+  RU: "ru-RU",
+  DE: "de-DE",
+  ZH: "zh-CN",
+};
+
+const CITY_I18N = {
+  TR: {
+    title: "NeredeYenir | {city} Restoranları",
+    cityTitle: "{city} Restoranları",
+    toplineHome: "Anasayfa",
+    toplineRestaurants: "restoranları",
+    districtSearch: "İlçeye göre ara",
+    categorySearch: "Kategoriye göre ara",
+    districtPickerAria: "İlçe seçimini aç",
+    categoryPickerAria: "Kategori seçimini aç",
+    districtListAria: "İlçe listesi",
+    districtOptionsAria: "İlçe seçenekleri",
+    categoryListAria: "Kategori listesi",
+    categoryOptionsAria: "Kategori seçenekleri",
+    allDistricts: "Tüm ilçeler",
+    allCategories: "Tüm kategoriler",
+    districtListTitle: "İlçeler",
+    categoryListTitle: "Kategoriler",
+    sortTraveler: "En çok tercih edilen",
+    sortLocals: "Yerel favoriler",
+    sortViewed: "En çok görüntülenen",
+    sortRated: "En yüksek puan",
+    paginationPrev: "Önceki",
+    paginationNext: "Sonraki",
+    paginationAria: "Sayfa {page}",
+    emptyFiltered: "Bu filtrelerle eşleşen restoran bulunamadı. Filtreleri genişleterek tekrar dene.",
+    openVenueAria: "{name} sayfasını aç",
+    resultWithDistrict:
+      "{city} ilinde toplam {cityTotal} restoran bulunmaktadır. {district} İlçesinde de {districtTotal} restoran vardır.",
+    resultWithoutDistrict: "{city} ilinde toplam {cityTotal} restoran bulunmaktadır.",
+    cityDataMissingTitle: "Şehir verisi bulunamadı",
+    cityDataMissingText: "Gösterilecek restoran verisi yok.",
+    footerLabel: "Alt Bant",
+    footerDownloadTitle: "NeredeYenir'i indir!",
+    footerDownloadNow: "Hemen indirin",
+    footerDiscoverTitle: "NeredeYenir'i keşfet",
+    footerAbout: "Hakkımızda",
+    footerCareer: "Kariyer",
+    footerTech: "Teknoloji",
+    footerContact: "İletişim",
+    footerHelpTitle: "Yardım mı lazım?",
+    footerFaq: "Sıkça Sorulan Sorular",
+    footerKvkk: "Kişisel Verilerin Korunması",
+    footerPrivacy: "Gizlilik Politikası",
+    footerTerms: "Kullanım Koşulları",
+    footerCookies: "Çerez Politikası",
+    footerPartnerTitle: "İş ortaklığımız",
+    footerAddRestaurant: "Restoran ekle",
+    footerAddPrice: "Fiyat ekle",
+    footerCollab: "İş birliği",
+    footerCopyright: "© 2026 NeredeYenir",
+    footerSocial: "Sosyal",
+    footerSearchAria: "Ara",
+    footerWorldAria: "Dünya",
+  },
+  EN: {
+    title: "NeredeYenir | {city} Restaurants",
+    cityTitle: "{city} Restaurants",
+    toplineHome: "Home",
+    toplineRestaurants: "restaurants",
+    districtSearch: "Search by district",
+    categorySearch: "Search by category",
+    districtPickerAria: "Open district selector",
+    categoryPickerAria: "Open category selector",
+    districtListAria: "District list",
+    districtOptionsAria: "District options",
+    categoryListAria: "Category list",
+    categoryOptionsAria: "Category options",
+    allDistricts: "All districts",
+    allCategories: "All categories",
+    districtListTitle: "Districts",
+    categoryListTitle: "Categories",
+    sortTraveler: "Most preferred",
+    sortLocals: "Local favorites",
+    sortViewed: "Most viewed",
+    sortRated: "Highest rated",
+    paginationPrev: "Previous",
+    paginationNext: "Next",
+    paginationAria: "Page {page}",
+    emptyFiltered: "No restaurants match these filters. Try widening your filters.",
+    openVenueAria: "Open {name} page",
+    resultWithDistrict:
+      "There are {cityTotal} restaurants in {city}. There are {districtTotal} restaurants in {district} district.",
+    resultWithoutDistrict: "There are {cityTotal} restaurants in {city}.",
+    cityDataMissingTitle: "City data not found",
+    cityDataMissingText: "No restaurant data to display.",
+    footerLabel: "Footer",
+    footerDownloadTitle: "Download NeredeYenir!",
+    footerDownloadNow: "Download now",
+    footerDiscoverTitle: "Discover NeredeYenir",
+    footerAbout: "About us",
+    footerCareer: "Careers",
+    footerTech: "Technology",
+    footerContact: "Contact",
+    footerHelpTitle: "Need help?",
+    footerFaq: "Frequently Asked Questions",
+    footerKvkk: "Personal Data Protection",
+    footerPrivacy: "Privacy Policy",
+    footerTerms: "Terms of Use",
+    footerCookies: "Cookie Policy",
+    footerPartnerTitle: "Partnership",
+    footerAddRestaurant: "Add restaurant",
+    footerAddPrice: "Add price",
+    footerCollab: "Collaboration",
+    footerCopyright: "© 2026 NeredeYenir",
+    footerSocial: "Social",
+    footerSearchAria: "Search",
+    footerWorldAria: "World",
+  },
+  RU: {
+    title: "NeredeYenir | Рестораны {city}",
+    cityTitle: "Рестораны {city}",
+    toplineHome: "Главная",
+    toplineRestaurants: "рестораны",
+    districtSearch: "Поиск по району",
+    categorySearch: "Поиск по категории",
+    districtPickerAria: "Открыть выбор района",
+    categoryPickerAria: "Открыть выбор категории",
+    districtListAria: "Список районов",
+    districtOptionsAria: "Пункты районов",
+    categoryListAria: "Список категорий",
+    categoryOptionsAria: "Пункты категорий",
+    allDistricts: "Все районы",
+    allCategories: "Все категории",
+    districtListTitle: "Районы",
+    categoryListTitle: "Категории",
+    sortTraveler: "Самые популярные",
+    sortLocals: "Выбор местных",
+    sortViewed: "Самые просматриваемые",
+    sortRated: "Самый высокий рейтинг",
+    paginationPrev: "Назад",
+    paginationNext: "Далее",
+    paginationAria: "Страница {page}",
+    emptyFiltered: "По этим фильтрам ресторанов не найдено. Расширьте фильтры и попробуйте снова.",
+    openVenueAria: "Открыть страницу {name}",
+    resultWithDistrict:
+      "В городе {city} всего {cityTotal} ресторанов. В районе {district} есть {districtTotal} ресторанов.",
+    resultWithoutDistrict: "В городе {city} всего {cityTotal} ресторанов.",
+    cityDataMissingTitle: "Данные города не найдены",
+    cityDataMissingText: "Нет данных ресторанов для показа.",
+    footerLabel: "Нижняя панель",
+    footerDownloadTitle: "Скачайте NeredeYenir!",
+    footerDownloadNow: "Скачать",
+    footerDiscoverTitle: "О NeredeYenir",
+    footerAbout: "О нас",
+    footerCareer: "Карьера",
+    footerTech: "Технологии",
+    footerContact: "Контакты",
+    footerHelpTitle: "Нужна помощь?",
+    footerFaq: "Частые вопросы",
+    footerKvkk: "Защита персональных данных",
+    footerPrivacy: "Политика конфиденциальности",
+    footerTerms: "Условия использования",
+    footerCookies: "Политика cookies",
+    footerPartnerTitle: "Партнерство",
+    footerAddRestaurant: "Добавить ресторан",
+    footerAddPrice: "Добавить цену",
+    footerCollab: "Сотрудничество",
+    footerCopyright: "© 2026 NeredeYenir",
+    footerSocial: "Соцсети",
+    footerSearchAria: "Поиск",
+    footerWorldAria: "Мир",
+  },
+  DE: {
+    title: "NeredeYenir | Restaurants in {city}",
+    cityTitle: "{city} Restaurants",
+    toplineHome: "Startseite",
+    toplineRestaurants: "restaurants",
+    districtSearch: "Nach Bezirk suchen",
+    categorySearch: "Nach Kategorie suchen",
+    districtPickerAria: "Bezirksauswahl öffnen",
+    categoryPickerAria: "Kategorieauswahl öffnen",
+    districtListAria: "Bezirksliste",
+    districtOptionsAria: "Bezirksoptionen",
+    categoryListAria: "Kategorieliste",
+    categoryOptionsAria: "Kategorieoptionen",
+    allDistricts: "Alle Bezirke",
+    allCategories: "Alle Kategorien",
+    districtListTitle: "Bezirke",
+    categoryListTitle: "Kategorien",
+    sortTraveler: "Am meisten bevorzugt",
+    sortLocals: "Lokale Favoriten",
+    sortViewed: "Am meisten angesehen",
+    sortRated: "Höchste Bewertung",
+    paginationPrev: "Zurück",
+    paginationNext: "Weiter",
+    paginationAria: "Seite {page}",
+    emptyFiltered: "Keine Restaurants für diese Filter gefunden. Bitte Filter erweitern und erneut versuchen.",
+    openVenueAria: "Seite {name} öffnen",
+    resultWithDistrict:
+      "In {city} gibt es insgesamt {cityTotal} Restaurants. Im Bezirk {district} gibt es {districtTotal} Restaurants.",
+    resultWithoutDistrict: "In {city} gibt es insgesamt {cityTotal} Restaurants.",
+    cityDataMissingTitle: "Stadtdaten nicht gefunden",
+    cityDataMissingText: "Keine Restaurantdaten zum Anzeigen.",
+    footerLabel: "Fußbereich",
+    footerDownloadTitle: "NeredeYenir herunterladen!",
+    footerDownloadNow: "Jetzt herunterladen",
+    footerDiscoverTitle: "NeredeYenir entdecken",
+    footerAbout: "Über uns",
+    footerCareer: "Karriere",
+    footerTech: "Technologie",
+    footerContact: "Kontakt",
+    footerHelpTitle: "Brauchst du Hilfe?",
+    footerFaq: "Häufige Fragen",
+    footerKvkk: "Datenschutz personenbezogener Daten",
+    footerPrivacy: "Datenschutzrichtlinie",
+    footerTerms: "Nutzungsbedingungen",
+    footerCookies: "Cookie-Richtlinie",
+    footerPartnerTitle: "Partnerschaft",
+    footerAddRestaurant: "Restaurant hinzufügen",
+    footerAddPrice: "Preis hinzufügen",
+    footerCollab: "Zusammenarbeit",
+    footerCopyright: "© 2026 NeredeYenir",
+    footerSocial: "Sozial",
+    footerSearchAria: "Suche",
+    footerWorldAria: "Welt",
+  },
+  ZH: {
+    title: "NeredeYenir | {city} 餐厅",
+    cityTitle: "{city} 餐厅",
+    toplineHome: "首页",
+    toplineRestaurants: "餐厅",
+    districtSearch: "按区搜索",
+    categorySearch: "按分类搜索",
+    districtPickerAria: "打开区选择器",
+    categoryPickerAria: "打开分类选择器",
+    districtListAria: "区列表",
+    districtOptionsAria: "区选项",
+    categoryListAria: "分类列表",
+    categoryOptionsAria: "分类选项",
+    allDistricts: "全部区",
+    allCategories: "全部分类",
+    districtListTitle: "区",
+    categoryListTitle: "分类",
+    sortTraveler: "最受欢迎",
+    sortLocals: "本地推荐",
+    sortViewed: "浏览最多",
+    sortRated: "评分最高",
+    paginationPrev: "上一页",
+    paginationNext: "下一页",
+    paginationAria: "第 {page} 页",
+    emptyFiltered: "没有符合这些筛选条件的餐厅。请放宽筛选后重试。",
+    openVenueAria: "打开 {name} 页面",
+    resultWithDistrict: "{city} 共有 {cityTotal} 家餐厅。{district} 区有 {districtTotal} 家餐厅。",
+    resultWithoutDistrict: "{city} 共有 {cityTotal} 家餐厅。",
+    cityDataMissingTitle: "未找到城市数据",
+    cityDataMissingText: "没有可显示的餐厅数据。",
+    footerLabel: "页脚",
+    footerDownloadTitle: "下载 NeredeYenir！",
+    footerDownloadNow: "立即下载",
+    footerDiscoverTitle: "了解 NeredeYenir",
+    footerAbout: "关于我们",
+    footerCareer: "招聘",
+    footerTech: "技术",
+    footerContact: "联系",
+    footerHelpTitle: "需要帮助？",
+    footerFaq: "常见问题",
+    footerKvkk: "个人数据保护",
+    footerPrivacy: "隐私政策",
+    footerTerms: "使用条款",
+    footerCookies: "Cookie 政策",
+    footerPartnerTitle: "合作伙伴",
+    footerAddRestaurant: "添加餐厅",
+    footerAddPrice: "添加价格",
+    footerCollab: "合作",
+    footerCopyright: "© 2026 NeredeYenir",
+    footerSocial: "社交",
+    footerSearchAria: "搜索",
+    footerWorldAria: "世界",
+  },
+};
+
+let activeLanguage = "TR";
 
 let venues = [];
 let districtsByCity = {};
@@ -1283,6 +1577,10 @@ function openAuthModal(mode) {
 }
 
 function renderAuthState() {
+  if (!loginBtn || !signupBtn || !logoutBtn || !authWelcome) {
+    return;
+  }
+
   const hasUser = Boolean(authState.user);
 
   loginBtn.classList.toggle("is-hidden", hasUser);
@@ -1298,6 +1596,24 @@ function renderAuthState() {
 }
 
 function attachAuthEvents() {
+  if (
+    !loginBtn ||
+    !signupBtn ||
+    !logoutBtn ||
+    !authModal ||
+    !authModalClose ||
+    !loginForm ||
+    !signupForm ||
+    !loginEmail ||
+    !loginPassword ||
+    !signupName ||
+    !signupEmail ||
+    !signupPassword ||
+    !signupPasswordRepeat
+  ) {
+    return;
+  }
+
   loginBtn.addEventListener("click", () => {
     openAuthModal("login");
   });
@@ -1411,6 +1727,19 @@ function attachAuthEvents() {
 }
 
 function initializeAuth() {
+  if (
+    !loginBtn ||
+    !signupBtn ||
+    !logoutBtn ||
+    !authWelcome ||
+    !authModal ||
+    !authModalClose ||
+    !loginForm ||
+    !signupForm
+  ) {
+    return;
+  }
+
   authState.user = loadSession();
   renderAuthState();
   attachAuthEvents();

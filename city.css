@@ -7,11 +7,15 @@
   width: min(1220px, calc(100% - 2.4rem));
   margin-inline: auto;
   position: relative;
-  z-index: 2;
 }
 
 .city-header {
+  z-index: 40;
   padding-top: 1rem;
+}
+
+.city-shell {
+  z-index: 2;
 }
 
 .city-topbar {
