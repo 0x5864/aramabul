@@ -3,14 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NeredeYenir | Şehir Restoranları</title>
+    <meta name="theme-color" content="#1f6f54" />
+    <title>arama bul | Şehir Restoranları</title>
     <meta
       name="description"
       content="Seçtiğin il için restoranları bölge, kategori ve bütçe filtreleri ile incele."
     />
-    <link rel="icon" type="image/png" href="assets/logo3.png?v=20260222" />
-    <link rel="shortcut icon" type="image/png" href="assets/logo3.png?v=20260222" />
-    <link rel="apple-touch-icon" href="assets/logo3.png?v=20260222" />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260223" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260223" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260223" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,8 +26,8 @@
 
     <header class="city-header">
       <nav class="topbar city-topbar">
-        <a class="brand" href="index.html" aria-label="NeredeYenir">
-          <span class="brand-wordmark">nerede yenir</span>
+        <a class="brand" href="index.html" aria-label="arama bul">
+          <span class="brand-wordmark">arama bul</span>
         </a>
         <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Restoran arama">
           <label class="visually-hidden" for="headerSearchInput">Restoran adı</label>
@@ -43,10 +44,13 @@
       </nav>
       <div class="city-topline">
         <div class="city-topline-inner">
-          <a href="index.html">Anasayfa</a>
+          <a id="cityToplineHomeLink" href="index.html">Anasayfa</a>
           <span>/</span>
-          <span id="cityToplineName">Şehir</span>
-          <span>restoranları</span>
+          <a id="cityToplineFoodLink" href="yemek.html">Yemek</a>
+          <span>/</span>
+          <a id="cityToplineCityLink" href="city.html">Şehir İli</a>
+          <span id="cityToplineDistrictDivider" hidden>/</span>
+          <span id="cityToplineDistrict" hidden>İlçe</span>
         </div>
       </div>
     </header>
@@ -142,7 +146,7 @@
       <div class="yr-footer-inner">
         <div class="yr-footer-grid">
           <section class="yr-footer-col">
-            <h4>NeredeYenir'i indir!</h4>
+            <h4>arama bul'u indir!</h4>
             <a class="store-badge" href="#" aria-label="App Store">
               <span class="store-badge-top">Hemen indirin</span>
               <span class="store-badge-name">App Store</span>
@@ -154,7 +158,7 @@
           </section>
 
           <section class="yr-footer-col">
-            <h4>NeredeYenir'i keşfet</h4>
+            <h4>arama bul'u keşfet</h4>
             <a href="#">Hakkımızda</a>
             <a href="#">Kariyer</a>
             <a href="#">Teknoloji</a>
@@ -180,7 +184,7 @@
         </div>
 
         <div class="yr-footer-bottom">
-          <p>© 2026 NeredeYenir</p>
+          <p>© 2026 arama bul</p>
           <div class="yr-footer-social" aria-label="Sosyal">
             <a href="#" aria-label="Instagram">○</a>
             <a href="#" aria-label="Ara">◌</a>

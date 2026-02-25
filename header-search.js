@@ -35,6 +35,13 @@
     DE: "Restaurantname",
     ZH: "餐厅名称",
   };
+  const FOOTER_HEADINGS = {
+    TR: { discover: "Keşfet", help: "Yardım" },
+    EN: { discover: "Discover", help: "Help" },
+    RU: { discover: "Обзор", help: "Помощь" },
+    DE: { discover: "Entdecken", help: "Hilfe" },
+    ZH: { discover: "探索", help: "帮助" },
+  };
   const HOVER_CLOSE_DELAY_MS = 180;
   const hoverCloseTimers = new WeakMap();
 
@@ -246,7 +253,46 @@
     return readStoredLanguage();
   };
 
+  function normalizeFooterUi() {
+    const lang =
+      typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
+        ? window.NEREDEYENIR_GET_LANGUAGE()
+        : readStoredLanguage();
+    const headings = FOOTER_HEADINGS[lang] || FOOTER_HEADINGS.TR;
+    const footerGrids = [...document.querySelectorAll(".yr-footer-grid")];
+
+    footerGrids.forEach((grid) => {
+      const columns = [...grid.querySelectorAll(":scope > .yr-footer-col")];
+      if (columns.length > 3) {
+        columns.slice(3).forEach((column) => {
+          column.remove();
+        });
+      }
+
+      const visibleColumns = [...grid.querySelectorAll(":scope > .yr-footer-col")];
+
+      const firstTitle = visibleColumns[0]?.querySelector("h4");
+      if (firstTitle) {
+        firstTitle.remove();
+      }
+
+      const discoverTitle = visibleColumns[1]?.querySelector("h4");
+      if (discoverTitle) {
+        discoverTitle.textContent = headings.discover;
+      }
+
+      const helpTitle = visibleColumns[2]?.querySelector("h4");
+      if (helpTitle) {
+        helpTitle.textContent = headings.help;
+      }
+    });
+  }
+
   initializeLanguageSwitcher();
+  normalizeFooterUi();
+  window.addEventListener("load", () => {
+    normalizeFooterUi();
+  });
 
   const form = document.querySelector(".header-search");
   if (!form) {
@@ -284,6 +330,9 @@
   applySearchUiLanguage();
   document.addEventListener("neredeyenir:languagechange", () => {
     applySearchUiLanguage();
+    window.requestAnimationFrame(() => {
+      normalizeFooterUi();
+    });
   });
 
   const VENUES_JSON_PATH = "data/venues.json";

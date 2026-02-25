@@ -3,14 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n-title="meta.title">NeredeYenir | Türkiye'nin Lezzet Haritası</title>
+    <meta name="theme-color" content="#1f6f54" />
+    <title>arama bul | Anasayfa</title>
     <meta
       name="description"
-      content="Türkiye'nin 81 ilinde yemek yenilecek yerleri keşfet. Şehir, mutfak ve bütçe filtresi ile en iyi mekanları bul."
+      content="Yemek, kafe, kuaför, veteriner, eczane, market, akaryakıt, hastane, banka, otel ve diğer hizmet kategorilerinden arama başlat."
     />
-    <link rel="icon" type="image/png" href="assets/logo3.png?v=20260222" />
-    <link rel="shortcut icon" type="image/png" href="assets/logo3.png?v=20260222" />
-    <link rel="apple-touch-icon" href="assets/logo3.png?v=20260222" />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260223" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260223" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260223" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,201 +22,209 @@
   </head>
   <body>
     <div class="texture"></div>
+
     <header class="global-header-band">
       <nav class="topbar global-topbar">
-        <a class="brand" href="#" aria-label="NeredeYenir" data-i18n-aria-label="brand.ariaLabel">
-          <span class="brand-wordmark">nerede yenir</span>
+        <a class="brand" href="index.html" aria-label="arama bul">
+          <span class="brand-wordmark">arama bul</span>
         </a>
-        <form
-          class="header-search"
-          action="restaurant.html"
-          method="get"
-          role="search"
-          aria-label="Restoran arama"
-          data-i18n-aria-label="search.formAria"
-        >
-          <label class="visually-hidden" for="headerSearchInput" data-i18n="search.inputLabel">Restoran adı</label>
+        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Restoran arama">
+          <label class="visually-hidden" for="headerSearchInput">Restoran adı</label>
           <input
             id="headerSearchInput"
             class="header-search-input"
             type="search"
             name="mekan"
             placeholder="Restoran ara"
-            data-i18n-placeholder="search.placeholder"
             autocomplete="off"
           />
-          <button class="header-search-btn" type="submit" data-i18n="search.button">Ara</button>
+          <button class="header-search-btn" type="submit">Ara</button>
         </form>
-        <div class="auth-actions" aria-label="Hesap işlemleri" data-i18n-aria-label="auth.actionsAria">
-          <p id="authWelcome" class="auth-welcome is-hidden" aria-live="polite"></p>
-          <button id="loginBtn" class="auth-btn auth-link-btn auth-btn-outline" type="button">
-            <svg class="auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M13 5l7 7-7 7" />
-              <path d="M20 12H9" />
-              <path d="M9 19H4V5h5" />
-            </svg>
-            <span class="auth-link-text" data-i18n="auth.login">Giriş yap</span>
-          </button>
-          <button id="signupBtn" class="auth-btn auth-link-btn auth-btn-solid" type="button">
-            <svg class="auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M15 19a5 5 0 0 0-10 0" />
-              <circle cx="10" cy="8" r="3.5" />
-              <path d="M19 8v6" />
-              <path d="M16 11h6" />
-            </svg>
-            <span class="auth-link-text" data-i18n="auth.signup">Kayıt ol</span>
-          </button>
-          <div class="lang-switch" data-lang-switch>
-            <button
-              class="lang-switch-btn"
-              type="button"
-              aria-label="Dil seçimi"
-              data-i18n-aria-label="language.selectorAria"
-              aria-haspopup="dialog"
-              aria-expanded="false"
-              data-lang-trigger
-            >
-              <span class="lang-switch-code" data-lang-current>TR</span>
-            </button>
-            <div class="lang-switch-menu" data-lang-menu hidden>
-              <button type="button" class="lang-switch-option" data-lang-option="TR">TR</button>
-              <button type="button" class="lang-switch-option" data-lang-option="EN">EN</button>
-              <button type="button" class="lang-switch-option" data-lang-option="RU">RU</button>
-              <button type="button" class="lang-switch-option" data-lang-option="DE">DE</button>
-              <button type="button" class="lang-switch-option" data-lang-option="ZH">ZH</button>
-            </div>
-          </div>
-          <button id="logoutBtn" class="auth-btn auth-btn-outline is-hidden" type="button" data-i18n="auth.logout">
-            Çıkış yap
-          </button>
-        </div>
       </nav>
       <div class="global-topline"></div>
     </header>
 
-    <header class="hero">
+    <main class="hero">
       <section class="section-head province-head">
         <div>
-          <h3 data-i18n="home.regionSearch">Bölgelere göre ara</h3>
+          <h3>Arama kategorileri</h3>
+          <p class="province-help">İstediğin alanı seç ve o kategori sayfasına geç.</p>
         </div>
       </section>
 
-      <section
-        id="topCityGrid"
-        class="top-city-grid"
-        aria-label="En kalabalık 6 il"
-        data-i18n-aria-label="home.topCitiesAria"
-      ></section>
-      <section id="provinceGrid" class="province-grid"></section>
+      <section class="top-city-grid" aria-label="Arama kategorileri">
+        <a class="top-city-card category-home-card" href="yemek.html" aria-label="Yemek kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/yemek.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Yemek</span>
+          </span>
+        </a>
 
-    </header>
+        <a class="top-city-card category-home-card" href="kafe.html" aria-label="Kafe kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/kafe.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Kafe</span>
+          </span>
+        </a>
 
-    <footer class="yr-footer" aria-label="Alt Bant" data-i18n-aria-label="footer.ariaLabel">
+        <a class="top-city-card category-home-card" href="kuafor.html" aria-label="Kuaför kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/sac.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Kuaför</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="veteriner.html" aria-label="Veteriner kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/vet.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Veteriner</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="eczane.html" aria-label="Eczane kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/eczane.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Eczane</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="market.html" aria-label="Market kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/market1.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Market</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="akaryakit.html" aria-label="Akaryakıt kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/pompa.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Akaryakıt</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="hastane.html" aria-label="Hastane kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/hasta.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Hastane</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="banka.html" aria-label="Banka kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/banka1.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Banka</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="otel.html" aria-label="Otel kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/otel.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Otel</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="atm.html" aria-label="ATM kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/atm.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">ATM</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="kargo.html" aria-label="Kargo Şubeleri kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/kargo.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Kargo Şubeleri</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="noter.html" aria-label="Noter kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/noter1.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Noter</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="asm.html" aria-label="Aile Sağlığı Merkezi kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/hasta.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Aile Sağlığı Merkezi</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="dis-klinikleri.html" aria-label="Diş Klinikleri kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/dis.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Diş Klinikleri</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="duraklar.html" aria-label="Otobüs / Metro / Tramvay Durakları kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/durak.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Duraklar</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="otopark.html" aria-label="Otopark kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/park.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Otopark</span>
+          </span>
+        </a>
+      </section>
+    </main>
+
+    <footer class="yr-footer" aria-label="Alt Bant">
       <div class="yr-footer-inner">
         <div class="yr-footer-grid">
           <section class="yr-footer-col">
-            <h4 data-i18n="footer.downloadTitle">NeredeYenir'i indir!</h4>
-            <a class="store-badge" href="#" aria-label="App Store" data-i18n-aria-label="footer.appStoreAria">
-              <span class="store-badge-top" data-i18n="footer.downloadNow">Hemen indirin</span>
+            <h4>arama bul'u indir!</h4>
+            <a class="store-badge" href="#" aria-label="App Store">
+              <span class="store-badge-top">Hemen indirin</span>
               <span class="store-badge-name">App Store</span>
             </a>
-            <a class="store-badge" href="#" aria-label="Google Play" data-i18n-aria-label="footer.googlePlayAria">
-              <span class="store-badge-top" data-i18n="footer.downloadNow">Hemen indirin</span>
+            <a class="store-badge" href="#" aria-label="Google Play">
+              <span class="store-badge-top">Hemen indirin</span>
               <span class="store-badge-name">Google Play</span>
             </a>
           </section>
 
           <section class="yr-footer-col">
-            <h4 data-i18n="footer.discoverTitle">NeredeYenir'i keşfet</h4>
-            <a href="#" data-i18n="footer.about">Hakkımızda</a>
-            <a href="#" data-i18n="footer.career">Kariyer</a>
-            <a href="#" data-i18n="footer.tech">Teknoloji</a>
-            <a href="#" data-i18n="footer.contact">İletişim</a>
+            <h4>arama bul'u keşfet</h4>
+            <a href="#">Hakkımızda</a>
+            <a href="#">Kariyer</a>
+            <a href="#">Teknoloji</a>
+            <a href="#">İletişim</a>
           </section>
 
           <section class="yr-footer-col">
-            <h4 data-i18n="footer.helpTitle">Yardım mı lazım?</h4>
-            <a href="#" data-i18n="footer.faq">Sıkça Sorulan Sorular</a>
-            <a href="#" data-i18n="footer.kvkk">Kişisel Verilerin Korunması</a>
-            <a href="#" data-i18n="footer.privacy">Gizlilik Politikası</a>
-            <a href="#" data-i18n="footer.terms">Kullanım Koşulları</a>
-            <a href="#" data-i18n="footer.cookies">Çerez Politikası</a>
+            <h4>Yardım mı lazım?</h4>
+            <a href="#">Sıkça Sorulan Sorular</a>
+            <a href="#">Kişisel Verilerin Korunması</a>
+            <a href="#">Gizlilik Politikası</a>
+            <a href="#">Kullanım Koşulları</a>
+            <a href="#">Çerez Politikası</a>
           </section>
 
           <section class="yr-footer-col">
-            <h4 data-i18n="footer.partnerTitle">İş ortaklığımız</h4>
-            <a href="#" data-i18n="footer.addRestaurant">Restoran ekle</a>
-            <a href="#" data-i18n="footer.addPrice">Fiyat ekle</a>
-            <a href="#" data-i18n="footer.collab">İş birliği</a>
+            <h4>İş ortaklığımız</h4>
+            <a href="#">Restoran ekle</a>
+            <a href="#">Fiyat ekle</a>
+            <a href="#">İş birliği</a>
           </section>
-
         </div>
 
         <div class="yr-footer-bottom">
-          <p data-i18n="footer.copyright">© 2026 NeredeYenir</p>
-          <div class="yr-footer-social" aria-label="Sosyal" data-i18n-aria-label="footer.socialAria">
+          <p>© 2026 arama bul</p>
+          <div class="yr-footer-social" aria-label="Sosyal">
             <a href="#" aria-label="Instagram">○</a>
-            <a href="#" aria-label="Ara" data-i18n-aria-label="footer.searchAria">◌</a>
-            <a href="#" aria-label="Dünya" data-i18n-aria-label="footer.worldAria">◍</a>
+            <a href="#" aria-label="Ara">◌</a>
+            <a href="#" aria-label="Dünya">◍</a>
           </div>
         </div>
       </div>
     </footer>
 
-    <div id="authModal" class="auth-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
-      <div class="auth-modal-panel">
-        <button id="authModalClose" class="auth-modal-close" type="button" aria-label="Kapat" data-i18n-aria-label="auth.close">
-          ×
-        </button>
-        <p class="eyebrow" data-i18n="auth.account">Hesap</p>
-        <h3 id="authModalTitle" data-i18n="auth.login">Giriş yap</h3>
-        <p id="authModalText" class="auth-modal-text" data-i18n="auth.modalLoginText">
-          Hesabına girerek favori mekanlarını kaydet.
-        </p>
-
-        <form id="loginForm" class="auth-form">
-          <label>
-            <span data-i18n="auth.email">E-posta</span>
-            <input id="loginEmail" type="email" required autocomplete="email" />
-          </label>
-          <label>
-            <span data-i18n="auth.password">Şifre</span>
-            <input id="loginPassword" type="password" required autocomplete="current-password" />
-          </label>
-          <button class="auth-submit" type="submit" data-i18n="auth.login">Giriş yap</button>
-        </form>
-
-        <form id="signupForm" class="auth-form is-hidden">
-          <label>
-            <span data-i18n="auth.fullName">Ad soyad</span>
-            <input id="signupName" type="text" required minlength="2" autocomplete="name" />
-          </label>
-          <label>
-            <span data-i18n="auth.email">E-posta</span>
-            <input id="signupEmail" type="email" required autocomplete="email" />
-          </label>
-          <label>
-            <span data-i18n="auth.password">Şifre</span>
-            <input id="signupPassword" type="password" required minlength="6" autocomplete="new-password" />
-          </label>
-          <label>
-            <span data-i18n="auth.passwordRepeat">Şifre tekrar</span>
-            <input
-              id="signupPasswordRepeat"
-              type="password"
-              required
-              minlength="6"
-              autocomplete="new-password"
-            />
-          </label>
-          <button class="auth-submit" type="submit" data-i18n="auth.signup">Kaydol</button>
-        </form>
-
-        <p id="authMessage" class="auth-message" aria-live="polite"></p>
-      </div>
-    </div>
-
     <script src="header-search.js"></script>
-    <script src="app.js"></script>
   </body>
 </html>

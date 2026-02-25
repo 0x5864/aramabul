@@ -118,10 +118,16 @@ const sortedMainPageCategoryTags = [...mainPageCategoryTags].sort((left, right) 
 );
 
 const cityTitle = document.querySelector("#cityTitle");
-const cityToplineName = document.querySelector("#cityToplineName");
-const cityBreadcrumbName = document.querySelector("#cityBreadcrumbName");
+const cityToplineHomeLink = document.querySelector("#cityToplineHomeLink");
+const cityToplineFoodLink = document.querySelector("#cityToplineFoodLink");
+const cityToplineCityLink = document.querySelector("#cityToplineCityLink");
+const cityToplineDistrictDivider = document.querySelector("#cityToplineDistrictDivider");
+const cityToplineDistrict = document.querySelector("#cityToplineDistrict");
 const cityResultMeta = document.querySelector("#cityResultMeta");
 const cityVenueList = document.querySelector("#cityVenueList");
+const cityLayout = document.querySelector(".city-layout");
+const citySidebar = document.querySelector(".city-sidebar");
+const citySortTabsWrap = document.querySelector(".city-sort-tabs");
 const cityPaginationTop = document.querySelector("#cityPaginationTop");
 const cityPaginationBottom = document.querySelector("#cityPaginationBottom");
 const cityVenueTemplate = document.querySelector("#cityVenueTemplate");
@@ -136,8 +142,6 @@ const categoryCurrent = document.querySelector("#categoryCurrent");
 const categoryFlyoutCity = document.querySelector("#categoryFlyoutCity");
 const categoryFlyoutList = document.querySelector("#categoryFlyoutList");
 const sortTabs = [...document.querySelectorAll(".city-sort-tab")];
-const cityToplineHomeLink = document.querySelector(".city-topline-inner a");
-const cityToplineSuffix = document.querySelector(".city-topline-inner span:last-child");
 const districtHeading = document.querySelector(".filter-card-district .filter-card-head h3");
 const categoryHeading = document.querySelector(".filter-card-category .filter-card-head h3");
 const districtFlyoutTitle = document.querySelector(".district-flyout-head strong");
@@ -188,6 +192,9 @@ const authState = {
   mode: "login",
 };
 
+const ORHANELI_DEMO_CITY = "Bursa";
+const ORHANELI_DEMO_DISTRICT = "Orhaneli";
+
 const LANGUAGE_STORAGE_KEY = "neredeyenir.selectedLanguage.v1";
 const SUPPORTED_LANGUAGES = new Set(["TR", "EN", "RU", "DE", "ZH"]);
 const LANGUAGE_LOCALES = {
@@ -200,10 +207,13 @@ const LANGUAGE_LOCALES = {
 
 const CITY_I18N = {
   TR: {
-    title: "NeredeYenir | {city} Restoranları",
+    title: "arama bul | {city} Restoranları",
     cityTitle: "{city} Restoranları",
     toplineHome: "Anasayfa",
-    toplineRestaurants: "restoranları",
+    toplineFood: "Yemek",
+    cityLink: "{city} İli",
+    districtFallback: "İlçe",
+    districtLabel: "{district} İlçesi",
     districtSearch: "İlçeye göre ara",
     categorySearch: "Kategoriye göre ara",
     districtPickerAria: "İlçe seçimini aç",
@@ -231,14 +241,14 @@ const CITY_I18N = {
     cityDataMissingTitle: "Şehir verisi bulunamadı",
     cityDataMissingText: "Gösterilecek restoran verisi yok.",
     footerLabel: "Alt Bant",
-    footerDownloadTitle: "NeredeYenir'i indir!",
+    footerDownloadTitle: "İndir.",
     footerDownloadNow: "Hemen indirin",
-    footerDiscoverTitle: "NeredeYenir'i keşfet",
+    footerDiscoverTitle: "Keşfet",
     footerAbout: "Hakkımızda",
     footerCareer: "Kariyer",
     footerTech: "Teknoloji",
     footerContact: "İletişim",
-    footerHelpTitle: "Yardım mı lazım?",
+    footerHelpTitle: "Yardım",
     footerFaq: "Sıkça Sorulan Sorular",
     footerKvkk: "Kişisel Verilerin Korunması",
     footerPrivacy: "Gizlilik Politikası",
@@ -248,16 +258,19 @@ const CITY_I18N = {
     footerAddRestaurant: "Restoran ekle",
     footerAddPrice: "Fiyat ekle",
     footerCollab: "İş birliği",
-    footerCopyright: "© 2026 NeredeYenir",
+    footerCopyright: "© 2026 arama bul",
     footerSocial: "Sosyal",
     footerSearchAria: "Ara",
     footerWorldAria: "Dünya",
   },
   EN: {
-    title: "NeredeYenir | {city} Restaurants",
+    title: "arama bul | {city} Restaurants",
     cityTitle: "{city} Restaurants",
     toplineHome: "Home",
-    toplineRestaurants: "restaurants",
+    toplineFood: "Food",
+    cityLink: "{city} City",
+    districtFallback: "District",
+    districtLabel: "{district} District",
     districtSearch: "Search by district",
     categorySearch: "Search by category",
     districtPickerAria: "Open district selector",
@@ -285,14 +298,14 @@ const CITY_I18N = {
     cityDataMissingTitle: "City data not found",
     cityDataMissingText: "No restaurant data to display.",
     footerLabel: "Footer",
-    footerDownloadTitle: "Download NeredeYenir!",
+    footerDownloadTitle: "Download",
     footerDownloadNow: "Download now",
-    footerDiscoverTitle: "Discover NeredeYenir",
+    footerDiscoverTitle: "Discover",
     footerAbout: "About us",
     footerCareer: "Careers",
     footerTech: "Technology",
     footerContact: "Contact",
-    footerHelpTitle: "Need help?",
+    footerHelpTitle: "Help",
     footerFaq: "Frequently Asked Questions",
     footerKvkk: "Personal Data Protection",
     footerPrivacy: "Privacy Policy",
@@ -302,16 +315,19 @@ const CITY_I18N = {
     footerAddRestaurant: "Add restaurant",
     footerAddPrice: "Add price",
     footerCollab: "Collaboration",
-    footerCopyright: "© 2026 NeredeYenir",
+    footerCopyright: "© 2026 arama bul",
     footerSocial: "Social",
     footerSearchAria: "Search",
     footerWorldAria: "World",
   },
   RU: {
-    title: "NeredeYenir | Рестораны {city}",
+    title: "arama bul | Рестораны {city}",
     cityTitle: "Рестораны {city}",
     toplineHome: "Главная",
-    toplineRestaurants: "рестораны",
+    toplineFood: "Еда",
+    cityLink: "Город {city}",
+    districtFallback: "Район",
+    districtLabel: "Район {district}",
     districtSearch: "Поиск по району",
     categorySearch: "Поиск по категории",
     districtPickerAria: "Открыть выбор района",
@@ -339,14 +355,14 @@ const CITY_I18N = {
     cityDataMissingTitle: "Данные города не найдены",
     cityDataMissingText: "Нет данных ресторанов для показа.",
     footerLabel: "Нижняя панель",
-    footerDownloadTitle: "Скачайте NeredeYenir!",
+    footerDownloadTitle: "Скачать",
     footerDownloadNow: "Скачать",
-    footerDiscoverTitle: "О NeredeYenir",
+    footerDiscoverTitle: "Обзор",
     footerAbout: "О нас",
     footerCareer: "Карьера",
     footerTech: "Технологии",
     footerContact: "Контакты",
-    footerHelpTitle: "Нужна помощь?",
+    footerHelpTitle: "Помощь",
     footerFaq: "Частые вопросы",
     footerKvkk: "Защита персональных данных",
     footerPrivacy: "Политика конфиденциальности",
@@ -356,16 +372,19 @@ const CITY_I18N = {
     footerAddRestaurant: "Добавить ресторан",
     footerAddPrice: "Добавить цену",
     footerCollab: "Сотрудничество",
-    footerCopyright: "© 2026 NeredeYenir",
+    footerCopyright: "© 2026 arama bul",
     footerSocial: "Соцсети",
     footerSearchAria: "Поиск",
     footerWorldAria: "Мир",
   },
   DE: {
-    title: "NeredeYenir | Restaurants in {city}",
+    title: "arama bul | Restaurants in {city}",
     cityTitle: "{city} Restaurants",
     toplineHome: "Startseite",
-    toplineRestaurants: "restaurants",
+    toplineFood: "Essen",
+    cityLink: "Stadt {city}",
+    districtFallback: "Bezirk",
+    districtLabel: "{district} Bezirk",
     districtSearch: "Nach Bezirk suchen",
     categorySearch: "Nach Kategorie suchen",
     districtPickerAria: "Bezirksauswahl öffnen",
@@ -393,14 +412,14 @@ const CITY_I18N = {
     cityDataMissingTitle: "Stadtdaten nicht gefunden",
     cityDataMissingText: "Keine Restaurantdaten zum Anzeigen.",
     footerLabel: "Fußbereich",
-    footerDownloadTitle: "NeredeYenir herunterladen!",
+    footerDownloadTitle: "Download",
     footerDownloadNow: "Jetzt herunterladen",
-    footerDiscoverTitle: "NeredeYenir entdecken",
+    footerDiscoverTitle: "Entdecken",
     footerAbout: "Über uns",
     footerCareer: "Karriere",
     footerTech: "Technologie",
     footerContact: "Kontakt",
-    footerHelpTitle: "Brauchst du Hilfe?",
+    footerHelpTitle: "Hilfe",
     footerFaq: "Häufige Fragen",
     footerKvkk: "Datenschutz personenbezogener Daten",
     footerPrivacy: "Datenschutzrichtlinie",
@@ -410,16 +429,19 @@ const CITY_I18N = {
     footerAddRestaurant: "Restaurant hinzufügen",
     footerAddPrice: "Preis hinzufügen",
     footerCollab: "Zusammenarbeit",
-    footerCopyright: "© 2026 NeredeYenir",
+    footerCopyright: "© 2026 arama bul",
     footerSocial: "Sozial",
     footerSearchAria: "Suche",
     footerWorldAria: "Welt",
   },
   ZH: {
-    title: "NeredeYenir | {city} 餐厅",
+    title: "arama bul | {city} 餐厅",
     cityTitle: "{city} 餐厅",
     toplineHome: "首页",
-    toplineRestaurants: "餐厅",
+    toplineFood: "美食",
+    cityLink: "{city} 市",
+    districtFallback: "区",
+    districtLabel: "{district} 区",
     districtSearch: "按区搜索",
     categorySearch: "按分类搜索",
     districtPickerAria: "打开区选择器",
@@ -446,14 +468,14 @@ const CITY_I18N = {
     cityDataMissingTitle: "未找到城市数据",
     cityDataMissingText: "没有可显示的餐厅数据。",
     footerLabel: "页脚",
-    footerDownloadTitle: "下载 NeredeYenir！",
+    footerDownloadTitle: "下载",
     footerDownloadNow: "立即下载",
-    footerDiscoverTitle: "了解 NeredeYenir",
+    footerDiscoverTitle: "探索",
     footerAbout: "关于我们",
     footerCareer: "招聘",
     footerTech: "技术",
     footerContact: "联系",
-    footerHelpTitle: "需要帮助？",
+    footerHelpTitle: "帮助",
     footerFaq: "常见问题",
     footerKvkk: "个人数据保护",
     footerPrivacy: "隐私政策",
@@ -463,7 +485,7 @@ const CITY_I18N = {
     footerAddRestaurant: "添加餐厅",
     footerAddPrice: "添加价格",
     footerCollab: "合作",
-    footerCopyright: "© 2026 NeredeYenir",
+    footerCopyright: "© 2026 arama bul",
     footerSocial: "社交",
     footerSearchAria: "搜索",
     footerWorldAria: "世界",
@@ -471,6 +493,211 @@ const CITY_I18N = {
 };
 
 let activeLanguage = "TR";
+
+function normalizeLanguageCode(code) {
+  const normalized = String(code || "").trim().toUpperCase();
+  return SUPPORTED_LANGUAGES.has(normalized) ? normalized : "TR";
+}
+
+function readLanguageFromStorage() {
+  try {
+    return normalizeLanguageCode(localStorage.getItem(LANGUAGE_STORAGE_KEY));
+  } catch (_error) {
+    return "TR";
+  }
+}
+
+function getCurrentLanguage() {
+  if (typeof window.NEREDEYENIR_GET_LANGUAGE === "function") {
+    return normalizeLanguageCode(window.NEREDEYENIR_GET_LANGUAGE());
+  }
+
+  return activeLanguage;
+}
+
+function currentLocale() {
+  return LANGUAGE_LOCALES[getCurrentLanguage()] || LANGUAGE_LOCALES.TR;
+}
+
+function cityT(key, replacements = {}) {
+  const lang = getCurrentLanguage();
+  const languagePack = CITY_I18N[lang] || CITY_I18N.TR;
+  const template = languagePack[key] || CITY_I18N.TR[key] || "";
+
+  return Object.entries(replacements).reduce((output, [token, value]) => {
+    return output.replaceAll(`{${token}}`, String(value));
+  }, template);
+}
+
+function formatNumber(value) {
+  return Number(value || 0).toLocaleString(currentLocale());
+}
+
+function applyCityStaticTranslations() {
+  if (cityToplineHomeLink) {
+    cityToplineHomeLink.href = "index.html";
+    cityToplineHomeLink.textContent = cityT("toplineHome");
+  }
+
+  if (cityToplineFoodLink) {
+    cityToplineFoodLink.href = "yemek.html";
+    cityToplineFoodLink.textContent = cityT("toplineFood");
+  }
+
+  if (districtHeading) {
+    districtHeading.textContent = cityT("districtSearch");
+  }
+
+  if (categoryHeading) {
+    categoryHeading.textContent = cityT("categorySearch");
+  }
+
+  if (districtPickerTrigger) {
+    districtPickerTrigger.setAttribute("aria-label", cityT("districtPickerAria"));
+  }
+
+  if (categoryPickerTrigger) {
+    categoryPickerTrigger.setAttribute("aria-label", cityT("categoryPickerAria"));
+  }
+
+  const districtFlyout = document.querySelector("#districtFlyout");
+  if (districtFlyout) {
+    districtFlyout.setAttribute("aria-label", cityT("districtListAria"));
+  }
+
+  if (districtFlyoutList) {
+    districtFlyoutList.setAttribute("aria-label", cityT("districtOptionsAria"));
+  }
+
+  if (categoryFlyoutTitle) {
+    categoryFlyoutTitle.textContent = cityT("categoryListTitle");
+  }
+
+  const categoryFlyout = document.querySelector("#categoryFlyout");
+  if (categoryFlyout) {
+    categoryFlyout.setAttribute("aria-label", cityT("categoryListAria"));
+  }
+
+  if (categoryFlyoutList) {
+    categoryFlyoutList.setAttribute("aria-label", cityT("categoryOptionsAria"));
+  }
+
+  if (districtFlyoutTitle) {
+    districtFlyoutTitle.textContent = cityT("districtListTitle");
+  }
+
+  sortTabs.forEach((button) => {
+    switch (button.dataset.sort) {
+      case "locals":
+        button.textContent = cityT("sortLocals");
+        break;
+      case "viewed":
+        button.textContent = cityT("sortViewed");
+        break;
+      case "rated":
+        button.textContent = cityT("sortRated");
+        break;
+      case "traveler":
+      default:
+        button.textContent = cityT("sortTraveler");
+        break;
+    }
+  });
+
+  if (footerColumns[0]) {
+    const links = footerColumns[0].querySelectorAll("a");
+    const title = footerColumns[0].querySelector("h4");
+    const badges = footerColumns[0].querySelectorAll(".store-badge-top");
+    if (title) {
+      title.textContent = cityT("footerDownloadTitle");
+    }
+    badges.forEach((badge) => {
+      badge.textContent = cityT("footerDownloadNow");
+    });
+    if (links[0]) {
+      links[0].setAttribute("aria-label", "App Store");
+    }
+    if (links[1]) {
+      links[1].setAttribute("aria-label", "Google Play");
+    }
+  }
+
+  if (footerColumns[1]) {
+    const items = footerColumns[1].querySelectorAll("a");
+    const title = footerColumns[1].querySelector("h4");
+    if (title) {
+      title.textContent = cityT("footerDiscoverTitle");
+    }
+    if (items[0]) {
+      items[0].textContent = cityT("footerAbout");
+    }
+    if (items[1]) {
+      items[1].textContent = cityT("footerCareer");
+    }
+    if (items[2]) {
+      items[2].textContent = cityT("footerTech");
+    }
+    if (items[3]) {
+      items[3].textContent = cityT("footerContact");
+    }
+  }
+
+  if (footerColumns[2]) {
+    const items = footerColumns[2].querySelectorAll("a");
+    const title = footerColumns[2].querySelector("h4");
+    if (title) {
+      title.textContent = cityT("footerHelpTitle");
+    }
+    if (items[0]) {
+      items[0].textContent = cityT("footerFaq");
+    }
+    if (items[1]) {
+      items[1].textContent = cityT("footerKvkk");
+    }
+    if (items[2]) {
+      items[2].textContent = cityT("footerPrivacy");
+    }
+    if (items[3]) {
+      items[3].textContent = cityT("footerTerms");
+    }
+    if (items[4]) {
+      items[4].textContent = cityT("footerCookies");
+    }
+  }
+
+  if (footerColumns[3]) {
+    const items = footerColumns[3].querySelectorAll("a");
+    const title = footerColumns[3].querySelector("h4");
+    if (title) {
+      title.textContent = cityT("footerPartnerTitle");
+    }
+    if (items[0]) {
+      items[0].textContent = cityT("footerAddRestaurant");
+    }
+    if (items[1]) {
+      items[1].textContent = cityT("footerAddPrice");
+    }
+    if (items[2]) {
+      items[2].textContent = cityT("footerCollab");
+    }
+  }
+
+  if (footerBottomText) {
+    footerBottomText.textContent = cityT("footerCopyright");
+  }
+
+  if (footerSocial) {
+    footerSocial.setAttribute("aria-label", cityT("footerSocial"));
+  }
+
+  if (footerSocialLinks[1]) {
+    footerSocialLinks[1].setAttribute("aria-label", cityT("footerSearchAria"));
+  }
+
+  if (footerSocialLinks[2]) {
+    footerSocialLinks[2].setAttribute("aria-label", cityT("footerWorldAria"));
+  }
+}
 
 let venues = [];
 let districtsByCity = {};
@@ -1042,6 +1269,93 @@ function filteredVenues() {
   return filtered;
 }
 
+function isOrhaneliRestaurantDemoMode() {
+  return state.city === ORHANELI_DEMO_CITY && state.district === ORHANELI_DEMO_DISTRICT;
+}
+
+function applyOrhaneliDemoLayout(enabled) {
+  if (cityLayout) {
+    cityLayout.style.gridTemplateColumns = enabled ? "1fr" : "";
+  }
+
+  if (citySidebar) {
+    citySidebar.classList.toggle("is-hidden", enabled);
+  }
+
+  if (citySortTabsWrap) {
+    citySortTabsWrap.classList.toggle("is-hidden", enabled);
+  }
+
+  if (cityResultMeta) {
+    cityResultMeta.classList.toggle("is-hidden", enabled);
+  }
+}
+
+function googleRestaurantSearchUrl(venue) {
+  const mapsUrl = new URL("https://www.google.com/maps/search/");
+  mapsUrl.searchParams.set("api", "1");
+  mapsUrl.searchParams.set("query", `${venue.name} ${venue.district} ${venue.city}`);
+
+  if (typeof venue.sourcePlaceId === "string" && venue.sourcePlaceId.trim()) {
+    mapsUrl.searchParams.set("query_place_id", venue.sourcePlaceId.trim());
+  }
+
+  return mapsUrl.toString();
+}
+
+function renderOrhaneliDemoList(venues) {
+  if (!cityVenueList) {
+    return;
+  }
+
+  cityVenueList.innerHTML = "";
+
+  const uniqueByName = [];
+  const seen = new Set();
+
+  venues.forEach((venue) => {
+    const nameKey = normalizeForSearch(venue.name);
+
+    if (!nameKey || seen.has(nameKey)) {
+      return;
+    }
+
+    seen.add(nameKey);
+    uniqueByName.push(venue);
+  });
+
+  uniqueByName.sort((left, right) => left.name.localeCompare(right.name, "tr"));
+
+  if (uniqueByName.length === 0) {
+    renderEmptyState();
+    return;
+  }
+
+  const row = document.createElement("article");
+  row.className = "province-row";
+
+  const rowTitle = document.createElement("h4");
+  rowTitle.className = "province-region";
+  rowTitle.textContent = "Orhaneli restoranları";
+
+  const chips = document.createElement("div");
+  chips.className = "province-cities";
+
+  uniqueByName.forEach((venue) => {
+    const chip = document.createElement("a");
+    chip.className = "province-pill";
+    chip.href = googleRestaurantSearchUrl(venue);
+    chip.target = "_blank";
+    chip.rel = "noopener noreferrer";
+    chip.textContent = venue.name;
+    chip.setAttribute("aria-label", `${venue.name} sayfasını Google'da yeni sekmede aç`);
+    chips.append(chip);
+  });
+
+  row.append(rowTitle, chips);
+  cityVenueList.append(row);
+}
+
 function updateSortTabs() {
   sortTabs.forEach((button) => {
     const isActive = button.dataset.sort === state.sort;
@@ -1115,12 +1429,26 @@ function applyExtraUrlState() {
 }
 
 function renderPageHeader() {
-  const titleText = `${state.city} Restoranları`;
-  document.title = `NeredeYenir | ${state.city} Restoranları`;
+  const titleText = cityT("cityTitle", { city: state.city });
+  document.title = cityT("title", { city: state.city });
   cityTitle.textContent = titleText;
-  cityToplineName.textContent = state.city;
-  if (cityBreadcrumbName) {
-    cityBreadcrumbName.textContent = titleText;
+
+  if (cityToplineCityLink) {
+    const cityUrl = new URL("city.html", window.location.href);
+    cityUrl.searchParams.set("il", toSlug(state.city));
+    cityToplineCityLink.href = cityUrl.toString();
+    cityToplineCityLink.textContent = cityT("cityLink", { city: state.city });
+  }
+
+  if (cityToplineDistrict && cityToplineDistrictDivider) {
+    if (state.district && state.district !== "all") {
+      cityToplineDistrict.textContent = cityT("districtLabel", { district: state.district });
+      cityToplineDistrict.hidden = false;
+      cityToplineDistrictDivider.hidden = false;
+    } else {
+      cityToplineDistrict.hidden = true;
+      cityToplineDistrictDivider.hidden = true;
+    }
   }
 }
 
@@ -1187,9 +1515,10 @@ function renderDistrictOptions() {
 
   if (!districts.includes(state.district)) {
     state.district = "all";
+    renderPageHeader();
   }
 
-  districtCurrent.textContent = state.district === "all" ? "Tüm ilçeler" : state.district;
+  districtCurrent.textContent = state.district === "all" ? cityT("allDistricts") : state.district;
   districtFlyoutCity.textContent = state.city;
 
   const allDistricts = ["all", ...districts];
@@ -1205,7 +1534,7 @@ function renderDistrictOptions() {
     optionButton.dataset.value = district;
     optionButton.setAttribute("role", "option");
     optionButton.setAttribute("aria-selected", district === state.district ? "true" : "false");
-    optionButton.textContent = district === "all" ? "Tüm ilçeler" : district;
+    optionButton.textContent = district === "all" ? cityT("allDistricts") : district;
 
     if (district === state.district) {
       optionButton.classList.add("active");
@@ -1218,6 +1547,7 @@ function renderDistrictOptions() {
     optionButton.addEventListener("click", () => {
       state.district = district;
       state.page = 1;
+      renderPageHeader();
       renderDistrictOptions();
       renderVenues();
       updateUrl();
@@ -1241,13 +1571,13 @@ function renderSidebarCategories() {
     state.category = "all";
   }
 
-  categoryCurrent.textContent = state.category === "all" ? "Tüm kategoriler" : state.category;
+  categoryCurrent.textContent = state.category === "all" ? cityT("allCategories") : state.category;
   categoryFlyoutCity.textContent = state.city;
 
   const allButton = document.createElement("button");
   allButton.type = "button";
   allButton.className = "category-option category-option-all";
-  allButton.textContent = "Tüm kategoriler";
+  allButton.textContent = cityT("allCategories");
   allButton.dataset.value = "all";
   allButton.setAttribute("role", "option");
   allButton.setAttribute("aria-selected", state.category === "all" ? "true" : "false");
@@ -1294,7 +1624,7 @@ function renderSidebarCategories() {
 function renderEmptyState() {
   const empty = document.createElement("article");
   empty.className = "city-empty";
-  empty.textContent = "Bu filtrelerle eşleşen restoran bulunamadı. Filtreleri genişleterek tekrar dene.";
+  empty.textContent = cityT("emptyFiltered");
   cityVenueList.append(empty);
 }
 
@@ -1311,7 +1641,7 @@ function renderVenueCard(venue) {
   if (titleLink) {
     titleLink.textContent = venue.name;
     titleLink.href = restaurantDetailUrl(venue);
-    titleLink.setAttribute("aria-label", `${venue.name} sayfasını aç`);
+    titleLink.setAttribute("aria-label", cityT("openVenueAria", { name: venue.name }));
   }
   card.querySelector(".city-venue-subtitle").textContent = venue.district;
   card.querySelector(".city-venue-description").textContent =
@@ -1347,7 +1677,7 @@ function buildPaginationButton(label, page, active = false) {
   button.textContent = label;
   button.dataset.page = String(page);
   button.classList.toggle("active", active);
-  button.setAttribute("aria-label", `Sayfa ${page}`);
+  button.setAttribute("aria-label", cityT("paginationAria", { page }));
 
   if (active) {
     button.setAttribute("aria-current", "page");
@@ -1369,7 +1699,7 @@ function appendPaginationButtons(container, totalPages) {
   const previousButton = document.createElement("button");
   previousButton.type = "button";
   previousButton.className = "city-pagination-btn";
-  previousButton.textContent = "Önceki";
+  previousButton.textContent = cityT("paginationPrev");
   previousButton.dataset.page = String(state.page - 1);
   previousButton.disabled = state.page <= 1;
   container.append(previousButton);
@@ -1395,7 +1725,7 @@ function appendPaginationButtons(container, totalPages) {
   const nextButton = document.createElement("button");
   nextButton.type = "button";
   nextButton.className = "city-pagination-btn";
-  nextButton.textContent = "Sonraki";
+  nextButton.textContent = cityT("paginationNext");
   nextButton.dataset.page = String(state.page + 1);
   nextButton.disabled = state.page >= totalPages;
   container.append(nextButton);
@@ -1428,20 +1758,38 @@ function renderPagination(totalPages) {
 function renderVenues() {
   const cityVenues = selectedCityVenues();
   const filtered = filteredVenues();
+  const demoMode = isOrhaneliRestaurantDemoMode();
   const totalPages = Math.max(1, Math.ceil(filtered.length / VENUES_PER_PAGE));
   state.page = Math.min(totalPages, Math.max(1, state.page));
   const startIndex = (state.page - 1) * VENUES_PER_PAGE;
   const visible = filtered.slice(startIndex, startIndex + VENUES_PER_PAGE);
 
+  applyOrhaneliDemoLayout(demoMode);
+
   cityVenueList.innerHTML = "";
   const districtForMeta = state.district !== "all" ? state.district : "";
 
+  if (demoMode) {
+    renderPagination(1);
+    renderOrhaneliDemoList(filtered);
+    return;
+  }
+
+  if (cityResultMeta) {
+    cityResultMeta.classList.remove("is-hidden");
+  }
+
   cityResultMeta.textContent = districtForMeta
-    ? `${state.city} ilinde toplam ${cityVenues.length} restoran bulunmaktadır. ${districtForMeta} İlçesinde de ${districtVenueCount(
-        state.city,
-        districtForMeta,
-      )} restoran vardır.`
-    : `${state.city} ilinde toplam ${cityVenues.length} restoran bulunmaktadır.`;
+    ? cityT("resultWithDistrict", {
+        city: state.city,
+        cityTotal: formatNumber(cityVenues.length),
+        district: districtForMeta,
+        districtTotal: formatNumber(districtVenueCount(state.city, districtForMeta)),
+      })
+    : cityT("resultWithoutDistrict", {
+        city: state.city,
+        cityTotal: formatNumber(cityVenues.length),
+      });
 
   renderPagination(totalPages);
 
@@ -1844,7 +2192,23 @@ function attachFilterEvents() {
   });
 }
 
+function applyCityLanguage() {
+  applyCityStaticTranslations();
+
+  if (!state.city) {
+    return;
+  }
+
+  renderPageHeader();
+  renderDistrictOptions();
+  renderSidebarCategories();
+  updateSortTabs();
+  renderVenues();
+}
+
 async function initializeCityPage() {
+  activeLanguage = getCurrentLanguage() || readLanguageFromStorage();
+  applyCityStaticTranslations();
   initializeAuth();
 
   venues = await loadVenues();
@@ -1860,8 +2224,9 @@ async function initializeCityPage() {
   state.page = 1;
 
   if (!state.city) {
-    cityTitle.textContent = "Şehir verisi bulunamadı";
-    cityResultMeta.textContent = "Gösterilecek restoran verisi yok.";
+    document.title = cityT("cityDataMissingTitle");
+    cityTitle.textContent = cityT("cityDataMissingTitle");
+    cityResultMeta.textContent = cityT("cityDataMissingText");
     return;
   }
 
@@ -1876,5 +2241,14 @@ async function initializeCityPage() {
   updateUrl();
   attachFilterEvents();
 }
+
+document.addEventListener("neredeyenir:languagechange", (event) => {
+  const requestedLanguage =
+    event && event.detail && typeof event.detail.language === "string"
+      ? event.detail.language
+      : "TR";
+  activeLanguage = normalizeLanguageCode(requestedLanguage);
+  applyCityLanguage();
+});
 
 initializeCityPage();

@@ -38,8 +38,21 @@ const devOrigins = new Set([
   "http://localhost:8787",
 ]);
 
+function isLocalhostOrigin(origin) {
+  try {
+    const parsed = new URL(origin);
+    return parsed.hostname === "127.0.0.1" || parsed.hostname === "localhost";
+  } catch (_error) {
+    return false;
+  }
+}
+
 function isAllowedOrigin(origin) {
   if (!origin) {
+    return true;
+  }
+
+  if (NODE_ENV !== "production" && origin === "null") {
     return true;
   }
 
@@ -48,6 +61,10 @@ function isAllowedOrigin(origin) {
   }
 
   if (NODE_ENV !== "production" && devOrigins.has(origin)) {
+    return true;
+  }
+
+  if (NODE_ENV !== "production" && isLocalhostOrigin(origin)) {
     return true;
   }
 
@@ -128,6 +145,124 @@ function cleanText(value, maxLength = 120) {
   }
 
   return cleaned.slice(0, maxLength);
+}
+
+function normalizeCategory(value) {
+  const category = cleanText(value, 40).toLocaleLowerCase("tr");
+
+  if (!category) {
+    return "restoran";
+  }
+
+  if (category === "kuafor" || category === "kuaför" || category === "berber") {
+    return "kuafor";
+  }
+
+  if (category === "veteriner" || category === "veterinary") {
+    return "veteriner";
+  }
+
+  return category;
+}
+
+function firstTextPart(value) {
+  const source = cleanText(value, 300);
+  if (!source) {
+    return "";
+  }
+
+  return cleanText(source.split(",")[0] || "", 200);
+}
+
+function buildGoogleMapsSearchUrl(queryText) {
+  const mapsUrl = new URL("https://www.google.com/maps/search/");
+  mapsUrl.searchParams.set("api", "1");
+  mapsUrl.searchParams.set("query", cleanText(queryText, 500));
+  return mapsUrl.toString();
+}
+
+function normalizeLookupKey(value) {
+  return String(value || "")
+    .trim()
+    .toLocaleLowerCase("tr")
+    .replaceAll("ı", "i")
+    .replaceAll("ğ", "g")
+    .replaceAll("ü", "u")
+    .replaceAll("ş", "s")
+    .replaceAll("ö", "o")
+    .replaceAll("ç", "c")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function includesLookup(haystack, needle) {
+  const normalizedHaystack = normalizeLookupKey(haystack);
+  const normalizedNeedle = normalizeLookupKey(needle);
+  return Boolean(normalizedHaystack && normalizedNeedle && normalizedHaystack.includes(normalizedNeedle));
+}
+
+async function searchPlacesWithNominatim(textQuery, limit) {
+  const url = new URL("https://nominatim.openstreetmap.org/search");
+  url.searchParams.set("q", textQuery);
+  url.searchParams.set("format", "jsonv2");
+  url.searchParams.set("addressdetails", "1");
+  url.searchParams.set("countrycodes", "tr");
+  url.searchParams.set("limit", String(limit));
+
+  const controller = new AbortController();
+  const timeoutHandle = setTimeout(() => controller.abort(), 10000);
+
+  let response;
+  try {
+    response = await fetch(url.toString(), {
+      headers: {
+        "Accept": "application/json",
+        "User-Agent": "arama-bul/1.0 (local)",
+      },
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutHandle);
+  }
+
+  if (!response.ok) {
+    return [];
+  }
+
+  const payload = await response.json();
+  if (!Array.isArray(payload)) {
+    return [];
+  }
+
+  const seen = new Set();
+
+  return payload
+    .map((item) => {
+      const displayName = cleanText(item.display_name || "", 300);
+      const name = cleanText(item.name || "", 200) || firstTextPart(displayName);
+      const uniqueKey = cleanText(item.place_id ? String(item.place_id) : "", 200) || name.toLocaleLowerCase("tr");
+      const mapsQuery = cleanText(`${name} ${displayName}`.trim(), 500);
+      const locationContext = cleanText(JSON.stringify(item.address || {}), 500);
+
+      return {
+        uniqueKey,
+        placeId: cleanText(item.place_id ? String(item.place_id) : "", 200),
+        name,
+        address: displayName,
+        locationContext,
+        mapsUrl: buildGoogleMapsSearchUrl(mapsQuery || name),
+        rating: null,
+        userRatingCount: null,
+      };
+    })
+    .filter((place) => {
+      if (!place.name || !place.uniqueKey || seen.has(place.uniqueKey)) {
+        return false;
+      }
+
+      seen.add(place.uniqueKey);
+      return true;
+    })
+    .map(({ uniqueKey: _uniqueKey, ...place }) => place);
 }
 
 function toIsoOrNull(value) {
@@ -372,13 +507,204 @@ app.get("/api/districts", async (_req, res, next) => {
   }
 });
 
+app.get("/api/places/search", async (req, res, next) => {
+  try {
+    const placesApiKey = cleanText(process.env.PLACES_API_KEY || "", 256);
+    if (!placesApiKey) {
+      res.status(503).json({
+        ok: false,
+        message: "places_api_key_missing",
+        places: [],
+      });
+      return;
+    }
+
+    const city = cleanText(req.query.city || req.query.il || "", 80);
+    const district = cleanText(req.query.district || req.query.ilce || "", 80);
+    const category = normalizeCategory(req.query.category || "");
+    const limit = parseBoundedInt(req.query.limit, 60, 1, 60);
+
+    const rawKeyword = cleanText(req.query.keyword || "restoran", 80);
+    const keywordCandidates =
+      category === "kuafor"
+        ? ["kuaför salonu", "kuaför", "berber", "güzellik salonu", "erkek kuaförü", "kadın kuaförü", "hair salon"]
+        : category === "veteriner"
+          ? [
+              "veteriner kliniği",
+              "veteriner",
+              "hayvan hastanesi",
+              "veteriner hekim",
+              "veterinary clinic",
+              "pet clinic",
+              "pet vet",
+            ]
+          : [rawKeyword];
+
+    const districtQueries = keywordCandidates
+      .map((keyword) => [district, city, keyword].filter(Boolean).join(" ").trim())
+      .filter((query) => query.length >= 2);
+
+    const cityQueries = keywordCandidates
+      .map((keyword) => [city, keyword].filter(Boolean).join(" ").trim())
+      .filter((query) => query.length >= 2);
+
+    const hasDistrict = Boolean(district);
+    const queries = hasDistrict
+      ? [...new Set([...districtQueries, ...cityQueries])]
+      : [...new Set(cityQueries)];
+
+    if (queries.length === 0) {
+      res.json({ ok: true, places: [], query: "" });
+      return;
+    }
+
+    const fieldMask = [
+      "places.id",
+      "places.displayName",
+      "places.formattedAddress",
+      "places.rating",
+      "places.userRatingCount",
+      "places.googleMapsUri",
+    ].join(",");
+
+    let normalizedPlaces = [];
+    let selectedQuery = queries[0];
+    let upstreamError = null;
+    let source = "none";
+    const mergedPlaces = [];
+    const seenPlaceKeys = new Set();
+
+    function matchesLocation(place) {
+      const text = `${place.name || ""} ${place.address || ""} ${place.locationContext || ""}`;
+
+      if (hasDistrict) {
+        return includesLookup(text, district);
+      }
+
+      if (city) {
+        return includesLookup(text, city);
+      }
+
+      return true;
+    }
+
+    function mergePlaces(places) {
+      for (const place of places) {
+        const key =
+          cleanText(place.placeId || "", 200) ||
+          cleanText(`${place.name}|${place.address}`.toLocaleLowerCase("tr"), 500);
+
+        if (!place.name || !key || seenPlaceKeys.has(key)) {
+          continue;
+        }
+
+        seenPlaceKeys.add(key);
+        mergedPlaces.push(place);
+
+        if (mergedPlaces.length >= limit) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    if (placesApiKey) {
+      for (const textQuery of queries) {
+        const requestBody = {
+          textQuery,
+          languageCode: "tr",
+          regionCode: "TR",
+          maxResultCount: Math.min(limit, 20),
+        };
+
+        const controller = new AbortController();
+        const timeoutHandle = setTimeout(() => controller.abort(), 10000);
+
+        let response;
+        try {
+          response = await fetch("https://places.googleapis.com/v1/places:searchText", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Goog-Api-Key": placesApiKey,
+              "X-Goog-FieldMask": fieldMask,
+            },
+            body: JSON.stringify(requestBody),
+            signal: controller.signal,
+          });
+        } finally {
+          clearTimeout(timeoutHandle);
+        }
+
+        if (!response.ok) {
+          const errorText = await response.text().catch(() => "");
+          upstreamError = {
+            status: response.status,
+            detail: errorText.slice(0, 500),
+          };
+          continue;
+        }
+
+        const payload = await response.json();
+        const places = Array.isArray(payload.places) ? payload.places : [];
+
+        const currentPlaces = places
+          .map((place) => ({
+            placeId: cleanText(place.id || "", 200),
+            name: cleanText(place.displayName && place.displayName.text ? place.displayName.text : "", 200),
+            address: cleanText(place.formattedAddress || "", 240),
+            mapsUrl: cleanText(place.googleMapsUri || "", 1000),
+            rating: Number.isFinite(place.rating) ? Number(place.rating) : null,
+            userRatingCount: Number.isFinite(place.userRatingCount) ? Number(place.userRatingCount) : null,
+          }))
+          .filter((place) => place.name)
+          .filter(matchesLocation);
+
+        if (currentPlaces.length > 0) {
+          selectedQuery = textQuery;
+          source = "google";
+          const isFull = mergePlaces(currentPlaces);
+          if (isFull) {
+            break;
+          }
+        }
+      }
+    }
+
+    normalizedPlaces = mergedPlaces;
+
+    if (normalizedPlaces.length === 0 && upstreamError) {
+      res.status(502).json({
+        ok: false,
+        message: "places_upstream_error",
+        status: upstreamError.status,
+        detail: upstreamError.detail,
+        places: [],
+      });
+      return;
+    }
+
+    res.json({
+      ok: true,
+      category,
+      query: selectedQuery,
+      source,
+      upstream: null,
+      places: normalizedPlaces,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 const staticCacheMaxAge = NODE_ENV === "production" ? "1h" : 0;
 app.use(
   express.static(STATIC_ROOT, {
     index: false,
     maxAge: staticCacheMaxAge,
     setHeaders(res, filePath) {
-      if (filePath.endsWith(".html")) {
+      if (filePath.endsWith(".html") || filePath.endsWith(".js") || filePath.endsWith(".json")) {
         res.setHeader("Cache-Control", "no-store");
       }
     },

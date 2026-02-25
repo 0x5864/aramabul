@@ -58,6 +58,7 @@ const restaurantAddressFields = [...document.querySelectorAll('[data-info-field=
 const restaurantPhoneFields = [...document.querySelectorAll('[data-info-field="phone"]')];
 const restaurantInstagramFields = [...document.querySelectorAll('[data-info-field="instagram"]')];
 const restaurantWebsiteFields = [...document.querySelectorAll('[data-info-field="website"]')];
+const restaurantTabsNav = document.querySelector(".restaurant-tabs");
 const restaurantTabs = [...document.querySelectorAll(".restaurant-tab")];
 const restaurantPanels = [...document.querySelectorAll(".restaurant-panel")];
 const restaurantMapCanvas = document.querySelector("#restaurantMapCanvas");
@@ -69,6 +70,20 @@ const restaurantCommentForm = document.querySelector("#restaurantCommentForm");
 const restaurantCommentAuthor = document.querySelector("#commentAuthor");
 const restaurantCommentText = document.querySelector("#commentText");
 const restaurantCommentMessage = document.querySelector("#restaurantCommentMessage");
+const restaurantOverviewHeading = document.querySelector(".restaurant-overview h2");
+const restaurantAddressLabels = [...document.querySelectorAll(".restaurant-address-label")];
+const restaurantPhoneLabels = [...document.querySelectorAll(".restaurant-phone-label")];
+const restaurantInstagramLabels = [...document.querySelectorAll(".restaurant-instagram-label")];
+const restaurantWebsiteLabels = [...document.querySelectorAll(".restaurant-website-label")];
+const restaurantCommentsTitle = document.querySelector(".restaurant-comments-title");
+const restaurantCommentAuthorLabel = document.querySelector('label[for="commentAuthor"]');
+const restaurantCommentTextLabel = document.querySelector('label[for="commentText"]');
+const restaurantCommentSubmit = document.querySelector(".restaurant-comment-submit");
+const restaurantMapTitle = document.querySelector(".restaurant-map-title");
+const footerColumns = [...document.querySelectorAll(".yr-footer-col")];
+const footerBottomText = document.querySelector(".yr-footer-bottom p");
+const footerSocial = document.querySelector(".yr-footer-social");
+const footerSocialLinks = [...document.querySelectorAll(".yr-footer-social a")];
 
 let leafletMap = null;
 let leafletMarker = null;
@@ -76,6 +91,600 @@ let latestMapToken = "";
 let activeCommentsKey = "";
 let activeComments = [];
 let activeVenue = null;
+let activeLanguage = "TR";
+
+const LANGUAGE_STORAGE_KEY = "neredeyenir.selectedLanguage.v1";
+const SUPPORTED_LANGUAGES = new Set(["TR", "EN", "RU", "DE", "ZH"]);
+const LANGUAGE_LOCALES = {
+  TR: "tr-TR",
+  EN: "en-US",
+  RU: "ru-RU",
+  DE: "de-DE",
+  ZH: "zh-CN",
+};
+
+const RESTAURANT_I18N = {
+  TR: {
+    title: "arama bul | {name}",
+    home: "Anasayfa",
+    food: "Yemek",
+    breadcrumbAria: "Gezinme yolu",
+    cityLink: "{city} İli",
+    districtFallback: "İlçe",
+    districtLabel: "{district} İlçesi",
+    scoreExcellent: "Mükemmel",
+    scoreVeryGood: "Çok iyi",
+    scoreGood: "İyi",
+    scoreAverage: "Orta",
+    reviewCount: "{count} değerlendirme",
+    reviewMissing: "Değerlendirme bilgisi bulunamamıştır",
+    cuisineFallback: "Restoran",
+    dessertCuisine: "Tatlı",
+    categoryMeta: "Kategori: {cuisine}",
+    overviewFallback: "{name}, {city} şehrinde özellikle {cuisine} sevenler için tercih edilen bir durak.",
+    atmospherePrefix: "Mekan özellikleri: {items}.",
+    menuPrefix: "Menü/servis: {items}.",
+    countryName: "Türkiye",
+    phoneMissing: "Telefon bilgisi bulunamadı",
+    infoMissing: "Bilgi bulunamamıştır",
+    instagramOpenAria: "Instagram profilini yeni sekmede aç",
+    websiteOpenAria: "Web sitesini yeni sekmede aç",
+    mapAria: "Restoran konum haritası",
+    mapOpen: "Google Haritalar'da aç",
+    mapLoading: "Konum yükleniyor...",
+    mapNotFound: "Konum bulunamadı. Alttaki bağlantıdan Google Haritalar'ı açabilirsin.",
+    mapLoadFailed: "Harita yüklenemedi. Lütfen tekrar dene.",
+    commentsEmpty: "İlk yorumu sen yaz.",
+    commentsAuthorLabel: "Adın",
+    commentsAuthorPlaceholder: "Adını yaz",
+    commentsTextLabel: "Yorumun",
+    commentsTextPlaceholder: "Deneyimini paylaş",
+    commentsSubmit: "Yorumu Gönder",
+    commentsEmptyError: "Yorum metni boş olamaz.",
+    commentsSaved: "Yorumun kaydedildi.",
+    guest: "Misafir",
+    tabsAria: "Detay sekmeleri",
+    tabOverview: "Genel Bilgi",
+    tabLocation: "Konum",
+    tabComments: "Yorumlar",
+    tabPhotos: "Fotoğraflar",
+    mainImageAlt: "Restoran ana görseli",
+    thumbImageAlt: "Restoran detay görseli",
+    overviewHeading: "Özet",
+    addressLabel: "Adres",
+    phoneLabel: "Telefon",
+    instagramLabel: "Instagram",
+    websiteLabel: "Web Sitesi",
+    mapTitle: "Konum",
+    commentsTitle: "Yorumlar",
+    footerDownloadTitle: "İndir.",
+    footerDownloadNow: "Hemen indirin",
+    footerDiscoverTitle: "Keşfet",
+    footerAbout: "Hakkımızda",
+    footerCareer: "Kariyer",
+    footerTech: "Teknoloji",
+    footerContact: "İletişim",
+    footerHelpTitle: "Yardım",
+    footerFaq: "Sıkça Sorulan Sorular",
+    footerKvkk: "Kişisel Verilerin Korunması",
+    footerPrivacy: "Gizlilik Politikası",
+    footerTerms: "Kullanım Koşulları",
+    footerCookies: "Çerez Politikası",
+    footerPartnerTitle: "İş ortaklığımız",
+    footerAddRestaurant: "Restoran ekle",
+    footerAddPrice: "Fiyat ekle",
+    footerCollab: "İş birliği",
+    footerCopyright: "© 2026 arama bul",
+    footerSocial: "Sosyal",
+    footerSearchAria: "Ara",
+    footerWorldAria: "Dünya",
+  },
+  EN: {
+    title: "arama bul | {name}",
+    home: "Home",
+    food: "Food",
+    breadcrumbAria: "Breadcrumb",
+    cityLink: "{city} City",
+    districtFallback: "District",
+    districtLabel: "{district} District",
+    scoreExcellent: "Excellent",
+    scoreVeryGood: "Very good",
+    scoreGood: "Good",
+    scoreAverage: "Average",
+    reviewCount: "{count} reviews",
+    reviewMissing: "Rating information is unavailable",
+    cuisineFallback: "Restaurant",
+    dessertCuisine: "Dessert",
+    categoryMeta: "Category: {cuisine}",
+    overviewFallback: "{name} is a popular stop in {city} for people who enjoy {cuisine}.",
+    atmospherePrefix: "Venue features: {items}.",
+    menuPrefix: "Menu/service: {items}.",
+    countryName: "Turkey",
+    phoneMissing: "Phone information is unavailable",
+    infoMissing: "Information not available",
+    instagramOpenAria: "Open Instagram profile in a new tab",
+    websiteOpenAria: "Open website in a new tab",
+    mapAria: "Restaurant location map",
+    mapOpen: "Open in Google Maps",
+    mapLoading: "Loading location...",
+    mapNotFound: "Location not found. You can open Google Maps using the link below.",
+    mapLoadFailed: "Map could not be loaded. Please try again.",
+    commentsEmpty: "Write the first comment.",
+    commentsAuthorLabel: "Your name",
+    commentsAuthorPlaceholder: "Enter your name",
+    commentsTextLabel: "Your comment",
+    commentsTextPlaceholder: "Share your experience",
+    commentsSubmit: "Submit Comment",
+    commentsEmptyError: "Comment text cannot be empty.",
+    commentsSaved: "Your comment has been saved.",
+    guest: "Guest",
+    tabsAria: "Detail tabs",
+    tabOverview: "Overview",
+    tabLocation: "Location",
+    tabComments: "Comments",
+    tabPhotos: "Photos",
+    mainImageAlt: "Restaurant main photo",
+    thumbImageAlt: "Restaurant photo",
+    overviewHeading: "Summary",
+    addressLabel: "Address",
+    phoneLabel: "Phone",
+    instagramLabel: "Instagram",
+    websiteLabel: "Website",
+    mapTitle: "Location",
+    commentsTitle: "Comments",
+    footerDownloadTitle: "Download",
+    footerDownloadNow: "Download now",
+    footerDiscoverTitle: "Discover",
+    footerAbout: "About us",
+    footerCareer: "Careers",
+    footerTech: "Technology",
+    footerContact: "Contact",
+    footerHelpTitle: "Help",
+    footerFaq: "Frequently Asked Questions",
+    footerKvkk: "Personal Data Protection",
+    footerPrivacy: "Privacy Policy",
+    footerTerms: "Terms of Use",
+    footerCookies: "Cookie Policy",
+    footerPartnerTitle: "Partnership",
+    footerAddRestaurant: "Add restaurant",
+    footerAddPrice: "Add price",
+    footerCollab: "Collaboration",
+    footerCopyright: "© 2026 arama bul",
+    footerSocial: "Social",
+    footerSearchAria: "Search",
+    footerWorldAria: "World",
+  },
+  RU: {
+    title: "arama bul | {name}",
+    home: "Главная",
+    food: "Еда",
+    breadcrumbAria: "Хлебные крошки",
+    cityLink: "Город {city}",
+    districtFallback: "Район",
+    districtLabel: "Район {district}",
+    scoreExcellent: "Отлично",
+    scoreVeryGood: "Очень хорошо",
+    scoreGood: "Хорошо",
+    scoreAverage: "Средне",
+    reviewCount: "{count} отзывов",
+    reviewMissing: "Информация об оценках недоступна",
+    cuisineFallback: "Ресторан",
+    dessertCuisine: "Десерты",
+    categoryMeta: "Категория: {cuisine}",
+    overviewFallback: "{name} — популярное место в {city} для тех, кто любит {cuisine}.",
+    atmospherePrefix: "Особенности места: {items}.",
+    menuPrefix: "Меню/сервис: {items}.",
+    countryName: "Turkey",
+    phoneMissing: "Информация о телефоне недоступна",
+    infoMissing: "Информация недоступна",
+    instagramOpenAria: "Открыть профиль Instagram в новой вкладке",
+    websiteOpenAria: "Открыть сайт в новой вкладке",
+    mapAria: "Карта расположения ресторана",
+    mapOpen: "Открыть в Google Картах",
+    mapLoading: "Загрузка локации...",
+    mapNotFound: "Локация не найдена. Вы можете открыть Google Карты по ссылке ниже.",
+    mapLoadFailed: "Не удалось загрузить карту. Попробуйте еще раз.",
+    commentsEmpty: "Напишите первый отзыв.",
+    commentsAuthorLabel: "Ваше имя",
+    commentsAuthorPlaceholder: "Введите ваше имя",
+    commentsTextLabel: "Ваш отзыв",
+    commentsTextPlaceholder: "Поделитесь впечатлением",
+    commentsSubmit: "Отправить отзыв",
+    commentsEmptyError: "Текст отзыва не может быть пустым.",
+    commentsSaved: "Ваш отзыв сохранен.",
+    guest: "Гость",
+    tabsAria: "Вкладки деталей",
+    tabOverview: "Общая информация",
+    tabLocation: "Локация",
+    tabComments: "Отзывы",
+    tabPhotos: "Фото",
+    mainImageAlt: "Основное фото ресторана",
+    thumbImageAlt: "Фото ресторана",
+    overviewHeading: "Кратко",
+    addressLabel: "Адрес",
+    phoneLabel: "Телефон",
+    instagramLabel: "Instagram",
+    websiteLabel: "Веб-сайт",
+    mapTitle: "Локация",
+    commentsTitle: "Отзывы",
+    footerDownloadTitle: "Скачать",
+    footerDownloadNow: "Скачать",
+    footerDiscoverTitle: "Обзор",
+    footerAbout: "О нас",
+    footerCareer: "Карьера",
+    footerTech: "Технологии",
+    footerContact: "Контакты",
+    footerHelpTitle: "Помощь",
+    footerFaq: "Часто задаваемые вопросы",
+    footerKvkk: "Защита персональных данных",
+    footerPrivacy: "Политика конфиденциальности",
+    footerTerms: "Условия использования",
+    footerCookies: "Политика cookie",
+    footerPartnerTitle: "Партнерство",
+    footerAddRestaurant: "Добавить ресторан",
+    footerAddPrice: "Добавить цену",
+    footerCollab: "Сотрудничество",
+    footerCopyright: "© 2026 arama bul",
+    footerSocial: "Соцсети",
+    footerSearchAria: "Поиск",
+    footerWorldAria: "Мир",
+  },
+  DE: {
+    title: "arama bul | {name}",
+    home: "Startseite",
+    food: "Essen",
+    breadcrumbAria: "Brotkrumen",
+    cityLink: "Stadt {city}",
+    districtFallback: "Bezirk",
+    districtLabel: "{district} Bezirk",
+    scoreExcellent: "Ausgezeichnet",
+    scoreVeryGood: "Sehr gut",
+    scoreGood: "Gut",
+    scoreAverage: "Durchschnittlich",
+    reviewCount: "{count} Bewertungen",
+    reviewMissing: "Bewertungsinformationen sind nicht verfügbar",
+    cuisineFallback: "Restaurant",
+    dessertCuisine: "Dessert",
+    categoryMeta: "Kategorie: {cuisine}",
+    overviewFallback: "{name} ist in {city} ein beliebter Ort für alle, die {cuisine} mögen.",
+    atmospherePrefix: "Merkmale des Lokals: {items}.",
+    menuPrefix: "Menü/Service: {items}.",
+    countryName: "Turkey",
+    phoneMissing: "Telefoninformationen sind nicht verfügbar",
+    infoMissing: "Information nicht verfügbar",
+    instagramOpenAria: "Instagram-Profil in neuem Tab öffnen",
+    websiteOpenAria: "Webseite in neuem Tab öffnen",
+    mapAria: "Standortkarte des Restaurants",
+    mapOpen: "In Google Maps öffnen",
+    mapLoading: "Standort wird geladen...",
+    mapNotFound: "Standort wurde nicht gefunden. Du kannst Google Maps über den Link unten öffnen.",
+    mapLoadFailed: "Die Karte konnte nicht geladen werden. Bitte versuche es erneut.",
+    commentsEmpty: "Schreibe den ersten Kommentar.",
+    commentsAuthorLabel: "Dein Name",
+    commentsAuthorPlaceholder: "Gib deinen Namen ein",
+    commentsTextLabel: "Dein Kommentar",
+    commentsTextPlaceholder: "Teile deine Erfahrung",
+    commentsSubmit: "Kommentar senden",
+    commentsEmptyError: "Der Kommentartext darf nicht leer sein.",
+    commentsSaved: "Dein Kommentar wurde gespeichert.",
+    guest: "Gast",
+    tabsAria: "Detail-Tabs",
+    tabOverview: "Allgemeine Infos",
+    tabLocation: "Standort",
+    tabComments: "Kommentare",
+    tabPhotos: "Fotos",
+    mainImageAlt: "Hauptfoto des Restaurants",
+    thumbImageAlt: "Restaurantfoto",
+    overviewHeading: "Zusammenfassung",
+    addressLabel: "Adresse",
+    phoneLabel: "Telefon",
+    instagramLabel: "Instagram",
+    websiteLabel: "Webseite",
+    mapTitle: "Standort",
+    commentsTitle: "Kommentare",
+    footerDownloadTitle: "Download",
+    footerDownloadNow: "Jetzt laden",
+    footerDiscoverTitle: "Entdecken",
+    footerAbout: "Über uns",
+    footerCareer: "Karriere",
+    footerTech: "Technologie",
+    footerContact: "Kontakt",
+    footerHelpTitle: "Hilfe",
+    footerFaq: "Häufige Fragen",
+    footerKvkk: "Schutz personenbezogener Daten",
+    footerPrivacy: "Datenschutzrichtlinie",
+    footerTerms: "Nutzungsbedingungen",
+    footerCookies: "Cookie-Richtlinie",
+    footerPartnerTitle: "Partnerschaft",
+    footerAddRestaurant: "Restaurant hinzufügen",
+    footerAddPrice: "Preis hinzufügen",
+    footerCollab: "Zusammenarbeit",
+    footerCopyright: "© 2026 arama bul",
+    footerSocial: "Soziale Medien",
+    footerSearchAria: "Suche",
+    footerWorldAria: "Welt",
+  },
+  ZH: {
+    title: "arama bul | {name}",
+    home: "首页",
+    food: "美食",
+    breadcrumbAria: "面包屑导航",
+    cityLink: "{city} 市",
+    districtFallback: "区",
+    districtLabel: "{district} 区",
+    scoreExcellent: "极佳",
+    scoreVeryGood: "很好",
+    scoreGood: "不错",
+    scoreAverage: "一般",
+    reviewCount: "{count} 条评价",
+    reviewMissing: "暂无评分信息",
+    cuisineFallback: "餐厅",
+    dessertCuisine: "甜品",
+    categoryMeta: "类别：{cuisine}",
+    overviewFallback: "{name} 是 {city} 备受欢迎的餐厅，适合喜欢 {cuisine} 的人。",
+    atmospherePrefix: "场所特色：{items}。",
+    menuPrefix: "菜单/服务：{items}。",
+    countryName: "Turkey",
+    phoneMissing: "暂无电话信息",
+    infoMissing: "暂无信息",
+    instagramOpenAria: "在新标签页打开 Instagram 主页",
+    websiteOpenAria: "在新标签页打开网站",
+    mapAria: "餐厅位置地图",
+    mapOpen: "在 Google 地图中打开",
+    mapLoading: "正在加载位置...",
+    mapNotFound: "未找到位置。你可以通过下方链接打开 Google 地图。",
+    mapLoadFailed: "地图加载失败，请重试。",
+    commentsEmpty: "来写第一条评论吧。",
+    commentsAuthorLabel: "你的名字",
+    commentsAuthorPlaceholder: "输入你的名字",
+    commentsTextLabel: "你的评论",
+    commentsTextPlaceholder: "分享你的体验",
+    commentsSubmit: "提交评论",
+    commentsEmptyError: "评论内容不能为空。",
+    commentsSaved: "评论已保存。",
+    guest: "访客",
+    tabsAria: "详情标签",
+    tabOverview: "基本信息",
+    tabLocation: "位置",
+    tabComments: "评论",
+    tabPhotos: "照片",
+    mainImageAlt: "餐厅主图",
+    thumbImageAlt: "餐厅图片",
+    overviewHeading: "简介",
+    addressLabel: "地址",
+    phoneLabel: "电话",
+    instagramLabel: "Instagram",
+    websiteLabel: "网站",
+    mapTitle: "位置",
+    commentsTitle: "评论",
+    footerDownloadTitle: "下载",
+    footerDownloadNow: "立即下载",
+    footerDiscoverTitle: "探索",
+    footerAbout: "关于我们",
+    footerCareer: "招聘",
+    footerTech: "技术",
+    footerContact: "联系我们",
+    footerHelpTitle: "帮助",
+    footerFaq: "常见问题",
+    footerKvkk: "个人数据保护",
+    footerPrivacy: "隐私政策",
+    footerTerms: "使用条款",
+    footerCookies: "Cookie 政策",
+    footerPartnerTitle: "合作伙伴",
+    footerAddRestaurant: "添加餐厅",
+    footerAddPrice: "添加价格",
+    footerCollab: "合作",
+    footerCopyright: "© 2026 arama bul",
+    footerSocial: "社交",
+    footerSearchAria: "搜索",
+    footerWorldAria: "全球",
+  },
+};
+
+function normalizeLanguageCode(code) {
+  const normalized = String(code || "").trim().toUpperCase();
+  return SUPPORTED_LANGUAGES.has(normalized) ? normalized : "TR";
+}
+
+function readLanguageFromStorage() {
+  try {
+    return normalizeLanguageCode(localStorage.getItem(LANGUAGE_STORAGE_KEY));
+  } catch (_error) {
+    return "TR";
+  }
+}
+
+function getCurrentLanguage() {
+  if (typeof window.NEREDEYENIR_GET_LANGUAGE === "function") {
+    return normalizeLanguageCode(window.NEREDEYENIR_GET_LANGUAGE());
+  }
+
+  return activeLanguage;
+}
+
+function currentLocale() {
+  return LANGUAGE_LOCALES[getCurrentLanguage()] || LANGUAGE_LOCALES.TR;
+}
+
+function restaurantT(key, replacements = {}) {
+  const lang = getCurrentLanguage();
+  const languagePack = RESTAURANT_I18N[lang] || RESTAURANT_I18N.TR;
+  const template = languagePack[key] || RESTAURANT_I18N.TR[key] || "";
+
+  return Object.entries(replacements).reduce((output, [token, value]) => {
+    return output.replaceAll(`{${token}}`, String(value));
+  }, template);
+}
+
+function applyRestaurantStaticTranslations() {
+  if (restaurantBreadcrumb) {
+    restaurantBreadcrumb.setAttribute("aria-label", restaurantT("breadcrumbAria"));
+  }
+  if (restaurantTabsNav) {
+    restaurantTabsNav.setAttribute("aria-label", restaurantT("tabsAria"));
+  }
+  if (restaurantTabs[0]) {
+    restaurantTabs[0].textContent = restaurantT("tabOverview");
+  }
+  if (restaurantTabs[1]) {
+    restaurantTabs[1].textContent = restaurantT("tabLocation");
+  }
+  if (restaurantTabs[2]) {
+    restaurantTabs[2].textContent = restaurantT("tabComments");
+  }
+  if (restaurantTabs[3]) {
+    restaurantTabs[3].textContent = restaurantT("tabPhotos");
+  }
+
+  if (restaurantOverviewHeading) {
+    restaurantOverviewHeading.textContent = restaurantT("overviewHeading");
+  }
+  if (restaurantMainImage) {
+    restaurantMainImage.alt = restaurantT("mainImageAlt");
+  }
+  restaurantThumbs.forEach((image) => {
+    image.alt = restaurantT("thumbImageAlt");
+  });
+
+  restaurantAddressLabels.forEach((element) => {
+    element.textContent = restaurantT("addressLabel");
+  });
+  restaurantPhoneLabels.forEach((element) => {
+    element.textContent = restaurantT("phoneLabel");
+  });
+  restaurantInstagramLabels.forEach((element) => {
+    element.textContent = restaurantT("instagramLabel");
+  });
+  restaurantWebsiteLabels.forEach((element) => {
+    element.textContent = restaurantT("websiteLabel");
+  });
+
+  if (restaurantMapTitle) {
+    restaurantMapTitle.textContent = restaurantT("mapTitle");
+  }
+  if (restaurantMapCanvas) {
+    restaurantMapCanvas.setAttribute("aria-label", restaurantT("mapAria"));
+  }
+  if (restaurantMapLink) {
+    restaurantMapLink.textContent = restaurantT("mapOpen");
+    restaurantMapLink.setAttribute("aria-label", restaurantT("mapOpen"));
+  }
+  if (restaurantCommentsTitle) {
+    restaurantCommentsTitle.textContent = restaurantT("commentsTitle");
+  }
+  if (restaurantCommentsEmpty) {
+    restaurantCommentsEmpty.textContent = restaurantT("commentsEmpty");
+  }
+  if (restaurantCommentAuthorLabel) {
+    restaurantCommentAuthorLabel.textContent = restaurantT("commentsAuthorLabel");
+  }
+  if (restaurantCommentTextLabel) {
+    restaurantCommentTextLabel.textContent = restaurantT("commentsTextLabel");
+  }
+  if (restaurantCommentAuthor) {
+    restaurantCommentAuthor.setAttribute("placeholder", restaurantT("commentsAuthorPlaceholder"));
+  }
+  if (restaurantCommentText) {
+    restaurantCommentText.setAttribute("placeholder", restaurantT("commentsTextPlaceholder"));
+  }
+  if (restaurantCommentSubmit) {
+    restaurantCommentSubmit.textContent = restaurantT("commentsSubmit");
+  }
+
+  if (footerColumns[0]) {
+    const links = footerColumns[0].querySelectorAll("a");
+    const title = footerColumns[0].querySelector("h4");
+    const badges = footerColumns[0].querySelectorAll(".store-badge-top");
+    if (title) {
+      title.textContent = restaurantT("footerDownloadTitle");
+    }
+    badges.forEach((badge) => {
+      badge.textContent = restaurantT("footerDownloadNow");
+    });
+    if (links[0]) {
+      links[0].setAttribute("aria-label", "App Store");
+    }
+    if (links[1]) {
+      links[1].setAttribute("aria-label", "Google Play");
+    }
+  }
+
+  if (footerColumns[1]) {
+    const items = footerColumns[1].querySelectorAll("a");
+    const title = footerColumns[1].querySelector("h4");
+    if (title) {
+      title.textContent = restaurantT("footerDiscoverTitle");
+    }
+    if (items[0]) {
+      items[0].textContent = restaurantT("footerAbout");
+    }
+    if (items[1]) {
+      items[1].textContent = restaurantT("footerCareer");
+    }
+    if (items[2]) {
+      items[2].textContent = restaurantT("footerTech");
+    }
+    if (items[3]) {
+      items[3].textContent = restaurantT("footerContact");
+    }
+  }
+
+  if (footerColumns[2]) {
+    const items = footerColumns[2].querySelectorAll("a");
+    const title = footerColumns[2].querySelector("h4");
+    if (title) {
+      title.textContent = restaurantT("footerHelpTitle");
+    }
+    if (items[0]) {
+      items[0].textContent = restaurantT("footerFaq");
+    }
+    if (items[1]) {
+      items[1].textContent = restaurantT("footerKvkk");
+    }
+    if (items[2]) {
+      items[2].textContent = restaurantT("footerPrivacy");
+    }
+    if (items[3]) {
+      items[3].textContent = restaurantT("footerTerms");
+    }
+    if (items[4]) {
+      items[4].textContent = restaurantT("footerCookies");
+    }
+  }
+
+  if (footerColumns[3]) {
+    const items = footerColumns[3].querySelectorAll("a");
+    const title = footerColumns[3].querySelector("h4");
+    if (title) {
+      title.textContent = restaurantT("footerPartnerTitle");
+    }
+    if (items[0]) {
+      items[0].textContent = restaurantT("footerAddRestaurant");
+    }
+    if (items[1]) {
+      items[1].textContent = restaurantT("footerAddPrice");
+    }
+    if (items[2]) {
+      items[2].textContent = restaurantT("footerCollab");
+    }
+  }
+
+  if (footerBottomText) {
+    footerBottomText.textContent = restaurantT("footerCopyright");
+  }
+
+  if (footerSocial) {
+    footerSocial.setAttribute("aria-label", restaurantT("footerSocial"));
+  }
+
+  if (footerSocialLinks[1]) {
+    footerSocialLinks[1].setAttribute("aria-label", restaurantT("footerSearchAria"));
+  }
+
+  if (footerSocialLinks[2]) {
+    footerSocialLinks[2].setAttribute("aria-label", restaurantT("footerWorldAria"));
+  }
+}
 
 function normalizeForSearch(value) {
   return String(value || "")
@@ -99,12 +708,20 @@ function sanitizeText(value, fallback = "") {
   return cleaned.length > 0 ? cleaned.slice(0, 120) : fallback;
 }
 
-function normalizeCuisineLabel(value, fallback = "Restoran") {
+function normalizeCuisineLabel(value, fallback = "") {
   const cleaned = sanitizeText(value, fallback);
-  const normalized = normalizeForSearch(cleaned);
+  return cleaned;
+}
 
-  if (normalized === "baklava" || normalized === "kunefe") {
-    return "Tatlı";
+function localizeCuisineLabel(cuisineValue) {
+  const cleaned = sanitizeText(cuisineValue || "", "");
+  if (!cleaned) {
+    return restaurantT("cuisineFallback");
+  }
+
+  const normalized = normalizeForSearch(cleaned);
+  if (normalized === "baklava" || normalized === "kunefe" || normalized === "tatli") {
+    return restaurantT("dessertCuisine");
   }
 
   return cleaned;
@@ -233,9 +850,9 @@ function normalizeVenueRecord(record) {
   }
 
   const city = sanitizeText(record.city);
-  const district = sanitizeText(record.district, "Merkez");
+  const district = sanitizeText(record.district, "");
   const name = sanitizeVenueName(record.name);
-  const cuisine = normalizeCuisineLabel(record.cuisine, "Restoran");
+  const cuisine = normalizeCuisineLabel(record.cuisine, "");
 
   if (!city || !name) {
     return null;
@@ -412,18 +1029,18 @@ function starText(rating) {
 
 function scoreLabel(rating) {
   if (rating >= 4.6) {
-    return "Mükemmel";
+    return restaurantT("scoreExcellent");
   }
 
   if (rating >= 4.2) {
-    return "Çok iyi";
+    return restaurantT("scoreVeryGood");
   }
 
   if (rating >= 3.8) {
-    return "İyi";
+    return restaurantT("scoreGood");
   }
 
-  return "Orta";
+  return restaurantT("scoreAverage");
 }
 
 function formatTurkishPhone(phoneValue) {
@@ -464,12 +1081,10 @@ function formatTurkishPhone(phoneValue) {
 function formatDistrictLabel(district) {
   const districtText = sanitizeText(district, "");
   if (!districtText) {
-    return "İlçe";
+    return restaurantT("districtFallback");
   }
 
-  return districtText.toLocaleLowerCase("tr").endsWith("ilçesi")
-    ? districtText
-    : `${districtText} İlçesi`;
+  return restaurantT("districtLabel", { district: districtText });
 }
 
 function buildMapQuery(venue) {
@@ -477,7 +1092,10 @@ function buildMapQuery(venue) {
     return venue.address;
   }
 
-  return `${venue.name}, ${venue.district}, ${venue.city}, Türkiye`;
+  const parts = [venue.name, venue.district, venue.city, restaurantT("countryName")]
+    .map((segment) => sanitizeText(String(segment || ""), ""))
+    .filter(Boolean);
+  return parts.join(", ");
 }
 
 function buildMapUrls(venue) {
@@ -519,7 +1137,7 @@ function readComments(storageKey) {
           return null;
         }
 
-        const author = sanitizeText(entry.author, "Misafir");
+        const author = sanitizeText(entry.author, restaurantT("guest"));
         const comment = sanitizeCommentText(entry.comment, "");
         const createdAt = sanitizeText(entry.createdAt, "");
 
@@ -553,7 +1171,7 @@ function formatCommentDate(value) {
     return "";
   }
 
-  return date.toLocaleDateString("tr-TR", {
+  return date.toLocaleDateString(currentLocale(), {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
@@ -582,7 +1200,7 @@ function renderComments() {
 
     const author = document.createElement("strong");
     author.className = "restaurant-comment-author";
-    author.textContent = entry.author || "Misafir";
+    author.textContent = entry.author || restaurantT("guest");
 
     const date = document.createElement("span");
     date.className = "restaurant-comment-date";
@@ -617,11 +1235,14 @@ function initializeCommentWriter() {
 
     const comment = sanitizeCommentText(restaurantCommentText.value, "");
     if (!comment) {
-      showCommentMessage("Yorum metni boş olamaz.");
+      showCommentMessage(restaurantT("commentsEmptyError"));
       return;
     }
 
-    const author = sanitizeText(restaurantCommentAuthor ? restaurantCommentAuthor.value : "", "Misafir");
+    const author = sanitizeText(
+      restaurantCommentAuthor ? restaurantCommentAuthor.value : "",
+      restaurantT("guest"),
+    );
     const entry = {
       author,
       comment,
@@ -631,7 +1252,7 @@ function initializeCommentWriter() {
     activeComments = [entry, ...activeComments];
     saveComments(activeCommentsKey, activeComments);
     renderComments();
-    showCommentMessage("Yorumun kaydedildi.");
+    showCommentMessage(restaurantT("commentsSaved"));
 
     restaurantCommentForm.reset();
   });
@@ -662,8 +1283,9 @@ function setMapStatus(text = "") {
 async function geocodeWithNominatim(query) {
   const controller = new AbortController();
   const timeoutHandle = setTimeout(() => controller.abort(), 6000);
+  const languageCode = currentLocale().split("-")[0] || "tr";
   const endpoint =
-    `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=tr&q=${encodeURIComponent(
+    `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=${languageCode}&q=${encodeURIComponent(
       query,
     )}`;
 
@@ -785,8 +1407,8 @@ function renderMapIframe(mapUrls) {
   iframe.src = mapUrls.iframeUrl;
   iframe.loading = "lazy";
   iframe.referrerPolicy = "no-referrer-when-downgrade";
-  iframe.title = "Restoran konum haritası";
-  iframe.setAttribute("aria-label", "Restoran konum haritası");
+  iframe.title = restaurantT("mapAria");
+  iframe.setAttribute("aria-label", restaurantT("mapAria"));
 
   restaurantMapCanvas.append(iframe);
   return true;
@@ -852,7 +1474,7 @@ async function renderLocationMap(venue) {
 
   const mapUrls = buildMapUrls(venue);
   const iframeRendered = renderMapIframe(mapUrls);
-  setMapStatus(iframeRendered ? "" : "Konum yükleniyor...");
+  setMapStatus(iframeRendered ? "" : restaurantT("mapLoading"));
 
   let center = extractCoordinatesFromMapsUrl(venue.mapsUrl);
 
@@ -863,7 +1485,7 @@ async function renderLocationMap(venue) {
     }
 
     if (!center) {
-      const fallbackQuery = `${venue.name}, ${venue.city}, Türkiye`;
+      const fallbackQuery = `${venue.name}, ${venue.city}, ${restaurantT("countryName")}`;
       center = await geocodeWithNominatim(fallbackQuery);
     }
   } catch (_error) {
@@ -880,7 +1502,7 @@ async function renderLocationMap(venue) {
   }
 
   if (!center) {
-    setMapStatus("Konum bulunamadı. Alttaki bağlantıdan Google Haritalar'ı açabilirsin.");
+    setMapStatus(restaurantT("mapNotFound"));
     return;
   }
 
@@ -890,7 +1512,7 @@ async function renderLocationMap(venue) {
       setMapStatus("");
       return;
     }
-    setMapStatus("Harita yüklenemedi. Lütfen tekrar dene.");
+    setMapStatus(restaurantT("mapLoadFailed"));
     return;
   }
 
@@ -944,22 +1566,30 @@ function initializeTabInteractions() {
 function buildBreadcrumb(venue) {
   const cityUrl = new URL("city.html", window.location.href);
   cityUrl.searchParams.set("il", toSlug(venue.city));
+  const foodUrl = "yemek.html";
 
   restaurantBreadcrumb.innerHTML = "";
 
   const homeLink = document.createElement("a");
   homeLink.href = "index.html";
-  homeLink.textContent = "Anasayfa";
+  homeLink.textContent = restaurantT("home");
 
   const dividerOne = document.createElement("span");
   dividerOne.textContent = "/";
 
-  const cityLink = document.createElement("a");
-  cityLink.href = cityUrl.toString();
-  cityLink.textContent = `${venue.city} İli`;
+  const foodLink = document.createElement("a");
+  foodLink.href = foodUrl;
+  foodLink.textContent = restaurantT("food");
 
   const dividerTwo = document.createElement("span");
   dividerTwo.textContent = "/";
+
+  const cityLink = document.createElement("a");
+  cityLink.href = cityUrl.toString();
+  cityLink.textContent = restaurantT("cityLink", { city: venue.city });
+
+  const dividerThree = document.createElement("span");
+  dividerThree.textContent = "/";
 
   const districtText = formatDistrictLabel(venue.district);
 
@@ -977,16 +1607,25 @@ function buildBreadcrumb(venue) {
     current.textContent = districtText;
   }
 
-  restaurantBreadcrumb.append(homeLink, dividerOne, cityLink, dividerTwo, current);
+  restaurantBreadcrumb.append(
+    homeLink,
+    dividerOne,
+    foodLink,
+    dividerTwo,
+    cityLink,
+    dividerThree,
+    current,
+  );
 }
 
 function renderVenue(venue) {
   activeVenue = venue;
   const hasRating = Number.isFinite(venue.rating);
-  const hasReviewCount = Number.isFinite(venue.userRatingCount) && venue.userRatingCount > 1;
+  const hasReviewCount = Number.isFinite(venue.userRatingCount) && venue.userRatingCount > 0;
   const displayRating = hasRating && hasReviewCount ? venue.rating : 0;
+  const localizedCuisine = localizeCuisineLabel(venue.cuisine);
 
-  document.title = `NeredeYenir | ${venue.name}`;
+  document.title = restaurantT("title", { name: venue.name });
 
   buildBreadcrumb(venue);
 
@@ -999,21 +1638,30 @@ function renderVenue(venue) {
   restaurantScoreLabel.textContent = hasReviewCount ? scoreLabel(displayRating) : "";
   restaurantScoreLabel.hidden = !hasReviewCount;
   restaurantReviews.textContent = hasReviewCount
-    ? `${venue.userRatingCount.toLocaleString("tr-TR")} değerlendirme`
-    : "Değerlendirme bilgisi bulunamamıştır";
-  const addressText = venue.address || `${venue.district}, ${venue.city}`;
-  restaurantMeta.textContent = `Kategori: ${venue.cuisine}`;
+    ? restaurantT("reviewCount", { count: venue.userRatingCount.toLocaleString(currentLocale()) })
+    : restaurantT("reviewMissing");
+  const addressText = venue.address || [sanitizeText(venue.district, ""), venue.city].filter(Boolean).join(", ");
+  restaurantMeta.textContent = restaurantT("categoryMeta", { cuisine: localizedCuisine });
+
+  let localizedCuisineLower = localizedCuisine;
+  try {
+    localizedCuisineLower = localizedCuisine.toLocaleLowerCase(currentLocale());
+  } catch (_error) {
+    localizedCuisineLower = localizedCuisine.toLowerCase();
+  }
 
   const summaryBase =
     sanitizeText(venue.editorialSummary || "", "") ||
-    `${venue.name}, ${venue.city} şehrinde özellikle ${venue.cuisine.toLocaleLowerCase(
-      "tr",
-    )} sevenler için tercih edilen bir durak.`;
+    restaurantT("overviewFallback", {
+      name: venue.name,
+      city: venue.city,
+      cuisine: localizedCuisineLower,
+    });
   const atmosphereText = Array.isArray(venue.atmosphereCapabilities) && venue.atmosphereCapabilities.length > 0
-    ? `Mekan özellikleri: ${venue.atmosphereCapabilities.join(", ")}.`
+    ? restaurantT("atmospherePrefix", { items: venue.atmosphereCapabilities.join(", ") })
     : "";
   const menuText = Array.isArray(venue.menuCapabilities) && venue.menuCapabilities.length > 0
-    ? `Menü/servis: ${venue.menuCapabilities.join(", ")}.`
+    ? restaurantT("menuPrefix", { items: venue.menuCapabilities.join(", ") })
     : "";
   const overview = [summaryBase, atmosphereText, menuText].filter(Boolean).join(" ");
   restaurantOverviewText.textContent = overview;
@@ -1029,7 +1677,7 @@ function renderVenue(venue) {
   });
   restaurantPhoneFields.forEach((field) => {
     field.classList.toggle("is-missing", !formattedPhone);
-    field.textContent = formattedPhone || "Telefon bilgisi bulunamadı";
+    field.textContent = formattedPhone || restaurantT("phoneMissing");
   });
 
   const instagramText = sanitizeUrl(venue.instagram || "", "");
@@ -1038,7 +1686,7 @@ function renderVenue(venue) {
     field.innerHTML = "";
 
     if (!instagramText) {
-      field.textContent = "Bilgi bulunamamıştır";
+      field.textContent = restaurantT("infoMissing");
       return;
     }
 
@@ -1048,7 +1696,7 @@ function renderVenue(venue) {
     instagramLink.target = "_blank";
     instagramLink.rel = "noopener noreferrer";
     instagramLink.textContent = instagramText;
-    instagramLink.setAttribute("aria-label", "Instagram profilini yeni sekmede aç");
+    instagramLink.setAttribute("aria-label", restaurantT("instagramOpenAria"));
     field.append(instagramLink);
   });
 
@@ -1058,7 +1706,7 @@ function renderVenue(venue) {
     field.innerHTML = "";
 
     if (!websiteText) {
-      field.textContent = "Bilgi bulunamamıştır";
+      field.textContent = restaurantT("infoMissing");
       return;
     }
 
@@ -1068,7 +1716,7 @@ function renderVenue(venue) {
     websiteLink.target = "_blank";
     websiteLink.rel = "noopener noreferrer";
     websiteLink.textContent = websiteText;
-    websiteLink.setAttribute("aria-label", "Web sitesini yeni sekmede aç");
+    websiteLink.setAttribute("aria-label", restaurantT("websiteOpenAria"));
     field.append(websiteLink);
   });
 
@@ -1080,7 +1728,16 @@ function renderVenue(venue) {
   void renderLocationMap(venue);
 }
 
+function applyRestaurantLanguage() {
+  applyRestaurantStaticTranslations();
+  if (activeVenue) {
+    renderVenue(activeVenue);
+  }
+}
+
 async function initializeRestaurantPage() {
+  activeLanguage = getCurrentLanguage() || readLanguageFromStorage();
+  applyRestaurantStaticTranslations();
   initializeTabInteractions();
   initializeCommentWriter();
   const venues = await loadVenues();
@@ -1088,5 +1745,14 @@ async function initializeRestaurantPage() {
 
   renderVenue(venue);
 }
+
+document.addEventListener("neredeyenir:languagechange", (event) => {
+  const requestedLanguage =
+    event && event.detail && typeof event.detail.language === "string"
+      ? event.detail.language
+      : "TR";
+  activeLanguage = normalizeLanguageCode(requestedLanguage);
+  applyRestaurantLanguage();
+});
 
 initializeRestaurantPage();

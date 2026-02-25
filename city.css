@@ -1,5 +1,5 @@
 .city-page {
-  background: #f7f7f7;
+  background: var(--bg);
 }
 
 .city-header,
@@ -12,6 +12,7 @@
 .city-header {
   z-index: 40;
   padding-top: 1rem;
+  background: inherit;
 }
 
 .city-shell {
@@ -29,7 +30,7 @@
 
 .city-topline {
   border-top: 2px solid #797252;
-  background: #f4f4f4;
+  background: inherit;
 }
 
 .city-topline-inner {

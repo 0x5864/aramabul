@@ -1,0 +1,4232 @@
+[
+  {
+    "city": "Adana",
+    "district": "Çukurova",
+    "name": "100. Yıl Veteriner Kliniği",
+    "address": "85381, 90G, Adana",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0336164%2C35.2402043",
+    "source": "osm"
+  },
+  {
+    "city": "Adana",
+    "district": "Çukurova",
+    "name": "Adana Terapi Veteriner Kliniği",
+    "address": "Çukurova, Adana",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0490078%2C35.2845684",
+    "source": "osm"
+  },
+  {
+    "city": "Adana",
+    "district": "Çukurova",
+    "name": "Dost Veteriner Kliniği",
+    "address": "79128 Sokak, Sincar Kule 1, Adana",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0424818%2C35.3036804",
+    "source": "osm"
+  },
+  {
+    "city": "Adana",
+    "district": "Çukurova",
+    "name": "Petspital",
+    "address": "Çukurova, Adana",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0459215%2C35.2937827",
+    "source": "osm"
+  },
+  {
+    "city": "Adana",
+    "district": "Sarıçam",
+    "name": "Adana Terapi Veteriner Kliniği",
+    "address": "Sarıçam, Adana",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0490078%2C35.2845684",
+    "source": "osm"
+  },
+  {
+    "city": "Adana",
+    "district": "Sarıçam",
+    "name": "Petspital",
+    "address": "Sarıçam, Adana",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0459215%2C35.2937827",
+    "source": "osm"
+  },
+  {
+    "city": "Adana",
+    "district": "Seyhan",
+    "name": "Adana Terapi Veteriner Kliniği",
+    "address": "Seyhan, Adana",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0490078%2C35.2845684",
+    "source": "osm"
+  },
+  {
+    "city": "Adana",
+    "district": "Seyhan",
+    "name": "Petspital",
+    "address": "Seyhan, Adana",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0459215%2C35.2937827",
+    "source": "osm"
+  },
+  {
+    "city": "Afyonkarahisar",
+    "district": "Merkez",
+    "name": "Hayvan Hastanesi",
+    "address": "Merkez, Afyonkarahisar",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.8228873%2C30.5338537",
+    "source": "osm"
+  },
+  {
+    "city": "Aksaray",
+    "district": "Ortaköy",
+    "name": "Dinç Veteriner",
+    "address": "Ortaköy, Aksaray",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.7372362%2C34.0407468",
+    "source": "osm"
+  },
+  {
+    "city": "Aksaray",
+    "district": "Ortaköy",
+    "name": "Veteriner Kliniği",
+    "address": "Ortaköy, Aksaray",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.7358769%2C34.0391796",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Altındağ",
+    "name": "Dışkapı Veteriner",
+    "address": "Altındağ, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9568057%2C32.863416",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Altındağ",
+    "name": "Taymur",
+    "address": "Altındağ, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.937225%2C32.8791739",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Active Veteriner Kliniği",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8649929%2C32.6964092",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Alfa Veteriner",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8511819%2C32.662985",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Cat Hospital Kedi Hastanesi",
+    "address": "Güvenlik Cd., 45",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.905531%2C32.8530664",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Eda Veteriner",
+    "address": "2100. Sokak, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9103481%2C32.75958",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Happy Tails Veteriner Kliniği",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.866351%2C32.6403315",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Happyvet Veteriner Kliniği",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8974913%2C32.8486151",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Hayvan Hastanesi",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8949571%2C32.8499539",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Hill's",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8628778%2C32.8575915",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Kuki Veteriner Kliniği",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8955522%2C32.8520205",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Lena Veteriner Kliniği",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.886103%2C32.6830579",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Metropolitan Hayvan Hastanesi",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8188091%2C32.7213766",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Oasis",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9133471%2C32.8623309",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Petlive Veteriner Kliniği",
+    "address": "Mehmet Rifat Börekçi Cd., Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8532061%2C32.6482123",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Terapi Veteriner",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8714816%2C32.8572921",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "name": "Veteriner",
+    "address": "Çankaya, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8248322%2C32.7173195",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Gölbaşı",
+    "name": "Metropolitan Hayvan Hastanesi",
+    "address": "Gölbaşı, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8188091%2C32.7213766",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Gölbaşı",
+    "name": "Veteriner",
+    "address": "Gölbaşı, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8248322%2C32.7173195",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Keçiören",
+    "name": "Can Veteriner Kliniği",
+    "address": "Keçiören, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9667939%2C32.7898099",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Keçiören",
+    "name": "Demetevler Veteriner Kliniği",
+    "address": "Keçiören, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9678917%2C32.7864295",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Keçiören",
+    "name": "Lions Veteriner Kliniği",
+    "address": "Etlik Caddesi, 137, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.976301%2C32.8269083",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Keçiören",
+    "name": "Vetina Veteriner Kliniği",
+    "address": "Keçiören, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9691765%2C32.7855087",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Can Veteriner Kliniği",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9667939%2C32.7898099",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Demetevler Veteriner Kliniği",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9678917%2C32.7864295",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Elvankent Veteriner",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9504176%2C32.6103048",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Etimesgut Belediyesi Sokak Hayvanları Kliniği",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9739853%2C32.6487958",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "HS Veteriner Kliniği",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9506237%2C32.7379931",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Liberta Veteriner",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9787169%2C32.6391695",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Pati Pati Veteriner Kliniği",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9911027%2C32.6321588",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Pet Planet Veteriner Kliniği",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9927073%2C32.6260894",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Petamica Veteriner",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9927443%2C32.6401591",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Petlant Veteriner Kliniği",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.974746%2C32.722893",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Veteriner",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9708591%2C32.7183802",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Vetina Veteriner Kliniği",
+    "address": "Yenimahalle, Ankara",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9691765%2C32.7855087",
+    "source": "osm"
+  },
+  {
+    "city": "Ankara",
+    "district": "Yenimahalle",
+    "name": "Yenimahalle Veteriner",
+    "address": "Ragıp Tüzün Caddesi, 75",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.9637108%2C32.8148674",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Bulvar veteriner kliniği",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8790277%2C30.7374314",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Doğu Garajı Veteriner Kliniği",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8859889%2C30.71384",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Hayvan Hastanesi",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8581508%2C30.7455125",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Infinity Veteriner Kliniği",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8856585%2C30.7123662",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Kayra veteriner kliniği",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8809425%2C30.7217882",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Medikal Veteriner",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8583871%2C30.7410454",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Onat Veteriner Kliniği",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.885886%2C30.7187925",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Pet Love",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8725573%2C30.7313622",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Petibör",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8981539%2C30.7362168",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Aksu",
+    "name": "Veteriner Kliniği",
+    "address": "Aksu, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8574976%2C30.7876354",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Alanya",
+    "name": "Aloha",
+    "address": "Alanya, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.5522787%2C31.981445",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Alanya",
+    "name": "Elit Veteriner Klinigi",
+    "address": "Alanya, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.4891626%2C32.1001172",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Alanya",
+    "name": "Mahmutlar Veteriner Klinigi",
+    "address": "Alanya, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.4891021%2C32.0951784",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Alanya",
+    "name": "Vetbucks",
+    "address": "Alanya, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.5514763%2C31.9860324",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Gazipaşa",
+    "name": "Dexter",
+    "address": "Gazipaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.2677758%2C32.3083187",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Gazipaşa",
+    "name": "Pet Shop",
+    "address": "Gazipaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.2689296%2C32.3190858",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Kaş",
+    "name": "Kaş Veteriner Kliniği",
+    "address": "Kaş, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.1991416%2C29.6387023",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Kaş",
+    "name": "Pet Life",
+    "address": "Kaş, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.2652911%2C29.4156807",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Kemer",
+    "name": "Kemer Veteriner Klinigi",
+    "address": "Kemer, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.6014399%2C30.5555203",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Kemer",
+    "name": "Volga Veteriner",
+    "address": "Dörtyol Blv, 27/C, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.6005557%2C30.5535697",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Kepez",
+    "name": "Petibör",
+    "address": "Kepez, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8981539%2C30.7362168",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Konyaaltı",
+    "name": "Alpha Veteriner Kliniği",
+    "address": "460. Sokak, 6/B, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8680069%2C30.636392",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Konyaaltı",
+    "name": "Altınkum Veteriner Polikliniği",
+    "address": "Konyaaltı, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8668208%2C30.630845",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Konyaaltı",
+    "name": "Aşkım Veteriner Kliniği",
+    "address": "Konyaaltı, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8498282%2C30.6061948",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Konyaaltı",
+    "name": "HomeOpati",
+    "address": "Atatürk Bulvarı, 281/1, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8490771%2C30.6141111",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Konyaaltı",
+    "name": "Konyaaltı Veteriner",
+    "address": "Konyaaltı, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8589108%2C30.6059384",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Konyaaltı",
+    "name": "Per Vet Veteriner Kliniği",
+    "address": "Konyaaltı, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.848391%2C30.6161331",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Konyaaltı",
+    "name": "Turkuaz Veteriner Kliniği",
+    "address": "Konyaaltı, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8478707%2C30.60755",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Korkuteli",
+    "name": "Kocak Veteriner",
+    "address": "Korkuteli, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.3095302%2C29.7747842",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Manavgat",
+    "name": "Zooland Veteriner Kliniği",
+    "address": "Kemer Caddesi, 23, Side",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.7836964%2C31.404585",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Akdeniz Veteriner Kliniği",
+    "address": "Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.881147%2C30.7170523",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Barış Ayhan Veteriner Kliniği",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8881985%2C30.6862086",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Bulvar veteriner kliniği",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8790277%2C30.7374314",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Doğu Garajı Veteriner Kliniği",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8859889%2C30.71384",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Hayvan Hastanesi",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8581508%2C30.7455125",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Infinity Veteriner Kliniği",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8856585%2C30.7123662",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Kayra veteriner kliniği",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8809425%2C30.7217882",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Medikal Veteriner",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8583871%2C30.7410454",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Onat Veteriner Kliniği",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.885886%2C30.7187925",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Pamir Veteriner Kliniği",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8850887%2C30.6859324",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Pet Love",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8725573%2C30.7313622",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Petibör",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8981539%2C30.7362168",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Petropol Veteriner Kliniği",
+    "address": "Falez Caddesi, 12a, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.855415%2C30.7561341",
+    "source": "osm"
+  },
+  {
+    "city": "Antalya",
+    "district": "Muratpaşa",
+    "name": "Veteriner Kliniği",
+    "address": "Muratpaşa, Antalya",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.8574976%2C30.7876354",
+    "source": "osm"
+  },
+  {
+    "city": "Aydın",
+    "district": "Kuşadası",
+    "name": "Pandora",
+    "address": "Kuşadası, Aydın",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8522566%2C27.2579077",
+    "source": "osm"
+  },
+  {
+    "city": "Aydın",
+    "district": "Kuşadası",
+    "name": "Turhan Veteriner Kliniği",
+    "address": "Çetin Emeç Caddesi, 9/1B, Aydın",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.859897%2C27.2662741",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Altıeylül",
+    "name": "266 Veteriner",
+    "address": "Altıeylül, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.6351146%2C27.8905387",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Altıeylül",
+    "name": "Yonca Veteriner",
+    "address": "Altıeylül, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.6513093%2C27.8800726",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Ayvalık",
+    "name": "Mercan Veteriner Kliniği",
+    "address": "Ayvalık, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.3129977%2C26.689485",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Are Veteriner Kliniği",
+    "address": "17016 Sokak, 1/1A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3429646%2C27.9563682",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Arteka Veteriner",
+    "address": "Bandırma, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3959648%2C27.793653",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Bandırma ForPet's",
+    "address": "Şehit Bedir Karabıyık Caddesi, 49/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3474775%2C27.9455958",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Bandırma Veteriner",
+    "address": "Aktoprak Caddesi, 15/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.345659%2C27.9625742",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Bandırma Veteriner Yaşam Merkezi",
+    "address": "Mehmetçik Caddesi, 51/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3485815%2C27.9647496",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Banvet",
+    "address": "General Halit Caddesi, 17/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3516527%2C27.9694373",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Banvet",
+    "address": "General Ali Hikmet Paşa Caddesi, 41/D, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3504459%2C27.971925",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Kılavuz Veteriner",
+    "address": "20003 Sokak, 28/B, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3492005%2C27.9721597",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Kılavuz Veteriner Hekim Atilla Seyhan",
+    "address": "Hacı Cafer Yaşbek Sokağı, 11/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3415218%2C27.9681089",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Taşkan Veteriner Kliniği",
+    "address": "General Ali Hikmet Paşa Caddesi, 33/B, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3508757%2C27.9714663",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Tavuk Doktoru",
+    "address": "Havuzlu Bahçe Sokağı, 58/E, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3513144%2C27.9803603",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Union Veteriner Kliniği",
+    "address": "1003 Sokak, 1/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3512968%2C27.9756217",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Vet Life Veteriner Kliniği",
+    "address": "Celal Atik Caddesi, 56/1A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3527062%2C27.9897174",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Veteriner FermaVet",
+    "address": "Çamlık Caddesi, 11/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3395668%2C27.9570253",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Veteriner Hekim Ahmet",
+    "address": "14035 Sokak, 1/B, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3456171%2C28.007703",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Veteriner Latif Akpınar",
+    "address": "General Halit Caddesi, 7/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3520697%2C27.9692596",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Bandırma",
+    "name": "Vetmedipol Bandırma Veteriner Kliniği",
+    "address": "Şehit Bedir Karabıyık Caddesi, 15/A, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3424116%2C27.9441132",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Burhaniye",
+    "name": "Burhaniye Yaşam Veteriner",
+    "address": "Burhaniye, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.5020405%2C26.9559531",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Burhaniye",
+    "name": "Derman Veteriner Kliniği",
+    "address": "Burhaniye, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.5035374%2C26.983696",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Burhaniye",
+    "name": "Kariyer Veteriner Kliniği",
+    "address": "Burhaniye, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.5013033%2C26.9727393",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Burhaniye",
+    "name": "Tarhal Veterinerlik",
+    "address": "Burhaniye, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.5048576%2C26.9812271",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Burhaniye",
+    "name": "Tez Veteriner",
+    "address": "Burhaniye, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.5042187%2C26.9806138",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Edremit",
+    "name": "Akçay Veteriner Kliniği",
+    "address": "Edremit, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.5881993%2C26.9253832",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Erdek",
+    "name": "Arteka Veteriner",
+    "address": "Erdek, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3959648%2C27.793653",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Havran",
+    "name": "Veteriner Hekim Tahir Özdemir",
+    "address": "Havran, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.4703731%2C27.3645206",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "İvrindi",
+    "name": "Veteriner Hekim Tahir Özdemir",
+    "address": "İvrindi, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.4703731%2C27.3645206",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Karesi",
+    "name": "266 Veteriner",
+    "address": "Karesi, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.6351146%2C27.8905387",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Karesi",
+    "name": "Yonca Veteriner",
+    "address": "Karesi, Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.6513093%2C27.8800726",
+    "source": "osm"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Manyas",
+    "name": "Barkin Veteriner Kliniği",
+    "address": "Çarşı, Aşıklar Sk. No:23, 10470 Manyas/Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Barkin+Veteriner+Klini%C4%9Fi+Manyas+Bal%C4%B1kesir",
+    "source": "manual"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Manyas",
+    "name": "Erdin Veteriner Kliniği",
+    "address": "Manyas/Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Erdin+Veteriner+Klini%C4%9Fi+Manyas+Bal%C4%B1kesir",
+    "source": "manual"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Manyas",
+    "name": "Günay Veteriner Kliniği",
+    "address": "Eski Han Sk. No:13/A, Manyas/Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=G%C3%BCnay+Veteriner+Klini%C4%9Fi+Manyas+Bal%C4%B1kesir",
+    "source": "manual"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Manyas",
+    "name": "Kızıksa Veteriner Kliniği",
+    "address": "Bandırma Cd. No:1/D, Manyas/Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=K%C4%B1z%C4%B1ksa+Veteriner+Klini%C4%9Fi+Manyas+Bal%C4%B1kesir",
+    "source": "manual"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Manyas",
+    "name": "Man-Vet Veterinerlik Hizmetleri",
+    "address": "İnönü Cd. 11/A, Manyas/Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Man-Vet+Veterinerlik+Hizmetleri+Manyas+Bal%C4%B1kesir",
+    "source": "manual"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Manyas",
+    "name": "Onvet Veteriner Hekim Muayenehanesi",
+    "address": "Aşıklar Sokak No:12, Manyas/Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Onvet+Veteriner+Hekim+Muayenehanesi+Manyas+Bal%C4%B1kesir",
+    "source": "manual"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Manyas",
+    "name": "Özüak Veteriner",
+    "address": "Manyas/Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=%C3%96z%C3%BCak+Veteriner+Manyas+Bal%C4%B1kesir",
+    "source": "manual"
+  },
+  {
+    "city": "Balıkesir",
+    "district": "Manyas",
+    "name": "Özüak Veteriner Kliniği",
+    "address": "Maltepe Mahallesi, Maltepe Caddesi, Manyas/Balıkesir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=%C3%96z%C3%BCak+Veteriner+Klini%C4%9Fi+Manyas+Bal%C4%B1kesir",
+    "source": "manual"
+  },
+  {
+    "city": "Batman",
+    "district": "Gercüş",
+    "name": "Sadık Günel Veteriner",
+    "address": "Gercüş, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.5459932%2C41.7195261",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Adar Veteriner",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8900184%2C41.129568",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Barış Veteriner Kliniği",
+    "address": "Seyran Caddesi, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.880192%2C41.1221935",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Çoban Veteriner Kliniği",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8879121%2C41.1332841",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Ercan Veteriner Kliniği",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8808188%2C41.1243243",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Eyüp Çelik Veteriner",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.878875%2C41.1172881",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Koçer 72 Veteriner Kliniği",
+    "address": "80. Yıl Caddesi, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8900923%2C41.1283043",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Öz Derman Veteriner",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.890149%2C41.1282157",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Öz Derman Veteriner Kliniği",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8898097%2C41.1287237",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Özel Koyuncu Veteriner Kliniği",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8804348%2C41.1240446",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Renas Veteriner",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8782941%2C41.1200713",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Şiwan Veteriner Kliniği",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8805975%2C41.1234171",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Tüzün Veteriner",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8897465%2C41.1298195",
+    "source": "osm"
+  },
+  {
+    "city": "Batman",
+    "district": "Merkez",
+    "name": "Uzman Veteriner Kliniği",
+    "address": "Merkez, Batman",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8803808%2C41.1236533",
+    "source": "osm"
+  },
+  {
+    "city": "Bitlis",
+    "district": "Merkez",
+    "name": "Çoban Veteriner",
+    "address": "Merkez, Bitlis",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4922761%2C42.2882424",
+    "source": "osm"
+  },
+  {
+    "city": "Bitlis",
+    "district": "Tatvan",
+    "name": "Çoban Veteriner",
+    "address": "Tatvan, Bitlis",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4922761%2C42.2882424",
+    "source": "osm"
+  },
+  {
+    "city": "Bolu",
+    "district": "Merkez",
+    "name": "Vetsinaps",
+    "address": "Merkez, Bolu",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.7386148%2C31.5904273",
+    "source": "osm"
+  },
+  {
+    "city": "Burdur",
+    "district": "Gölhisar",
+    "name": "Alfavet",
+    "address": "Gölhisar, Burdur",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.1371479%2C29.5070608",
+    "source": "osm"
+  },
+  {
+    "city": "Burdur",
+    "district": "Gölhisar",
+    "name": "Ece Veteriner Kliniği",
+    "address": "Gölhisar, Burdur",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.1378355%2C29.5067613",
+    "source": "osm"
+  },
+  {
+    "city": "Burdur",
+    "district": "Karamanlı",
+    "name": "Kocak Veteriner",
+    "address": "Karamanlı, Burdur",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.3095302%2C29.7747842",
+    "source": "osm"
+  },
+  {
+    "city": "Burdur",
+    "district": "Tefenni",
+    "name": "Kocak Veteriner",
+    "address": "Tefenni, Burdur",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.3095302%2C29.7747842",
+    "source": "osm"
+  },
+  {
+    "city": "Bursa",
+    "district": "Mustafakemalpaşa",
+    "name": "KLİNİKA VETERİNER MUAYENEHANESİ",
+    "address": "Şehit Adnan Yıldız Sokak, 2/4A, BURSA",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.0418754%2C28.4017652",
+    "source": "osm"
+  },
+  {
+    "city": "Bursa",
+    "district": "Nilüfer",
+    "name": "Demir Vet",
+    "address": "Nilüfer, Bursa",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.2287328%2C28.8510305",
+    "source": "osm"
+  },
+  {
+    "city": "Bursa",
+    "district": "Nilüfer",
+    "name": "Hayvan Hastanesi",
+    "address": "Nilüfer, Bursa",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.229426%2C28.8744931",
+    "source": "osm"
+  },
+  {
+    "city": "Bursa",
+    "district": "Osmangazi",
+    "name": "Armilla Veteriner",
+    "address": "Osmangazi, Bursa",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.2085563%2C29.020028",
+    "source": "osm"
+  },
+  {
+    "city": "Çanakkale",
+    "district": "Biga",
+    "name": "Ör-Vet Veteri̇ner Kli̇ni̇ği̇",
+    "address": "Biga, Çanakkale",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.3816006%2C27.2042285",
+    "source": "osm"
+  },
+  {
+    "city": "Denizli",
+    "district": "Acıpayam",
+    "name": "Alfavet",
+    "address": "Acıpayam, Denizli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.1371479%2C29.5070608",
+    "source": "osm"
+  },
+  {
+    "city": "Denizli",
+    "district": "Acıpayam",
+    "name": "Ece Veteriner Kliniği",
+    "address": "Acıpayam, Denizli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.1378355%2C29.5067613",
+    "source": "osm"
+  },
+  {
+    "city": "Denizli",
+    "district": "Merkezefendi",
+    "name": "Kınıklı Veteriner Kliniği",
+    "address": "Merkezefendi, Denizli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.7479872%2C29.1067863",
+    "source": "osm"
+  },
+  {
+    "city": "Denizli",
+    "district": "Merkezefendi",
+    "name": "PetPro+",
+    "address": "Merkezefendi, Denizli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.7477099%2C29.1009876",
+    "source": "osm"
+  },
+  {
+    "city": "Denizli",
+    "district": "Merkezefendi",
+    "name": "Veteriner Figen Gezer",
+    "address": "Merkezefendi, Denizli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.7595075%2C29.0835524",
+    "source": "osm"
+  },
+  {
+    "city": "Diyarbakır",
+    "district": "Kayapınar",
+    "name": "Pets Home Veteriner Kliniği",
+    "address": "608. Sokak, 8/CD, Diyarbakır",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.9389827%2C40.15063",
+    "source": "osm"
+  },
+  {
+    "city": "Düzce",
+    "district": "Merkez",
+    "name": "Düzce Veteriner Tıp Merkezi",
+    "address": "Rasim Betir Bulvarı, 23, Düzce",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.8444717%2C31.1610707",
+    "source": "osm"
+  },
+  {
+    "city": "Düzce",
+    "district": "Merkez",
+    "name": "Öz Veteriner",
+    "address": "Merkez, Düzce",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.905139%2C31.147282",
+    "source": "osm"
+  },
+  {
+    "city": "Edirne",
+    "district": "Merkez",
+    "name": "DENİZ VETERİNER KLİNİĞİ",
+    "address": "TAHSİN ŞIPKA CADDESİ, EDİRNE",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.6623125%2C26.5877241",
+    "source": "osm"
+  },
+  {
+    "city": "Eskişehir",
+    "district": "İnönü",
+    "name": "İnönü Veteriner Kliniği",
+    "address": "İnönü, Eskişehir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8152154%2C30.1419311",
+    "source": "osm"
+  },
+  {
+    "city": "Eskişehir",
+    "district": "İnönü",
+    "name": "Ulusoy Veteriner Kliniği",
+    "address": "İnönü, Eskişehir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.8183436%2C30.1444477",
+    "source": "osm"
+  },
+  {
+    "city": "Eskişehir",
+    "district": "Odunpazarı",
+    "name": "Espati Veteriner Kliniği",
+    "address": "Odunpazarı, Eskişehir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.7910577%2C30.4837567",
+    "source": "osm"
+  },
+  {
+    "city": "Eskişehir",
+    "district": "Odunpazarı",
+    "name": "Senpati",
+    "address": "Odunpazarı, Eskişehir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.776912%2C30.5106612",
+    "source": "osm"
+  },
+  {
+    "city": "Eskişehir",
+    "district": "Tepebaşı",
+    "name": "Acil Veteriner Kliniği",
+    "address": "Eti Caddesi, 6/B, Eskişehir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.7863526%2C30.5072514",
+    "source": "osm"
+  },
+  {
+    "city": "Eskişehir",
+    "district": "Tepebaşı",
+    "name": "Espati Veteriner Kliniği",
+    "address": "Tepebaşı, Eskişehir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.7910577%2C30.4837567",
+    "source": "osm"
+  },
+  {
+    "city": "Eskişehir",
+    "district": "Tepebaşı",
+    "name": "Senpati",
+    "address": "Tepebaşı, Eskişehir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.776912%2C30.5106612",
+    "source": "osm"
+  },
+  {
+    "city": "Gaziantep",
+    "district": "Şahinbey",
+    "name": "Arya Veteriner Muayenehanesi",
+    "address": "Şahinbey, Gaziantep",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.066939%2C37.414994",
+    "source": "osm"
+  },
+  {
+    "city": "Gaziantep",
+    "district": "Şahinbey",
+    "name": "Demir Veteriner",
+    "address": "Şahinbey, Gaziantep",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.042941%2C37.327593",
+    "source": "osm"
+  },
+  {
+    "city": "Gaziantep",
+    "district": "Şahinbey",
+    "name": "Forvet Veteriner",
+    "address": "Şahinbey, Gaziantep",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0662513%2C37.4150443",
+    "source": "osm"
+  },
+  {
+    "city": "Gaziantep",
+    "district": "Şehitkamil",
+    "name": "Arya Veteriner Muayenehanesi",
+    "address": "Şehitkamil, Gaziantep",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.066939%2C37.414994",
+    "source": "osm"
+  },
+  {
+    "city": "Gaziantep",
+    "district": "Şehitkamil",
+    "name": "Demir Veteriner",
+    "address": "Şehitkamil, Gaziantep",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.042941%2C37.327593",
+    "source": "osm"
+  },
+  {
+    "city": "Gaziantep",
+    "district": "Şehitkamil",
+    "name": "Forvet Veteriner",
+    "address": "Şehitkamil, Gaziantep",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.0662513%2C37.4150443",
+    "source": "osm"
+  },
+  {
+    "city": "Hatay",
+    "district": "Defne",
+    "name": "Damla Veteriner Kliniği",
+    "address": "uğur mumcu 5 caddesi, 12A, hatay",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.1937842%2C36.1458314",
+    "source": "osm"
+  },
+  {
+    "city": "Hatay",
+    "district": "Defne",
+    "name": "Neşem Veteriner Hekim Muayenehanesi",
+    "address": "Defne, Hatay",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.1627938%2C36.1392632",
+    "source": "osm"
+  },
+  {
+    "city": "Hatay",
+    "district": "Defne",
+    "name": "VetAntioch Veteriner Kliniği",
+    "address": "Defne, Hatay",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.222084%2C36.1239108",
+    "source": "osm"
+  },
+  {
+    "city": "Hatay",
+    "district": "İskenderun",
+    "name": "Bilgin Veteriner Kliniği",
+    "address": "İskenderun, Hatay",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.5923937%2C36.1622151",
+    "source": "osm"
+  },
+  {
+    "city": "Hatay",
+    "district": "İskenderun",
+    "name": "Dingil kardeşler veteriner kliniği",
+    "address": "İskenderun, Hatay",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=36.5786148%2C36.1652884",
+    "source": "osm"
+  },
+  {
+    "city": "Isparta",
+    "district": "Atabey",
+    "name": "Veteriner Kliniği",
+    "address": "Atabey, Isparta",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.951062%2C30.6386255",
+    "source": "osm"
+  },
+  {
+    "city": "Isparta",
+    "district": "Eğirdir",
+    "name": "Eğirdir Veteriner Kliniği",
+    "address": "Eğirdir, Isparta",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8752259%2C30.8512174",
+    "source": "osm"
+  },
+  {
+    "city": "Isparta",
+    "district": "Merkez",
+    "name": "Gülkent Veteriner Kliniği (Vetpool)",
+    "address": "Merkez, Isparta",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.7664411%2C30.5418613",
+    "source": "osm"
+  },
+  {
+    "city": "Isparta",
+    "district": "Merkez",
+    "name": "Orfe Veteriner Kliniği",
+    "address": "Merkez, Isparta",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8147667%2C30.5437626",
+    "source": "osm"
+  },
+  {
+    "city": "Isparta",
+    "district": "Merkez",
+    "name": "Petoloji Veteriner Kliniği",
+    "address": "Merkez, Isparta",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.7641568%2C30.5392645",
+    "source": "osm"
+  },
+  {
+    "city": "Isparta",
+    "district": "Merkez",
+    "name": "Yenişehir Veteriner Kliniği",
+    "address": "Merkez, Isparta",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.817319%2C30.5486525",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Animalist Veteriner Kliniği",
+    "address": "Sedef Caddesi, Istanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9920323%2C29.1185178",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Aorta Veteriner Kliniği",
+    "address": "Ataşehir Bulvarı, 13, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9925059%2C29.1212111",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Asimo Veteriner Kliniği",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9834114%2C29.1223993",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Bostancı Bölge Veteriner",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9601968%2C29.0944808",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Çiçek Veteriner",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.96767%2C29.0857803",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "DNA Veteriner Kliniği",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.979544%2C29.0766651",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Dr. House",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9600645%2C29.0917456",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Göztepe Veteriner Kliniği",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9809351%2C29.0725773",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "İstanbul Hayvan Hastanesi",
+    "address": "Gökdoğan Sokağı, 12, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.996139%2C29.1328695",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "KBK Veteriner",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9790705%2C29.1125985",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Libadiye Veteriner",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0013597%2C29.0792251",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Maestro Veteriner Kliniği",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9797735%2C29.1238071",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "My Patim Veteriner Kliniği",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0052944%2C29.0835749",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Pruva Veteriner Kliniği",
+    "address": "Vedat Günyol Caddesi, 46, Istanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9909536%2C29.1138839",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "uzmvet",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9787329%2C29.0909852",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Vet Point Veteriner Kliniği",
+    "address": "Sedef Caddesi, 15, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9921385%2C29.1211788",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Vetelite Veteriner Kliniği",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9591038%2C29.0761946",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Vetix",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0017921%2C29.1429504",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Vetportal Veteriner Kliniği",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.980744%2C29.0737956",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Yeditepe Veteriner Kliniği",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9892824%2C29.1409199",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "name": "Zoom Veteriner",
+    "address": "Ataşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9706653%2C29.0829465",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Avcılar",
+    "name": "Asya Veteriner Polikliniği",
+    "address": "Avcılar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0702689%2C28.6864845",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Avcılar",
+    "name": "İstanbul Üniversitesi-Cerrahpaşa Veteriner Fakültesi - Hayvan Hastanesi",
+    "address": "Avcılar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.994134%2C28.7216328",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Avcılar",
+    "name": "VetPraxis Veteriner Kliniği - Ispartakule Veteriner",
+    "address": "Firüze Çiçeği Sokağı, 133, istanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0619479%2C28.7135691",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bağcılar",
+    "name": "Güneşli Ada Veteriner Kliniği",
+    "address": "Atatürk Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0293779%2C28.8286539",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bağcılar",
+    "name": "Şirinpati Veteriner Kliniği",
+    "address": "bosna caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0554897%2C28.8317707",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bahçelievler",
+    "name": "Bahçelievler Veteriner Kliniği",
+    "address": "Ali Reşat Paşa Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0020645%2C28.8677663",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bahçelievler",
+    "name": "Bakırköy Veteriner Kliniği",
+    "address": "Bahçelievler, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9925942%2C28.8726168",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bakırköy",
+    "name": "Bakırköy Veteriner Kliniği",
+    "address": "Bakırköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9925942%2C28.8726168",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bakırköy",
+    "name": "Mir’zoo Veteriner",
+    "address": "Bakırköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9789317%2C28.8835344",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bakırköy",
+    "name": "Özgür Veteriner Kliniği",
+    "address": "Ziya Erdem Caddesi, 14, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9587649%2C28.8176937",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Başakşehir",
+    "name": "Asya Veteriner Polikliniği",
+    "address": "Başakşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0702689%2C28.6864845",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Başakşehir",
+    "name": "Bahçekent Veteriner Kliniği",
+    "address": "Esenyurt Hadımköy Yolu, 1.Blok 24/AP, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0890199%2C28.6496778",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Başakşehir",
+    "name": "Patiler",
+    "address": "Başakşehir, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0635947%2C28.6679811",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bayrampaşa",
+    "name": "Esenler Belediyesi Veteriner İşleri Şefliği",
+    "address": "Bayrampaşa, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0247012%2C28.8964069",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bayrampaşa",
+    "name": "Kronik",
+    "address": "Bayrampaşa, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0727859%2C28.8872149",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bayrampaşa",
+    "name": "Pet Address Bayrampaşa",
+    "address": "Bayrampaşa, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0385044%2C28.912045",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Bayrampaşa",
+    "name": "Smokin Veteriner Kliniği",
+    "address": "Millet Cd., 168, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0689838%2C28.8862362",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beşiktaş",
+    "name": "animalia",
+    "address": "Beşiktaş, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0792861%2C29.0194093",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beşiktaş",
+    "name": "Candy Veteriner Kliniği",
+    "address": "Fahri Gizden Sokağı, 19/1 A, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0635337%2C29.0057507",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beşiktaş",
+    "name": "Erkut Gören",
+    "address": "Beşiktaş, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0515228%2C28.9926373",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beşiktaş",
+    "name": "Pera Veteriner Kliniği",
+    "address": "Beşiktaş, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0517281%2C29.024144",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beşiktaş",
+    "name": "Veterinerium",
+    "address": "Beşiktaş, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.084689%2C29.01264",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beykoz",
+    "name": "ALEMDAĞ VETERİNER KLİNİĞİ",
+    "address": "Beykoz, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0499601%2C29.2398883",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beylikdüzü",
+    "name": "Brand Veteriner Muayenehanesi",
+    "address": "Beylikdüzü, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0120736%2C28.647101",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beylikdüzü",
+    "name": "Ege Veteriner Kliniği Beylikdüzü",
+    "address": "1993. Sokak, 22, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0179287%2C28.6396232",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beylikdüzü",
+    "name": "Tom & Jerry Veteriner Kliniği",
+    "address": "Beylikdüzü, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0027222%2C28.6423096",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beyoğlu",
+    "name": "Erkut Gören",
+    "address": "Beyoğlu, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0515228%2C28.9926373",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Beyoğlu",
+    "name": "Kutup",
+    "address": "Beyoğlu, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0587236%2C28.9884723",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Büyükçekmece",
+    "name": "Efe Vet",
+    "address": "Büyükçekmece, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0205545%2C28.5897664",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Büyükçekmece",
+    "name": "Medikovet",
+    "address": "Büyükçekmece, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0187383%2C28.5870918",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Büyükçekmece",
+    "name": "Vetassist",
+    "address": "Büyükçekmece, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.999507%2C28.5426117",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Çatalca",
+    "name": "Uzmanlar Veteriner Kliniği",
+    "address": "Atatürk Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.1405905%2C28.4639115",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Çekmeköy",
+    "name": "ALEMDAĞ VETERİNER KLİNİĞİ",
+    "address": "Çekmeköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0499601%2C29.2398883",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Çekmeköy",
+    "name": "La Fontaine Veteriner",
+    "address": "Çekmeköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0311891%2C29.183339",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Çekmeköy",
+    "name": "Şans Veteriner Polikliniği",
+    "address": "Çekmeköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0337302%2C29.1752639",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenler",
+    "name": "Esenler Belediyesi Veteriner İşleri Şefliği",
+    "address": "Esenler, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0247012%2C28.8964069",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenler",
+    "name": "Kronik",
+    "address": "Esenler, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0727859%2C28.8872149",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenyurt",
+    "name": "Asya Veteriner Polikliniği",
+    "address": "Esenyurt, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0702689%2C28.6864845",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenyurt",
+    "name": "Bahçekent Veteriner Kliniği",
+    "address": "Esenyurt Hadımköy Yolu, 1.Blok 24/AP, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0890199%2C28.6496778",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenyurt",
+    "name": "Brand Veteriner Muayenehanesi",
+    "address": "Esenyurt, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0120736%2C28.647101",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenyurt",
+    "name": "Ege Veteriner Kliniği Beylikdüzü",
+    "address": "1993. Sokak, 22, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0179287%2C28.6396232",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenyurt",
+    "name": "Patiler",
+    "address": "Esenyurt, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0635947%2C28.6679811",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenyurt",
+    "name": "Rehber Veteriner Kliniği",
+    "address": "64. Sokak, 23A, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.001445%2C28.6943372",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Esenyurt",
+    "name": "Tom & Jerry Veteriner Kliniği",
+    "address": "Esenyurt, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0027222%2C28.6423096",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "Esenler Belediyesi Veteriner İşleri Şefliği",
+    "address": "Eyüpsultan, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0247012%2C28.8964069",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "Kronik",
+    "address": "Eyüpsultan, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0727859%2C28.8872149",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "Pet Address Bayrampaşa",
+    "address": "Eyüpsultan, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0385044%2C28.912045",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "Pet Avrupa Veteriner",
+    "address": "Eyüpsultan, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0865386%2C28.9021651",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "Rota Veteriner Kliniği",
+    "address": "Reşadiye Caddesi, 72/C, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.051256%2C28.9179338",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "VetAmerikan Hayvan Hastanesi",
+    "address": "Eyüpsultan, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0820136%2C28.9751548",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "Veteriner Kliniği",
+    "address": "Eyüpsultan, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0785374%2C28.9338684",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "vetistanbul veteriner kliniği",
+    "address": "Eyüpsultan, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0798466%2C28.9701061",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Eyüpsultan",
+    "name": "VetTown Veteriner",
+    "address": "Eyüpsultan, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.1793947%2C28.8887298",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Fatih",
+    "name": "Atlantis Veteriner",
+    "address": "Fatih, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0134396%2C28.9303028",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Fatih",
+    "name": "İlgivet/Veteriner Kliniği",
+    "address": "Cevdetpaşa Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.009523%2C28.9339328",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Fatih",
+    "name": "Kızılelma Veteriner Klinigi",
+    "address": "Emrullah Efendi Sokağı, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0089699%2C28.9368202",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Fatih",
+    "name": "Paşa Veteriner Kliniği",
+    "address": "Kocamustafapaşa Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0046031%2C28.934078",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Fatih",
+    "name": "Patiler Veteriner Klinigi",
+    "address": "Cevdetpaşa Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0095789%2C28.9329031",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Fatih",
+    "name": "Yaşam Veteriner Kliniği",
+    "address": "Turgut özal millet caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0174404%2C28.9296554",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Gaziosmanpaşa",
+    "name": "Kronik",
+    "address": "Gaziosmanpaşa, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0727859%2C28.8872149",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Gaziosmanpaşa",
+    "name": "Pet Avrupa Veteriner",
+    "address": "Gaziosmanpaşa, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0865386%2C28.9021651",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Gaziosmanpaşa",
+    "name": "Veteriner Kliniği",
+    "address": "Gaziosmanpaşa, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0785374%2C28.9338684",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Güngören",
+    "name": "Esenler Belediyesi Veteriner İşleri Şefliği",
+    "address": "Güngören, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0247012%2C28.8964069",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Acıbadem Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0020667%2C29.042364",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Altıntepe Bio-Vet",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.951534%2C29.1009586",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Anatolia Hayvan Hastanesi",
+    "address": "Nurettin Ali Berkol Sokağı, 43, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9646003%2C29.0784838",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Animal Care Center Veteriner Kliniği",
+    "address": "Rüzgar Sokağı / Şua Elite Concept / A2 Blok, 44 BF, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9954356%2C29.0537576",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "AXIS VET VETERINARY CLINIC",
+    "address": "Ihlamur Sokağı, 5, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.975413%2C29.0628289",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Barbazoo",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9685906%2C29.0633387",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Barış Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9871354%2C29.0452358",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "BNC Veteriner Kliniği",
+    "address": "Oral Sokağı, 7, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9671334%2C29.087513",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Bostancı Bölge Veteriner",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9601968%2C29.0944808",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Cat & Dog Veteriner Kliniği",
+    "address": "Bayar Caddesi, 38, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9739033%2C29.0942697",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Çiçek Veteriner",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.96767%2C29.0857803",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "D'Park Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9875113%2C29.033377",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Deltavet Veteriner kliniği",
+    "address": "Hafız İmam Sokağı, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9815878%2C29.0781377",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "DNA Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.979544%2C29.0766651",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Dr. House",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9600645%2C29.0917456",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Dr. Pati Veteriner Kliniği",
+    "address": "Bağdat Caddesi, 103/D, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9793126%2C29.0453664",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Erenköy Veteriner",
+    "address": "Erenköy İstasyon Caddesi, 32, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9725654%2C29.0778963",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Fi Veteriner",
+    "address": "Hilmi Paşa Sokağı, 38, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9728773%2C29.0930928",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Friends Moda Veteriner Polikliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9822711%2C29.0234938",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Göztepe Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9809351%2C29.0725773",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Hera Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9860264%2C29.02805",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "ixir Veteriner",
+    "address": "Dr. Faruk Ayanoğlu Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9734431%2C29.0457291",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "La Fontaine Veteriner",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9867637%2C29.0461208",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Libadiye Veteriner",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0013597%2C29.0792251",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Lucky Pet Veteriner Kliniği",
+    "address": "Atatürk Caddesi, 68, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9808553%2C29.0886366",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Major Veteriner",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9837082%2C29.0619128",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Meoof Veteriner",
+    "address": "Güneşli Sokağı, 21, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9693413%2C29.0881197",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "My Patim Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0052944%2C29.0835749",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Pasteur Veteriner Kliniği",
+    "address": "Ethem Efendi Caddesi, 78, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9746107%2C29.0754239",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "PetVet Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9998525%2C29.0413572",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Petville Veteriner",
+    "address": "Mehmet Şevki Paşa Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9583983%2C29.1013554",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Reha Salgın",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.968294%2C29.071214",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Sahil Veteriner Kliniği",
+    "address": "Kazım Karabekirpaşa Sokağı, 3, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9705186%2C29.0772388",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Sevcan Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.982796%2C29.0663627",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "uzmvet",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9787329%2C29.0909852",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vereriner",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9864486%2C29.0217647",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vet Kozyatağı",
+    "address": "Şakacı Sokağı, 70, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9684083%2C29.0876968",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vetelite Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9591038%2C29.0761946",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vetgrup",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.972549%2C29.0509152",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vetkadıköy",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9870476%2C29.0262073",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vetline",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9833436%2C29.0299782",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vetmemorial Veterinerlik A. Ş.",
+    "address": "Adile Naşit Sokak, 2, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9824918%2C29.0826816",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vetmen Veteriner Kliniği",
+    "address": "Çamlıpark Sokağı, 1/C, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.979878%2C29.0794271",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vetportal Veteriner Kliniği",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.980744%2C29.0737956",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Vetzone Veteriner",
+    "address": "Kaya Sultan Sokağı, 16, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9648624%2C29.0906343",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Yenitepe Veteriner Kliniği",
+    "address": "Fahrettin Kerim Gökay Caddesi, 93, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9889449%2C29.0428039",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "name": "Zoom Veteriner",
+    "address": "Kadıköy, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9706653%2C29.0829465",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kağıthane",
+    "name": "VetAmerikan Hayvan Hastanesi",
+    "address": "Kağıthane, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0820136%2C28.9751548",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kağıthane",
+    "name": "vetistanbul veteriner kliniği",
+    "address": "Kağıthane, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0798466%2C28.9701061",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kartal",
+    "name": "Doğa Veterinerlik Hizmetleri",
+    "address": "Kartal, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9237111%2C29.2221527",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kartal",
+    "name": "Neovet Veteriner Kliniği",
+    "address": "Kartal, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.8952969%2C29.183878",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kartal",
+    "name": "Pati-Bo",
+    "address": "Kartal, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9302268%2C29.143476",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kartal",
+    "name": "Paw Vita Veteriner Kliniği",
+    "address": "Şehit Hakan Kurban Caddesi, 65/A, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9093742%2C29.1703247",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Kartal",
+    "name": "VET34",
+    "address": "Kartal, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9052081%2C29.1627844",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Küçükçekmece",
+    "name": "Magic Veteriner Klinigi",
+    "address": "Zafer Cömert Sokağı, 11/C, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0344166%2C28.7931245",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Küçükçekmece",
+    "name": "Sun Veteriner Kliniği",
+    "address": "Küçükçekmece, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0198894%2C28.7917804",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Maltepe",
+    "name": "Altıntepe Bio-Vet",
+    "address": "Maltepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.951534%2C29.1009586",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Maltepe",
+    "name": "Boncuk Veteriner Kliniği",
+    "address": "Maltepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9259959%2C29.1379269",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Maltepe",
+    "name": "İdealtepe Veteriner Kliniği",
+    "address": "Maltepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9379693%2C29.1189141",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Maltepe",
+    "name": "KBK Veteriner",
+    "address": "Maltepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9790705%2C29.1125985",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Maltepe",
+    "name": "Maestro Veteriner Kliniği",
+    "address": "Maltepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9797735%2C29.1238071",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Maltepe",
+    "name": "Pati-Bo",
+    "address": "Maltepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9302268%2C29.143476",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Maltepe",
+    "name": "Pedaliza Veteriner Kliniği",
+    "address": "Maltepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.947476%2C29.1063852",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "ALEMDAĞ VETERİNER KLİNİĞİ",
+    "address": "Pendik, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0499601%2C29.2398883",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Çare Veteriner",
+    "address": "Pendik, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.8623876%2C29.3336243",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Doğa Veterinerlik Hizmetleri",
+    "address": "Pendik, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9237111%2C29.2221527",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Dünya Veteriner",
+    "address": "Cemre Sokak, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9323972%2C29.3202259",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Monavet Veteriner Kliniği",
+    "address": "Reyhan Caddesi, 69, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9306298%2C29.3228451",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Multivet",
+    "address": "Pendik, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9927908%2C29.2311303",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Odak",
+    "address": "Pendik, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9933735%2C29.2315395",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Pets Ultimate Veteriner",
+    "address": "Pendik, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9168174%2C29.3076828",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Vet's",
+    "address": "Pendik, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9920443%2C29.2311156",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Vetkonsept Veteriner Kliniği",
+    "address": "Pendik, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9192047%2C29.2960122",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Pendik",
+    "name": "Yenişehir Vet Veteriner Kliniği",
+    "address": "Mustafa Akyol Sokağı, 11, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9273818%2C29.3079237",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sancaktepe",
+    "name": "ALEMDAĞ VETERİNER KLİNİĞİ",
+    "address": "Sancaktepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0499601%2C29.2398883",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sancaktepe",
+    "name": "Multivet",
+    "address": "Sancaktepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9927908%2C29.2311303",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sancaktepe",
+    "name": "Odak",
+    "address": "Sancaktepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9933735%2C29.2315395",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sancaktepe",
+    "name": "Vet's",
+    "address": "Sancaktepe, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9920443%2C29.2311156",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sarıyer",
+    "name": "Ayazağa Veteriner",
+    "address": "Sarıyer, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.1158266%2C28.9994252",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sarıyer",
+    "name": "Kut Veteriner Kliniği",
+    "address": "Sarıyer, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.1149305%2C28.9993641",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sarıyer",
+    "name": "Madagaskar Veteriner Kliniği",
+    "address": "Sarıyer, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.2043767%2C29.0400502",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sarıyer",
+    "name": "Petivet",
+    "address": "Sarıyer, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.1868314%2C29.0411293",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sarıyer",
+    "name": "Vet Point Veteriner Kliniği",
+    "address": "Hisar caddesi, 15, istanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0896536%2C29.0564821",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sarıyer",
+    "name": "VetAmerikan Hayvan Hastanesi",
+    "address": "Sarıyer, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0820136%2C28.9751548",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sarıyer",
+    "name": "Veterinerium",
+    "address": "Sarıyer, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.084689%2C29.01264",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Silivri",
+    "name": "Çavuşoğlu Veteriner",
+    "address": "Silivri, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.2894366%2C27.9971415",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Silivri",
+    "name": "Çerkezköy Veteriner Kliniği",
+    "address": "Silivri, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.2929746%2C27.9945598",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Silivri",
+    "name": "Empati Veteriner Kliniği",
+    "address": "Silivri, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.2880528%2C27.9970184",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Silivri",
+    "name": "EquiPet Veteriner Kliniği",
+    "address": "Silivri, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.2641588%2C28.0295051",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Silivri",
+    "name": "Kapaklı Ekit Veteriner Kliniği",
+    "address": "Silivri, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.3308844%2C27.9745881",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Silivri",
+    "name": "Patikam Veteriner Kliniği",
+    "address": "Silivri, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.2691457%2C28.0219827",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sultanbeyli",
+    "name": "Çelik Veteriner Ecza Deposu",
+    "address": "Fatih Bulvarı Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9639937%2C29.281749",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sultangazi",
+    "name": "Pet Avrupa Veteriner",
+    "address": "Sultangazi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0865386%2C28.9021651",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Şişli",
+    "name": "Erkut Gören",
+    "address": "Şişli, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0515228%2C28.9926373",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Şişli",
+    "name": "Gülbağ Veteriner Kliniği",
+    "address": "Galata Deresi Caddesi, 27, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0759164%2C28.9976478",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Şişli",
+    "name": "Kutup",
+    "address": "Şişli, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0587236%2C28.9884723",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Şişli",
+    "name": "Nişantaşı Veteriner Polikliniği",
+    "address": "Süleyman Nazif Sokağı, 5, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0504436%2C28.9890563",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Şişli",
+    "name": "VetAmerikan Hayvan Hastanesi",
+    "address": "Şişli, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0820136%2C28.9751548",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Şişli",
+    "name": "Veterinerium",
+    "address": "Şişli, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.084689%2C29.01264",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Şişli",
+    "name": "vetistanbul veteriner kliniği",
+    "address": "Şişli, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0798466%2C28.9701061",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Tuzla",
+    "name": "Atam Veteriner Kliniği",
+    "address": "Meydan Sokağı, 16/C, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9099099%2C29.3898028",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Tuzla",
+    "name": "Çare Veteriner",
+    "address": "Tuzla, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.8623876%2C29.3336243",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Tuzla",
+    "name": "Jasmin Veteriner",
+    "address": "Karadağ Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9360922%2C29.3675175",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Tuzla",
+    "name": "Köri̇ veteri̇ner poli̇kli̇ni̇ği̇",
+    "address": "Manastır Yolu, 86, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.8170453%2C29.2875703",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Tuzla",
+    "name": "Pets Ultimate Veteriner",
+    "address": "Tuzla, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9168174%2C29.3076828",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Tuzla",
+    "name": "Vetkonsept Veteriner Kliniği",
+    "address": "Tuzla, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9192047%2C29.2960122",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "ares veteriner kliniği",
+    "address": "Ümraniye, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0094962%2C29.115118",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Clubvet Veteriner Kliniği",
+    "address": "Serencebey Caddesi, 42, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0140114%2C29.187958",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Exen Veteriner Kliniği",
+    "address": "Paksoy Sokağı, 24F, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0322576%2C29.0907303",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "La Fontaine Veteriner",
+    "address": "Ümraniye, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0311891%2C29.183339",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Medeniyet Veteriner Kliniği",
+    "address": "Açıkyüz Sokağı, 6A, Şerifali Mahallesi",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.004875%2C29.145154",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "My Patim Veteriner Kliniği",
+    "address": "Ümraniye, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0052944%2C29.0835749",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Petopia Veteriner Muayenehanesi",
+    "address": "Ümraniye, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.02282%2C29.1130369",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Şans Veteriner Polikliniği",
+    "address": "Ümraniye, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0337302%2C29.1752639",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Vetix",
+    "address": "Ümraniye, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0017921%2C29.1429504",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Vetterapi Veteriner Kliniği Tanı ve Tedavi Merkezi",
+    "address": "Pamukova Sokak, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0089169%2C29.1798075",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Yeditepe Veteriner Kliniği",
+    "address": "Ümraniye, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9892824%2C29.1409199",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Ümraniye",
+    "name": "Yenişehir Veteriner Kliniği",
+    "address": "Atay Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0107629%2C29.1192013",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "Acıbadem Veteriner Kliniği",
+    "address": "Üsküdar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0020667%2C29.042364",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "Fıstıkağacı Veteriner",
+    "address": "Üsküdar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.027689%2C29.0250023",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "Harmony Veteriner Kliniği",
+    "address": "Üsküdar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0158447%2C29.074889",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "Libadiye Veteriner",
+    "address": "Üsküdar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0013597%2C29.0792251",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "My Patim Veteriner Kliniği",
+    "address": "Üsküdar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0052944%2C29.0835749",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "Pepe Veteriner Kliniği",
+    "address": "Üsküdar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0129664%2C29.0360414",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "Pera Veteriner Kliniği",
+    "address": "Üsküdar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0517281%2C29.024144",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "PetVet Veteriner Kliniği",
+    "address": "Üsküdar, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9998525%2C29.0413572",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "Veterinerim",
+    "address": "Cumhuriyet Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0273458%2C29.0321544",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Üsküdar",
+    "name": "Vetmedica Veteriner Kliniği",
+    "address": "Halk Caddesi, 80, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0193788%2C29.0127064",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Zeytinburnu",
+    "name": "Attaysat",
+    "address": "74. sok., İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.993726%2C28.8951715",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Zeytinburnu",
+    "name": "Esenler Belediyesi Veteriner İşleri Şefliği",
+    "address": "Zeytinburnu, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0247012%2C28.8964069",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Zeytinburnu",
+    "name": "Olive Veteriner Kliniği",
+    "address": "85/1 sk, 21-23B, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.0006154%2C28.914085",
+    "source": "osm"
+  },
+  {
+    "city": "İstanbul",
+    "district": "Zeytinburnu",
+    "name": "Zeytinburnu Veteriner Kliniği",
+    "address": "Merv Caddesi, İstanbul",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.9875455%2C28.8984963",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Balçova",
+    "name": "PanVet Veterinary Clinic",
+    "address": "Balçova, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3973149%2C27.0941432",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Balçova",
+    "name": "Totem Veteriner Kliniği",
+    "address": "Balçova, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3946689%2C27.0910427",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bayraklı",
+    "name": "Central Animal Vet",
+    "address": "Bayraklı, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4556517%2C27.1843554",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bayraklı",
+    "name": "Lena Veteriner Kliniği",
+    "address": "273/6. Sokak, 8A/A, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4573552%2C27.1895518",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Anadolu Veterinerlik Bergama",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.115777%2C27.1800974",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Ber Vet Veteriner Kliniği",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1219369%2C27.1805781",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Bergama Doğa Veteriner Kliniği ve Pet Shop",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1160352%2C27.1903996",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Can Veteriner Kliniği",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1162358%2C27.1799827",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Ege Veteriner Kliniği | Bergama",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1161896%2C27.1912875",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Saygın Veteriner Kliniği",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.116627%2C27.1949664",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Şişman Veteriner Kliniği",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1226029%2C27.1807767",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Türen Veteriner Kliniği",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1226581%2C27.1813394",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Umut Veterinerlik",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1225236%2C27.1807375",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Veteriner Hekim Haydar Çevik",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.120488%2C27.1806044",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Veteriner Ömer İhsan Uslu",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1203113%2C27.1805085",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Yaşam Veteriner Kliniği Bergama",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1103799%2C27.1720711",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bergama",
+    "name": "Yörem Veteriner Kliniği",
+    "address": "Bergama, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=39.1225658%2C27.1807584",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bornova",
+    "name": "Bornova Doğa Veteriner Polikliniği",
+    "address": "Bornova, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4578719%2C27.2040529",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bornova",
+    "name": "Central Animal Vet",
+    "address": "Bornova, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4556517%2C27.1843554",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Bornova",
+    "name": "Umut Veteriner Kliniği",
+    "address": "Bornova, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4639333%2C27.2157204",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Çiğli",
+    "name": "Çiğli Veteriner Polikliniği",
+    "address": "Çiğli, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4925756%2C27.0554842",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Çiğli",
+    "name": "Momentum Veteriner Kliniği",
+    "address": "Çiğli, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4721873%2C27.0983389",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Çiğli",
+    "name": "Santa",
+    "address": "Çiğli, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4557464%2C27.0956154",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Çiğli",
+    "name": "SmartVet",
+    "address": "Çiğli, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4876827%2C27.0582783",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Dikili",
+    "name": "Retro Veteriner Kliniği",
+    "address": "130 Sokak, 13/A, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.9371323%2C26.9346812",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karabağlar",
+    "name": "Konak",
+    "address": "Karabağlar, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4042871%2C27.1006709",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karabağlar",
+    "name": "Kökekuba Veteriner Polikliniği",
+    "address": "Karabağlar, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3991482%2C27.0969028",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karabağlar",
+    "name": "Mira",
+    "address": "Karabağlar, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4027693%2C27.0958715",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karabağlar",
+    "name": "PanVet Veterinary Clinic",
+    "address": "Karabağlar, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3973149%2C27.0941432",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karabağlar",
+    "name": "Totem Veteriner Kliniği",
+    "address": "Karabağlar, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3946689%2C27.0910427",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karşıyaka",
+    "name": "Ata-Vet Veteriner Kliniği",
+    "address": "6479. Sokak, 38, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.472653%2C27.0896575",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karşıyaka",
+    "name": "Central Animal Vet",
+    "address": "Karşıyaka, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4556517%2C27.1843554",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karşıyaka",
+    "name": "Karşıyaka Yaşam Veteriner Kliniği",
+    "address": "Fazıl Bey Caddesi, 62",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.454704%2C27.111215",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karşıyaka",
+    "name": "Momentum Veteriner Kliniği",
+    "address": "Karşıyaka, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4721873%2C27.0983389",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Karşıyaka",
+    "name": "Santa",
+    "address": "Karşıyaka, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4557464%2C27.0956154",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "Çapan Veteriner Kliniği",
+    "address": "Konak, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4093606%2C27.1123228",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "Konak",
+    "address": "Konak, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4042871%2C27.1006709",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "Kökekuba Veteriner Polikliniği",
+    "address": "Konak, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3991482%2C27.0969028",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "Martı",
+    "address": "Konak, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.406437%2C27.1009856",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "Mira",
+    "address": "Konak, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4027693%2C27.0958715",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "PanVet Veterinary Clinic",
+    "address": "Konak, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3973149%2C27.0941432",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "Pegasos",
+    "address": "Konak, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4071593%2C27.1034409",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "Rota Veteriner Kliniği",
+    "address": "İnönü Caddesi, 484/A, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3936709%2C27.0880369",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Konak",
+    "name": "Totem Veteriner Kliniği",
+    "address": "Konak, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.3946689%2C27.0910427",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Selçuk",
+    "name": "Pandora",
+    "address": "Selçuk, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=37.8522566%2C27.2579077",
+    "source": "osm"
+  },
+  {
+    "city": "İzmir",
+    "district": "Torbalı",
+    "name": "Domestic Veteriner Kliniği",
+    "address": "Torbalı, İzmir",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.1503913%2C27.3605466",
+    "source": "osm"
+  },
+  {
+    "city": "Kayseri",
+    "district": "Develi",
+    "name": "Veteriner Hekim",
+    "address": "Develi, Kayseri",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4536241%2C35.7999688",
+    "source": "osm"
+  },
+  {
+    "city": "Kayseri",
+    "district": "Tomarza",
+    "name": "Veteriner Hekim",
+    "address": "Tomarza, Kayseri",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=38.4536241%2C35.7999688",
+    "source": "osm"
+  },
+  {
+    "city": "Kırklareli",
+    "district": "Babaeski",
+    "name": "Veteriner Ömer Barış Elitaş",
+    "address": "Babaeski, Kırklareli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.3681827%2C27.1420924",
+    "source": "osm"
+  },
+  {
+    "city": "Kırklareli",
+    "district": "Demirköy",
+    "name": "Köyvet Veteriner Kliniği",
+    "address": "Demirköy, Kırklareli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.8250204%2C27.7675487",
+    "source": "osm"
+  },
+  {
+    "city": "Kırklareli",
+    "district": "Demirköy",
+    "name": "Yıldız Veteriner Kliniği",
+    "address": "Demirköy, Kırklareli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.8248955%2C27.7689703",
+    "source": "osm"
+  },
+  {
+    "city": "Kırklareli",
+    "district": "Lüleburgaz",
+    "name": "Derzelas Veteriner Kliniği",
+    "address": "Büklüm Caddesi, Lüleburgaz",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.3979832%2C27.3693201",
+    "source": "osm"
+  },
+  {
+    "city": "Kırklareli",
+    "district": "Merkez",
+    "name": "Gold Pati Veteriner Kliniği",
+    "address": "Merkez, Kırklareli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.7224227%2C27.2149857",
+    "source": "osm"
+  },
+  {
+    "city": "Kırklareli",
+    "district": "Merkez",
+    "name": "Kırklareli Hayvan Barınağı",
+    "address": "Merkez, Kırklareli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.7332086%2C27.1961808",
+    "source": "osm"
+  },
+  {
+    "city": "Kırklareli",
+    "district": "Pınarhisar",
+    "name": "Veteriner Hekim Mehmet Şener Yardımcı",
+    "address": "Salih Bilinmez Caddesi, 17A, Kırklareli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.6234702%2C27.5191655",
+    "source": "osm"
+  },
+  {
+    "city": "Kırklareli",
+    "district": "Vize",
+    "name": "Bravo Veteriner Kliniği",
+    "address": "Vize, Kırklareli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.4423062%2C27.9191232",
+    "source": "osm"
+  },
+  {
+    "city": "Kocaeli",
+    "district": "Başiskele",
+    "name": "Dost Veteriner",
+    "address": "Başiskele, Kocaeli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.754308%2C30.0230054",
+    "source": "osm"
+  },
+  {
+    "city": "Kocaeli",
+    "district": "Başiskele",
+    "name": "Format Veteriner",
+    "address": "Başiskele, Kocaeli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.7418398%2C30.0247535",
+    "source": "osm"
+  },
+  {
+    "city": "Kocaeli",
+    "district": "Başiskele",
+    "name": "Öyküm Veteriner",
+    "address": "Başiskele, Kocaeli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.7402982%2C30.0183917",
+    "source": "osm"
+  },
+  {
+    "city": "Kocaeli",
+    "district": "Derince",
+    "name": "GREENPET Veteriner Hizmetleri",
+    "address": "Derince, Kocaeli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.7558678%2C29.8250964",
+    "source": "osm"
+  },
+  {
+    "city": "Kocaeli",
+    "district": "Gebze",
+    "name": "biyogenetik",
+    "address": "Gebze, Kocaeli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.798284%2C29.4380677",
+    "source": "osm"
+  },
+  {
+    "city": "Kocaeli",
+    "district": "Gebze",
+    "name": "karadeniz",
+    "address": "Gebze, Kocaeli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.7972343%2C29.4296242",
+    "source": "osm"
+  },
+  {
+    "city": "Kocaeli",
+    "district": "Gebze",
+    "name": "Safari Veteriner Kliniği",
+    "address": "Gebze, Kocaeli",
+    "placeId": "",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=40.7906452%2C29.3426783",
+    "source": "osm"
+  }
+]

@@ -1,0 +1,141 @@
+const DISTRICTS_JSON_PATH = "data/districts.json";
+
+const veterinerCityTitle = document.querySelector("#veterinerCityTitle");
+const veterinerCityBreadcrumb = document.querySelector("#veterinerCityBreadcrumb");
+const veterinerDistrictGrid = document.querySelector("#veterinerDistrictGrid");
+
+const state = {
+  city: "",
+  districts: [],
+};
+
+function normalizeName(value) {
+  return String(value || "")
+    .trim()
+    .toLocaleLowerCase("tr")
+    .replaceAll("ı", "i")
+    .replaceAll("ğ", "g")
+    .replaceAll("ü", "u")
+    .replaceAll("ş", "s")
+    .replaceAll("ö", "o")
+    .replaceAll("ç", "c")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function cityFromQuery() {
+  const url = new URL(window.location.href);
+  return (url.searchParams.get("sehir") || url.searchParams.get("city") || "").trim();
+}
+
+function findCityName(queryCity, cityNames) {
+  if (!queryCity) {
+    return "";
+  }
+
+  const normalizedQuery = normalizeName(queryCity);
+  const exact = cityNames.find((name) => name === queryCity);
+
+  if (exact) {
+    return exact;
+  }
+
+  return cityNames.find((name) => normalizeName(name) === normalizedQuery) || "";
+}
+
+function districtPageUrl(cityName, districtName) {
+  return `veteriner-district.html?sehir=${encodeURIComponent(cityName)}&ilce=${encodeURIComponent(districtName)}`;
+}
+
+function renderDistrictGrid() {
+  if (!veterinerDistrictGrid) {
+    return;
+  }
+
+  const districts = state.districts;
+  veterinerDistrictGrid.innerHTML = "";
+
+  if (!state.city || districts.length === 0) {
+    const empty = document.createElement("article");
+    empty.className = "empty-state";
+    empty.textContent = "Bu il için ilçe verisi bulunamadı.";
+    veterinerDistrictGrid.append(empty);
+    return;
+  }
+
+  const row = document.createElement("article");
+  row.className = "province-row";
+
+  const rowTitle = document.createElement("h4");
+  rowTitle.className = "province-region";
+  rowTitle.textContent = "İlçeler";
+
+  const chips = document.createElement("div");
+  chips.className = "province-cities";
+
+  districts.forEach((districtName) => {
+    const chip = document.createElement("a");
+    chip.className = "province-pill veteriner-pill veteriner-pill-link";
+    chip.href = districtPageUrl(state.city, districtName);
+    chip.textContent = districtName;
+    chip.setAttribute("aria-label", `${districtName} ilçesindeki veterinerleri aç`);
+    chips.append(chip);
+  });
+
+  row.append(rowTitle, chips);
+  veterinerDistrictGrid.append(row);
+}
+
+function renderCityHeader() {
+  if (veterinerCityTitle) {
+    veterinerCityTitle.textContent = `${state.city} İli`;
+  }
+
+  if (veterinerCityBreadcrumb) {
+    veterinerCityBreadcrumb.textContent = state.city || "İl";
+  }
+
+  document.title = state.city
+    ? `arama bul | ${state.city} İli`
+    : "arama bul | Veteriner İl Sayfası";
+}
+
+async function loadDistricts() {
+  const response = await fetch(DISTRICTS_JSON_PATH, { cache: "no-store" });
+
+  if (!response.ok) {
+    throw new Error(`İlçe verisi alınamadı: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+async function initVeterinerCityPage() {
+  let districtMap = {};
+
+  try {
+    districtMap = await loadDistricts();
+  } catch (error) {
+    console.error(error);
+  }
+
+  const cityNames = Object.keys(districtMap).sort((left, right) => left.localeCompare(right, "tr"));
+  const queryCity = cityFromQuery();
+  const matchedCity = findCityName(queryCity, cityNames);
+
+  if (!matchedCity) {
+    state.city = "";
+    state.districts = [];
+    renderCityHeader();
+    renderDistrictGrid();
+    return;
+  }
+
+  state.city = matchedCity;
+  state.districts = [...new Set((districtMap[matchedCity] || []).map((name) => String(name || "").trim()).filter(Boolean))]
+    .sort((left, right) => left.localeCompare(right, "tr"));
+
+  renderCityHeader();
+  renderDistrictGrid();
+}
+
+initVeterinerCityPage();
