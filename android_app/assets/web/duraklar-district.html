@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>arama bul | İlçe Otobüs / Metro / Tramvay Durakları Noktaları</title>
+    <meta
+      name="description"
+      content="Seçtiğin ilçedeki Otobüs / Metro / Tramvay Durakları noktalarını kutu listesinde gör ve Google Maps'te aç."
+    />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260223" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260223" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260223" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="duraklar-district-page" data-category-key="duraklar" data-category-page="district">
+    <div class="texture"></div>
+
+    <header class="global-header-band">
+      <nav class="topbar global-topbar">
+        <a class="brand" href="index.html" aria-label="arama bul">
+          <span class="brand-wordmark">arama bul</span>
+        </a>
+        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Restoran arama">
+          <label class="visually-hidden" for="headerSearchInput">Restoran adı</label>
+          <input
+            id="headerSearchInput"
+            class="header-search-input"
+            type="search"
+            name="mekan"
+            placeholder="Restoran ara"
+            autocomplete="off"
+          />
+          <button class="header-search-btn" type="submit">Ara</button>
+        </form>
+      </nav>
+      <div class="global-topline">
+        <div class="global-topline-inner">
+          <a href="index.html">Anasayfa</a>
+          <span>/</span>
+          <a href="duraklar.html">Otobüs / Metro / Tramvay Durakları</a>
+          <span>/</span>
+          <a id="categoryDistrictCityLink" href="duraklar.html">İl</a>
+          <span>/</span>
+          <span id="categoryDistrictBreadcrumb">İlçe</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="hero">
+      <section class="section-head province-head">
+        <div>
+          <h3 id="categoryDistrictTitle">İlçe Mekanları</h3>
+        </div>
+      </section>
+
+      <section id="categoryVenueGrid" class="province-grid" aria-label="Mekan listesi"></section>
+    </main>
+
+    <footer class="yr-footer" aria-label="Alt Bant">
+      <div class="yr-footer-inner">
+        <div class="yr-footer-grid">
+          <section class="yr-footer-col">
+            <h4>arama bul'u indir!</h4>
+            <a class="store-badge" href="#" aria-label="App Store">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">App Store</span>
+            </a>
+            <a class="store-badge" href="#" aria-label="Google Play">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">Google Play</span>
+            </a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>arama bul'u keşfet</h4>
+            <a href="#">Hakkımızda</a>
+            <a href="#">Kariyer</a>
+            <a href="#">Teknoloji</a>
+            <a href="#">İletişim</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>Yardım mı lazım?</h4>
+            <a href="#">Sıkça Sorulan Sorular</a>
+            <a href="#">Kişisel Verilerin Korunması</a>
+            <a href="#">Gizlilik Politikası</a>
+            <a href="#">Kullanım Koşulları</a>
+            <a href="#">Çerez Politikası</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>İş ortaklığımız</h4>
+            <a href="#">Restoran ekle</a>
+            <a href="#">Fiyat ekle</a>
+            <a href="#">İş birliği</a>
+          </section>
+        </div>
+
+        <div class="yr-footer-bottom">
+          <p>© 2026 arama bul</p>
+          <div class="yr-footer-social" aria-label="Sosyal">
+            <a href="#" aria-label="Instagram">○</a>
+            <a href="#" aria-label="Ara">◌</a>
+            <a href="#" aria-label="Dünya">◍</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="header-search.js"></script>
+    <script src="category-pages.js"></script>
+  </body>
+</html>

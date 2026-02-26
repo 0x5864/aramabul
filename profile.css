@@ -1,0 +1,428 @@
+.settings-page {
+  color: var(--ink);
+  background: var(--bg);
+  font-family: "Plus Jakarta Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.94rem;
+  font-weight: 400;
+}
+
+.profile-hidden-search {
+  display: none !important;
+}
+
+.settings-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.55rem;
+  background: var(--bg);
+  border-bottom: 0;
+}
+
+.settings-header h1 {
+  margin: 0;
+  font-size: clamp(1rem, 3.2vw, 1.08rem);
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.settings-home-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.settings-home-link:hover,
+.settings-home-link:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  outline: none;
+}
+
+.settings-back-btn {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+}
+
+.settings-back-btn svg {
+  width: 25px;
+  height: 25px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.settings-shell {
+  width: 100%;
+  margin: 0;
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.65rem 0.65rem calc(6.7rem + env(safe-area-inset-bottom, 0px));
+  background: var(--bg);
+}
+
+.settings-shell * {
+  font-weight: 400;
+}
+
+.settings-card + .settings-card {
+  margin-top: 0.08rem;
+}
+
+.settings-account-card {
+  margin-top: 0.15rem;
+}
+
+.settings-menu-card {
+  margin-top: 0;
+}
+
+.settings-signout {
+  margin-top: 0.3rem;
+}
+
+.settings-signout:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.settings-row:focus-visible,
+.settings-row-button:focus-visible,
+.settings-signout:focus-visible,
+.settings-back-btn:focus-visible {
+  outline: 2px solid rgba(30, 167, 255, 0.72);
+  outline-offset: 2px;
+}
+
+.settings-back-btn:hover {
+  background: rgba(22, 33, 35, 0.06);
+}
+
+.settings-row:hover {
+  background: rgba(11, 92, 148, 0.05);
+}
+
+.settings-row:active {
+  background: rgba(11, 92, 148, 0.09);
+}
+
+.settings-signout:hover:not(:disabled) {
+  background: rgba(201, 42, 74, 0.08);
+}
+
+.settings-signout:active:not(:disabled) {
+  background: rgba(201, 42, 74, 0.12);
+}
+
+.settings-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fffdf8;
+  box-shadow: 0 8px 24px rgba(22, 33, 35, 0.08);
+  overflow: hidden;
+}
+
+.settings-account-head {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.95rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.settings-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: linear-gradient(140deg, #e8cd92, #b89155);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.settings-account-head h2 {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.1;
+}
+
+.settings-account-head p {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  color: rgba(22, 33, 35, 0.66);
+}
+
+.settings-signup-card {
+  padding: 0.95rem;
+}
+
+.settings-signup-head h2 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.settings-signup-head p {
+  margin: 0.28rem 0 0;
+  font-size: 0.82rem;
+  color: rgba(22, 33, 35, 0.66);
+}
+
+.settings-signup-form {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.56rem;
+}
+
+.settings-signup-field {
+  display: grid;
+  gap: 0.26rem;
+}
+
+.settings-signup-field span {
+  font-size: 0.82rem;
+  color: rgba(22, 33, 35, 0.74);
+}
+
+.settings-signup-field input {
+  min-height: 40px;
+  border: 1px solid rgba(22, 33, 35, 0.2);
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--ink);
+  padding: 0 0.72rem;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 400;
+}
+
+.settings-signup-field input:focus-visible {
+  outline: 2px solid rgba(30, 167, 255, 0.56);
+  outline-offset: 1px;
+  border-color: rgba(30, 167, 255, 0.68);
+}
+
+.settings-signup-message {
+  min-height: 1.1rem;
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  color: #c92a4a;
+}
+
+.settings-signup-message.is-ok {
+  color: #237652;
+}
+
+.settings-signup-submit {
+  min-height: 42px;
+  border: 1px solid #2c3531;
+  border-radius: 12px;
+  background: #2c3531;
+  color: #eae7dc;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.settings-signup-submit:disabled {
+  opacity: 0.7;
+}
+
+.settings-page.signup-mode .settings-menu-card,
+.settings-page.signup-mode #settingsSignOutBtn {
+  display: none;
+}
+
+.settings-row {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0 0.95rem;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  background: #fffdf8;
+}
+
+.settings-row:last-child {
+  border-bottom: 0;
+}
+
+.settings-row-button {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.settings-row-icon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  color: rgba(22, 33, 35, 0.88);
+}
+
+.settings-row-icon svg {
+  width: 23px;
+  height: 23px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.settings-row-label {
+  flex: 1;
+  font-size: 0.92rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.settings-row-chevron {
+  width: 20px;
+  height: 20px;
+  color: rgba(22, 33, 35, 0.5);
+}
+
+.settings-row-chevron svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.settings-signout {
+  min-height: 58px;
+  border: 1px solid rgba(201, 42, 74, 0.32);
+  border-radius: 16px;
+  background: #fffdf8;
+  color: #c92a4a;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 400;
+}
+
+.settings-inline-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(6.9rem + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 10px);
+  min-width: 180px;
+  max-width: calc(100vw - 2rem);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  color: var(--ink);
+  padding: 0.58rem 0.8rem;
+  font-size: 0.82rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(22, 33, 35, 0.14);
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 240;
+}
+
+.settings-inline-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+body.theme-dark .settings-header {
+  background: var(--bg);
+  border-bottom: 0;
+}
+
+body.theme-dark.settings-page {
+  background: var(--bg);
+}
+
+body.theme-dark .settings-header h1,
+body.theme-dark .settings-back-btn {
+  color: var(--ink);
+}
+
+body.theme-dark .settings-card,
+body.theme-dark .settings-row {
+  background: #fffdf8;
+  border-color: var(--line);
+}
+
+body.theme-dark .settings-account-head p {
+  color: rgba(22, 33, 35, 0.66);
+}
+
+body.theme-dark .settings-account-head h2,
+body.theme-dark .settings-row-label,
+body.theme-dark .settings-row-icon {
+  color: var(--ink);
+}
+
+body.theme-dark .settings-row-chevron {
+  color: rgba(22, 33, 35, 0.5);
+}
+
+body.theme-dark .settings-signout {
+  border-color: rgba(201, 42, 74, 0.32);
+  background: #fffdf8;
+  color: #c92a4a;
+}
+
+body.theme-dark .settings-inline-toast {
+  background: #fffdf8;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+body.theme-dark .settings-signup-head p,
+body.theme-dark .settings-signup-field span {
+  color: rgba(22, 33, 35, 0.72);
+}
+
+body.theme-dark .settings-row:hover {
+  background: rgba(11, 92, 148, 0.05);
+}
+
+body.theme-dark .settings-row:active {
+  background: rgba(11, 92, 148, 0.09);
+}
+
+@media (max-width: 680px) {
+  .settings-shell {
+    width: 100%;
+    margin: 0;
+    padding-inline: 0.55rem;
+  }
+
+  .settings-header {
+    min-height: 58px;
+  }
+
+  .settings-header h1 {
+    font-size: 1rem;
+  }
+}
