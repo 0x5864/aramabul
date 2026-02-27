@@ -195,7 +195,7 @@ function renderMarketGroups() {
       const chip = document.createElement("a");
       chip.className = "province-pill market-pill market-pill-link";
       chip.href = marketWebsiteUrl(marketName);
-      chip.target = "_blank";
+      chip.target = "_self";
       chip.rel = "noopener noreferrer";
       chip.textContent = marketName;
       chip.setAttribute("aria-label", `${marketName} web sitesini yeni sekmede aç`);

@@ -10,6 +10,8 @@ const PORT = Number(process.env.API_PORT || process.env.PORT || 8787);
 const NODE_ENV = process.env.NODE_ENV || "development";
 const MAX_LIMIT = 100_000;
 const STATIC_ROOT = path.resolve(__dirname, "..");
+const HTML_PREVIEW_TIMEOUT_MS = 8000;
+const HTML_PREVIEW_MAX_LENGTH = 750_000;
 
 const pool = createPool();
 const app = express();
@@ -179,6 +181,169 @@ function buildGoogleMapsSearchUrl(queryText) {
   mapsUrl.searchParams.set("api", "1");
   mapsUrl.searchParams.set("query", cleanText(queryText, 500));
   return mapsUrl.toString();
+}
+
+function buildGoogleMapsPlaceLookupUrl(placeId, queryText) {
+  const mapsUrl = new URL("https://www.google.com/maps/search/");
+  mapsUrl.searchParams.set("api", "1");
+  mapsUrl.searchParams.set("query", cleanText(queryText || "restoran", 500));
+  const safePlaceId = cleanText(placeId, 200);
+  if (safePlaceId) {
+    mapsUrl.searchParams.set("query_place_id", safePlaceId);
+  }
+  return mapsUrl.toString();
+}
+
+function isPrivateIpv4Host(hostname) {
+  if (!/^\d{1,3}(?:\.\d{1,3}){3}$/.test(hostname)) {
+    return false;
+  }
+
+  const parts = hostname.split(".").map((part) => Number(part));
+  if (parts.some((part) => !Number.isFinite(part) || part < 0 || part > 255)) {
+    return true;
+  }
+
+  return (
+    parts[0] === 10 ||
+    parts[0] === 127 ||
+    (parts[0] === 169 && parts[1] === 254) ||
+    (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) ||
+    (parts[0] === 192 && parts[1] === 168)
+  );
+}
+
+function isBlockedHostName(hostname) {
+  const host = String(hostname || "").trim().toLowerCase();
+  if (!host) {
+    return true;
+  }
+
+  if (host === "localhost" || host.endsWith(".local")) {
+    return true;
+  }
+
+  if (host === "::1" || host.startsWith("fe80:") || host.startsWith("fc") || host.startsWith("fd")) {
+    return true;
+  }
+
+  return isPrivateIpv4Host(host);
+}
+
+function normalizeExternalHttpUrl(rawValue) {
+  const raw = cleanText(rawValue, 1200);
+  if (!raw) {
+    return "";
+  }
+
+  let parsed;
+  try {
+    parsed = new URL(raw);
+  } catch (_error) {
+    return "";
+  }
+
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+    return "";
+  }
+
+  if (isBlockedHostName(parsed.hostname)) {
+    return "";
+  }
+
+  return parsed.toString();
+}
+
+function decodeHtmlEntities(value) {
+  return String(value || "")
+    .replaceAll("&amp;", "&")
+    .replaceAll("&quot;", "\"")
+    .replaceAll("&#39;", "'")
+    .replaceAll("&lt;", "<")
+    .replaceAll("&gt;", ">");
+}
+
+function extractImageCandidatesFromHtml(html) {
+  const source = String(html || "");
+  if (!source) {
+    return [];
+  }
+
+  const patterns = [
+    /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["'][^>]*>/gi,
+    /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["'][^>]*>/gi,
+    /<meta[^>]+name=["']twitter:image(?::src)?["'][^>]+content=["']([^"']+)["'][^>]*>/gi,
+    /<meta[^>]+content=["']([^"']+)["'][^>]+name=["']twitter:image(?::src)?["'][^>]*>/gi,
+    /<meta[^>]+itemprop=["']image["'][^>]+content=["']([^"']+)["'][^>]*>/gi,
+    /<meta[^>]+content=["']([^"']+)["'][^>]+itemprop=["']image["'][^>]*>/gi,
+    /"image"\s*:\s*"([^"]+)"/gi,
+    /"thumbnailUrl"\s*:\s*"([^"]+)"/gi,
+  ];
+
+  const results = [];
+  const seen = new Set();
+
+  patterns.forEach((pattern) => {
+    let match = pattern.exec(source);
+    while (match) {
+      const rawCandidate = decodeHtmlEntities(match[1] || "");
+      if (rawCandidate && !seen.has(rawCandidate)) {
+        seen.add(rawCandidate);
+        results.push(rawCandidate);
+      }
+      match = pattern.exec(source);
+    }
+  });
+
+  return results;
+}
+
+async function fetchHtmlPreview(pageUrl) {
+  const controller = new AbortController();
+  const timeoutHandle = setTimeout(() => controller.abort(), HTML_PREVIEW_TIMEOUT_MS);
+
+  let response;
+  try {
+    response = await fetch(pageUrl, {
+      method: "GET",
+      redirect: "follow",
+      headers: {
+        "Accept": "text/html,application/xhtml+xml",
+        "User-Agent": "arama-bul/1.0 (preview-image)",
+      },
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutHandle);
+  }
+
+  if (!response.ok) {
+    return "";
+  }
+
+  const contentType = String(response.headers.get("content-type") || "").toLowerCase();
+  if (!contentType.includes("text/html") && !contentType.includes("application/xhtml+xml")) {
+    return "";
+  }
+
+  const html = await response.text();
+  return html.slice(0, HTML_PREVIEW_MAX_LENGTH);
+}
+
+function resolveAbsoluteImageUrl(rawImageUrl, basePageUrl) {
+  const candidate = cleanText(rawImageUrl, 1500);
+  if (!candidate) {
+    return "";
+  }
+
+  let parsed;
+  try {
+    parsed = new URL(candidate, basePageUrl);
+  } catch (_error) {
+    return "";
+  }
+
+  return normalizeExternalHttpUrl(parsed.toString());
 }
 
 function normalizeLookupKey(value) {
@@ -692,6 +857,95 @@ app.get("/api/places/search", async (req, res, next) => {
       source,
       upstream: null,
       places: normalizedPlaces,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/places/preview-image", async (req, res, next) => {
+  try {
+    res.setHeader("Cache-Control", "no-store");
+
+    const websiteUrl = normalizeExternalHttpUrl(req.query.website || "");
+    const rawMapsUrl = normalizeExternalHttpUrl(req.query.mapsUrl || "");
+    const placeId = cleanText(req.query.sourcePlaceId || req.query.placeId || "", 200);
+    const name = cleanText(req.query.name || "", 120);
+    const district = cleanText(req.query.district || req.query.ilce || "", 80);
+    const city = cleanText(req.query.city || req.query.il || "", 80);
+    const queryText = cleanText([name, district, city].filter(Boolean).join(" "), 500);
+
+    const pageCandidates = [];
+    const seenPages = new Set();
+    let websiteIconFallback = "";
+    const pushPage = (urlValue) => {
+      const pageUrl = normalizeExternalHttpUrl(urlValue);
+      if (!pageUrl || seenPages.has(pageUrl)) {
+        return;
+      }
+      seenPages.add(pageUrl);
+      pageCandidates.push(pageUrl);
+    };
+
+    pushPage(websiteUrl);
+    if (websiteUrl) {
+      try {
+        const iconUrl = new URL("/favicon.ico", websiteUrl).toString();
+        websiteIconFallback = normalizeExternalHttpUrl(iconUrl);
+      } catch (_error) {
+        websiteIconFallback = "";
+      }
+    }
+
+    if (rawMapsUrl) {
+      try {
+        const parsed = new URL(rawMapsUrl);
+        const host = parsed.hostname.toLowerCase();
+        if (host === "www.google.com" || host === "google.com" || host === "maps.google.com") {
+          pushPage(rawMapsUrl);
+        }
+      } catch (_error) {
+        // Ignore invalid map URLs.
+      }
+    }
+
+    if (placeId || queryText) {
+      pushPage(buildGoogleMapsPlaceLookupUrl(placeId, queryText));
+    }
+
+    for (const pageUrl of pageCandidates) {
+      const html = await fetchHtmlPreview(pageUrl);
+      if (!html) {
+        continue;
+      }
+
+      const imageCandidates = extractImageCandidatesFromHtml(html);
+      for (const rawImageUrl of imageCandidates) {
+        const imageUrl = resolveAbsoluteImageUrl(rawImageUrl, pageUrl);
+        if (imageUrl) {
+          res.json({
+            ok: true,
+            imageUrl,
+            sourceUrl: pageUrl,
+          });
+          return;
+        }
+      }
+    }
+
+    if (websiteIconFallback) {
+      res.json({
+        ok: true,
+        imageUrl: websiteIconFallback,
+        sourceUrl: websiteUrl,
+      });
+      return;
+    }
+
+    res.json({
+      ok: true,
+      imageUrl: "",
+      sourceUrl: "",
     });
   } catch (error) {
     next(error);

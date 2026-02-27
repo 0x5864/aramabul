@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <mask id="pin-hole-mask">
+      <rect width="128" height="128" fill="#fff"/>
+      <circle cx="64" cy="42" r="14.5" fill="#000"/>
+    </mask>
+  </defs>
+  <path
+    d="M64 8c-19.882 0-36 16.118-36 36 0 7.688 2.443 14.804 6.595 20.623L64 116l29.405-51.377C97.557 58.804 100 51.688 100 44 100 24.118 83.882 8 64 8Z"
+    fill="#f20505"
+    mask="url(#pin-hole-mask)"
+  />
+  <path
+    d="M46 104.2 A33.5 8.2 0 1 0 82 104.2"
+    stroke="#f20505"
+    stroke-width="4"
+    stroke-linecap="butt"
+    fill="none"
+  />
+</svg>

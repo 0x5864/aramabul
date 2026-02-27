@@ -7,7 +7,7 @@
     <title>arama bul | Anasayfa</title>
     <meta
       name="description"
-      content="Yemek, kafe, kuaför, veteriner, eczane, market, akaryakıt, hastane, banka, otel ve diğer hizmet kategorilerinden arama başlat."
+      content="Yemek, kafe, kuaför, veteriner, sağlık, market, akaryakıt, seyahat, hastane, banka, otel ve diğer hizmet kategorilerinden arama başlat."
     />
     <link rel="icon" type="image/png" href="assets/fav.png?v=20260223" />
     <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260223" />
@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260227-22" />
   </head>
   <body class="home-page">
     <div class="texture"></div>
@@ -28,14 +28,14 @@
         <a class="brand" href="index.html" aria-label="arama bul">
           <span class="brand-wordmark">arama bul</span>
         </a>
-        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Restoran arama">
-          <label class="visually-hidden" for="headerSearchInput">Restoran adı</label>
+        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Genel arama">
+          <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
           <input
             id="headerSearchInput"
             class="header-search-input"
             type="search"
             name="mekan"
-            placeholder="Restoran ara"
+            placeholder="Ne bulmamı istersin?"
             autocomplete="off"
           />
           <button class="header-search-btn" type="submit">Ara</button>
@@ -47,8 +47,8 @@
     <main class="hero">
       <section class="section-head province-head">
         <div>
-          <h3>Arama kategorileri</h3>
-          <p class="province-help">İstediğin alanı seç ve o kategori sayfasına geç.</p>
+          <h3>Ne Nerede?</h3>
+          <p class="province-help">Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.</p>
         </div>
       </section>
 
@@ -81,10 +81,10 @@
           </span>
         </a>
 
-        <a class="top-city-card category-home-card" href="eczane.html" aria-label="Eczane kategorisinde ara">
+        <a class="top-city-card category-home-card" href="eczane.html" aria-label="Sağlık kategorisinde ara">
           <span class="top-city-thumb" style="background-image: url('assets/eczane.png')" aria-hidden="true"></span>
           <span class="top-city-content">
-            <span class="top-city-name">Eczane</span>
+            <span class="top-city-name">Sağlık</span>
           </span>
         </a>
 
@@ -120,6 +120,13 @@
           <span class="top-city-thumb" style="background-image: url('assets/otel.png')" aria-hidden="true"></span>
           <span class="top-city-content">
             <span class="top-city-name">Otel</span>
+          </span>
+        </a>
+
+        <a class="top-city-card category-home-card" href="seyahat.html" aria-label="Seyahat kategorisinde ara">
+          <span class="top-city-thumb" style="background-image: url('assets/durak.png')" aria-hidden="true"></span>
+          <span class="top-city-content">
+            <span class="top-city-name">Seyahat</span>
           </span>
         </a>
 
@@ -226,6 +233,6 @@
     </footer>
 
     <script src="data/fallback-food-data.js?v=20260226-04"></script>
-    <script src="header-search.js?v=20260226-04"></script>
+    <script src="header-search.js?v=20260227-18"></script>
   </body>
 </html>

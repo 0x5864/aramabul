@@ -12,7 +12,7 @@
   --radius: 22px;
   --link-base: #116466;
   --link-hover: #116466;
-  --mobile-nav-bg: #eae7dc;
+  --mobile-nav-bg: var(--bg);
   --mobile-nav-border: rgba(147, 163, 189, 0.44);
   --mobile-nav-shadow: 0 -6px 16px rgba(21, 39, 66, 0.14);
   --mobile-nav-icon: #1f2a37;
@@ -48,7 +48,7 @@ body {
 }
 
 body.theme-light {
-  --mobile-nav-bg: #eae7dc;
+  --mobile-nav-bg: var(--bg);
   --mobile-nav-border: rgba(147, 163, 189, 0.44);
   --mobile-nav-shadow: 0 -6px 16px rgba(21, 39, 66, 0.14);
   --mobile-nav-icon: #1f2a37;
@@ -895,6 +895,18 @@ main {
   font-size: 0.92rem;
 }
 
+.home-page .province-head h3 {
+  margin-bottom: 0.42rem;
+}
+
+.home-page .province-help {
+  margin-top: 0.12rem;
+}
+
+.home-page .section-head.province-head {
+  margin-bottom: 1.32rem;
+}
+
 .bank-total {
   margin-bottom: 0.32rem;
 }
@@ -1722,13 +1734,13 @@ main {
     letter-spacing: -0.03em;
   }
 
-  .global-topbar .brand-wordmark {
+  .topbar .brand-wordmark {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
   }
 
-  .global-topbar .brand-wordmark::before {
+  .topbar .brand-wordmark::before {
     content: "";
     width: 1.08em;
     height: 1.08em;
@@ -1801,6 +1813,10 @@ main {
     padding-inline: 0.12rem;
   }
 
+  .home-page .section-head.province-head {
+    margin-bottom: 1rem;
+  }
+
   .top-city-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.62rem;
@@ -1847,7 +1863,8 @@ main {
     z-index: 120;
     border-top: 1px solid var(--mobile-nav-border);
     border-radius: 0;
-    background: var(--mobile-nav-bg);
+    background-color: var(--bg);
+    background-image: none;
     box-shadow: var(--mobile-nav-shadow);
     backdrop-filter: blur(10px);
     padding:

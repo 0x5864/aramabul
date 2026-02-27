@@ -314,7 +314,7 @@ function renderHospitalGroups() {
       const chip = document.createElement("a");
       chip.className = "province-pill hospital-pill hospital-pill-link";
       chip.href = hospitalWebsiteUrl(hospitalName);
-      chip.target = "_blank";
+      chip.target = "_self";
       chip.rel = "noopener noreferrer";
       chip.textContent = hospitalName;
       chip.setAttribute("aria-label", `${hospitalName} web sitesini yeni sekmede aç`);

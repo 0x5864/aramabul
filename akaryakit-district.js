@@ -165,7 +165,7 @@ function renderPlaces() {
     const chip = document.createElement("a");
     chip.className = "province-pill yemek-pill yemek-pill-link";
     chip.href = mapsPlaceUrl(place);
-    chip.target = "_blank";
+    chip.target = "_self";
     chip.rel = "noopener noreferrer";
     chip.textContent = place.name;
     chip.setAttribute("aria-label", `${place.name} akaryakıt istasyonunu Google Maps'te aç`);

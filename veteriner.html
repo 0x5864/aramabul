@@ -17,9 +17,9 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260227-22" />
   </head>
-  <body class="veteriner-page">
+  <body class="veteriner-page" data-category-key="veteriner" data-category-page="root">
     <div class="texture"></div>
 
     <header class="global-header-band">
@@ -27,14 +27,14 @@
         <a class="brand" href="index.html" aria-label="arama bul">
           <span class="brand-wordmark">arama bul</span>
         </a>
-        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Restoran arama">
-          <label class="visually-hidden" for="headerSearchInput">Restoran adı</label>
+        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Genel arama">
+          <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
           <input
             id="headerSearchInput"
             class="header-search-input"
             type="search"
             name="mekan"
-            placeholder="Restoran ara"
+            placeholder="Ne bulmamı istersin?"
             autocomplete="off"
           />
           <button class="header-search-btn" type="submit">Ara</button>
@@ -56,7 +56,7 @@
         </div>
       </section>
 
-      <section id="veterinerGroupGrid" class="province-grid" aria-label="Türkiye veteriner klinikleri"></section>
+      <section id="categoryGroupGrid" class="province-grid" aria-label="Türkiye veteriner klinikleri"></section>
     </main>
 
     <footer class="yr-footer" aria-label="Alt Bant">
@@ -110,7 +110,9 @@
       </div>
     </footer>
 
-    <script src="header-search.js"></script>
-    <script src="veteriner.js"></script>
+    <script src="header-search.js?v=20260227-18"></script>
+    <script src="data/fallback-data.js?v=20260226-05"></script>
+    <script src="data/fallback-category-data.js?v=20260226-05"></script>
+    <script src="category-pages.js?v=20260227-15"></script>
   </body>
 </html>

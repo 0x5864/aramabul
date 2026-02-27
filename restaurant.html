@@ -21,7 +21,7 @@
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260227-22" />
     <link rel="stylesheet" href="restaurant.css" />
   </head>
   <body class="restaurant-page">
@@ -32,14 +32,14 @@
         <a class="brand" href="index.html" aria-label="arama bul">
           <span class="brand-wordmark">arama bul</span>
         </a>
-        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Restoran arama">
-          <label class="visually-hidden" for="headerSearchInput">Restoran adı</label>
+        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Genel arama">
+          <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
           <input
             id="headerSearchInput"
             class="header-search-input"
             type="search"
             name="mekan"
-            placeholder="Restoran ara"
+            placeholder="Ne bulmamı istersin?"
             autocomplete="off"
           />
           <button class="header-search-btn" type="submit">Ara</button>
@@ -207,7 +207,7 @@
       crossorigin=""
     ></script>
     <script src="data/fallback-food-data.js?v=20260226-04"></script>
-    <script src="header-search.js?v=20260226-04"></script>
+    <script src="header-search.js?v=20260227-18"></script>
     <script src="restaurant.js?v=20260226-04"></script>
   </body>
 </html>

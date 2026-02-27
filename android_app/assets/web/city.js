@@ -1401,7 +1401,7 @@ function renderOrhaneliDemoList(venues) {
     const chip = document.createElement("a");
     chip.className = "province-pill";
     chip.href = googleRestaurantSearchUrl(venue);
-    chip.target = "_blank";
+    chip.target = "_self";
     chip.rel = "noopener noreferrer";
     chip.textContent = venue.name;
     chip.setAttribute("aria-label", `${venue.name} sayfasını Google'da yeni sekmede aç`);

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 
@@ -47,6 +48,84 @@ class _HomeWebViewPageState extends State<HomeWebViewPage> {
   bool _didFallbackToBundled = false;
   bool _hasLoadedAtLeastOnce = false;
 
+  bool _isMapLikeUrl(Uri uri, String rawUrl) {
+    final scheme = uri.scheme.toLowerCase();
+    final host = uri.host.toLowerCase();
+    final path = uri.path.toLowerCase();
+    final raw = rawUrl.toLowerCase();
+
+    if (scheme == 'intent' || scheme == 'geo' || scheme == 'comgooglemaps') {
+      return true;
+    }
+
+    if (host.contains('maps.google.') || host == 'maps.app.goo.gl') {
+      return true;
+    }
+
+    if (host.contains('google.com') && path.startsWith('/maps')) {
+      return true;
+    }
+
+    return raw.contains('google.com/maps') || raw.contains('maps.app.goo.gl');
+  }
+
+  Uri _resolveExternalUri(String rawUrl) {
+    final raw = rawUrl.trim();
+
+    if (raw.toLowerCase().startsWith('intent://')) {
+      final intentPrefix = 'intent://';
+      final intentIndex = raw.indexOf('#Intent;');
+      final body = intentIndex >= 0 ? raw.substring(0, intentIndex) : raw;
+      final meta = intentIndex >= 0 ? raw.substring(intentIndex) : '';
+      final defaultHostPath = body.substring(intentPrefix.length);
+
+      var scheme = 'https';
+      final schemeMatch = RegExp(r';scheme=([^;]+);').firstMatch(meta);
+      if (schemeMatch != null) {
+        scheme = (schemeMatch.group(1) ?? 'https').trim();
+      }
+
+      return Uri.parse('$scheme://$defaultHostPath');
+    }
+
+    return Uri.parse(raw);
+  }
+
+  Future<NavigationDecision> _onNavigationRequest(
+    NavigationRequest request,
+  ) async {
+    final rawUrl = request.url.trim();
+    final parsed = Uri.tryParse(rawUrl);
+
+    if (parsed == null) {
+      return NavigationDecision.navigate;
+    }
+
+    final scheme = parsed.scheme.toLowerCase();
+    final shouldOpenExternally = _isMapLikeUrl(parsed, rawUrl) ||
+        (scheme != 'http' &&
+            scheme != 'https' &&
+            scheme != 'about' &&
+            scheme != 'file' &&
+            scheme != 'data' &&
+            scheme != 'javascript');
+
+    if (!shouldOpenExternally) {
+      return NavigationDecision.navigate;
+    }
+
+    Uri externalUri;
+    try {
+      externalUri = _resolveExternalUri(rawUrl);
+    } catch (error) {
+      debugPrint('Dis URL cozumleme hatasi: $error');
+      return NavigationDecision.prevent;
+    }
+
+    await launchUrl(externalUri, mode: LaunchMode.externalApplication);
+    return NavigationDecision.prevent;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +133,7 @@ class _HomeWebViewPageState extends State<HomeWebViewPage> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
+          onNavigationRequest: _onNavigationRequest,
           onPageStarted: (_) {
             if (!mounted) return;
             setState(() {
@@ -139,6 +219,22 @@ class _HomeWebViewPageState extends State<HomeWebViewPage> {
     await _controller.reload();
   }
 
+  Future<void> _goHome() async {
+    setState(() {
+      _lastError = null;
+      _isLoading = true;
+      _progress = 0;
+    });
+
+    if (kStartUrl.trim().isNotEmpty) {
+      _usesRemoteStartUrl = true;
+      await _controller.loadRequest(Uri.parse(kStartUrl));
+      return;
+    }
+
+    await _loadBundledPage();
+  }
+
   @override
   Widget build(BuildContext context) {
     final showProgress = _isLoading && _progress < 100;
@@ -147,13 +243,31 @@ class _HomeWebViewPageState extends State<HomeWebViewPage> {
       backgroundColor: const Color(0xFFEAE7DC),
       appBar: AppBar(
         backgroundColor: const Color(0xFF2C3531),
-        title: const Text(
-          'arama bul',
-          style: TextStyle(
-            color: Color(0xFFFFCB9A),
-            fontSize: 32,
-            fontWeight: FontWeight.w800,
-            letterSpacing: -0.3,
+        title: GestureDetector(
+          onTap: _goHome,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  'assets/web/assets/yer.png',
+                  width: 34,
+                  height: 34,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                'arama bul',
+                style: TextStyle(
+                  color: Color(0xFFEAE7DC),
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: -0.3,
+                ),
+              ),
+            ],
           ),
         ),
       ),

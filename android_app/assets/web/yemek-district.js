@@ -41,13 +41,29 @@ function findNameMatch(queryValue, values) {
   }
 
   const normalizedQuery = normalizeName(queryValue);
+  if (!normalizedQuery) {
+    return "";
+  }
+
   const exact = values.find((value) => value === queryValue);
 
   if (exact) {
     return exact;
   }
 
-  return values.find((value) => normalizeName(value) === normalizedQuery) || "";
+  const normalizedExact = values.find((value) => normalizeName(value) === normalizedQuery);
+  if (normalizedExact) {
+    return normalizedExact;
+  }
+
+  if (normalizedQuery.length < 3) {
+    return "";
+  }
+
+  return values.find((value) => {
+    const normalizedValue = normalizeName(value);
+    return normalizedValue.includes(normalizedQuery) || normalizedQuery.includes(normalizedValue);
+  }) || "";
 }
 
 function mapsPlaceUrl(venue) {
@@ -150,7 +166,7 @@ function renderVenueGrid() {
     const chip = document.createElement("a");
     chip.className = "province-pill yemek-pill yemek-pill-link";
     chip.href = mapsPlaceUrl(venue);
-    chip.target = "_blank";
+    chip.target = "_self";
     chip.rel = "noopener noreferrer";
     chip.textContent = venue.name;
     chip.setAttribute("aria-label", `${venue.name} restoranını Google Maps'te aç`);

@@ -1,3 +1,4 @@
+const ASSET_VERSION = "20260226-05";
 const VETERINER_JSON_PATH = "data/veteriner.json";
 
 const veterinerDistrictTitle = document.querySelector("#veterinerDistrictTitle");
@@ -11,6 +12,65 @@ const state = {
   places: [],
   errorMessage: "",
 };
+
+function withVersion(path) {
+  const source = String(path || "").trim();
+  if (!source) {
+    return source;
+  }
+
+  const separator = source.includes("?") ? "&" : "?";
+  return `${source}${separator}v=${ASSET_VERSION}`;
+}
+
+function stripQuery(path) {
+  const source = String(path || "").trim();
+  if (!source) {
+    return source;
+  }
+
+  const queryIndex = source.indexOf("?");
+  return queryIndex >= 0 ? source.slice(0, queryIndex) : source;
+}
+
+function candidateAssetPaths(path) {
+  const source = String(path || "").trim();
+  if (!source) {
+    return [];
+  }
+
+  const candidates = [];
+  const pushUnique = (value) => {
+    const normalized = String(value || "").trim();
+    if (!normalized || candidates.includes(normalized)) {
+      return;
+    }
+    candidates.push(normalized);
+  };
+
+  pushUnique(withVersion(source));
+  pushUnique(source);
+  pushUnique(stripQuery(source));
+  return candidates;
+}
+
+async function fetchJsonWithFallback(path, fallbackValue) {
+  const candidates = candidateAssetPaths(path);
+
+  for (const candidate of candidates) {
+    try {
+      const response = await fetch(candidate, { cache: "no-store" });
+      if (!response.ok) {
+        continue;
+      }
+      return await response.json();
+    } catch (_error) {
+      // Keep trying fallback candidates.
+    }
+  }
+
+  return fallbackValue;
+}
 
 function normalizeName(value) {
   return String(value || "")
@@ -39,13 +99,29 @@ function findNameMatch(queryValue, values) {
   }
 
   const normalizedQuery = normalizeName(queryValue);
+  if (!normalizedQuery) {
+    return "";
+  }
+
   const exact = values.find((value) => value === queryValue);
 
   if (exact) {
     return exact;
   }
 
-  return values.find((value) => normalizeName(value) === normalizedQuery) || "";
+  const normalizedExact = values.find((value) => normalizeName(value) === normalizedQuery);
+  if (normalizedExact) {
+    return normalizedExact;
+  }
+
+  if (normalizedQuery.length < 3) {
+    return "";
+  }
+
+  return values.find((value) => {
+    const normalizedValue = normalizeName(value);
+    return normalizedValue.includes(normalizedQuery) || normalizedQuery.includes(normalizedValue);
+  }) || "";
 }
 
 function parseMapsQuery(mapsUrl) {
@@ -173,7 +249,7 @@ function renderPlaces() {
     const chip = document.createElement("a");
     chip.className = "province-pill veteriner-pill veteriner-pill-link";
     chip.href = mapsPlaceUrl(place);
-    chip.target = "_blank";
+    chip.target = "_self";
     chip.rel = "noopener noreferrer";
     chip.textContent = place.name;
     chip.setAttribute("aria-label", `${place.name} veteriner kartını Google Maps'te aç`);
@@ -185,13 +261,45 @@ function renderPlaces() {
 }
 
 async function loadVeterinerPlaces() {
-  const response = await fetch(VETERINER_JSON_PATH, { cache: "no-store" });
-
-  if (!response.ok) {
-    throw new Error(`Veteriner verisi alınamadı: ${response.status}`);
+  const fallbackCategoryData = window.NEREDEYENIR_FALLBACK_CATEGORY_DATA;
+  if (
+    fallbackCategoryData &&
+    typeof fallbackCategoryData === "object" &&
+    Array.isArray(fallbackCategoryData.veteriner) &&
+    fallbackCategoryData.veteriner.length > 0
+  ) {
+    return fallbackCategoryData.veteriner
+      .map((item) => ({
+        city: String(item.city || "").trim(),
+        district: String(item.district || "").trim(),
+        name: String(item.name || "").trim(),
+        address: String(item.address || "").trim(),
+        placeId: String(item.placeId || "").trim(),
+        mapsUrl: String(item.mapsUrl || "").trim(),
+      }))
+      .filter((item) => item.city && item.district && item.name);
   }
 
-  const payload = await response.json();
+  const fallbackData = window.NEREDEYENIR_FALLBACK_DATA;
+  if (
+    fallbackData &&
+    typeof fallbackData === "object" &&
+    Array.isArray(fallbackData.veteriner) &&
+    fallbackData.veteriner.length > 0
+  ) {
+    return fallbackData.veteriner
+      .map((item) => ({
+        city: String(item.city || "").trim(),
+        district: String(item.district || "").trim(),
+        name: String(item.name || "").trim(),
+        address: String(item.address || "").trim(),
+        placeId: String(item.placeId || "").trim(),
+        mapsUrl: String(item.mapsUrl || "").trim(),
+      }))
+      .filter((item) => item.city && item.district && item.name);
+  }
+
+  const payload = await fetchJsonWithFallback(VETERINER_JSON_PATH, []);
   if (!Array.isArray(payload)) {
     return [];
   }
@@ -223,7 +331,7 @@ async function initVeterinerDistrictPage() {
     state.city = params.city;
     state.district = params.district;
     state.places = [];
-    state.errorMessage = "Veteriner veri dosyası boş. Önce gerçek veriyi data/veteriner.json dosyasına aktar.";
+    state.errorMessage = "Veteriner verisi yüklenemedi. Lütfen daha sonra tekrar deneyin.";
     renderHeader();
     renderPlaces();
     return;

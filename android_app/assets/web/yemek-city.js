@@ -112,13 +112,29 @@ function findCityName(queryCity, cityNames) {
   }
 
   const normalizedQuery = normalizeName(queryCity);
+  if (!normalizedQuery) {
+    return "";
+  }
+
   const exact = cityNames.find((name) => name === queryCity);
 
   if (exact) {
     return exact;
   }
 
-  return cityNames.find((name) => normalizeName(name) === normalizedQuery) || "";
+  const normalizedExact = cityNames.find((name) => normalizeName(name) === normalizedQuery);
+  if (normalizedExact) {
+    return normalizedExact;
+  }
+
+  if (normalizedQuery.length < 3) {
+    return "";
+  }
+
+  return cityNames.find((name) => {
+    const normalizedName = normalizeName(name);
+    return normalizedName.includes(normalizedQuery) || normalizedQuery.includes(normalizedName);
+  }) || "";
 }
 
 function districtPageUrl(cityName, districtName) {

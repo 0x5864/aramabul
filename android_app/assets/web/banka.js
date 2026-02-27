@@ -199,7 +199,7 @@ function renderBankGroups() {
       const chip = document.createElement("a");
       chip.className = "province-pill bank-pill bank-pill-link";
       chip.href = BANK_WEBSITES[bankName] || "#";
-      chip.target = "_blank";
+      chip.target = "_self";
       chip.rel = "noopener noreferrer";
       chip.textContent = formatBankDisplayName(bankName);
       chip.setAttribute("aria-label", `${formatBankDisplayName(bankName)} web sitesini yeni sekmede aç`);

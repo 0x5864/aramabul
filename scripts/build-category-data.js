@@ -117,8 +117,8 @@ function categorySelectors(category) {
     return [
       ["shop", "hairdresser"],
       ["craft", "hairdresser"],
-      ["shop", "beauty"],
-      ["craft", "beautician"],
+      ["shop", "barber"],
+      ["craft", "barber"],
     ];
   }
 
@@ -247,6 +247,7 @@ function selectBestGeocodeCandidate(items, city, district) {
   const scored = items
     .map((item) => {
       const display = cleanText(item.display_name || "", 400);
+      const itemType = cleanText(item.type || "", 80);
       const address = item.address && typeof item.address === "object" ? item.address : {};
       const bag = [
         display,
@@ -268,50 +269,84 @@ function selectBestGeocodeCandidate(items, city, district) {
         score += 2;
       }
 
+      const normalizedType = normalizeText(itemType);
+      if (normalizedType === "administrative") {
+        score += 6;
+      } else if (normalizedType === "county" || normalizedType === "district" || normalizedType === "municipality") {
+        score += 4;
+      } else if (normalizedType === "park" || normalizedType === "attraction") {
+        score -= 4;
+      }
+
+      const bbox = Array.isArray(item.boundingbox) && item.boundingbox.length === 4
+        ? item.boundingbox.map((value) => Number(value))
+        : [];
+      const bboxArea = bbox.every(Number.isFinite)
+        ? Math.abs((bbox[1] - bbox[0]) * (bbox[3] - bbox[2]))
+        : 0;
+
       return {
         item,
         score,
+        bboxArea,
       };
     })
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+      return b.bboxArea - a.bboxArea;
+    });
 
   return scored.length > 0 ? scored[0].item : null;
 }
 
 async function geocodeDistrictBounds(city, district) {
-  const url = new URL(NOMINATIM_ENDPOINT);
-  url.searchParams.set("q", `${district}, ${city}, Turkiye`);
-  url.searchParams.set("format", "jsonv2");
-  url.searchParams.set("addressdetails", "1");
-  url.searchParams.set("limit", "5");
+  const searchQueries = [
+    `${district} ilçesi, ${city}, Turkiye`,
+    `${district}, ${city}, Turkiye`,
+  ];
+  const candidates = [];
 
-  const controller = new AbortController();
-  const timeoutHandle = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  for (const searchQuery of searchQueries) {
+    const url = new URL(NOMINATIM_ENDPOINT);
+    url.searchParams.set("q", searchQuery);
+    url.searchParams.set("format", "jsonv2");
+    url.searchParams.set("addressdetails", "1");
+    url.searchParams.set("limit", "10");
 
-  let response;
-  try {
-    response = await fetch(url.toString(), {
-      headers: {
-        Accept: "application/json",
-        "User-Agent": "arama-bul/1.0",
-      },
-      signal: controller.signal,
-    });
-  } finally {
-    clearTimeout(timeoutHandle);
+    const controller = new AbortController();
+    const timeoutHandle = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+    let response;
+    try {
+      response = await fetch(url.toString(), {
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "arama-bul/1.0",
+        },
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeoutHandle);
+    }
+
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      throw new Error(`nominatim_error_${response.status}: ${detail.slice(0, 120)}`);
+    }
+
+    const payload = await response.json();
+    if (Array.isArray(payload) && payload.length > 0) {
+      payload.forEach((item) => candidates.push(item));
+    }
   }
 
-  if (!response.ok) {
-    const detail = await response.text().catch(() => "");
-    throw new Error(`nominatim_error_${response.status}: ${detail.slice(0, 120)}`);
-  }
-
-  const payload = await response.json();
-  if (!Array.isArray(payload) || payload.length === 0) {
+  if (candidates.length === 0) {
     return null;
   }
 
-  const best = selectBestGeocodeCandidate(payload, city, district);
+  const best = selectBestGeocodeCandidate(candidates, city, district);
   if (!best || !Array.isArray(best.boundingbox) || best.boundingbox.length !== 4) {
     return null;
   }
@@ -328,7 +363,7 @@ async function geocodeDistrictBounds(city, district) {
   return { south, north, west, east };
 }
 
-function buildOverpassQuery(bounds, selectors) {
+function buildOverpassQuery(bounds, selectors, category) {
   const bbox = `${bounds.south},${bounds.west},${bounds.north},${bounds.east}`;
   const parts = [];
 
@@ -338,6 +373,18 @@ function buildOverpassQuery(bounds, selectors) {
     parts.push(`way${selector}(${bbox});`);
     parts.push(`relation${selector}(${bbox});`);
   });
+
+  if (category === "kuafor") {
+    const freeTextRegex = "(kuaf[oö]r|berber|hair|barber)";
+    const freeTextKeys = ["name", "brand", "operator"];
+
+    freeTextKeys.forEach((key) => {
+      const selector = `["${key}"~"${freeTextRegex}",i]`;
+      parts.push(`node${selector}(${bbox});`);
+      parts.push(`way${selector}(${bbox});`);
+      parts.push(`relation${selector}(${bbox});`);
+    });
+  }
 
   return [
     "[out:json][timeout:45];",
@@ -419,7 +466,8 @@ function formatAddressFromTags(tags) {
   return chunks.join(", ");
 }
 
-function mapOverpassElement(element, city, district) {
+function mapOverpassElement(element, city, district, options = {}) {
+  const requireDistrictTextMatch = options.requireDistrictTextMatch !== false;
   const tags = element && element.tags && typeof element.tags === "object" ? element.tags : {};
   const name = cleanText(tags.name || "", 200);
   if (!name) {
@@ -441,7 +489,7 @@ function mapOverpassElement(element, city, district) {
   const address = tagAddress || cleanText(`${district}, ${city}`, 240);
 
   const locationBag = `${name} ${address} ${cleanText(tags["addr:district"] || "", 120)} ${cleanText(tags["addr:city"] || "", 120)}`;
-  if (!includesNormalized(locationBag, district)) {
+  if (requireDistrictTextMatch && !includesNormalized(locationBag, district)) {
     return null;
   }
 
@@ -611,13 +659,15 @@ async function main() {
         continue;
       }
 
-      const query = buildOverpassQuery(bounds, selectors);
+      const query = buildOverpassQuery(bounds, selectors, category);
       const elements = await fetchOverpassElements(query);
       await delay(args.sleepMs);
 
       let added = 0;
       elements.forEach((element) => {
-        const mapped = mapOverpassElement(element, target.city, target.district);
+        const mapped = mapOverpassElement(element, target.city, target.district, {
+          requireDistrictTextMatch: category !== "kuafor",
+        });
         if (!mapped) {
           return;
         }

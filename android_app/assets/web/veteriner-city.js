@@ -1,4 +1,4 @@
-const ASSET_VERSION = "20260226-02";
+const ASSET_VERSION = "20260226-05";
 const DISTRICTS_JSON_PATH = "data/districts.json";
 const VETERINER_JSON_PATH = "data/veteriner.json";
 
@@ -94,13 +94,29 @@ function findCityName(queryCity, cityNames) {
   }
 
   const normalizedQuery = normalizeName(queryCity);
+  if (!normalizedQuery) {
+    return "";
+  }
+
   const exact = cityNames.find((name) => name === queryCity);
 
   if (exact) {
     return exact;
   }
 
-  return cityNames.find((name) => normalizeName(name) === normalizedQuery) || "";
+  const normalizedExact = cityNames.find((name) => normalizeName(name) === normalizedQuery);
+  if (normalizedExact) {
+    return normalizedExact;
+  }
+
+  if (normalizedQuery.length < 3) {
+    return "";
+  }
+
+  return cityNames.find((name) => {
+    const normalizedName = normalizeName(name);
+    return normalizedName.includes(normalizedQuery) || normalizedQuery.includes(normalizedName);
+  }) || "";
 }
 
 function districtPageUrl(cityName, districtName) {
@@ -184,6 +200,22 @@ async function loadDistricts() {
 }
 
 async function loadVeterinerRecords() {
+  const fallbackCategoryData = window.NEREDEYENIR_FALLBACK_CATEGORY_DATA;
+  if (
+    fallbackCategoryData &&
+    typeof fallbackCategoryData === "object" &&
+    Array.isArray(fallbackCategoryData.veteriner) &&
+    fallbackCategoryData.veteriner.length > 0
+  ) {
+    return fallbackCategoryData.veteriner
+      .map((item) => ({
+        city: String(item.city || "").trim(),
+        district: String(item.district || "").trim(),
+        name: String(item.name || "").trim(),
+      }))
+      .filter((item) => item.city && item.district && item.name);
+  }
+
   const fallback = window.NEREDEYENIR_FALLBACK_DATA;
   if (fallback && Array.isArray(fallback.veteriner)) {
     return fallback.veteriner
@@ -224,7 +256,7 @@ function resolveDistrictList(matchedCity, districtMap, records) {
   )].sort((left, right) => left.localeCompare(right, "tr"));
 
   if (recordDistricts.length === 0) {
-    return catalogDistricts;
+    return [];
   }
 
   const recordDistrictKeys = new Set(recordDistricts.map((value) => normalizeName(value)));
