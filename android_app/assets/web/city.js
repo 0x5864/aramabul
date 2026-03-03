@@ -256,7 +256,6 @@ const CITY_I18N = {
     footerTerms: "Kullanım Koşulları",
     footerCookies: "Çerez Politikası",
     footerPartnerTitle: "İş ortaklığımız",
-    footerAddRestaurant: "Restoran ekle",
     footerAddPrice: "Yer ekle",
     footerCollab: "İş birliği",
     footerCopyright: "© 2026 arama bul",
@@ -313,7 +312,6 @@ const CITY_I18N = {
     footerTerms: "Terms of Use",
     footerCookies: "Cookie Policy",
     footerPartnerTitle: "Partnership",
-    footerAddRestaurant: "Add restaurant",
     footerAddPrice: "Add place",
     footerCollab: "Collaboration",
     footerCopyright: "© 2026 arama bul",
@@ -370,7 +368,6 @@ const CITY_I18N = {
     footerTerms: "Условия использования",
     footerCookies: "Политика cookies",
     footerPartnerTitle: "Партнерство",
-    footerAddRestaurant: "Добавить ресторан",
     footerAddPrice: "Добавить место",
     footerCollab: "Сотрудничество",
     footerCopyright: "© 2026 arama bul",
@@ -427,7 +424,6 @@ const CITY_I18N = {
     footerTerms: "Nutzungsbedingungen",
     footerCookies: "Cookie-Richtlinie",
     footerPartnerTitle: "Partnerschaft",
-    footerAddRestaurant: "Restaurant hinzufügen",
     footerAddPrice: "Ort hinzufügen",
     footerCollab: "Zusammenarbeit",
     footerCopyright: "© 2026 arama bul",
@@ -483,7 +479,6 @@ const CITY_I18N = {
     footerTerms: "使用条款",
     footerCookies: "Cookie 政策",
     footerPartnerTitle: "合作伙伴",
-    footerAddRestaurant: "添加餐厅",
     footerAddPrice: "添加地点",
     footerCollab: "合作",
     footerCopyright: "© 2026 arama bul",
@@ -670,13 +665,10 @@ function applyCityStaticTranslations() {
       title.textContent = cityT("footerPartnerTitle");
     }
     if (items[0]) {
-      items[0].textContent = cityT("footerAddRestaurant");
+      items[0].textContent = cityT("footerAddPrice");
     }
     if (items[1]) {
-      items[1].textContent = cityT("footerAddPrice");
-    }
-    if (items[2]) {
-      items[2].textContent = cityT("footerCollab");
+      items[1].textContent = cityT("footerCollab");
     }
   }
 

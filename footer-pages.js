@@ -131,33 +131,18 @@
     iletisim: {
       eyebrow: "Destek",
       title: "İletişim",
-      lead: "Soru, öneri ve iş taleplerini düzenli ve hızlı biçimde toplamak için temel iletişim akışını burada anlatıyoruz.",
-      cards: [
-        {
-          title: "Bize nasıl yazabilirsin?",
-          bullets: [
-            "Genel sorular için: destek@aramabul.com",
-            "İş birliği için: ortaklik@aramabul.com",
-            "İçerik düzeltmeleri için: icerik@aramabul.com",
-          ],
-        },
-        {
-          title: "Mesaj gönderirken ekle",
-          paragraphs: [
-            "Şehir, ilçe, kategori ve ilgili bağlantıyı eklersen daha hızlı dönebiliriz.",
-            "Sorun ekran görüntüsü veya kısa açıklama ile gelirse çözüm süresi kısalır.",
-          ],
-        },
-        {
-          title: "Yanıt süresi",
-          paragraphs: [
-            "Genel hedefimiz, çalışma günlerinde 24 ila 48 saat içinde ilk dönüşü yapmak.",
-          ],
-        },
-      ],
+      lead: "Soru, öneri ve iş talepleriniz için aşağıdaki formu doldurunuz.",
+      form: {
+        kind: "contact",
+        title: "",
+        description: "",
+        submitLabel: "Gönder",
+        successText: "Mesajın hazırlandı. İlgili ekibe en kısa sürede yönlendireceğiz.",
+      },
+      cards: [],
       strip: {
         title: "Kısa not",
-        text: "İletişim bilgileri ilk taslaktır. İstersen ikinci turda gerçek kanal ve form yapısına çevirebiliriz.",
+        text: "Mesajını konu ve kısa bağlamla gönderirsen doğru ekibe daha hızlı yönlendirebiliriz.",
       },
     },
     sss: {
@@ -319,35 +304,6 @@
         title: "Kısa not",
         text: "Zorunlu olmayan yeni çerezler eklenirse bu metni ve varsa tercih ekranını aynı anda güncelleriz.",
       },
-    },
-    "restoran-ekle": {
-      eyebrow: "İş ortaklığı",
-      title: "Restoran ekle",
-      lead: "Yeni bir işletmeyi sisteme almak için ilk başta hangi bilgilere ihtiyaç duyduğumuzu burada topladık.",
-      cards: [
-        {
-          title: "Gönderilecek temel bilgiler",
-          bullets: [
-            "İşletme adı",
-            "Şehir ve ilçe",
-            "Açık adres",
-            "Telefon ve varsa web sitesi",
-          ],
-        },
-        {
-          title: "İnceleme adımı",
-          paragraphs: [
-            "Gönderilen bilgi önce temel doğruluk kontrolünden geçer.",
-            "Eksik alan varsa ek bilgi istenir, netse yayına alınır.",
-          ],
-        },
-        {
-          title: "İlk sürüm yaklaşımı",
-          paragraphs: [
-            "İlk etapta sade listeleme hedeflenir. Sonraki turda fotoğraf, menü ve özel içerik alanı eklenebilir.",
-          ],
-        },
-      ],
     },
     "yer-ekle": PLACE_SUBMISSION_CONTENT,
     "fiyat-ekle": PLACE_SUBMISSION_CONTENT,
@@ -523,6 +479,7 @@
 
     const title = String(formConfig.title || "").trim();
     const description = String(formConfig.description || "").trim();
+    const formKind = String(formConfig.kind || "place").trim();
     const submitLabel = String(formConfig.submitLabel || "Gönder").trim();
     const note = String(formConfig.note || "").trim();
     const successText = String(formConfig.successText || "Bilgiler hazırlandı.").trim();
@@ -573,6 +530,149 @@
         input.autocomplete = autocomplete;
       }
       return input;
+    }
+
+    function lockPlaceholderTranslation(control) {
+      control.setAttribute("data-no-static-translate", "true");
+      return control;
+    }
+
+    function finalizeForm(actionsNode, statusNode) {
+      form.append(grid);
+      form.append(actionsNode);
+      form.append(statusNode);
+      card.append(form);
+      wrap.append(card);
+      wrap.hidden = false;
+    }
+
+    if (formKind === "contact") {
+      const contactTargets = Object.freeze({
+        destek: {
+          label: "Genel sorular",
+          address: "destek@aramabul.com",
+          subject: "Genel sorular",
+        },
+        ortaklik: {
+          label: "İş birliği",
+          address: "ortaklik@aramabul.com",
+          subject: "İş birliği talebi",
+        },
+        icerik: {
+          label: "İçerik düzeltmeleri",
+          address: "icerik@aramabul.com",
+          subject: "İçerik düzeltmeleri",
+        },
+      });
+      const fullName = lockPlaceholderTranslation(buildInput("text", "fullName", "Ad Soyad", true, "name"));
+      const email = buildInput("email", "email", "E-posta", true, "email");
+      const subjectSelect = document.createElement("select");
+      const phoneAreaCode = buildInput("text", "phoneAreaCode", "Alan kodu", false, "tel-area-code");
+      const phoneNumber = buildInput("tel", "phoneNumber", "Telefon numarası", false, "tel-local");
+      const message = lockPlaceholderTranslation(document.createElement("textarea"));
+
+      subjectSelect.name = "topic";
+      subjectSelect.required = true;
+
+      message.name = "message";
+      message.placeholder = "Mesaj";
+      message.required = true;
+
+      phoneAreaCode.inputMode = "numeric";
+      phoneAreaCode.maxLength = 3;
+      phoneAreaCode.pattern = "\\d{3}";
+      phoneNumber.inputMode = "numeric";
+      phoneNumber.maxLength = 7;
+      phoneNumber.pattern = "\\d{7}";
+
+      fillSelect(
+        subjectSelect,
+        "Konu",
+        Object.entries(contactTargets).map(([key, target]) => ({
+          value: key,
+          label: target.label,
+        }))
+      );
+
+      const phoneGroup = document.createElement("div");
+      phoneGroup.className = "content-page-phone-group";
+
+      const countryCode = document.createElement("span");
+      countryCode.className = "content-page-phone-prefix";
+      countryCode.textContent = "+90";
+
+      phoneGroup.append(countryCode, phoneAreaCode, phoneNumber);
+
+      grid.append(buildField("Ad Soyad", fullName, "full"));
+      grid.append(buildField("E-posta", email, "full"));
+      grid.append(buildField("Konu", subjectSelect, "full"));
+      grid.append(buildField("Telefon bilgisi", phoneGroup, "full"));
+      grid.append(buildField("Mesaj", message, "full"));
+
+      const actions = document.createElement("div");
+      actions.className = "content-page-form-actions";
+
+      const submitButton = document.createElement("button");
+      submitButton.type = "submit";
+      submitButton.className = "content-page-form-button";
+      submitButton.textContent = submitLabel;
+      actions.append(submitButton);
+
+      if (note) {
+        const noteNode = document.createElement("p");
+        noteNode.className = "content-page-form-note";
+        noteNode.textContent = note;
+        actions.append(noteNode);
+      }
+
+      const status = document.createElement("p");
+      status.className = "content-page-form-status";
+      status.setAttribute("aria-live", "polite");
+
+      subjectSelect.addEventListener("change", () => {
+        syncSelectState(subjectSelect);
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          status.dataset.state = "error";
+          status.textContent = "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.";
+          return;
+        }
+
+        const selectedTarget = contactTargets[subjectSelect.value];
+        if (!selectedTarget) {
+          status.dataset.state = "error";
+          status.textContent = "Lütfen konu seçimini tamamla.";
+          return;
+        }
+
+        const messageLines = [
+          `Ad Soyad: ${fullName.value.trim()}`,
+          `E-posta: ${email.value.trim()}`,
+        ];
+        const areaCode = phoneAreaCode.value.trim();
+        const localNumber = phoneNumber.value.trim();
+        if (areaCode || localNumber) {
+          messageLines.push(`Telefon: +90 ${areaCode} ${localNumber}`.trim());
+        }
+        messageLines.push("", message.value.trim());
+
+        const mailtoHref =
+          `mailto:${selectedTarget.address}`
+          + `?subject=${encodeURIComponent(selectedTarget.subject)}`
+          + `&body=${encodeURIComponent(messageLines.join("\n"))}`;
+
+        status.dataset.state = "success";
+        status.textContent = `${successText} ${selectedTarget.address} adresi hazırlandı.`;
+        window.location.href = mailtoHref;
+      });
+
+      finalizeForm(actions, status);
+      return;
     }
 
     function normalizeLocationToken(value) {
@@ -855,13 +955,7 @@
       status.textContent = successText;
     });
 
-    form.append(grid);
-    form.append(actions);
-    form.append(status);
-    card.append(form);
-
-    wrap.append(card);
-    wrap.hidden = false;
+    finalizeForm(actions, status);
     loadDistricts();
   }
 

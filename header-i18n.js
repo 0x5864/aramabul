@@ -15,7 +15,6 @@
       "footer-page.html?sayfa=iletisim",
     ],
     [
-      "footer-page.html?sayfa=restoran-ekle",
       "footer-page.html?sayfa=yer-ekle",
       "footer-page.html?sayfa=is-birligi",
     ],
@@ -372,6 +371,10 @@
 
     const attributeTargets = [...document.querySelectorAll("[placeholder], [aria-label], [title]")];
     attributeTargets.forEach((element) => {
+      if (element.hasAttribute("data-no-static-translate")) {
+        return;
+      }
+
       const originalValues = STATIC_ATTRIBUTE_ORIGINALS.get(element) || {};
 
       ["placeholder", "aria-label", "title"].forEach((attributeName) => {

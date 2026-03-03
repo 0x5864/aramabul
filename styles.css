@@ -1041,7 +1041,10 @@ main > * {
 
 .content-page-shell[data-page-key="yer-ekle"] .content-page-form-card h2,
 .content-page-shell[data-page-key="yer-ekle"] .content-page-form-card > p,
-.content-page-shell[data-page-key="yer-ekle"] .content-page-form-status {
+.content-page-shell[data-page-key="yer-ekle"] .content-page-form-status,
+.content-page-shell[data-page-key="iletisim"] .content-page-form-card h2,
+.content-page-shell[data-page-key="iletisim"] .content-page-form-card > p,
+.content-page-shell[data-page-key="iletisim"] .content-page-form-status {
   font-size: 0.92rem;
   font-weight: 400;
   line-height: 1.4;
@@ -1065,7 +1068,39 @@ main > * {
   gap: 0.62rem;
 }
 
+.content-page-shell[data-page-key="iletisim"] .content-page-form-card {
+  position: relative;
+  border: 0;
+  border-radius: 4px;
+  background: var(--paper);
+  margin-top: 0.55rem;
+  padding: 0.55rem;
+  box-shadow: none;
+  max-width: min(100%, 520px);
+}
+
+.content-page-shell[data-page-key="iletisim"] .content-page-form-card h2 {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  background: transparent;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.content-page-shell[data-page-key="iletisim"] .content-page-form {
+  margin-top: 0.55rem;
+  gap: 0.62rem;
+}
+
 .content-page-shell[data-page-key="yer-ekle"] .content-page-form-actions {
+  justify-content: flex-end;
+}
+
+.content-page-shell[data-page-key="iletisim"] .content-page-form-actions {
   justify-content: flex-end;
 }
 
@@ -1073,9 +1108,16 @@ main > * {
   gap: 0.5rem;
 }
 
+.content-page-shell[data-page-key="iletisim"] .content-page-form-grid {
+  gap: 0.5rem;
+}
+
 .content-page-shell[data-page-key="yer-ekle"] .content-page-field input,
 .content-page-shell[data-page-key="yer-ekle"] .content-page-field select,
-.content-page-shell[data-page-key="yer-ekle"] .content-page-field textarea {
+.content-page-shell[data-page-key="yer-ekle"] .content-page-field textarea,
+.content-page-shell[data-page-key="iletisim"] .content-page-field input,
+.content-page-shell[data-page-key="iletisim"] .content-page-field select,
+.content-page-shell[data-page-key="iletisim"] .content-page-field textarea {
   min-height: 42px;
   border: 1px solid var(--box-border);
   border-radius: 4px;
@@ -1088,14 +1130,16 @@ main > * {
   box-shadow: none;
 }
 
-.content-page-shell[data-page-key="yer-ekle"] .content-page-phone-group {
+.content-page-shell[data-page-key="yer-ekle"] .content-page-phone-group,
+.content-page-shell[data-page-key="iletisim"] .content-page-phone-group {
   display: grid;
   grid-template-columns: 58px 86px minmax(0, 1fr);
   gap: 0.5rem;
   width: 100%;
 }
 
-.content-page-shell[data-page-key="yer-ekle"] .content-page-phone-prefix {
+.content-page-shell[data-page-key="yer-ekle"] .content-page-phone-prefix,
+.content-page-shell[data-page-key="iletisim"] .content-page-phone-prefix {
   min-height: 42px;
   display: inline-flex;
   align-items: center;
@@ -1109,7 +1153,8 @@ main > * {
   color: var(--box-text);
 }
 
-.content-page-shell[data-page-key="yer-ekle"] .content-page-phone-group input {
+.content-page-shell[data-page-key="yer-ekle"] .content-page-phone-group input,
+.content-page-shell[data-page-key="iletisim"] .content-page-phone-group input {
   min-width: 0;
 }
 
@@ -1117,8 +1162,14 @@ main > * {
   min-height: 96px;
 }
 
+.content-page-shell[data-page-key="iletisim"] .content-page-field textarea {
+  min-height: 132px;
+}
+
 .content-page-shell[data-page-key="yer-ekle"] .content-page-field input::placeholder,
-.content-page-shell[data-page-key="yer-ekle"] .content-page-field textarea::placeholder {
+.content-page-shell[data-page-key="yer-ekle"] .content-page-field textarea::placeholder,
+.content-page-shell[data-page-key="iletisim"] .content-page-field input::placeholder,
+.content-page-shell[data-page-key="iletisim"] .content-page-field textarea::placeholder {
   color: rgba(22, 33, 35, 0.58);
 }
 
@@ -1153,7 +1204,10 @@ main > * {
 
 .content-page-shell[data-page-key="yer-ekle"] .content-page-field input:focus,
 .content-page-shell[data-page-key="yer-ekle"] .content-page-field select:focus,
-.content-page-shell[data-page-key="yer-ekle"] .content-page-field textarea:focus {
+.content-page-shell[data-page-key="yer-ekle"] .content-page-field textarea:focus,
+.content-page-shell[data-page-key="iletisim"] .content-page-field input:focus,
+.content-page-shell[data-page-key="iletisim"] .content-page-field select:focus,
+.content-page-shell[data-page-key="iletisim"] .content-page-field textarea:focus {
   outline: none;
   border-color: var(--box-border);
   box-shadow: 0 0 0 2px var(--box-hover-soft);
@@ -1170,7 +1224,23 @@ main > * {
   line-height: 1;
 }
 
+.content-page-shell[data-page-key="iletisim"] .content-page-form-button {
+  min-height: 34px;
+  border-radius: 12px;
+  background: #011d36;
+  color: #e1e1e1;
+  padding: 0 0.72rem;
+  font-size: 0.84rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
 .content-page-shell[data-page-key="yer-ekle"] .content-page-form-button:hover {
+  background: #384796;
+  box-shadow: none;
+}
+
+.content-page-shell[data-page-key="iletisim"] .content-page-form-button:hover {
   background: #384796;
   box-shadow: none;
 }
@@ -1181,8 +1251,15 @@ main > * {
   outline: none;
 }
 
+.content-page-shell[data-page-key="iletisim"] .content-page-form-button:focus-visible {
+  background: #022746;
+  box-shadow: 0 0 0 2px var(--hover-blue-soft);
+  outline: none;
+}
+
 @media (max-width: 620px) {
-  .content-page-shell[data-page-key="yer-ekle"] .content-page-phone-group {
+  .content-page-shell[data-page-key="yer-ekle"] .content-page-phone-group,
+  .content-page-shell[data-page-key="iletisim"] .content-page-phone-group {
     grid-template-columns: 52px 76px minmax(0, 1fr);
     gap: 0.4rem;
   }
