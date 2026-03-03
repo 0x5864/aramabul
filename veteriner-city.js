@@ -172,12 +172,12 @@ function renderCityHeader() {
   }
 
   document.title = state.city
-    ? `arama bul | ${state.city} İli`
-    : "arama bul | Veteriner İl Sayfası";
+    ? `aramabul | ${state.city} İli`
+    : "aramabul | Veteriner İl Sayfası";
 }
 
 function readFallbackDistrictMap() {
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && fallback.districts && typeof fallback.districts === "object" && !Array.isArray(fallback.districts)) {
     return fallback.districts;
   }
@@ -200,7 +200,7 @@ async function loadDistricts() {
 }
 
 async function loadVeterinerRecords() {
-  const fallbackCategoryData = window.NEREDEYENIR_FALLBACK_CATEGORY_DATA;
+  const fallbackCategoryData = window.ARAMABUL_FALLBACK_CATEGORY_DATA;
   if (
     fallbackCategoryData &&
     typeof fallbackCategoryData === "object" &&
@@ -216,7 +216,7 @@ async function loadVeterinerRecords() {
       .filter((item) => item.city && item.district && item.name);
   }
 
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && Array.isArray(fallback.veteriner)) {
     return fallback.veteriner
       .map((item) => ({

@@ -118,7 +118,7 @@ function dedupeGroups(groups) {
 }
 
 function cityUrl(provinceName) {
-  return `akaryakit-city.html?sehir=${encodeURIComponent(provinceName)}`;
+  return `keyif-city.html?sehir=${encodeURIComponent(provinceName)}`;
 }
 
 function renderEmptyState(messageText) {
@@ -181,7 +181,7 @@ function renderGroupGrid(citySet) {
 }
 
 async function loadAkaryakitCitySet() {
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && Array.isArray(fallback.akaryakit)) {
     return new Set(
       fallback.akaryakit

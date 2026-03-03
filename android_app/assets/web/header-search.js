@@ -22,11 +22,11 @@
     ZH: { idle: "查找", loading: "查找中..." },
   };
   const SEARCH_PLACEHOLDER_TEXT = {
-    TR: "Restoran ara",
-    EN: "Search restaurant",
-    RU: "Найти ресторан",
-    DE: "Restaurant suchen",
-    ZH: "搜索餐厅",
+    TR: "Ne bulmamı istersin?",
+    EN: "What should I find?",
+    RU: "Что мне найти?",
+    DE: "Was soll ich finden?",
+    ZH: "你想让我找什么？",
   };
   const SEARCH_PAGE_PLACEHOLDER_TEXT = {
     TR: "Ne bulmamı istersin?",
@@ -43,11 +43,11 @@
     ZH: "通用搜索",
   };
   const SEARCH_INPUT_LABEL_TEXT = {
-    TR: "Restoran adı",
-    EN: "Restaurant name",
-    RU: "Название ресторана",
-    DE: "Restaurantname",
-    ZH: "餐厅名称",
+    TR: "Arama ifadesi",
+    EN: "Search query",
+    RU: "Поисковый запрос",
+    DE: "Suchbegriff",
+    ZH: "搜索关键词",
   };
   const SEARCH_PAGE_INPUT_LABEL_TEXT = {
     TR: "Arama ifadesi",
@@ -63,17 +63,226 @@
     DE: { discover: "Entdecken", help: "Hilfe" },
     ZH: { discover: "探索", help: "帮助" },
   };
+  const STATIC_UI_TRANSLATIONS = {
+    TR: {},
+    EN: {
+      "Anasayfa": "Home",
+      "Ayarlar": "Settings",
+      "Dil Ayarları": "Language Settings",
+      "Dil seçenekleri": "Language options",
+      "Dil seç": "Choose language",
+      "Uygulama metinleri bu seçime göre güncellenir.": "App text updates based on this selection.",
+      "Hesap": "Account",
+      "Diller": "Languages",
+      "Geribildirim": "Feedback",
+      "Yardım": "Help",
+      "Hakkında": "About",
+      "Çıkış yap": "Sign out",
+      "Misafir": "Guest",
+      "Kayıt ol": "Sign up",
+      "Hesabını oluştur ve ayarlarını kaydet.": "Create your account and save your settings.",
+      "Ad Soyad": "Full name",
+      "E-posta": "Email",
+      "Şifre": "Password",
+      "Şifre tekrar": "Repeat password",
+      "Hesap bilgileri": "Account details",
+      "Adını ve e-postanı burada güncelleyebilirsin.": "You can update your name and email here.",
+      "Kaydet": "Save",
+      "Ne Nerede?": "What and where?",
+      "Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.":
+        "Choose the topic you need. I will help you find the details and location.",
+      "Yemek": "Food",
+      "Kafe": "Cafe",
+      "Kuaför": "Hairdresser",
+      "Veteriner": "Veterinarian",
+      "Eczane": "Pharmacy",
+      "Market": "Market",
+      "Akaryakıt": "Fuel",
+      "Hastane": "Hospital",
+      "Banka": "Bank",
+      "Otel": "Hotel",
+      "Kargo Şubeleri": "Cargo Branches",
+      "Noter": "Notary",
+      "Aile Sağlığı Merkezi": "Family Health Center",
+      "Diş Klinikleri": "Dental Clinics",
+      "Duraklar": "Stops",
+      "Otopark": "Parking",
+      "Hakkımızda": "About us",
+      "Sıkça Sorulan Sorular": "FAQ",
+    },
+    RU: {
+      "Anasayfa": "Главная",
+      "Ayarlar": "Настройки",
+      "Dil Ayarları": "Настройки языка",
+      "Dil seçenekleri": "Языковые настройки",
+      "Dil seç": "Выберите язык",
+      "Uygulama metinleri bu seçime göre güncellenir.": "Тексты приложения обновляются по этому выбору.",
+      "Hesap": "Аккаунт",
+      "Diller": "Языки",
+      "Geribildirim": "Обратная связь",
+      "Yardım": "Помощь",
+      "Hakkında": "О приложении",
+      "Çıkış yap": "Выйти",
+      "Misafir": "Гость",
+      "Kayıt ol": "Регистрация",
+      "Hesabını oluştur ve ayarlarını kaydet.": "Создайте аккаунт и сохраните настройки.",
+      "Ad Soyad": "Имя и фамилия",
+      "E-posta": "Эл. почта",
+      "Şifre": "Пароль",
+      "Şifre tekrar": "Повторите пароль",
+      "Hesap bilgileri": "Данные аккаунта",
+      "Adını ve e-postanı burada güncelleyebilirsin.": "Здесь можно обновить имя и почту.",
+      "Kaydet": "Сохранить",
+      "Ne Nerede?": "Что и где?",
+      "Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.":
+        "Выберите нужную тему. Я помогу найти детали и место.",
+      "Yemek": "Еда",
+      "Kafe": "Кафе",
+      "Kuaför": "Парикмахер",
+      "Veteriner": "Ветеринар",
+      "Eczane": "Аптека",
+      "Market": "Маркет",
+      "Akaryakıt": "Топливо",
+      "Hastane": "Больница",
+      "Banka": "Банк",
+      "Otel": "Отель",
+      "Kargo Şubeleri": "Отделения доставки",
+      "Noter": "Нотариус",
+      "Aile Sağlığı Merkezi": "Семейный медцентр",
+      "Diş Klinikleri": "Стоматологии",
+      "Duraklar": "Остановки",
+      "Otopark": "Парковка",
+      "Hakkımızda": "О нас",
+      "Sıkça Sorulan Sorular": "Частые вопросы",
+    },
+    DE: {
+      "Anasayfa": "Startseite",
+      "Ayarlar": "Einstellungen",
+      "Dil Ayarları": "Spracheinstellungen",
+      "Dil seçenekleri": "Sprachoptionen",
+      "Dil seç": "Sprache wählen",
+      "Uygulama metinleri bu seçime göre güncellenir.": "Die App-Texte werden nach dieser Auswahl aktualisiert.",
+      "Hesap": "Konto",
+      "Diller": "Sprachen",
+      "Geribildirim": "Feedback",
+      "Yardım": "Hilfe",
+      "Hakkında": "Info",
+      "Çıkış yap": "Abmelden",
+      "Misafir": "Gast",
+      "Kayıt ol": "Registrieren",
+      "Hesabını oluştur ve ayarlarını kaydet.": "Erstelle dein Konto und speichere deine Einstellungen.",
+      "Ad Soyad": "Vollständiger Name",
+      "E-posta": "E-Mail",
+      "Şifre": "Passwort",
+      "Şifre tekrar": "Passwort wiederholen",
+      "Hesap bilgileri": "Kontodaten",
+      "Adını ve e-postanı burada güncelleyebilirsin.": "Hier kannst du deinen Namen und deine E-Mail aktualisieren.",
+      "Kaydet": "Speichern",
+      "Ne Nerede?": "Was und wo?",
+      "Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.":
+        "Wähle das passende Thema. Ich helfe dir, Details und Ort zu finden.",
+      "Yemek": "Essen",
+      "Kafe": "Café",
+      "Kuaför": "Friseur",
+      "Veteriner": "Tierarzt",
+      "Eczane": "Apotheke",
+      "Market": "Markt",
+      "Akaryakıt": "Kraftstoff",
+      "Hastane": "Krankenhaus",
+      "Banka": "Bank",
+      "Otel": "Hotel",
+      "Kargo Şubeleri": "Filialen",
+      "Noter": "Notar",
+      "Aile Sağlığı Merkezi": "Familiengesundheitszentrum",
+      "Diş Klinikleri": "Zahnkliniken",
+      "Duraklar": "Haltestellen",
+      "Otopark": "Parkplatz",
+      "Hakkımızda": "Über uns",
+      "Sıkça Sorulan Sorular": "FAQ",
+    },
+    ZH: {
+      "Anasayfa": "首页",
+      "Ayarlar": "设置",
+      "Dil Ayarları": "语言设置",
+      "Dil seçenekleri": "语言选项",
+      "Dil seç": "选择语言",
+      "Uygulama metinleri bu seçime göre güncellenir.": "应用文本会根据该选择更新。",
+      "Hesap": "账户",
+      "Diller": "语言",
+      "Geribildirim": "反馈",
+      "Yardım": "帮助",
+      "Hakkında": "关于",
+      "Çıkış yap": "退出",
+      "Misafir": "访客",
+      "Kayıt ol": "注册",
+      "Hesabını oluştur ve ayarlarını kaydet.": "创建账户并保存设置。",
+      "Ad Soyad": "姓名",
+      "E-posta": "电子邮件",
+      "Şifre": "密码",
+      "Şifre tekrar": "再次输入密码",
+      "Hesap bilgileri": "账户信息",
+      "Adını ve e-postanı burada güncelleyebilirsin.": "你可以在这里更新姓名和邮箱。",
+      "Kaydet": "保存",
+      "Ne Nerede?": "找什么？在哪里？",
+      "Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.":
+        "选择你要找的主题。我会帮你找到相关信息和位置。",
+      "Yemek": "美食",
+      "Kafe": "咖啡馆",
+      "Kuaför": "理发店",
+      "Veteriner": "兽医",
+      "Eczane": "药房",
+      "Market": "超市",
+      "Akaryakıt": "加油站",
+      "Hastane": "医院",
+      "Banka": "银行",
+      "Otel": "酒店",
+      "Kargo Şubeleri": "快递网点",
+      "Noter": "公证处",
+      "Aile Sağlığı Merkezi": "家庭健康中心",
+      "Diş Klinikleri": "牙科诊所",
+      "Duraklar": "站点",
+      "Otopark": "停车场",
+      "Hakkımızda": "关于我们",
+      "Sıkça Sorulan Sorular": "常见问题",
+    },
+  };
+  const STATIC_TEXT_NODE_ORIGINALS = new WeakMap();
+  const STATIC_ATTRIBUTE_ORIGINALS = new WeakMap();
   const CATEGORY_SEARCH_ROUTES = [
-    { href: "yemek.html", keywords: ["yemek", "restoran", "restaurant", "food"] },
-    { href: "kafe.html", keywords: ["kafe", "cafe", "kahve"] },
+    { href: "keyif.html", keywords: ["yemek", "food", "restoran", "restaurant", "lokanta"] },
+    { href: "hizmetler.html", keywords: ["hizmetler", "service", "services"] },
     { href: "kuafor.html", keywords: ["kuafor", "kuaför", "berber", "sac", "saç", "guzellik", "güzellik"] },
     { href: "veteriner.html", keywords: ["veteriner", "vet", "hayvan"] },
-    { href: "eczane.html", keywords: ["eczane", "pharmacy"] },
+    { href: "saglik.html", keywords: ["eczane", "pharmacy", "saglik", "sağlık", "health", "klinik", "clinic"] },
     { href: "market.html", keywords: ["market", "supermarket", "süpermarket", "bakkal"] },
-    { href: "akaryakit.html", keywords: ["akaryakit", "akaryakıt", "benzin", "fuel", "istasyon"] },
+    {
+      href: "keyif.html",
+      keywords: [
+        "keyif",
+        "meyhane",
+        "meyhaneler",
+        "rakı",
+        "raki",
+        "kafe",
+        "cafe",
+        "kahve",
+        "coffee",
+        "espresso",
+        "kahvalti",
+        "kahvaltı",
+        "kebap",
+        "doner",
+        "döner",
+        "pide",
+        "lahmacun",
+        "cigkofte",
+        "çiğ köfte",
+      ],
+    },
     { href: "hastane.html", keywords: ["hastane", "hospital"] },
     { href: "banka.html", keywords: ["banka", "bank"] },
     { href: "otel.html", keywords: ["otel", "hotel", "konaklama"] },
+    { href: "gezi.html", keywords: ["gezi", "seyahat", "ulasim", "ulaşım", "travel", "transport"] },
     { href: "atm.html", keywords: ["atm"] },
     { href: "kargo.html", keywords: ["kargo", "cargo"] },
     { href: "noter.html", keywords: ["noter", "notary"] },
@@ -89,7 +298,7 @@
       search: "Ara",
       signup: "Kayıt",
       profile: "Ayarlar",
-      searchPlaceholder: "Restoran adı yaz",
+      searchPlaceholder: "Ne bulmamı istersin?",
     },
     EN: {
       nav: "Bottom menu",
@@ -97,7 +306,7 @@
       search: "Search",
       signup: "Sign up",
       profile: "Settings",
-      searchPlaceholder: "Type restaurant name",
+      searchPlaceholder: "What should I find?",
     },
     RU: {
       nav: "Нижнее меню",
@@ -105,7 +314,7 @@
       search: "Поиск",
       signup: "Регистрация",
       profile: "Настройки",
-      searchPlaceholder: "Введите ресторан",
+      searchPlaceholder: "Что мне найти?",
     },
     DE: {
       nav: "Unteres Menü",
@@ -113,7 +322,7 @@
       search: "Suche",
       signup: "Registrieren",
       profile: "Einstellungen",
-      searchPlaceholder: "Restaurantname eingeben",
+      searchPlaceholder: "Was soll ich finden?",
     },
     ZH: {
       nav: "底部菜单",
@@ -121,7 +330,7 @@
       search: "搜索",
       signup: "注册",
       profile: "设置",
-      searchPlaceholder: "输入餐厅名称",
+      searchPlaceholder: "你想让我找什么？",
     },
   };
   const THEME_STORAGE_KEY = "neredeyenir.theme.v1";
@@ -385,6 +594,119 @@
     applyTheme(theme, true);
   };
 
+  function getStaticUiTranslation(sourceText, lang) {
+    const normalizedText = String(sourceText || "").trim();
+    if (!normalizedText || lang === "TR") {
+      return normalizedText;
+    }
+
+    const translations = STATIC_UI_TRANSLATIONS[lang] || STATIC_UI_TRANSLATIONS.TR;
+    return translations[normalizedText] || normalizedText;
+  }
+
+  function translatePreservingWhitespace(sourceText, lang) {
+    const rawText = String(sourceText || "");
+    const leadingWhitespace = rawText.match(/^\s*/u)?.[0] || "";
+    const trailingWhitespace = rawText.match(/\s*$/u)?.[0] || "";
+    const coreText = rawText.trim();
+    if (!coreText) {
+      return rawText;
+    }
+
+    const translatedCore = getStaticUiTranslation(coreText, lang);
+    return `${leadingWhitespace}${translatedCore}${trailingWhitespace}`;
+  }
+
+  function shouldSkipStaticTextNode(node) {
+    const parent = node.parentElement;
+    if (!parent) {
+      return true;
+    }
+
+    const tagName = parent.tagName;
+    if (tagName === "SCRIPT" || tagName === "STYLE" || tagName === "NOSCRIPT" || tagName === "TEXTAREA") {
+      return true;
+    }
+
+    if (
+      parent.closest(
+        ".yr-logo, .brand-wordmark, .header-search, .language-option-code, script, style, noscript, textarea",
+      )
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function applyStaticPageTranslations() {
+    const lang =
+      typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
+        ? window.NEREDEYENIR_GET_LANGUAGE()
+        : readStoredLanguage();
+
+    if (!document.body) {
+      return;
+    }
+
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node || !String(node.nodeValue || "").trim()) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
+        return shouldSkipStaticTextNode(node) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+      },
+    });
+
+    let currentNode = walker.nextNode();
+    while (currentNode) {
+      const originalText = STATIC_TEXT_NODE_ORIGINALS.get(currentNode) || currentNode.nodeValue;
+      STATIC_TEXT_NODE_ORIGINALS.set(currentNode, originalText);
+      const translatedText = translatePreservingWhitespace(originalText, lang);
+      if (currentNode.nodeValue !== translatedText) {
+        currentNode.nodeValue = translatedText;
+      }
+      currentNode = walker.nextNode();
+    }
+
+    const attributeTargets = [...document.querySelectorAll("[placeholder], [aria-label], [title]")];
+    attributeTargets.forEach((element) => {
+      const originalValues = STATIC_ATTRIBUTE_ORIGINALS.get(element) || {};
+
+      ["placeholder", "aria-label", "title"].forEach((attributeName) => {
+        if (!element.hasAttribute(attributeName)) {
+          return;
+        }
+
+        const sourceValue =
+          typeof originalValues[attributeName] === "string"
+            ? originalValues[attributeName]
+            : element.getAttribute(attributeName) || "";
+
+        originalValues[attributeName] = sourceValue;
+        const translatedValue = translatePreservingWhitespace(sourceValue, lang);
+        if (translatedValue !== sourceValue || lang === "TR") {
+          element.setAttribute(attributeName, translatedValue);
+        }
+      });
+
+      STATIC_ATTRIBUTE_ORIGINALS.set(element, originalValues);
+    });
+
+    if (!document.documentElement.dataset.originalTitle) {
+      document.documentElement.dataset.originalTitle = document.title;
+    }
+
+    const originalTitle = document.documentElement.dataset.originalTitle || "";
+    if (originalTitle) {
+      const [brandPrefix, rawSuffix] = originalTitle.split("|").map((part) => part.trim());
+      if (brandPrefix && rawSuffix) {
+        document.title = `${brandPrefix} | ${getStaticUiTranslation(rawSuffix, lang)}`;
+      }
+    }
+  }
+
   function normalizeFooterUi() {
     const lang =
       typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
@@ -422,8 +744,10 @@
 
   initializeLanguageSwitcher();
   applyTheme(readStoredTheme(), false);
+  applyStaticPageTranslations();
   normalizeFooterUi();
   window.addEventListener("load", () => {
+    applyStaticPageTranslations();
     normalizeFooterUi();
   });
 
@@ -457,16 +781,16 @@
     const categoryPage = String(document.body?.dataset?.categoryPage || "").toLocaleLowerCase("tr");
     const pageName = currentPageName();
     const categoryRootPages = new Set([
-      "yemek.html",
-      "kafe.html",
+      "hizmetler.html",
       "kuafor.html",
       "veteriner.html",
-      "eczane.html",
+      "saglik.html",
       "market.html",
-      "akaryakit.html",
+      "keyif.html",
       "hastane.html",
       "banka.html",
       "otel.html",
+      "gezi.html",
       "atm.html",
       "kargo.html",
       "noter.html",
@@ -487,7 +811,7 @@
       return;
     }
 
-    const headers = document.querySelectorAll(".global-header-band, .city-header");
+    const headers = document.querySelectorAll(".city-header");
     headers.forEach((headerElement) => {
       if (!(headerElement instanceof HTMLElement)) {
         return;
@@ -499,10 +823,6 @@
 
   function isHomePage() {
     return currentPageName() === "index.html" || currentPageName() === "";
-  }
-
-  function isRestaurantPage() {
-    return currentPageName() === "restaurant.html";
   }
 
   function getNavLabels() {
@@ -716,14 +1036,80 @@
   createMobileBottomNav();
   document.addEventListener("neredeyenir:languagechange", () => {
     applySearchUiLanguage();
+    applyStaticPageTranslations();
     window.requestAnimationFrame(() => {
       normalizeFooterUi();
     });
   });
 
   const VENUES_JSON_PATH = "data/venues.json";
-  const YEMEK_JSON_PATH = "data/yemek.json";
-  const KAFE_JSON_PATH = "data/kafe.json";
+  const FOOD_JSON_PATH = "data/keyif-food.json";
+  const DISTRICTS_JSON_PATH = "data/districts.json";
+  const CATEGORY_DATASET_SOURCES = [
+    {
+      pageBase: "kuafor",
+      dataPath: "data/kuafor.json",
+      fallbacks: [{ globalKey: "NEREDEYENIR_FALLBACK_DATA", property: "kuafor" }],
+    },
+    {
+      pageBase: "veteriner",
+      dataPath: "data/veteriner.json",
+      fallbacks: [{ globalKey: "NEREDEYENIR_FALLBACK_CATEGORY_DATA", property: "veteriner" }],
+    },
+    {
+      pageBase: "eczane",
+      dataPath: "data/eczane.json",
+      fallbacks: [{ globalKey: "NEREDEYENIR_FALLBACK_CATEGORY_DATA", property: "eczane" }],
+    },
+    { pageBase: "eczane", dataPath: "data/nobetci-eczane.json", fallbacks: [] },
+    {
+      pageBase: "keyif",
+      dataPath: "data/keyif.json",
+      fallbacks: [],
+    },
+    { pageBase: "keyif", dataPath: "data/keyif-restoran.json", fallbacks: [] },
+    { pageBase: "atm", dataPath: "data/atm.json", fallbacks: [] },
+    { pageBase: "kargo", dataPath: "data/kargo.json", fallbacks: [] },
+    { pageBase: "noter", dataPath: "data/noter.json", fallbacks: [] },
+    { pageBase: "asm", dataPath: "data/asm.json", fallbacks: [] },
+    { pageBase: "dis-klinikleri", dataPath: "data/dis-klinikleri.json", fallbacks: [] },
+    { pageBase: "duraklar", dataPath: "data/duraklar.json", fallbacks: [] },
+    { pageBase: "otopark", dataPath: "data/otopark.json", fallbacks: [] },
+  ];
+  const DISTRICT_ROUTE_PAGE_BASES = new Set([
+    "yemek",
+    "hizmetler",
+    "kuafor",
+    "veteriner",
+    "eczane",
+    "keyif",
+    "otel",
+    "atm",
+    "kargo",
+    "noter",
+    "asm",
+    "dis-klinikleri",
+    "duraklar",
+    "gezi",
+    "otopark",
+  ]);
+  const CITY_ROUTE_PAGE_BASES = new Set([
+    "yemek",
+    "hizmetler",
+    "kuafor",
+    "veteriner",
+    "eczane",
+    "keyif",
+    "otel",
+    "atm",
+    "kargo",
+    "noter",
+    "asm",
+    "dis-klinikleri",
+    "duraklar",
+    "gezi",
+    "otopark",
+  ]);
   const API_BASE_URL = (() => {
     if (typeof window.NEREDEYENIR_API_BASE === "string" && window.NEREDEYENIR_API_BASE.trim()) {
       return window.NEREDEYENIR_API_BASE.trim().replace(/\/+$/u, "");
@@ -752,6 +1138,8 @@
   };
 
   let venuesPromise = null;
+  let searchRecordsPromise = null;
+  let cityNamesPromise = null;
 
   function normalizeForSearch(value) {
     return String(value || "")
@@ -781,7 +1169,7 @@
     return value.trim();
   }
 
-  function normalizeVenueRecord(record) {
+  function normalizeVenueRecord(record, options = {}) {
     if (!record || typeof record !== "object") {
       return null;
     }
@@ -789,9 +1177,11 @@
     const name = sanitizeText(record.name);
     const city = sanitizeText(record.city);
     const district = sanitizeText(record.district);
-    const sourcePlaceId = sanitizeText(record.sourcePlaceId);
+    const address = sanitizeText(record.address);
+    const sourcePlaceId = sanitizeText(record.sourcePlaceId || record.placeId);
+    const pageBase = sanitizeText(options.pageBase || "yemek");
 
-    if (!name || !city) {
+    if (!name) {
       return null;
     }
 
@@ -799,14 +1189,18 @@
       name,
       city,
       district,
+      address,
       sourcePlaceId,
+      pageBase,
+      openAsRestaurant: Boolean(options.openAsRestaurant),
       canonicalName: canonicalize(name),
+      canonicalSearchBlob: canonicalize([name, city, district, address, pageBase].join(" ")),
     };
   }
 
-  function normalizeVenueCollection(payload) {
+  function normalizeVenueCollection(payload, options = {}) {
     if (Array.isArray(payload)) {
-      return payload.map(normalizeVenueRecord).filter((venue) => venue !== null);
+      return payload.map((record) => normalizeVenueRecord(record, options)).filter((venue) => venue !== null);
     }
 
     if (payload && typeof payload === "object") {
@@ -817,7 +1211,7 @@
           : null;
 
       if (collection) {
-        return collection.map(normalizeVenueRecord).filter((venue) => venue !== null);
+        return collection.map((record) => normalizeVenueRecord(record, options)).filter((venue) => venue !== null);
       }
     }
 
@@ -828,8 +1222,9 @@
     const seen = new Set();
 
     return records.filter((venue) => {
+      const pageBase = sanitizeText(venue.pageBase);
       const key = String(venue.sourcePlaceId || "")
-        || `${canonicalize(venue.city)}|${canonicalize(venue.district)}|${venue.canonicalName}`;
+        || `${pageBase}|${canonicalize(venue.city)}|${canonicalize(venue.district)}|${venue.canonicalName}`;
 
       if (!key || seen.has(key)) {
         return false;
@@ -846,9 +1241,25 @@
       return [];
     }
 
-    const yemekRecords = normalizeVenueCollection(payload.yemek);
-    const kafeRecords = normalizeVenueCollection(payload.kafe);
+    const yemekRecords = normalizeVenueCollection(payload.yemek, {
+      pageBase: "yemek",
+      openAsRestaurant: true,
+    });
+    const kafeRecords = normalizeVenueCollection(payload.kafe, {
+      pageBase: "keyif",
+      openAsRestaurant: true,
+    });
     return dedupeVenueRecords([...yemekRecords, ...kafeRecords]);
+  }
+
+  function readFallbackCollection(globalKey, property) {
+    const payload = window[globalKey];
+    if (!payload || typeof payload !== "object") {
+      return [];
+    }
+
+    const collection = payload[property];
+    return Array.isArray(collection) ? collection : [];
   }
 
   async function fetchVenuePayload(path) {
@@ -875,12 +1286,27 @@
     }
 
     venuesPromise = (async () => {
+      const foodPayload = await fetchVenuePayload(FOOD_JSON_PATH);
+      const bundledRecords = dedupeVenueRecords(
+        normalizeVenueCollection(foodPayload, { pageBase: "keyif", openAsRestaurant: true }),
+      );
+
       if (VENUES_API_ENDPOINT) {
         const apiPayload = await fetchVenuePayload(VENUES_API_ENDPOINT);
-        const apiRecords = normalizeVenueCollection(apiPayload);
+        const apiRecords = normalizeVenueCollection(apiPayload, {
+          pageBase: "keyif",
+          openAsRestaurant: true,
+        });
         if (apiRecords.length > 0) {
+          if (bundledRecords.length > 0) {
+            return dedupeVenueRecords([...bundledRecords, ...apiRecords]);
+          }
           return apiRecords;
         }
+      }
+
+      if (bundledRecords.length > 0) {
+        return bundledRecords;
       }
 
       const fallbackRecords = readFallbackFoodRecords();
@@ -888,43 +1314,138 @@
         return fallbackRecords;
       }
 
-      const [yemekPayload, kafePayload] = await Promise.all([
-        fetchVenuePayload(YEMEK_JSON_PATH),
-        fetchVenuePayload(KAFE_JSON_PATH),
-      ]);
-      const bundledRecords = dedupeVenueRecords([
-        ...normalizeVenueCollection(yemekPayload),
-        ...normalizeVenueCollection(kafePayload),
-      ]);
-      if (bundledRecords.length > 0) {
-        return bundledRecords;
-      }
-
       const venuesPayload = await fetchVenuePayload(VENUES_JSON_PATH);
-      return normalizeVenueCollection(venuesPayload);
+      return normalizeVenueCollection(venuesPayload, {
+        pageBase: "keyif",
+        openAsRestaurant: true,
+      });
     })();
 
     return venuesPromise;
   }
 
-  function findMatchingVenue(venues, query) {
+  async function loadCategoryDataset(source) {
+    const payload = await fetchVenuePayload(source.dataPath);
+    const records = normalizeVenueCollection(payload, { pageBase: source.pageBase });
+    if (records.length > 0) {
+      return records;
+    }
+
+    const fallbackRecords = source.fallbacks.flatMap((fallback) => {
+      return normalizeVenueCollection(readFallbackCollection(fallback.globalKey, fallback.property), {
+        pageBase: source.pageBase,
+      });
+    });
+    return dedupeVenueRecords(fallbackRecords);
+  }
+
+  async function loadSearchRecords() {
+    if (searchRecordsPromise) {
+      return searchRecordsPromise;
+    }
+
+    searchRecordsPromise = (async () => {
+      const [foodRecords, categoryCollections] = await Promise.all([
+        loadVenues(),
+        Promise.all(CATEGORY_DATASET_SOURCES.map((source) => loadCategoryDataset(source))),
+      ]);
+
+      return dedupeVenueRecords([...foodRecords, ...categoryCollections.flat()]);
+    })();
+
+    return searchRecordsPromise;
+  }
+
+  function fallbackDistrictMap() {
+    const payload = window.NEREDEYENIR_FALLBACK_DATA;
+    if (!payload || typeof payload !== "object") {
+      return null;
+    }
+
+    const districts = payload.districts;
+    if (!districts || typeof districts !== "object" || Array.isArray(districts)) {
+      return null;
+    }
+
+    return districts;
+  }
+
+  async function loadCityNames() {
+    if (cityNamesPromise) {
+      return cityNamesPromise;
+    }
+
+    cityNamesPromise = (async () => {
+      const fallbackMap = fallbackDistrictMap();
+      if (fallbackMap) {
+        return Object.keys(fallbackMap);
+      }
+
+      const payload = await fetchVenuePayload(DISTRICTS_JSON_PATH);
+      if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+        return [];
+      }
+
+      return Object.keys(payload);
+    })();
+
+    return cityNamesPromise;
+  }
+
+  async function findMatchingCityName(rawQuery) {
+    const canonicalQuery = canonicalize(rawQuery);
+    if (!canonicalQuery) {
+      return "";
+    }
+
+    const cityNames = await loadCityNames();
+    if (cityNames.length === 0) {
+      return "";
+    }
+
+    const exact = cityNames.find((city) => canonicalize(city) === canonicalQuery);
+    if (exact) {
+      return exact;
+    }
+
+    if (canonicalQuery.length < 3) {
+      return "";
+    }
+
+    return cityNames.find((city) => {
+      const canonicalCity = canonicalize(city);
+      return canonicalCity.startsWith(canonicalQuery) || canonicalQuery.startsWith(canonicalCity);
+    }) || "";
+  }
+
+  function findMatchingRecord(records, query) {
     const canonicalQuery = canonicalize(query);
     if (!canonicalQuery) {
       return null;
     }
 
-    const exactMatch = venues.find((venue) => venue.canonicalName === canonicalQuery);
+    const exactMatch = records.find((record) => record.canonicalName === canonicalQuery);
     if (exactMatch) {
       return exactMatch;
     }
 
-    const prefixMatch = venues.find((venue) => venue.canonicalName.startsWith(canonicalQuery));
+    const prefixMatch = records.find((record) => record.canonicalName.startsWith(canonicalQuery));
     if (prefixMatch) {
       return prefixMatch;
     }
 
     if (canonicalQuery.length >= 3) {
-      return venues.find((venue) => venue.canonicalName.includes(canonicalQuery)) || null;
+      const containsMatch = records.find((record) => record.canonicalName.includes(canonicalQuery));
+      if (containsMatch) {
+        return containsMatch;
+      }
+
+      const queryTokens = canonicalQuery.split(" ").filter((token) => token.length >= 2);
+      if (queryTokens.length >= 2) {
+        return records.find((record) => {
+          return queryTokens.every((token) => record.canonicalSearchBlob.includes(token));
+        }) || null;
+      }
     }
 
     return null;
@@ -960,17 +1481,42 @@
     return null;
   }
 
-  function restaurantUrlFor(venue) {
-    const targetUrl = new URL("restaurant.html", window.location.href);
-    targetUrl.searchParams.set("il", toSlug(venue.city));
-    targetUrl.searchParams.set("ilce", toSlug(venue.district || ""));
-    targetUrl.searchParams.set("mekan", toSlug(venue.name));
-
-    if (venue.sourcePlaceId) {
-      targetUrl.searchParams.set("pid", venue.sourcePlaceId);
+  function applyVenueParams(targetUrl, record) {
+    if (!(targetUrl instanceof URL) || !record || typeof record !== "object") {
+      return;
     }
 
-    return `${targetUrl.pathname}${targetUrl.search}`;
+    if (record.name) {
+      targetUrl.searchParams.set("mekan", String(record.name).trim());
+    }
+
+    if (record.sourcePlaceId) {
+      targetUrl.searchParams.set("pid", String(record.sourcePlaceId).trim());
+    }
+  }
+
+  function categoryUrlFor(record) {
+    const pageBase = sanitizeText(record.pageBase);
+    if (!pageBase) {
+      return cityUrlFor(record.city || record.name || "");
+    }
+
+    if (record.city && record.district && DISTRICT_ROUTE_PAGE_BASES.has(pageBase)) {
+      const targetUrl = new URL(`${pageBase}-district.html`, window.location.href);
+      targetUrl.searchParams.set("sehir", toSlug(record.city));
+      targetUrl.searchParams.set("ilce", toSlug(record.district));
+      applyVenueParams(targetUrl, record);
+      return `${targetUrl.pathname}${targetUrl.search}`;
+    }
+
+    if (record.city && CITY_ROUTE_PAGE_BASES.has(pageBase)) {
+      const targetUrl = new URL(`${pageBase}-city.html`, window.location.href);
+      targetUrl.searchParams.set("sehir", toSlug(record.city));
+      applyVenueParams(targetUrl, record);
+      return `${targetUrl.pathname}${targetUrl.search}`;
+    }
+
+    return `${pageBase}.html`;
   }
 
   function cityUrlFor(rawQuery) {
@@ -1011,11 +1557,17 @@
     setLoadingState(true);
 
     try {
-      const venues = await loadVenues();
-      const matchedVenue = findMatchingVenue(venues, query);
+      const matchedCity = await findMatchingCityName(query);
+      if (matchedCity) {
+        window.location.assign(cityUrlFor(matchedCity));
+        return;
+      }
 
-      if (matchedVenue) {
-        window.location.assign(restaurantUrlFor(matchedVenue));
+      const records = await loadSearchRecords();
+      const matchedRecord = findMatchingRecord(records, query);
+
+      if (matchedRecord) {
+        window.location.assign(categoryUrlFor(matchedRecord));
         return;
       }
 

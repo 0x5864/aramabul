@@ -1155,6 +1155,80 @@ function sanitizeText(value, fallback = "") {
   return cleaned.length > 0 ? cleaned.slice(0, 80) : fallback;
 }
 
+function inferVenuePageBase(venue) {
+  const searchable = normalizeForSearch(
+    [sanitizeText(venue?.cuisine), sanitizeText(venue?.name)].filter(Boolean).join(" "),
+  );
+
+  if (!searchable) {
+    return "keyif";
+  }
+
+  if (searchable.includes("eczane")) {
+    return "eczane";
+  }
+  if (searchable.includes("veteriner") || searchable.includes("vet")) {
+    return "veteriner";
+  }
+  if (searchable.includes("kuafor") || searchable.includes("berber") || searchable.includes("guzellik")) {
+    return "kuafor";
+  }
+  if (searchable.includes("atm")) {
+    return "atm";
+  }
+  if (searchable.includes("kargo")) {
+    return "kargo";
+  }
+  if (searchable.includes("noter")) {
+    return "noter";
+  }
+  if (searchable.includes("aile sagligi") || searchable.includes("aile hekimi") || searchable.includes("asm")) {
+    return "asm";
+  }
+  if (searchable.includes("dis klinigi") || searchable.includes("dentist") || searchable.includes("dental")) {
+    return "dis-klinikleri";
+  }
+  if (searchable.includes("otopark") || searchable.includes("parking")) {
+    return "otopark";
+  }
+  if (
+    searchable.includes("otel")
+    || searchable.includes("hotel")
+    || searchable.includes("hostel")
+    || searchable.includes("resort")
+    || searchable.includes("pansiyon")
+  ) {
+    return "otel";
+  }
+  if (
+    searchable.includes("akaryakit")
+    || searchable.includes("petrol")
+    || searchable.includes("benzin")
+    || searchable.includes("istasyon")
+  ) {
+    return "gezi";
+  }
+  if (
+    searchable.includes("durak")
+    || searchable.includes("metro")
+    || searchable.includes("tramvay")
+    || searchable.includes("otobus")
+  ) {
+    return "duraklar";
+  }
+  if (searchable.includes("market") || searchable.includes("supermarket") || searchable.includes("bakkal")) {
+    return "market";
+  }
+  if (searchable.includes("banka") || searchable.includes("bank")) {
+    return "banka";
+  }
+  if (searchable.includes("hastane") || searchable.includes("hospital")) {
+    return "hastane";
+  }
+
+  return "keyif";
+}
+
 function normalizeCuisineLabel(value, fallback = "Yerel") {
   const cleaned = sanitizeText(value, fallback);
   const normalized = normalizeForSearch(cleaned);
@@ -2132,10 +2206,52 @@ function restaurantPageUrl(venue) {
     return "#";
   }
 
-  const targetUrl = new URL("restaurant.html", window.location.href);
-  targetUrl.searchParams.set("il", toSlug(venue.city));
-  targetUrl.searchParams.set("ilce", toSlug(venue.district || ""));
-  targetUrl.searchParams.set("mekan", toSlug(venue.name));
+  const pageBase = inferVenuePageBase(venue);
+  const hasDistrict = Boolean(sanitizeText(venue.district));
+  const districtRouteBases = new Set([
+    "kuafor",
+    "veteriner",
+    "eczane",
+    "keyif",
+    "otel",
+    "atm",
+    "kargo",
+    "noter",
+    "asm",
+    "dis-klinikleri",
+    "duraklar",
+    "gezi",
+    "otopark",
+  ]);
+  const cityRouteBases = new Set([
+    "kuafor",
+    "veteriner",
+    "eczane",
+    "keyif",
+    "otel",
+    "atm",
+    "kargo",
+    "noter",
+    "asm",
+    "dis-klinikleri",
+    "duraklar",
+    "gezi",
+    "otopark",
+  ]);
+  const targetUrl = hasDistrict && districtRouteBases.has(pageBase)
+    ? new URL(`${pageBase}-district.html`, window.location.href)
+    : cityRouteBases.has(pageBase)
+      ? new URL(`${pageBase}-city.html`, window.location.href)
+      : new URL(`${pageBase}.html`, window.location.href);
+
+  if (hasDistrict && districtRouteBases.has(pageBase)) {
+    targetUrl.searchParams.set("sehir", toSlug(venue.city));
+    targetUrl.searchParams.set("ilce", toSlug(venue.district || ""));
+  } else if (cityRouteBases.has(pageBase)) {
+    targetUrl.searchParams.set("sehir", toSlug(venue.city));
+  }
+
+  targetUrl.searchParams.set("mekan", sanitizeText(venue.name, "mekan"));
 
   if (venue.sourcePlaceId) {
     targetUrl.searchParams.set("pid", venue.sourcePlaceId);

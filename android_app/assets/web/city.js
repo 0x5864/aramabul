@@ -1,6 +1,5 @@
 const VENUES_JSON_PATH = "data/venues.json";
-const YEMEK_JSON_PATH = "data/yemek.json";
-const KAFE_JSON_PATH = "data/kafe.json";
+const FOOD_JSON_PATH = "data/keyif-food.json";
 const DISTRICTS_JSON_PATH = "data/districts.json";
 const API_BASE_URL = (() => {
   if (typeof window === "undefined") {
@@ -212,7 +211,7 @@ const CITY_I18N = {
     title: "arama bul | {city} Restoranları",
     cityTitle: "{city} Restoranları",
     toplineHome: "Anasayfa",
-    toplineFood: "Yemek",
+    toplineFood: "Keyif",
     cityLink: "{city} İli",
     districtFallback: "İlçe",
     districtLabel: "{district} İlçesi",
@@ -269,7 +268,7 @@ const CITY_I18N = {
     title: "arama bul | {city} Restaurants",
     cityTitle: "{city} Restaurants",
     toplineHome: "Home",
-    toplineFood: "Food",
+    toplineFood: "Keyif",
     cityLink: "{city} City",
     districtFallback: "District",
     districtLabel: "{district} District",
@@ -326,7 +325,7 @@ const CITY_I18N = {
     title: "arama bul | Рестораны {city}",
     cityTitle: "Рестораны {city}",
     toplineHome: "Главная",
-    toplineFood: "Еда",
+    toplineFood: "Keyif",
     cityLink: "Город {city}",
     districtFallback: "Район",
     districtLabel: "Район {district}",
@@ -383,7 +382,7 @@ const CITY_I18N = {
     title: "arama bul | Restaurants in {city}",
     cityTitle: "{city} Restaurants",
     toplineHome: "Startseite",
-    toplineFood: "Essen",
+    toplineFood: "Keyif",
     cityLink: "Stadt {city}",
     districtFallback: "Bezirk",
     districtLabel: "{district} Bezirk",
@@ -440,7 +439,7 @@ const CITY_I18N = {
     title: "arama bul | {city} 餐厅",
     cityTitle: "{city} 餐厅",
     toplineHome: "首页",
-    toplineFood: "美食",
+    toplineFood: "Keyif",
     cityLink: "{city} 市",
     districtFallback: "区",
     districtLabel: "{district} 区",
@@ -542,7 +541,7 @@ function applyCityStaticTranslations() {
   }
 
   if (cityToplineFoodLink) {
-    cityToplineFoodLink.href = "yemek.html";
+    cityToplineFoodLink.href = "keyif.html";
     cityToplineFoodLink.textContent = cityT("toplineFood");
   }
 
@@ -634,13 +633,10 @@ function applyCityStaticTranslations() {
       items[0].textContent = cityT("footerAbout");
     }
     if (items[1]) {
-      items[1].textContent = cityT("footerCareer");
+      items[1].textContent = cityT("footerTech");
     }
     if (items[2]) {
-      items[2].textContent = cityT("footerTech");
-    }
-    if (items[3]) {
-      items[3].textContent = cityT("footerContact");
+      items[2].textContent = cityT("footerContact");
     }
   }
 
@@ -726,6 +722,80 @@ function sanitizeText(value, fallback = "") {
 
   const cleaned = value.trim();
   return cleaned.length > 0 ? cleaned.slice(0, 80) : fallback;
+}
+
+function inferVenuePageBase(venue) {
+  const searchable = normalizeForSearch(
+    [sanitizeText(venue?.cuisine), sanitizeText(venue?.name)].filter(Boolean).join(" "),
+  );
+
+  if (!searchable) {
+    return "keyif";
+  }
+
+  if (searchable.includes("eczane")) {
+    return "eczane";
+  }
+  if (searchable.includes("veteriner") || searchable.includes("vet")) {
+    return "veteriner";
+  }
+  if (searchable.includes("kuafor") || searchable.includes("berber") || searchable.includes("guzellik")) {
+    return "kuafor";
+  }
+  if (searchable.includes("atm")) {
+    return "atm";
+  }
+  if (searchable.includes("kargo")) {
+    return "kargo";
+  }
+  if (searchable.includes("noter")) {
+    return "noter";
+  }
+  if (searchable.includes("aile sagligi") || searchable.includes("aile hekimi") || searchable.includes("asm")) {
+    return "asm";
+  }
+  if (searchable.includes("dis klinigi") || searchable.includes("dentist") || searchable.includes("dental")) {
+    return "dis-klinikleri";
+  }
+  if (searchable.includes("otopark") || searchable.includes("parking")) {
+    return "otopark";
+  }
+  if (
+    searchable.includes("otel")
+    || searchable.includes("hotel")
+    || searchable.includes("hostel")
+    || searchable.includes("resort")
+    || searchable.includes("pansiyon")
+  ) {
+    return "otel";
+  }
+  if (
+    searchable.includes("akaryakit")
+    || searchable.includes("petrol")
+    || searchable.includes("benzin")
+    || searchable.includes("istasyon")
+  ) {
+    return "gezi";
+  }
+  if (
+    searchable.includes("durak")
+    || searchable.includes("metro")
+    || searchable.includes("tramvay")
+    || searchable.includes("otobus")
+  ) {
+    return "duraklar";
+  }
+  if (searchable.includes("market") || searchable.includes("supermarket") || searchable.includes("bakkal")) {
+    return "market";
+  }
+  if (searchable.includes("banka") || searchable.includes("bank")) {
+    return "banka";
+  }
+  if (searchable.includes("hastane") || searchable.includes("hospital")) {
+    return "hastane";
+  }
+
+  return "keyif";
 }
 
 function normalizeCuisineLabel(value, fallback = "Yerel") {
@@ -864,11 +934,15 @@ function normalizeVenueRecord(record) {
     userRatingCount: sanitizeRatingCount(record.userRatingCount),
     budget: sanitizeBudget(record.budget),
     address: sanitizeAddress(record.address, ""),
-    sourcePlaceId: sanitizeText(record.sourcePlaceId, ""),
+    neighborhood: sanitizeText(record.neighborhood || record.mahalle, ""),
+    postalCode: sanitizeText(record.postalCode || record.postcode, ""),
+    sourcePlaceId: sanitizeText(record.sourcePlaceId || record.placeId, ""),
     photoUri: sanitizeUrl(record.photoUri || "", ""),
     galleryPhotoUris: sanitizeUrlArray(record.galleryPhotoUris, 4),
     cuisineIndex: normalizeForSearch(cuisine),
-    searchIndex: normalizeForSearch(`${name} ${cuisine} ${city} ${district}`),
+    searchIndex: normalizeForSearch(
+      `${name} ${cuisine} ${city} ${district} ${record.neighborhood || record.mahalle || ""} ${record.postalCode || record.postcode || ""} ${record.address || ""}`,
+    ),
   };
 }
 
@@ -1030,19 +1104,18 @@ function readFallbackFoodRecords() {
 }
 
 async function loadBundledVenueCollections() {
+  const foodPayload = await fetchJson(FOOD_JSON_PATH);
+  const foodRecords = dedupeVenueRecords(normalizeVenueCollection(foodPayload));
+  if (foodRecords.length > 0) {
+    return foodRecords;
+  }
+
   const fallbackRecords = readFallbackFoodRecords();
   if (fallbackRecords.length > 0) {
     return fallbackRecords;
   }
 
-  const [yemekPayload, kafePayload] = await Promise.all([
-    fetchJson(YEMEK_JSON_PATH),
-    fetchJson(KAFE_JSON_PATH),
-  ]);
-
-  const yemekRecords = normalizeVenueCollection(yemekPayload);
-  const kafeRecords = normalizeVenueCollection(kafePayload);
-  return dedupeVenueRecords([...yemekRecords, ...kafeRecords]);
+  return [];
 }
 
 async function loadVenues() {
@@ -1051,6 +1124,10 @@ async function loadVenues() {
     const apiRecords = normalizeVenueCollection(apiPayload);
 
     if (apiRecords.length > 0) {
+      const bundledRecords = await loadBundledVenueCollections();
+      if (bundledRecords.length > 0) {
+        return dedupeVenueRecords([...bundledRecords, ...apiRecords]);
+      }
       return apiRecords;
     }
   }
@@ -1248,10 +1325,52 @@ function setVenueImage(imageElement, imageUrl) {
 }
 
 function restaurantDetailUrl(venue) {
-  const targetUrl = new URL("restaurant.html", window.location.href);
-  targetUrl.searchParams.set("il", toSlug(venue.city));
-  targetUrl.searchParams.set("ilce", toSlug(venue.district));
-  targetUrl.searchParams.set("mekan", toSlug(venue.name));
+  const pageBase = inferVenuePageBase(venue);
+  const hasDistrict = Boolean(sanitizeText(venue.district));
+  const districtRouteBases = new Set([
+    "kuafor",
+    "veteriner",
+    "eczane",
+    "keyif",
+    "otel",
+    "atm",
+    "kargo",
+    "noter",
+    "asm",
+    "dis-klinikleri",
+    "duraklar",
+    "gezi",
+    "otopark",
+  ]);
+  const cityRouteBases = new Set([
+    "kuafor",
+    "veteriner",
+    "eczane",
+    "keyif",
+    "otel",
+    "atm",
+    "kargo",
+    "noter",
+    "asm",
+    "dis-klinikleri",
+    "duraklar",
+    "gezi",
+    "otopark",
+  ]);
+  const targetUrl = hasDistrict && districtRouteBases.has(pageBase)
+    ? new URL(`${pageBase}-district.html`, window.location.href)
+    : cityRouteBases.has(pageBase)
+      ? new URL(`${pageBase}-city.html`, window.location.href)
+      : new URL(`${pageBase}.html`, window.location.href);
+
+  if (hasDistrict && districtRouteBases.has(pageBase)) {
+    targetUrl.searchParams.set("sehir", toSlug(venue.city));
+    targetUrl.searchParams.set("ilce", toSlug(venue.district));
+  } else if (cityRouteBases.has(pageBase)) {
+    targetUrl.searchParams.set("sehir", toSlug(venue.city));
+  }
+
+  targetUrl.searchParams.set("mekan", sanitizeText(venue.name, "mekan"));
 
   if (venue.sourcePlaceId) {
     targetUrl.searchParams.set("pid", venue.sourcePlaceId);
@@ -1349,8 +1468,24 @@ function applyOrhaneliDemoLayout(enabled) {
 
 function googleRestaurantSearchUrl(venue) {
   const mapsUrl = new URL("https://www.google.com/maps/search/");
+  const seen = new Set();
+  const queryParts = [];
+
+  [venue?.name, venue?.address, venue?.neighborhood, venue?.postalCode, venue?.district, venue?.city]
+    .map((value) => sanitizeText(value, ""))
+    .filter(Boolean)
+    .forEach((value) => {
+      const key = value.toLocaleLowerCase("tr");
+      if (seen.has(key)) {
+        return;
+      }
+
+      seen.add(key);
+      queryParts.push(value);
+    });
+
   mapsUrl.searchParams.set("api", "1");
-  mapsUrl.searchParams.set("query", `${venue.name} ${venue.district} ${venue.city}`);
+  mapsUrl.searchParams.set("query", queryParts.join(" "));
 
   if (typeof venue.sourcePlaceId === "string" && venue.sourcePlaceId.trim()) {
     mapsUrl.searchParams.set("query_place_id", venue.sourcePlaceId.trim());

@@ -213,7 +213,7 @@ async function fetchInstagramFromWebsite(websiteUrl) {
         method: 'GET',
         headers: {
           Accept: 'text/html,application/xhtml+xml',
-          'User-Agent': 'arama bulBot/1.0 (+https://neredeyenir.local)',
+          'User-Agent': 'aramabulBot/1.0 (+https://aramabul.local)',
         },
         redirect: 'follow',
         signal: abortController.signal,
@@ -396,4 +396,3 @@ async function run() {
 }
 
 run();
-

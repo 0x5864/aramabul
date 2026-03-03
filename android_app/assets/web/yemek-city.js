@@ -1,6 +1,6 @@
-const ASSET_VERSION = "20260226-04";
+const ASSET_VERSION = "20260227-14";
 const DISTRICTS_JSON_PATH = "data/districts.json";
-const YEMEK_JSON_PATH = "data/yemek.json";
+const YEMEK_JSON_PATH = "data/keyif-food.json";
 
 const yemekCityTitle = document.querySelector("#yemekCityTitle");
 const yemekCityBreadcrumb = document.querySelector("#yemekCityBreadcrumb");
@@ -203,17 +203,17 @@ function readFallbackDistrictMap() {
 }
 
 async function loadDistricts() {
+  const payload = await fetchJsonWithFallback(DISTRICTS_JSON_PATH, {});
+  if (payload && typeof payload === "object" && !Array.isArray(payload)) {
+    return payload;
+  }
+
   const fallbackDistricts = readFallbackDistrictMap();
   if (fallbackDistricts) {
     return fallbackDistricts;
   }
 
-  const payload = await fetchJsonWithFallback(DISTRICTS_JSON_PATH, {});
-  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
-    return {};
-  }
-
-  return payload;
+  return {};
 }
 
 async function loadYemekRecords() {
@@ -263,15 +263,8 @@ function resolveDistrictList(matchedCity, districtMap, records) {
       .filter(Boolean),
   )].sort((left, right) => left.localeCompare(right, "tr"));
 
-  if (recordDistricts.length === 0) {
+  if (catalogDistricts.length > 0) {
     return catalogDistricts;
-  }
-
-  const recordDistrictKeys = new Set(recordDistricts.map((value) => normalizeName(value)));
-  const matchedCatalogDistricts = catalogDistricts.filter((value) => recordDistrictKeys.has(normalizeName(value)));
-
-  if (matchedCatalogDistricts.length > 0) {
-    return matchedCatalogDistricts;
   }
 
   return recordDistricts;

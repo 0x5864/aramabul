@@ -3,211 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#1f6f54" />
-    <title>arama bul | Restoran</title>
-    <meta name="description" content="Restoran detaylarını, puanını ve rezervasyon panelini görüntüle." />
-    <link rel="icon" type="image/png" href="assets/fav.png?v=20260223" />
-    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260223" />
-    <link rel="apple-touch-icon" href="assets/fav.png?v=20260223" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
+    <title>aramabul | Yonlendiriliyor</title>
+    <meta
+      name="description"
+      content="Eski mekan detayi baglantisi guncel kategori sayfasina yonlendiriliyor."
     />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
-    <link rel="stylesheet" href="styles.css?v=20260227-22" />
-    <link rel="stylesheet" href="restaurant.css" />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260227" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 1.5rem;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: #f4f0e6;
+        color: #011d36;
+      }
+
+      .legacy-redirect {
+        max-width: 30rem;
+        text-align: center;
+      }
+
+      .legacy-redirect h1 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .legacy-redirect p {
+        margin: 0.55rem 0 0;
+        font-size: 0.94rem;
+        line-height: 1.5;
+      }
+    </style>
   </head>
-  <body class="restaurant-page">
-    <div class="texture"></div>
-
-    <header class="global-header-band">
-      <nav class="topbar global-topbar">
-        <a class="brand" href="index.html" aria-label="arama bul">
-          <span class="brand-wordmark">arama bul</span>
-        </a>
-        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Genel arama">
-          <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
-          <input
-            id="headerSearchInput"
-            class="header-search-input"
-            type="search"
-            name="mekan"
-            placeholder="Ne bulmamı istersin?"
-            autocomplete="off"
-          />
-          <button class="header-search-btn" type="submit">Ara</button>
-        </form>
-      </nav>
-      <div class="global-topline"></div>
-    </header>
-
-    <main class="restaurant-shell">
-      <nav id="restaurantBreadcrumb" class="restaurant-breadcrumb" aria-label="Breadcrumb"></nav>
-
-      <section class="restaurant-hero">
-        <p id="restaurantLead" class="restaurant-lead"></p>
-        <h1 id="restaurantName" class="restaurant-name"></h1>
-        <div class="restaurant-rating-row">
-          <span id="restaurantStars" class="restaurant-stars"></span>
-          <strong id="restaurantScore" class="restaurant-score"></strong>
-          <span id="restaurantScoreLabel" class="restaurant-score-label">Çok iyi</span>
-          <a id="restaurantReviews" href="#" class="restaurant-reviews"></a>
-        </div>
-        <p id="restaurantMeta" class="restaurant-meta"></p>
-      </section>
-
-      <nav class="restaurant-tabs" aria-label="Detay sekmeleri">
-        <button type="button" class="restaurant-tab active" data-panel="overview">Genel Bilgi</button>
-        <button type="button" class="restaurant-tab" data-panel="location">Konum</button>
-        <button type="button" class="restaurant-tab" data-panel="comments">Yorumlar</button>
-        <button type="button" class="restaurant-tab" data-panel="overview">Fotoğraflar</button>
-      </nav>
-
-      <section class="restaurant-panel" data-panel="overview">
-        <section class="restaurant-content">
-          <div class="restaurant-gallery">
-            <img id="restaurantMainImage" class="restaurant-main-image" alt="Restoran ana görseli" loading="eager" />
-            <div class="restaurant-thumb-row">
-              <img class="restaurant-thumb" alt="Restoran detay görseli" loading="lazy" />
-              <img class="restaurant-thumb" alt="Restoran detay görseli" loading="lazy" />
-              <img class="restaurant-thumb" alt="Restoran detay görseli" loading="lazy" />
-            </div>
-            <article class="restaurant-overview">
-              <h2>Özet</h2>
-              <p id="restaurantOverviewText"></p>
-            </article>
-          </div>
-
-          <aside class="restaurant-booking">
-            <p class="restaurant-address-label">Adres</p>
-            <p class="restaurant-address" data-info-field="address"></p>
-            <p class="restaurant-phone-label">Telefon</p>
-            <p class="restaurant-phone" data-info-field="phone"></p>
-            <p class="restaurant-instagram-label">Instagram</p>
-            <p class="restaurant-instagram" data-info-field="instagram"></p>
-            <p class="restaurant-website-label">Web Sitesi</p>
-            <p class="restaurant-website" data-info-field="website"></p>
-          </aside>
-        </section>
-      </section>
-
-      <section class="restaurant-panel" data-panel="comments" hidden>
-        <article class="restaurant-comments-card">
-          <h2 class="restaurant-comments-title">Yorumlar</h2>
-          <p id="restaurantCommentsEmpty" class="restaurant-comments-empty">İlk yorumu sen yaz.</p>
-          <ul id="restaurantCommentsList" class="restaurant-comments-list"></ul>
-
-          <form id="restaurantCommentForm" class="restaurant-comment-form">
-            <label for="commentAuthor">Adın</label>
-            <input id="commentAuthor" name="author" type="text" maxlength="60" placeholder="Adını yaz" />
-
-            <label for="commentText">Yorumun</label>
-            <textarea
-              id="commentText"
-              name="comment"
-              rows="4"
-              maxlength="500"
-              placeholder="Deneyimini paylaş"
-              required
-            ></textarea>
-
-            <button type="submit" class="restaurant-comment-submit">Yorumu Gönder</button>
-            <p id="restaurantCommentMessage" class="restaurant-comment-message" aria-live="polite"></p>
-          </form>
-        </article>
-      </section>
-
-      <section class="restaurant-panel" data-panel="location" hidden>
-        <section class="restaurant-content">
-          <article class="restaurant-map-card">
-            <h2 class="restaurant-map-title">Konum</h2>
-            <div id="restaurantMapCanvas" class="restaurant-map-canvas" aria-label="Restoran konum haritası"></div>
-            <p id="restaurantMapStatus" class="restaurant-map-status" hidden></p>
-            <a id="restaurantMapLink" class="restaurant-map-link" href="#" target="_blank" rel="noopener noreferrer">
-              Google Haritalar'da aç
-            </a>
-          </article>
-
-          <aside class="restaurant-booking">
-            <p class="restaurant-address-label">Adres</p>
-            <p class="restaurant-address" data-info-field="address"></p>
-            <p class="restaurant-phone-label">Telefon</p>
-            <p class="restaurant-phone" data-info-field="phone"></p>
-            <p class="restaurant-instagram-label">Instagram</p>
-            <p class="restaurant-instagram" data-info-field="instagram"></p>
-            <p class="restaurant-website-label">Web Sitesi</p>
-            <p class="restaurant-website" data-info-field="website"></p>
-          </aside>
-        </section>
-      </section>
+  <body>
+    <main class="legacy-redirect" aria-live="polite">
+      <h1>Guncel mekan sayfasina yonlendiriliyor</h1>
+      <p>Eski detay sayfasi kaldirildi. Baglantin yeni kategori akisina tasiniyor.</p>
     </main>
-
-    <footer class="yr-footer" aria-label="Alt Bant">
-      <div class="yr-footer-inner">
-        <div class="yr-footer-grid">
-          <section class="yr-footer-col">
-            <h4>arama bul'u indir!</h4>
-            <a class="store-badge" href="#" aria-label="App Store">
-              <span class="store-badge-top">Hemen indirin</span>
-              <span class="store-badge-name">App Store</span>
-            </a>
-            <a class="store-badge" href="#" aria-label="Google Play">
-              <span class="store-badge-top">Hemen indirin</span>
-              <span class="store-badge-name">Google Play</span>
-            </a>
-          </section>
-
-          <section class="yr-footer-col">
-            <h4>arama bul'u keşfet</h4>
-            <a href="#">Hakkımızda</a>
-            <a href="#">Kariyer</a>
-            <a href="#">Teknoloji</a>
-            <a href="#">İletişim</a>
-          </section>
-
-          <section class="yr-footer-col">
-            <h4>Yardım mı lazım?</h4>
-            <a href="#">Sıkça Sorulan Sorular</a>
-            <a href="#">Kişisel Verilerin Korunması</a>
-            <a href="#">Gizlilik Politikası</a>
-            <a href="#">Kullanım Koşulları</a>
-            <a href="#">Çerez Politikası</a>
-          </section>
-
-          <section class="yr-footer-col">
-            <h4>İş ortaklığımız</h4>
-            <a href="#">Restoran ekle</a>
-            <a href="#">Fiyat ekle</a>
-            <a href="#">İş birliği</a>
-          </section>
-
-        </div>
-
-        <div class="yr-footer-bottom">
-          <p>© 2026 arama bul</p>
-          <div class="yr-footer-social" aria-label="Sosyal">
-            <a href="#" aria-label="Instagram">○</a>
-            <a href="#" aria-label="Ara">◌</a>
-            <a href="#" aria-label="Dünya">◍</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
-    <script src="data/fallback-food-data.js?v=20260226-04"></script>
-    <script src="header-search.js?v=20260227-18"></script>
-    <script src="restaurant.js?v=20260226-04"></script>
+    <script src="legacy-restaurant-redirect.js?v=20260303-01"></script>
   </body>
 </html>

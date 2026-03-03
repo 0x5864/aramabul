@@ -127,13 +127,13 @@ function renderHeader() {
   if (akaryakitDistrictCityLink) {
     akaryakitDistrictCityLink.textContent = state.city || "İl";
     akaryakitDistrictCityLink.href = state.city
-      ? `akaryakit-city.html?sehir=${encodeURIComponent(state.city)}`
-      : "akaryakit.html";
+      ? `keyif-city.html?sehir=${encodeURIComponent(state.city)}`
+      : "keyif.html";
   }
 
   document.title = hasLocation
-    ? `arama bul | ${state.city} İli / ${state.district} İlçesi Akaryakıt İstasyonları`
-    : "arama bul | İlçe Akaryakıt İstasyonları";
+    ? `aramabul | ${state.city} İli / ${state.district} İlçesi Akaryakıt İstasyonları`
+    : "aramabul | İlçe Akaryakıt İstasyonları";
 }
 
 function renderPlaces() {
@@ -177,7 +177,7 @@ function renderPlaces() {
 }
 
 async function loadAkaryakitPlaces() {
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && Array.isArray(fallback.akaryakit)) {
     return fallback.akaryakit
       .map((item) => ({

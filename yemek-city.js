@@ -1,6 +1,9 @@
-const ASSET_VERSION = "20260227-14";
+const ASSET_VERSION = "20260302-01";
 const DISTRICTS_JSON_PATH = "data/districts.json";
-const YEMEK_JSON_PATH = "data/yemek.json";
+const YEMEK_JSON_PATH = "data/keyif-food.json";
+const runtime = window.ARAMABUL_RUNTIME;
+const FALLBACK_DATA_SCRIPT = "data/fallback-data.js?v=20260302-01";
+const FALLBACK_FOOD_SCRIPT = "data/fallback-food-data.js?v=20260302-01";
 
 const yemekCityTitle = document.querySelector("#yemekCityTitle");
 const yemekCityBreadcrumb = document.querySelector("#yemekCityBreadcrumb");
@@ -189,12 +192,46 @@ function renderCityHeader() {
   }
 
   document.title = state.city
-    ? `arama bul | ${state.city} İli`
-    : "arama bul | Yemek İl Sayfası";
+    ? `aramabul | ${state.city} İli`
+    : "aramabul | Yemek İl Sayfası";
 }
 
-function readFallbackDistrictMap() {
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+async function ensureFallbackData() {
+  if (window.ARAMABUL_FALLBACK_DATA) {
+    return;
+  }
+
+  if (!runtime || typeof runtime.loadScriptOnce !== "function") {
+    return;
+  }
+
+  try {
+    await runtime.loadScriptOnce(FALLBACK_DATA_SCRIPT);
+  } catch (_error) {
+    // Use fetch fallback below if the script cannot be loaded.
+  }
+}
+
+async function ensureFallbackFoodData() {
+  if (window.ARAMABUL_FALLBACK_FOOD_DATA) {
+    return;
+  }
+
+  if (!runtime || typeof runtime.loadScriptOnce !== "function") {
+    return;
+  }
+
+  try {
+    await runtime.loadScriptOnce(FALLBACK_FOOD_SCRIPT);
+  } catch (_error) {
+    // Use fetch fallback below if the script cannot be loaded.
+  }
+}
+
+async function readFallbackDistrictMap() {
+  await ensureFallbackData();
+
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && fallback.districts && typeof fallback.districts === "object" && !Array.isArray(fallback.districts)) {
     return fallback.districts;
   }
@@ -208,7 +245,7 @@ async function loadDistricts() {
     return payload;
   }
 
-  const fallbackDistricts = readFallbackDistrictMap();
+  const fallbackDistricts = await readFallbackDistrictMap();
   if (fallbackDistricts) {
     return fallbackDistricts;
   }
@@ -217,7 +254,9 @@ async function loadDistricts() {
 }
 
 async function loadYemekRecords() {
-  const fallbackPayload = window.NEREDEYENIR_FALLBACK_FOOD_DATA;
+  await ensureFallbackFoodData();
+
+  const fallbackPayload = window.ARAMABUL_FALLBACK_FOOD_DATA;
   if (
     fallbackPayload &&
     typeof fallbackPayload === "object" &&

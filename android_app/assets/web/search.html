@@ -9,23 +9,32 @@
       name="description"
       content="Restoran, ilçe veya şehir adına göre arama yap ve doğru sayfaya hızlıca geç."
     />
-    <link rel="icon" type="image/png" href="assets/fav.png?v=20260223" />
-    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260223" />
-    <link rel="apple-touch-icon" href="assets/fav.png?v=20260223" />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260227" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260303-18" />
   </head>
   <body class="search-page">
     <div class="texture"></div>
 
     <header class="global-header-band">
       <nav class="topbar global-topbar search-topbar">
-        <form class="header-search" action="restaurant.html" method="get" role="search" aria-label="Genel arama">
+        <a class="brand" href="index.html" aria-label="arama bul">
+          <span class="brand-wordmark">arama bul</span>
+        </a>
+      </nav>
+      <div class="global-topline"></div>
+    </header>
+
+    <main class="hero">
+      <section class="search-page-shell" aria-label="Arama alanı">
+        <form class="header-search" action="search.html" method="get" role="search" aria-label="Genel arama">
           <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
           <input
             id="headerSearchInput"
@@ -39,12 +48,9 @@
             <span class="header-search-btn-text">Bul</span>
           </button>
         </form>
-      </nav>
-      <div class="global-topline"></div>
-    </header>
+      </section>
+    </main>
 
-    <main class="hero"></main>
-
-    <script src="header-search.js"></script>
+    <script src="header-search.js?v=20260303-21"></script>
   </body>
 </html>

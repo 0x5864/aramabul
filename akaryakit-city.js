@@ -45,7 +45,7 @@ function findCityName(queryCity, cityNames) {
 }
 
 function districtPageUrl(cityName, districtName) {
-  return `akaryakit-district.html?sehir=${encodeURIComponent(cityName)}&ilce=${encodeURIComponent(districtName)}`;
+  return `keyif-district.html?sehir=${encodeURIComponent(cityName)}&ilce=${encodeURIComponent(districtName)}`;
 }
 
 function renderDistrictGrid() {
@@ -97,12 +97,12 @@ function renderCityHeader() {
   }
 
   document.title = state.city
-    ? `arama bul | ${state.city} İli`
-    : "arama bul | Akaryakıt İl Sayfası";
+    ? `aramabul | ${state.city} İli`
+    : "aramabul | Akaryakıt İl Sayfası";
 }
 
 async function loadDistricts() {
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && fallback.districts && typeof fallback.districts === "object" && !Array.isArray(fallback.districts)) {
     return fallback.districts;
   }
@@ -117,7 +117,7 @@ async function loadDistricts() {
 }
 
 async function loadAkaryakitRecords() {
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && Array.isArray(fallback.akaryakit)) {
     return fallback.akaryakit
       .map((item) => ({

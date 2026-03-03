@@ -45,7 +45,7 @@ function findCityName(queryCity, cityNames) {
 }
 
 function districtPageUrl(cityName, districtName) {
-  return `akaryakit-district.html?sehir=${encodeURIComponent(cityName)}&ilce=${encodeURIComponent(districtName)}`;
+  return `keyif-district.html?sehir=${encodeURIComponent(cityName)}&ilce=${encodeURIComponent(districtName)}`;
 }
 
 function renderDistrictGrid() {

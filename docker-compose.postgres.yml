@@ -1,21 +1,21 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: neredeyenir-postgres
+    container_name: aramabul-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: neredeyenir
-      POSTGRES_USER: neredeyenir
-      POSTGRES_PASSWORD: neredeyenir
+      POSTGRES_DB: aramabul
+      POSTGRES_USER: aramabul
+      POSTGRES_PASSWORD: aramabul
     ports:
       - "5432:5432"
     volumes:
-      - neredeyenir_pg_data:/var/lib/postgresql/data
+      - aramabul_pg_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U neredeyenir -d neredeyenir"]
+      test: ["CMD-SHELL", "pg_isready -U aramabul -d aramabul"]
       interval: 10s
       timeout: 5s
       retries: 10
 
 volumes:
-  neredeyenir_pg_data:
+  aramabul_pg_data:

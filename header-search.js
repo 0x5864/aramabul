@@ -1,430 +1,44 @@
 (() => {
-  const LANG_STORAGE_KEY = "neredeyenir.selectedLanguage.v1";
-  const LANGUAGE_OPTIONS = {
-    TR: { htmlLang: "tr" },
-    EN: { htmlLang: "en" },
-    RU: { htmlLang: "ru" },
-    DE: { htmlLang: "de" },
-    ZH: { htmlLang: "zh" },
+  const headerState = window.ARAMABUL_HEADER_STATE;
+  const headerI18n = window.ARAMABUL_HEADER_I18N;
+  const headerNav = window.ARAMABUL_HEADER_NAV;
+  const headerShell = window.ARAMABUL_HEADER_SHELL || { hideTopLayerForCategoryPages: () => {} };
+  const headerSearchUi = window.ARAMABUL_HEADER_SEARCH_UI || {
+    applySearchUiLanguage: () => {},
+    setLoadingState: () => {},
   };
-  const SEARCH_BUTTON_TEXT = {
-    TR: { idle: "Ara", loading: "Aranıyor..." },
-    EN: { idle: "Search", loading: "Searching..." },
-    RU: { idle: "Поиск", loading: "Поиск..." },
-    DE: { idle: "Suchen", loading: "Suche..." },
-    ZH: { idle: "搜索", loading: "搜索中..." },
-  };
-  const SEARCH_PAGE_BUTTON_TEXT = {
-    TR: { idle: "Bul", loading: "Bulunuyor..." },
-    EN: { idle: "Find", loading: "Finding..." },
-    RU: { idle: "Найти", loading: "Поиск..." },
-    DE: { idle: "Finden", loading: "Suche..." },
-    ZH: { idle: "查找", loading: "查找中..." },
-  };
-  const SEARCH_PLACEHOLDER_TEXT = {
-    TR: "Ne bulmamı istersin?",
-    EN: "What should I find?",
-    RU: "Что мне найти?",
-    DE: "Was soll ich finden?",
-    ZH: "你想让我找什么？",
-  };
-  const SEARCH_PAGE_PLACEHOLDER_TEXT = {
-    TR: "Ne bulmamı istersin?",
-    EN: "What should I find?",
-    RU: "Что мне найти?",
-    DE: "Was soll ich finden?",
-    ZH: "你想让我找什么？",
-  };
-  const SEARCH_FORM_ARIA_TEXT = {
-    TR: "Genel arama",
-    EN: "General search",
-    RU: "Общий поиск",
-    DE: "Allgemeine Suche",
-    ZH: "通用搜索",
-  };
-  const SEARCH_INPUT_LABEL_TEXT = {
-    TR: "Arama ifadesi",
-    EN: "Search query",
-    RU: "Поисковый запрос",
-    DE: "Suchbegriff",
-    ZH: "搜索关键词",
-  };
-  const SEARCH_PAGE_INPUT_LABEL_TEXT = {
-    TR: "Arama ifadesi",
-    EN: "Search query",
-    RU: "Поисковый запрос",
-    DE: "Suchbegriff",
-    ZH: "搜索关键词",
-  };
-  const FOOTER_HEADINGS = {
-    TR: { discover: "Keşfet", help: "Yardım" },
-    EN: { discover: "Discover", help: "Help" },
-    RU: { discover: "Обзор", help: "Помощь" },
-    DE: { discover: "Entdecken", help: "Hilfe" },
-    ZH: { discover: "探索", help: "帮助" },
-  };
-  const CATEGORY_SEARCH_ROUTES = [
-    { href: "yemek.html", keywords: ["yemek", "restoran", "restaurant", "food"] },
-    { href: "kafe.html", keywords: ["kafe", "cafe", "kahve"] },
-    { href: "kuafor.html", keywords: ["kuafor", "kuaför", "berber", "sac", "saç", "guzellik", "güzellik"] },
-    { href: "veteriner.html", keywords: ["veteriner", "vet", "hayvan"] },
-    { href: "eczane.html", keywords: ["eczane", "pharmacy", "saglik", "sağlık", "health", "klinik", "clinic"] },
-    { href: "market.html", keywords: ["market", "supermarket", "süpermarket", "bakkal"] },
-    { href: "akaryakit.html", keywords: ["akaryakit", "akaryakıt", "benzin", "fuel", "istasyon"] },
-    { href: "hastane.html", keywords: ["hastane", "hospital"] },
-    { href: "banka.html", keywords: ["banka", "bank"] },
-    { href: "otel.html", keywords: ["otel", "hotel", "konaklama"] },
-    { href: "seyahat.html", keywords: ["seyahat", "ulasim", "ulaşım", "travel", "transport"] },
-    { href: "atm.html", keywords: ["atm"] },
-    { href: "kargo.html", keywords: ["kargo", "cargo"] },
-    { href: "noter.html", keywords: ["noter", "notary"] },
-    { href: "asm.html", keywords: ["asm", "aile sagligi", "aile sağlığı", "aile hekimi"] },
-    { href: "dis-klinikleri.html", keywords: ["dis", "diş", "dis klinigi", "diş kliniği", "dentist"] },
-    { href: "duraklar.html", keywords: ["durak", "duraklar", "otobus", "otobüs", "metro", "tramvay"] },
-    { href: "otopark.html", keywords: ["otopark", "park"] },
-  ];
-  const BOTTOM_NAV_TEXT = {
-    TR: {
-      nav: "Alt menü",
-      home: "Anasayfa",
-      search: "Ara",
-      signup: "Kayıt",
-      profile: "Ayarlar",
-      searchPlaceholder: "Ne bulmamı istersin?",
-    },
-    EN: {
-      nav: "Bottom menu",
-      home: "Home",
-      search: "Search",
-      signup: "Sign up",
-      profile: "Settings",
-      searchPlaceholder: "What should I find?",
-    },
-    RU: {
-      nav: "Нижнее меню",
-      home: "Главная",
-      search: "Поиск",
-      signup: "Регистрация",
-      profile: "Настройки",
-      searchPlaceholder: "Что мне найти?",
-    },
-    DE: {
-      nav: "Unteres Menü",
-      home: "Start",
-      search: "Suche",
-      signup: "Registrieren",
-      profile: "Einstellungen",
-      searchPlaceholder: "Was soll ich finden?",
-    },
-    ZH: {
-      nav: "底部菜单",
-      home: "首页",
-      search: "搜索",
-      signup: "注册",
-      profile: "设置",
-      searchPlaceholder: "你想让我找什么？",
-    },
-  };
-  const THEME_STORAGE_KEY = "neredeyenir.theme.v1";
-  const DEFAULT_THEME = "dark";
-  const HOVER_CLOSE_DELAY_MS = 180;
-  const hoverCloseTimers = new WeakMap();
-
-  function clearHoverCloseTimer(container) {
-    if (!container) {
-      return;
-    }
-
-    const activeTimer = hoverCloseTimers.get(container);
-    if (activeTimer) {
-      window.clearTimeout(activeTimer);
-      hoverCloseTimers.delete(container);
-    }
-  }
-
-  function scheduleHoverClose(container) {
-    if (!container) {
-      return;
-    }
-
-    clearHoverCloseTimer(container);
-    const timerId = window.setTimeout(() => {
-      closeLanguageMenu(container);
-      hoverCloseTimers.delete(container);
-    }, HOVER_CLOSE_DELAY_MS);
-    hoverCloseTimers.set(container, timerId);
-  }
-
-  function isKnownLanguage(code) {
-    return Boolean(code && Object.prototype.hasOwnProperty.call(LANGUAGE_OPTIONS, code));
-  }
+  const headerSearchData = window.ARAMABUL_HEADER_SEARCH_DATA;
 
   function readStoredLanguage() {
-    try {
-      const raw = window.localStorage.getItem(LANG_STORAGE_KEY);
-      const code = String(raw || "").trim().toUpperCase();
-      return isKnownLanguage(code) ? code : "TR";
-    } catch (_error) {
-      return "TR";
-    }
-  }
-
-  function normalizeTheme(value) {
-    const lowered = String(value || "").trim().toLowerCase();
-    return lowered === "light" ? "light" : "dark";
+    return headerState.readStoredLanguage();
   }
 
   function readStoredTheme() {
-    try {
-      const raw = window.localStorage.getItem(THEME_STORAGE_KEY);
-      if (!raw) {
-        return DEFAULT_THEME;
-      }
-      return normalizeTheme(raw);
-    } catch (_error) {
-      return DEFAULT_THEME;
-    }
+    return headerState.readStoredTheme();
   }
 
   function applyTheme(theme, persist = true) {
-    const normalized = normalizeTheme(theme);
-
-    if (document.body) {
-      document.body.classList.toggle("theme-dark", normalized === "dark");
-      document.body.classList.toggle("theme-light", normalized === "light");
-    }
-    document.documentElement.setAttribute("data-theme", normalized);
-    window.NEREDEYENIR_CURRENT_THEME = normalized;
-
-    if (persist) {
-      try {
-        window.localStorage.setItem(THEME_STORAGE_KEY, normalized);
-      } catch (_error) {
-        // Ignore.
-      }
-    }
-
-    document.dispatchEvent(
-      new CustomEvent("neredeyenir:themechange", {
-        detail: { theme: normalized },
-      }),
-    );
-  }
-
-  function persistLanguage(code) {
-    try {
-      window.localStorage.setItem(LANG_STORAGE_KEY, code);
-    } catch (_error) {
-      // Ignore.
-    }
-  }
-
-  function closeLanguageMenu(container) {
-    if (!container) {
-      return;
-    }
-
-    clearHoverCloseTimer(container);
-
-    const menu = container.querySelector("[data-lang-menu]");
-    const trigger = container.querySelector("[data-lang-trigger]");
-    if (menu) {
-      menu.hidden = true;
-    }
-    if (trigger) {
-      trigger.setAttribute("aria-expanded", "false");
-    }
-    container.classList.remove("is-open");
-  }
-
-  function closeAllLanguageMenus() {
-    const containers = [...document.querySelectorAll("[data-lang-switch]")];
-    containers.forEach((container) => {
-      closeLanguageMenu(container);
-    });
-  }
-
-  function openLanguageMenu(container) {
-    if (!container) {
-      return;
-    }
-
-    clearHoverCloseTimer(container);
-
-    const menu = container.querySelector("[data-lang-menu]");
-    const trigger = container.querySelector("[data-lang-trigger]");
-    if (!menu || !trigger) {
-      return;
-    }
-
-    closeAllLanguageMenus();
-    menu.hidden = false;
-    trigger.setAttribute("aria-expanded", "true");
-    container.classList.add("is-open");
-  }
-
-  function applyLanguage(code, persist = true) {
-    const selectedCode = isKnownLanguage(code) ? code : "TR";
-    document.documentElement.lang = LANGUAGE_OPTIONS[selectedCode].htmlLang;
-    window.NEREDEYENIR_CURRENT_LANGUAGE = selectedCode;
-
-    const switches = [...document.querySelectorAll("[data-lang-switch]")];
-    switches.forEach((container) => {
-      const current = container.querySelector("[data-lang-current]");
-      if (current) {
-        current.textContent = selectedCode;
-      }
-
-      const options = [...container.querySelectorAll("[data-lang-option]")];
-      options.forEach((option) => {
-        const optionCode = String(option.dataset.langOption || "").toUpperCase();
-        const isActive = optionCode === selectedCode;
-        option.classList.toggle("active", isActive);
-        option.setAttribute("aria-pressed", isActive ? "true" : "false");
-      });
-    });
-
-    if (persist) {
-      persistLanguage(selectedCode);
-    }
-
-    document.dispatchEvent(
-      new CustomEvent("neredeyenir:languagechange", {
-        detail: { language: selectedCode },
-      }),
-    );
+    return headerState.applyTheme(theme, persist);
   }
 
   function initializeLanguageSwitcher() {
-    const switches = [...document.querySelectorAll("[data-lang-switch]")];
-    applyLanguage(readStoredLanguage(), false);
-
-    if (switches.length === 0) {
-      return;
-    }
-
-    switches.forEach((container) => {
-      const trigger = container.querySelector("[data-lang-trigger]");
-      const menu = container.querySelector("[data-lang-menu]");
-      const options = [...container.querySelectorAll("[data-lang-option]")];
-
-      if (!trigger || !menu || options.length === 0) {
-        return;
-      }
-
-      trigger.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (menu.hidden) {
-          openLanguageMenu(container);
-          return;
-        }
-
-        closeLanguageMenu(container);
-      });
-
-      container.addEventListener("mouseenter", () => {
-        clearHoverCloseTimer(container);
-        openLanguageMenu(container);
-      });
-
-      container.addEventListener("mouseleave", () => {
-        scheduleHoverClose(container);
-      });
-
-      menu.addEventListener("mouseenter", () => {
-        clearHoverCloseTimer(container);
-      });
-
-      trigger.addEventListener("focus", () => {
-        openLanguageMenu(container);
-      });
-
-      container.addEventListener("focusout", (event) => {
-        const nextFocus = event.relatedTarget;
-        if (nextFocus && container.contains(nextFocus)) {
-          return;
-        }
-
-        closeLanguageMenu(container);
-      });
-
-      options.forEach((option) => {
-        option.addEventListener("click", () => {
-          const selected = String(option.dataset.langOption || "").toUpperCase();
-          applyLanguage(selected, true);
-          closeLanguageMenu(container);
-        });
-      });
-    });
-
-    document.addEventListener("click", (event) => {
-      if (event.target && event.target.closest("[data-lang-switch]")) {
-        return;
-      }
-      closeAllLanguageMenus();
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        closeAllLanguageMenus();
-      }
-    });
+    return headerState.initializeLanguageSwitcher();
   }
 
-  window.NEREDEYENIR_GET_LANGUAGE = () => {
-    const code = String(window.NEREDEYENIR_CURRENT_LANGUAGE || "").toUpperCase();
-    if (isKnownLanguage(code)) {
-      return code;
-    }
-
-    return readStoredLanguage();
-  };
-  window.NEREDEYENIR_GET_THEME = () => {
-    return normalizeTheme(window.NEREDEYENIR_CURRENT_THEME || readStoredTheme());
-  };
-  window.NEREDEYENIR_SET_THEME = (theme) => {
-    applyTheme(theme, true);
-  };
+  function applyStaticPageTranslations() {
+    return headerI18n.applyStaticPageTranslations();
+  }
 
   function normalizeFooterUi() {
-    const lang =
-      typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
-        ? window.NEREDEYENIR_GET_LANGUAGE()
-        : readStoredLanguage();
-    const headings = FOOTER_HEADINGS[lang] || FOOTER_HEADINGS.TR;
-    const footerGrids = [...document.querySelectorAll(".yr-footer-grid")];
-
-    footerGrids.forEach((grid) => {
-      const columns = [...grid.querySelectorAll(":scope > .yr-footer-col")];
-      if (columns.length > 3) {
-        columns.slice(3).forEach((column) => {
-          column.remove();
-        });
-      }
-
-      const visibleColumns = [...grid.querySelectorAll(":scope > .yr-footer-col")];
-
-      const firstTitle = visibleColumns[0]?.querySelector("h4");
-      if (firstTitle) {
-        firstTitle.remove();
-      }
-
-      const discoverTitle = visibleColumns[1]?.querySelector("h4");
-      if (discoverTitle) {
-        discoverTitle.textContent = headings.discover;
-      }
-
-      const helpTitle = visibleColumns[2]?.querySelector("h4");
-      if (helpTitle) {
-        helpTitle.textContent = headings.help;
-      }
-    });
+    return headerI18n.normalizeFooterUi();
   }
 
   initializeLanguageSwitcher();
   applyTheme(readStoredTheme(), false);
+  applyStaticPageTranslations();
   normalizeFooterUi();
   window.addEventListener("load", () => {
+    applyStaticPageTranslations();
     normalizeFooterUi();
   });
 
@@ -455,770 +69,221 @@
   }
 
   function hideTopLayerForCategoryPages() {
-    const categoryPage = String(document.body?.dataset?.categoryPage || "").toLocaleLowerCase("tr");
-    const pageName = currentPageName();
-    const categoryRootPages = new Set([
-      "yemek.html",
-      "kafe.html",
-      "kuafor.html",
-      "veteriner.html",
-      "eczane.html",
-      "market.html",
-      "akaryakit.html",
-      "hastane.html",
-      "banka.html",
-      "otel.html",
-      "seyahat.html",
-      "atm.html",
-      "kargo.html",
-      "noter.html",
-      "asm.html",
-      "dis-klinikleri.html",
-      "duraklar.html",
-      "otopark.html",
-    ]);
-    const shouldHideHeader =
-      categoryPage === "city" ||
-      categoryPage === "district" ||
-      pageName === "city.html" ||
-      pageName.endsWith("-city.html") ||
-      pageName.endsWith("-district.html") ||
-      categoryRootPages.has(pageName);
-
-    if (!shouldHideHeader) {
-      return;
-    }
-
-    const headers = document.querySelectorAll(".city-header");
-    headers.forEach((headerElement) => {
-      if (!(headerElement instanceof HTMLElement)) {
-        return;
-      }
-      headerElement.style.display = "none";
-      headerElement.hidden = true;
-    });
-  }
-
-  function isHomePage() {
-    return currentPageName() === "index.html" || currentPageName() === "";
-  }
-
-  function isRestaurantPage() {
-    return currentPageName() === "restaurant.html";
+    return headerShell.hideTopLayerForCategoryPages({ currentPageName });
   }
 
   function getNavLabels() {
-    const lang =
-      typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
-        ? window.NEREDEYENIR_GET_LANGUAGE()
-        : readStoredLanguage();
-    return BOTTOM_NAV_TEXT[lang] || BOTTOM_NAV_TEXT.TR;
+    return headerI18n.getBottomNavLabels();
+  }
+
+  function getDesktopAuthLabels() {
+    return headerI18n.getDesktopAuthLabels();
+  }
+
+  function createDesktopAuthLinks() {
+    return headerNav.createDesktopAuthLinks({ currentPageName, getDesktopAuthLabels });
   }
 
   function createMobileBottomNav() {
-    const existing = document.querySelector(".mobile-bottom-nav");
-    if (existing) {
-      return;
-    }
-
-    const labels = getNavLabels();
-    const wrapper = document.createElement("div");
-    wrapper.className = "mobile-bottom-nav";
-    wrapper.innerHTML = `
-      <nav class="mobile-bottom-nav-actions" aria-label="${labels.nav}">
-        <button class="mobile-bottom-nav-btn" data-mobile-nav="home" type="button" aria-label="${labels.home}" title="${labels.home}">
-          <span class="mobile-bottom-nav-chip" aria-hidden="true">
-            <svg class="mobile-bottom-nav-icon-svg" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m3 11 9-7 9 7"></path>
-              <path d="M7 10v9h10v-9"></path>
-            </svg>
-          </span>
-        </button>
-        <button class="mobile-bottom-nav-btn" data-mobile-nav="search" type="button" aria-label="${labels.search}" title="${labels.search}">
-          <span class="mobile-bottom-nav-chip" aria-hidden="true">
-            <svg class="mobile-bottom-nav-icon-svg" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="11" cy="11" r="6.8"></circle>
-              <path d="m20 20-3.7-3.7"></path>
-            </svg>
-          </span>
-        </button>
-        <button class="mobile-bottom-nav-btn" data-mobile-nav="signup" type="button" aria-label="${labels.signup}" title="${labels.signup}">
-          <span class="mobile-bottom-nav-chip" aria-hidden="true">
-            <svg class="mobile-bottom-nav-icon-svg" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="10" cy="8.2" r="3.4"></circle>
-              <path d="M4.5 18.5c.8-2.9 2.9-4.8 5.5-4.8s4.7 1.9 5.5 4.8"></path>
-              <path d="M17.5 8v5"></path>
-              <path d="M15 10.5h5"></path>
-            </svg>
-          </span>
-        </button>
-        <button class="mobile-bottom-nav-btn" data-mobile-nav="profile" type="button" aria-label="${labels.profile}" title="${labels.profile}">
-          <span class="mobile-bottom-nav-chip" aria-hidden="true">
-            <img class="mobile-bottom-nav-icon-img" src="assets/ayar1.png?v=20260226-2" alt="" />
-            <svg class="mobile-bottom-nav-icon-svg mobile-bottom-nav-icon-svg-fallback" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M12 3.8v2.2"></path>
-              <path d="M12 18v2.2"></path>
-              <path d="m5.6 5.6 1.5 1.5"></path>
-              <path d="m16.9 16.9 1.5 1.5"></path>
-              <path d="M3.8 12H6"></path>
-              <path d="M18 12h2.2"></path>
-              <path d="m5.6 18.4 1.5-1.5"></path>
-              <path d="m16.9 7.1 1.5-1.5"></path>
-            </svg>
-          </span>
-        </button>
-      </nav>
-    `;
-
-    document.body.appendChild(wrapper);
-
-    const settingsIconImage = wrapper.querySelector('[data-mobile-nav="profile"] .mobile-bottom-nav-icon-img');
-    if (settingsIconImage instanceof HTMLImageElement) {
-      const chip = settingsIconImage.closest(".mobile-bottom-nav-chip");
-      const syncIconState = () => {
-        if (!chip) {
-          return;
-        }
-        if (settingsIconImage.complete && settingsIconImage.naturalWidth > 0) {
-          chip.classList.remove("icon-load-failed");
-          return;
-        }
-        if (settingsIconImage.complete && settingsIconImage.naturalWidth === 0) {
-          chip.classList.add("icon-load-failed");
-        }
-      };
-      settingsIconImage.addEventListener("error", () => {
-        if (chip) {
-          chip.classList.add("icon-load-failed");
-        }
-      });
-      settingsIconImage.addEventListener("load", () => {
-        if (chip) {
-          chip.classList.remove("icon-load-failed");
-        }
-      });
-      syncIconState();
-    }
-
-    const buttons = [...wrapper.querySelectorAll(".mobile-bottom-nav-btn")];
-
-    function updateActiveNav() {
-      const params = new URLSearchParams(window.location.search);
-      const signupMode = currentPageName() === "profile.html" && params.get("action") === "signup";
-      buttons.forEach((button) => {
-        const type = button.dataset.mobileNav;
-        const active =
-          (type === "home" && isHomePage()) ||
-          (type === "search" && currentPageName() === "search.html") ||
-          (type === "signup" && signupMode) ||
-          (type === "profile" && currentPageName() === "profile.html" && !signupMode) ||
-          false;
-        button.classList.toggle("active", active);
-      });
-    }
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const type = button.dataset.mobileNav;
-        const params = new URLSearchParams(window.location.search);
-        const isProfilePage = currentPageName() === "profile.html";
-        const actionMode = params.get("action");
-
-        if (type === "home") {
-          window.location.assign("index.html");
-          return;
-        }
-
-        if (type === "search") {
-          if (currentPageName() !== "search.html") {
-            window.location.assign("search.html");
-            return;
-          }
-          input.focus();
-          input.select();
-          updateActiveNav();
-          return;
-        }
-
-        if (type === "signup") {
-          if (!isProfilePage || actionMode !== "signup") {
-            window.location.assign("profile.html?action=signup");
-          }
-          return;
-        }
-
-        if (type === "profile") {
-          if (!isProfilePage || actionMode === "signup") {
-            window.location.assign("profile.html?action=profile");
-          }
-          return;
-        }
-      });
-    });
-
-    document.addEventListener("neredeyenir:languagechange", () => {
-      const nextLabels = getNavLabels();
-      const navWrap = wrapper.querySelector(".mobile-bottom-nav-actions");
-      const homeBtn = wrapper.querySelector('[data-mobile-nav="home"]');
-      const searchBtn = wrapper.querySelector('[data-mobile-nav="search"]');
-      const signupBtn = wrapper.querySelector('[data-mobile-nav="signup"]');
-      const profileBtn = wrapper.querySelector('[data-mobile-nav="profile"]');
-
-      if (navWrap) navWrap.setAttribute("aria-label", nextLabels.nav);
-      if (homeBtn) {
-        homeBtn.setAttribute("aria-label", nextLabels.home);
-        homeBtn.setAttribute("title", nextLabels.home);
-      }
-      if (searchBtn) {
-        searchBtn.setAttribute("aria-label", nextLabels.search);
-        searchBtn.setAttribute("title", nextLabels.search);
-      }
-      if (signupBtn) {
-        signupBtn.setAttribute("aria-label", nextLabels.signup);
-        signupBtn.setAttribute("title", nextLabels.signup);
-      }
-      if (profileBtn) {
-        profileBtn.setAttribute("aria-label", nextLabels.profile);
-        profileBtn.setAttribute("title", nextLabels.profile);
-      }
-    });
-    updateActiveNav();
+    return headerNav.createMobileBottomNav({ currentPageName, getNavLabels, input });
   }
 
   function applySearchUiLanguage() {
-    const lang =
-      typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
-        ? window.NEREDEYENIR_GET_LANGUAGE()
-        : readStoredLanguage();
-
-    const isSearchPage = currentPageName() === "search.html";
-    const buttonText = isSearchPage
-      ? SEARCH_PAGE_BUTTON_TEXT[lang] || SEARCH_PAGE_BUTTON_TEXT.TR
-      : SEARCH_BUTTON_TEXT[lang] || SEARCH_BUTTON_TEXT.TR;
-    const placeholderText = isSearchPage
-      ? SEARCH_PAGE_PLACEHOLDER_TEXT[lang] || SEARCH_PAGE_PLACEHOLDER_TEXT.TR
-      : SEARCH_PLACEHOLDER_TEXT[lang] || SEARCH_PLACEHOLDER_TEXT.TR;
-    const formAriaText = SEARCH_FORM_ARIA_TEXT[lang] || SEARCH_FORM_ARIA_TEXT.TR;
-    const inputLabelText = isSearchPage
-      ? SEARCH_PAGE_INPUT_LABEL_TEXT[lang] || SEARCH_PAGE_INPUT_LABEL_TEXT.TR
-      : SEARCH_INPUT_LABEL_TEXT[lang] || SEARCH_INPUT_LABEL_TEXT.TR;
-
-    form.setAttribute("aria-label", formAriaText);
-    input.setAttribute("placeholder", placeholderText);
-    setSubmitButtonLabel(buttonText.idle);
-
-    if (inputLabel) {
-      inputLabel.textContent = inputLabelText;
-    }
+    return headerSearchUi.applySearchUiLanguage({
+      currentPageName,
+      form,
+      input,
+      inputLabel,
+      setSubmitButtonLabel,
+      readStoredLanguage,
+    });
   }
 
+  createDesktopAuthLinks();
   applySearchUiLanguage();
   hideTopLayerForCategoryPages();
   createMobileBottomNav();
-  document.addEventListener("neredeyenir:languagechange", () => {
+  document.addEventListener("aramabul:languagechange", () => {
     applySearchUiLanguage();
+    applyStaticPageTranslations();
     window.requestAnimationFrame(() => {
       normalizeFooterUi();
     });
   });
 
-  const VENUES_JSON_PATH = "data/venues.json";
-  const YEMEK_JSON_PATH = "data/yemek.json";
-  const KAFE_JSON_PATH = "data/kafe.json";
-  const DISTRICTS_JSON_PATH = "data/districts.json";
-  const CATEGORY_DATASET_SOURCES = [
-    {
-      pageBase: "kuafor",
-      dataPath: "data/kuafor.json",
-      fallbacks: [{ globalKey: "NEREDEYENIR_FALLBACK_DATA", property: "kuafor" }],
-    },
-    {
-      pageBase: "veteriner",
-      dataPath: "data/veteriner.json",
-      fallbacks: [{ globalKey: "NEREDEYENIR_FALLBACK_CATEGORY_DATA", property: "veteriner" }],
-    },
-    {
-      pageBase: "eczane",
-      dataPath: "data/eczane.json",
-      fallbacks: [{ globalKey: "NEREDEYENIR_FALLBACK_CATEGORY_DATA", property: "eczane" }],
-    },
-    { pageBase: "eczane", dataPath: "data/nobetci-eczane.json", fallbacks: [] },
-    {
-      pageBase: "akaryakit",
-      dataPath: "data/akaryakit.json",
-      fallbacks: [{ globalKey: "NEREDEYENIR_FALLBACK_DATA", property: "akaryakit" }],
-    },
-    { pageBase: "atm", dataPath: "data/atm.json", fallbacks: [] },
-    { pageBase: "kargo", dataPath: "data/kargo.json", fallbacks: [] },
-    { pageBase: "noter", dataPath: "data/noter.json", fallbacks: [] },
-    { pageBase: "asm", dataPath: "data/asm.json", fallbacks: [] },
-    { pageBase: "dis-klinikleri", dataPath: "data/dis-klinikleri.json", fallbacks: [] },
-    { pageBase: "duraklar", dataPath: "data/duraklar.json", fallbacks: [] },
-    { pageBase: "otopark", dataPath: "data/otopark.json", fallbacks: [] },
-  ];
-  const DISTRICT_ROUTE_PAGE_BASES = new Set([
-    "yemek",
-    "kafe",
-    "kuafor",
-    "veteriner",
-    "eczane",
-    "akaryakit",
-    "otel",
-    "atm",
-    "kargo",
-    "noter",
-    "asm",
-    "dis-klinikleri",
-    "duraklar",
-    "seyahat",
-    "otopark",
-  ]);
-  const CITY_ROUTE_PAGE_BASES = new Set([
-    "yemek",
-    "kafe",
-    "kuafor",
-    "veteriner",
-    "eczane",
-    "akaryakit",
-    "otel",
-    "atm",
-    "kargo",
-    "noter",
-    "asm",
-    "dis-klinikleri",
-    "duraklar",
-    "seyahat",
-    "otopark",
-  ]);
-  const API_BASE_URL = (() => {
-    if (typeof window.NEREDEYENIR_API_BASE === "string" && window.NEREDEYENIR_API_BASE.trim()) {
-      return window.NEREDEYENIR_API_BASE.trim().replace(/\/+$/u, "");
-    }
+  function setLoadingState(isLoading) {
+    return headerSearchUi.setLoadingState({
+      currentPageName,
+      input,
+      submitButton,
+      setSubmitButtonLabel,
+      readStoredLanguage,
+      isLoading,
+    });
+  }
 
-    if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
-      return `${window.location.protocol}//${window.location.hostname}:8787`;
-    }
-
-    return window.location.origin;
-  })();
-  const VENUES_API_ENDPOINT =
-    typeof window.NEREDEYENIR_VENUES_API === "string" && window.NEREDEYENIR_VENUES_API.trim()
-      ? window.NEREDEYENIR_VENUES_API.trim()
-      : API_BASE_URL
-        ? `${API_BASE_URL}/api/venues?limit=50000`
-        : "";
-  const turkishCharMap = {
-    ç: "c",
-    ğ: "g",
-    ı: "i",
-    i: "i",
-    ö: "o",
-    ş: "s",
-    ü: "u",
+  const SEARCH_CHOICE_COPY = {
+    TR: {
+      title: "Birden fazla mekan bulundu",
+      text: "Lutfen acmak istedigin yeri sec.",
+      close: "Kapat",
+      note: "En yakin kaydi secmek icin sehir ve ilce de yazabilirsin.",
+    },
+    EN: {
+      title: "Multiple venues found",
+      text: "Choose the venue you want to open.",
+      close: "Close",
+      note: "Add the city and district to narrow the result.",
+    },
+    RU: {
+      title: "Naydeno neskolko mest",
+      text: "Vyberite mesto dlya otkrytiya.",
+      close: "Zakryt",
+      note: "Dobavte gorod i rayon, chtoby suzit rezultat.",
+    },
+    DE: {
+      title: "Mehrere Orte gefunden",
+      text: "Wahle den Ort, den du offnen mochtest.",
+      close: "Schliessen",
+      note: "Mit Stadt und Bezirk wird das Ergebnis genauer.",
+    },
+    ZH: {
+      title: "Found multiple places",
+      text: "Choose the place you want to open.",
+      close: "Close",
+      note: "Add city and district for a more exact result.",
+    },
   };
 
-  let venuesPromise = null;
-  let searchRecordsPromise = null;
-  let cityNamesPromise = null;
+  let searchChoiceModalApi = null;
 
-  function normalizeForSearch(value) {
-    return String(value || "")
-      .toLocaleLowerCase("tr")
-      .replace(/[çğıöşü]/g, (char) => turkishCharMap[char] || char)
-      .normalize("NFC");
-  }
-
-  function canonicalize(value) {
-    return normalizeForSearch(value)
-      .replace(/[^a-z0-9\s]/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function toSlug(value) {
-    return normalizeForSearch(value)
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  }
-
-  function sanitizeText(value) {
-    if (typeof value !== "string") {
-      return "";
+  function currentLanguageCode() {
+    if (typeof window.ARAMABUL_GET_LANGUAGE === "function") {
+      return window.ARAMABUL_GET_LANGUAGE();
     }
 
-    return value.trim();
+    return readStoredLanguage();
   }
 
-  function normalizeVenueRecord(record, options = {}) {
-    if (!record || typeof record !== "object") {
+  function searchChoiceCopy() {
+    const lang = currentLanguageCode();
+    return SEARCH_CHOICE_COPY[lang] || SEARCH_CHOICE_COPY.TR;
+  }
+
+  function ensureSearchChoiceModal() {
+    if (searchChoiceModalApi) {
+      return searchChoiceModalApi;
+    }
+
+    if (!document.body) {
       return null;
     }
 
-    const name = sanitizeText(record.name);
-    const city = sanitizeText(record.city);
-    const district = sanitizeText(record.district);
-    const address = sanitizeText(record.address);
-    const sourcePlaceId = sanitizeText(record.sourcePlaceId || record.placeId);
-    const pageBase = sanitizeText(options.pageBase || "yemek");
+    const modal = document.createElement("section");
+    modal.className = "search-choice-modal";
+    modal.hidden = true;
+    modal.innerHTML = `
+      <button class="search-choice-backdrop" type="button" aria-label="Close"></button>
+      <article class="search-choice-panel" role="dialog" aria-modal="true" aria-labelledby="searchChoiceTitle">
+        <header class="search-choice-head">
+          <div class="search-choice-head-text">
+            <h3 id="searchChoiceTitle" class="search-choice-title">Birden fazla mekan bulundu</h3>
+            <p class="search-choice-text">Lutfen acmak istedigin yeri sec.</p>
+          </div>
+          <button class="search-choice-close" type="button">Kapat</button>
+        </header>
+        <div class="search-choice-list" role="list"></div>
+        <p class="search-choice-note">En yakin kaydi secmek icin sehir ve ilce de yazabilirsin.</p>
+      </article>
+    `;
 
-    if (!name) {
-      return null;
-    }
+    const titleNode = modal.querySelector(".search-choice-title");
+    const textNode = modal.querySelector(".search-choice-text");
+    const listNode = modal.querySelector(".search-choice-list");
+    const noteNode = modal.querySelector(".search-choice-note");
+    const closeNode = modal.querySelector(".search-choice-close");
+    const backdropNode = modal.querySelector(".search-choice-backdrop");
 
-    return {
-      name,
-      city,
-      district,
-      address,
-      sourcePlaceId,
-      pageBase,
-      openAsRestaurant: Boolean(options.openAsRestaurant),
-      canonicalName: canonicalize(name),
-      canonicalSearchBlob: canonicalize([name, city, district, address, pageBase].join(" ")),
+    const close = () => {
+      modal.hidden = true;
+      document.body.classList.remove("search-choice-open");
+      if (listNode instanceof HTMLElement) {
+        listNode.innerHTML = "";
+      }
     };
-  }
 
-  function normalizeVenueCollection(payload, options = {}) {
-    if (Array.isArray(payload)) {
-      return payload.map((record) => normalizeVenueRecord(record, options)).filter((venue) => venue !== null);
-    }
-
-    if (payload && typeof payload === "object") {
-      const collection = Array.isArray(payload.venues)
-        ? payload.venues
-        : Array.isArray(payload.data)
-          ? payload.data
-          : null;
-
-      if (collection) {
-        return collection.map((record) => normalizeVenueRecord(record, options)).filter((venue) => venue !== null);
-      }
-    }
-
-    return [];
-  }
-
-  function dedupeVenueRecords(records) {
-    const seen = new Set();
-
-    return records.filter((venue) => {
-      const pageBase = sanitizeText(venue.pageBase);
-      const key = String(venue.sourcePlaceId || "")
-        || `${pageBase}|${canonicalize(venue.city)}|${canonicalize(venue.district)}|${venue.canonicalName}`;
-
-      if (!key || seen.has(key)) {
-        return false;
+    const open = (payload) => {
+      const choices = Array.isArray(payload?.choices) ? payload.choices : [];
+      if (!(listNode instanceof HTMLElement) || choices.length === 0) {
+        return;
       }
 
-      seen.add(key);
-      return true;
-    });
-  }
-
-  function readFallbackFoodRecords() {
-    const payload = window.NEREDEYENIR_FALLBACK_FOOD_DATA;
-    if (!payload || typeof payload !== "object") {
-      return [];
-    }
-
-    const yemekRecords = normalizeVenueCollection(payload.yemek, {
-      pageBase: "yemek",
-      openAsRestaurant: true,
-    });
-    const kafeRecords = normalizeVenueCollection(payload.kafe, {
-      pageBase: "kafe",
-      openAsRestaurant: true,
-    });
-    return dedupeVenueRecords([...yemekRecords, ...kafeRecords]);
-  }
-
-  function readFallbackCollection(globalKey, property) {
-    const payload = window[globalKey];
-    if (!payload || typeof payload !== "object") {
-      return [];
-    }
-
-    const collection = payload[property];
-    return Array.isArray(collection) ? collection : [];
-  }
-
-  async function fetchVenuePayload(path) {
-    try {
-      const response = await fetch(path, {
-        method: "GET",
-        headers: { Accept: "application/json" },
-        credentials: "omit",
-      });
-
-      if (!response.ok) {
-        return null;
+      const copy = searchChoiceCopy();
+      if (titleNode instanceof HTMLElement) {
+        titleNode.textContent = copy.title;
+      }
+      if (textNode instanceof HTMLElement) {
+        textNode.textContent = copy.text;
+      }
+      if (noteNode instanceof HTMLElement) {
+        noteNode.textContent = copy.note;
+      }
+      if (closeNode instanceof HTMLButtonElement) {
+        closeNode.textContent = copy.close;
+        closeNode.setAttribute("aria-label", copy.close);
+      }
+      if (backdropNode instanceof HTMLButtonElement) {
+        backdropNode.setAttribute("aria-label", copy.close);
       }
 
-      return await response.json();
-    } catch (_error) {
-      return null;
-    }
-  }
+      listNode.innerHTML = "";
+      choices.forEach((choice) => {
+        const href = String(choice?.href || "").trim();
+        if (!href) {
+          return;
+        }
 
-  async function loadVenues() {
-    if (venuesPromise) {
-      return venuesPromise;
-    }
+        const option = document.createElement("button");
+        option.type = "button";
+        option.className = "search-choice-option";
 
-    venuesPromise = (async () => {
-      if (VENUES_API_ENDPOINT) {
-        const apiPayload = await fetchVenuePayload(VENUES_API_ENDPOINT);
-        const apiRecords = normalizeVenueCollection(apiPayload, {
-          pageBase: "yemek",
-          openAsRestaurant: true,
+        const title = document.createElement("span");
+        title.className = "search-choice-option-title";
+        title.textContent = String(choice?.title || "Mekan").trim() || "Mekan";
+
+        const subtitle = document.createElement("span");
+        subtitle.className = "search-choice-option-meta";
+        subtitle.textContent = String(choice?.subtitle || "").trim();
+        subtitle.hidden = !subtitle.textContent;
+
+        option.append(title, subtitle);
+        option.addEventListener("click", () => {
+          close();
+          window.location.assign(href);
         });
-        if (apiRecords.length > 0) {
-          return apiRecords;
-        }
-      }
-
-      const fallbackRecords = readFallbackFoodRecords();
-      if (fallbackRecords.length > 0) {
-        return fallbackRecords;
-      }
-
-      const [yemekPayload, kafePayload] = await Promise.all([
-        fetchVenuePayload(YEMEK_JSON_PATH),
-        fetchVenuePayload(KAFE_JSON_PATH),
-      ]);
-      const bundledRecords = dedupeVenueRecords([
-        ...normalizeVenueCollection(yemekPayload, { pageBase: "yemek", openAsRestaurant: true }),
-        ...normalizeVenueCollection(kafePayload, { pageBase: "kafe", openAsRestaurant: true }),
-      ]);
-      if (bundledRecords.length > 0) {
-        return bundledRecords;
-      }
-
-      const venuesPayload = await fetchVenuePayload(VENUES_JSON_PATH);
-      return normalizeVenueCollection(venuesPayload, {
-        pageBase: "yemek",
-        openAsRestaurant: true,
+        listNode.append(option);
       });
-    })();
+      listNode.scrollTop = 0;
 
-    return venuesPromise;
-  }
+      if (!listNode.children.length) {
+        return;
+      }
 
-  async function loadCategoryDataset(source) {
-    const payload = await fetchVenuePayload(source.dataPath);
-    const records = normalizeVenueCollection(payload, { pageBase: source.pageBase });
-    if (records.length > 0) {
-      return records;
-    }
+      modal.hidden = false;
+      document.body.classList.add("search-choice-open");
+    };
 
-    const fallbackRecords = source.fallbacks.flatMap((fallback) => {
-      return normalizeVenueCollection(readFallbackCollection(fallback.globalKey, fallback.property), {
-        pageBase: source.pageBase,
-      });
+    closeNode?.addEventListener("click", close);
+    backdropNode?.addEventListener("click", close);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !modal.hidden) {
+        close();
+      }
     });
-    return dedupeVenueRecords(fallbackRecords);
-  }
 
-  async function loadSearchRecords() {
-    if (searchRecordsPromise) {
-      return searchRecordsPromise;
-    }
-
-    searchRecordsPromise = (async () => {
-      const [foodRecords, categoryCollections] = await Promise.all([
-        loadVenues(),
-        Promise.all(CATEGORY_DATASET_SOURCES.map((source) => loadCategoryDataset(source))),
-      ]);
-
-      return dedupeVenueRecords([...foodRecords, ...categoryCollections.flat()]);
-    })();
-
-    return searchRecordsPromise;
-  }
-
-  function fallbackDistrictMap() {
-    const payload = window.NEREDEYENIR_FALLBACK_DATA;
-    if (!payload || typeof payload !== "object") {
-      return null;
-    }
-
-    const districts = payload.districts;
-    if (!districts || typeof districts !== "object" || Array.isArray(districts)) {
-      return null;
-    }
-
-    return districts;
-  }
-
-  async function loadCityNames() {
-    if (cityNamesPromise) {
-      return cityNamesPromise;
-    }
-
-    cityNamesPromise = (async () => {
-      const fallbackMap = fallbackDistrictMap();
-      if (fallbackMap) {
-        return Object.keys(fallbackMap);
-      }
-
-      const payload = await fetchVenuePayload(DISTRICTS_JSON_PATH);
-      if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
-        return [];
-      }
-
-      return Object.keys(payload);
-    })();
-
-    return cityNamesPromise;
-  }
-
-  async function findMatchingCityName(rawQuery) {
-    const canonicalQuery = canonicalize(rawQuery);
-    if (!canonicalQuery) {
-      return "";
-    }
-
-    const cityNames = await loadCityNames();
-    if (cityNames.length === 0) {
-      return "";
-    }
-
-    const exact = cityNames.find((city) => canonicalize(city) === canonicalQuery);
-    if (exact) {
-      return exact;
-    }
-
-    if (canonicalQuery.length < 3) {
-      return "";
-    }
-
-    return cityNames.find((city) => {
-      const canonicalCity = canonicalize(city);
-      return canonicalCity.startsWith(canonicalQuery) || canonicalQuery.startsWith(canonicalCity);
-    }) || "";
-  }
-
-  function findMatchingRecord(records, query) {
-    const canonicalQuery = canonicalize(query);
-    if (!canonicalQuery) {
-      return null;
-    }
-
-    const exactMatch = records.find((record) => record.canonicalName === canonicalQuery);
-    if (exactMatch) {
-      return exactMatch;
-    }
-
-    const prefixMatch = records.find((record) => record.canonicalName.startsWith(canonicalQuery));
-    if (prefixMatch) {
-      return prefixMatch;
-    }
-
-    if (canonicalQuery.length >= 3) {
-      const containsMatch = records.find((record) => record.canonicalName.includes(canonicalQuery));
-      if (containsMatch) {
-        return containsMatch;
-      }
-
-      const queryTokens = canonicalQuery.split(" ").filter((token) => token.length >= 2);
-      if (queryTokens.length >= 2) {
-        return records.find((record) => {
-          return queryTokens.every((token) => record.canonicalSearchBlob.includes(token));
-        }) || null;
-      }
-    }
-
-    return null;
-  }
-
-  function findMatchingCategoryPage(rawQuery) {
-    const canonicalQuery = canonicalize(rawQuery);
-    if (!canonicalQuery) {
-      return null;
-    }
-
-    for (const route of CATEGORY_SEARCH_ROUTES) {
-      for (const keyword of route.keywords) {
-        if (canonicalize(keyword) === canonicalQuery) {
-          return route.href;
-        }
-      }
-    }
-
-    if (canonicalQuery.length < 2) {
-      return null;
-    }
-
-    for (const route of CATEGORY_SEARCH_ROUTES) {
-      for (const keyword of route.keywords) {
-        const canonicalKeyword = canonicalize(keyword);
-        if (canonicalQuery.includes(canonicalKeyword) || canonicalKeyword.includes(canonicalQuery)) {
-          return route.href;
-        }
-      }
-    }
-
-    return null;
-  }
-
-  function restaurantUrlFor(venue) {
-    const targetUrl = new URL("restaurant.html", window.location.href);
-    targetUrl.searchParams.set("il", toSlug(venue.city));
-    targetUrl.searchParams.set("ilce", toSlug(venue.district || ""));
-    targetUrl.searchParams.set("mekan", toSlug(venue.name));
-
-    if (venue.sourcePlaceId) {
-      targetUrl.searchParams.set("pid", venue.sourcePlaceId);
-    }
-
-    return `${targetUrl.pathname}${targetUrl.search}`;
-  }
-
-  function categoryUrlFor(record) {
-    const pageBase = sanitizeText(record.pageBase);
-    if (!pageBase) {
-      return cityUrlFor(record.city || record.name || "");
-    }
-
-    if (record.openAsRestaurant) {
-      return restaurantUrlFor(record);
-    }
-
-    if (record.city && record.district && DISTRICT_ROUTE_PAGE_BASES.has(pageBase)) {
-      const targetUrl = new URL(`${pageBase}-district.html`, window.location.href);
-      targetUrl.searchParams.set("sehir", toSlug(record.city));
-      targetUrl.searchParams.set("ilce", toSlug(record.district));
-      return `${targetUrl.pathname}${targetUrl.search}`;
-    }
-
-    if (record.city && CITY_ROUTE_PAGE_BASES.has(pageBase)) {
-      const targetUrl = new URL(`${pageBase}-city.html`, window.location.href);
-      targetUrl.searchParams.set("sehir", toSlug(record.city));
-      return `${targetUrl.pathname}${targetUrl.search}`;
-    }
-
-    return `${pageBase}.html`;
-  }
-
-  function cityUrlFor(rawQuery) {
-    const targetUrl = new URL("city.html", window.location.href);
-    targetUrl.searchParams.set("il", toSlug(rawQuery));
-    return `${targetUrl.pathname}${targetUrl.search}`;
-  }
-
-  function setLoadingState(isLoading) {
-    const lang =
-      typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
-        ? window.NEREDEYENIR_GET_LANGUAGE()
-        : readStoredLanguage();
-    const isSearchPage = currentPageName() === "search.html";
-    const labels = isSearchPage
-      ? SEARCH_PAGE_BUTTON_TEXT[lang] || SEARCH_PAGE_BUTTON_TEXT.TR
-      : SEARCH_BUTTON_TEXT[lang] || SEARCH_BUTTON_TEXT.TR;
-    input.disabled = isLoading;
-    submitButton.disabled = isLoading;
-    setSubmitButtonLabel(isLoading ? labels.loading : labels.idle);
+    document.body.append(modal);
+    searchChoiceModalApi = { open, close };
+    return searchChoiceModalApi;
   }
 
   form.addEventListener("submit", async (event) => {
@@ -1230,30 +295,24 @@
       return;
     }
 
-    const matchedCategoryPage = findMatchingCategoryPage(query);
-    if (matchedCategoryPage) {
-      window.location.assign(matchedCategoryPage);
-      return;
-    }
-
     setLoadingState(true);
 
     try {
-      const matchedCity = await findMatchingCityName(query);
-      if (matchedCity) {
-        window.location.assign(cityUrlFor(matchedCity));
+      const result = await headerSearchData.resolveQuery(query);
+      if (result && typeof result === "object" && result.type === "choices") {
+        ensureSearchChoiceModal()?.open(result);
         return;
       }
 
-      const records = await loadSearchRecords();
-      const matchedRecord = findMatchingRecord(records, query);
-
-      if (matchedRecord) {
-        window.location.assign(categoryUrlFor(matchedRecord));
-        return;
+      const targetUrl =
+        typeof result === "string"
+          ? result
+          : result && typeof result === "object"
+            ? String(result.href || "").trim()
+            : "";
+      if (targetUrl) {
+        window.location.assign(targetUrl);
       }
-
-      window.location.assign(cityUrlFor(query));
     } finally {
       setLoadingState(false);
     }

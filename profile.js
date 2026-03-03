@@ -1,7 +1,8 @@
 (() => {
-  const AUTH_USERS_KEY = "neredeyenir.auth.users.v1";
-  const AUTH_SESSION_KEY = "neredeyenir.auth.session.v1";
-  const THEME_STORAGE_KEY = "neredeyenir.theme.v1";
+  const runtime = window.ARAMABUL_RUNTIME;
+  const AUTH_USERS_KEY = runtime.storageKeys.authUsers;
+  const AUTH_SESSION_KEY = runtime.storageKeys.authSession;
+  const THEME_STORAGE_KEY = runtime.storageKeys.theme;
 
   const settingsAvatar = document.querySelector("#settingsAvatar");
   const settingsName = document.querySelector("#settingsName");
@@ -19,20 +20,52 @@
   const settingsSignupMessage = document.querySelector("#settingsSignupMessage");
   const settingsStubLinks = [...document.querySelectorAll('.settings-menu-card a[href="#"]')];
 
+  function readStorageValue(key) {
+    return runtime.readStorageValue(key);
+  }
+
+  function writeStorageValue(key, value) {
+    runtime.writeStorageValue(key, value);
+  }
+
+  function removeStorageValue(key) {
+    runtime.removeStorageValue(key);
+  }
+
+  function dispatchCompatEvent(name, detail = {}) {
+    runtime.dispatch(name, detail);
+  }
+
   function normalizeEmail(value) {
     return String(value || "").trim().toLocaleLowerCase("en-US");
   }
 
   function currentPageMode() {
+    return "profile";
+  }
+
+  function routeWasSignupMode() {
     const params = new URLSearchParams(window.location.search);
-    return params.get("action") === "signup" ? "signup" : "profile";
+    return params.get("action") === "signup";
+  }
+
+  function normalizeLegacySignupRoute() {
+    if (!routeWasSignupMode()) {
+      return;
+    }
+
+    window.history.replaceState({}, "", "profile.html?action=profile");
+    if (window.ARAMABUL_AUTH_MODAL?.open) {
+      window.requestAnimationFrame(() => {
+        window.ARAMABUL_AUTH_MODAL.open("signup");
+      });
+    }
   }
 
   function applyPageMode() {
-    const signupMode = currentPageMode() === "signup";
-    document.body.classList.toggle("signup-mode", signupMode);
+    document.body.classList.remove("signup-mode");
     if (settingsSignupCard) {
-      settingsSignupCard.classList.toggle("is-hidden", !signupMode);
+      settingsSignupCard.classList.add("is-hidden");
     }
   }
 
@@ -71,7 +104,7 @@
 
   function readSession() {
     try {
-      const raw = window.localStorage.getItem(AUTH_SESSION_KEY);
+      const raw = readStorageValue(AUTH_SESSION_KEY);
       if (!raw) {
         return null;
       }
@@ -95,7 +128,7 @@
 
   function readTheme() {
     try {
-      const raw = String(window.localStorage.getItem(THEME_STORAGE_KEY) || "").toLowerCase();
+      const raw = String(readStorageValue(THEME_STORAGE_KEY) || "").toLowerCase();
       return raw === "light" ? "light" : "dark";
     } catch (_error) {
       return "dark";
@@ -104,15 +137,16 @@
 
   function applyTheme(theme, persist = true) {
     const nextTheme = theme === "light" ? "light" : "dark";
-    if (typeof window.NEREDEYENIR_SET_THEME === "function") {
-      window.NEREDEYENIR_SET_THEME(nextTheme);
-    } else {
-      document.body.classList.toggle("theme-dark", nextTheme === "dark");
-      document.body.classList.toggle("theme-light", nextTheme === "light");
-      document.documentElement.setAttribute("data-theme", nextTheme);
-      if (persist) {
-        window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-      }
+    if (typeof window.ARAMABUL_SET_THEME === "function") {
+      window.ARAMABUL_SET_THEME(nextTheme);
+      return;
+    }
+
+    document.body.classList.toggle("theme-dark", nextTheme === "dark");
+    document.body.classList.toggle("theme-light", nextTheme === "light");
+    document.documentElement.setAttribute("data-theme", nextTheme);
+    if (persist) {
+      writeStorageValue(THEME_STORAGE_KEY, nextTheme);
     }
   }
 
@@ -126,7 +160,7 @@
       .replace(/[^a-z0-9._-]/g, "-")
       .replace(/-+/g, "-")
       .replace(/^-|-$/g, "");
-    return `@${slug || "kullanici"}.neredeyenir`;
+    return `@${slug || "kullanici"}.aramabul`;
   }
 
   function renderSettings() {
@@ -145,10 +179,6 @@
 
   if (settingsBackBtn) {
     settingsBackBtn.addEventListener("click", () => {
-      if (currentPageMode() === "signup") {
-        goToMode("profile");
-        return;
-      }
       goHome();
     });
   }
@@ -162,6 +192,11 @@
 
   if (settingsAddAccountBtn) {
     settingsAddAccountBtn.addEventListener("click", () => {
+      if (window.ARAMABUL_AUTH_MODAL?.open) {
+        window.ARAMABUL_AUTH_MODAL.open("signup", settingsAddAccountBtn);
+        return;
+      }
+
       goToMode("signup");
     });
   }
@@ -173,8 +208,8 @@
         window.location.assign("index.html");
         return;
       }
-      window.localStorage.removeItem(AUTH_SESSION_KEY);
-      document.dispatchEvent(new CustomEvent("neredeyenir:authchange"));
+      removeStorageValue(AUTH_SESSION_KEY);
+      dispatchCompatEvent("aramabul:authchange");
       renderSettings();
     });
   }
@@ -218,7 +253,7 @@
       }
 
       try {
-        const rawUsers = window.localStorage.getItem(AUTH_USERS_KEY);
+        const rawUsers = readStorageValue(AUTH_USERS_KEY);
         const users = Array.isArray(JSON.parse(rawUsers || "[]")) ? JSON.parse(rawUsers || "[]") : [];
         const hasEmail = users.some((user) => user && normalizeEmail(user.email) === email);
         if (hasEmail) {
@@ -226,13 +261,13 @@
           return;
         }
         users.push({ name, email });
-        window.localStorage.setItem(AUTH_USERS_KEY, JSON.stringify(users));
+        writeStorageValue(AUTH_USERS_KEY, JSON.stringify(users));
       } catch (_error) {
         // Keep flow alive even if user list cannot be stored.
       }
 
-      window.localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify({ name, email }));
-      document.dispatchEvent(new CustomEvent("neredeyenir:authchange"));
+      writeStorageValue(AUTH_SESSION_KEY, JSON.stringify({ name, email }));
+      dispatchCompatEvent("aramabul:authchange");
       setSignupMessage("Kayıt tamamlandı.", false);
       window.setTimeout(() => {
         goToMode("profile");
@@ -242,9 +277,11 @@
 
   renderSettings();
   applyPageMode();
+  normalizeLegacySignupRoute();
   applyTheme(readTheme(), false);
 
-  document.addEventListener("neredeyenir:authchange", () => {
+  const syncSettings = () => {
     renderSettings();
-  });
+  };
+  document.addEventListener("aramabul:authchange", syncSettings);
 })();

@@ -4,36 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2c3531" />
-    <title>arama bul | Ayarlar</title>
+    <title>aramabul | Ayarlar</title>
     <meta name="description" content="Hesap bilgilerin ve uygulama ayarların." />
-    <link rel="icon" type="image/png" href="assets/fav.png?v=20260223" />
-    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260223" />
-    <link rel="apple-touch-icon" href="assets/fav.png?v=20260223" />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260227" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260227-22" />
-    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="styles.css?v=20260303-18" />
+    <link rel="stylesheet" href="profile.css?v=20260301-04" />
   </head>
   <body class="profile-page settings-page">
     <div class="texture"></div>
 
-    <header class="settings-header" role="banner">
-      <button id="settingsBackBtn" class="settings-back-btn" type="button" aria-label="Geri">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m15 5-7 7 7 7"></path>
-        </svg>
-      </button>
-      <h1><a class="settings-home-link" href="index.html">Anasayfa</a></h1>
+    <header class="global-header-band" role="banner">
+      <nav class="topbar global-topbar">
+        <a class="brand" href="index.html" aria-label="aramabul">
+          <span class="brand-wordmark">aramabul</span>
+        </a>
+      </nav>
+      <div class="global-topline">
+        <div class="global-topline-inner">
+          <a href="index.html">Anasayfa</a>
+          <span>/</span>
+          <span>Ayarlar</span>
+        </div>
+      </div>
     </header>
 
-    <form class="header-search profile-hidden-search" action="restaurant.html" method="get" role="search" aria-label="Genel arama">
+    <form class="header-search profile-hidden-search" action="search.html" method="get" role="search" aria-label="Genel arama">
       <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
       <input id="headerSearchInput" class="header-search-input" type="search" name="mekan" placeholder="Ne bulmamı istersin?" />
-      <button class="header-search-btn" type="submit">Ara</button>
+      <button class="header-search-btn" type="submit">Bul</button>
     </form>
 
     <main class="settings-shell">
@@ -49,7 +55,6 @@
       <section id="settingsSignupCard" class="settings-card settings-signup-card is-hidden" aria-label="Kayıt ol">
         <div class="settings-signup-head">
           <h2>Kayıt ol</h2>
-          <p>Hesabını oluştur ve ayarlarını kaydet.</p>
         </div>
         <form id="settingsSignupForm" class="settings-signup-form" novalidate>
           <label class="settings-signup-field">
@@ -81,7 +86,7 @@
       </section>
 
       <section class="settings-card settings-menu-card">
-        <a class="settings-row" href="#" aria-label="Hesap">
+        <a class="settings-row" href="account-settings.html" aria-label="Hesap">
           <span class="settings-row-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <circle cx="12" cy="8.2" r="3.3"></circle>
@@ -96,69 +101,7 @@
           </span>
         </a>
 
-        <a class="settings-row" href="#" aria-label="Gizlilik ve güvenlik">
-          <span class="settings-row-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <rect x="5" y="10" width="14" height="10" rx="2"></rect>
-              <path d="M8 10V7.8A4 4 0 0 1 12 4a4 4 0 0 1 4 3.8V10"></path>
-            </svg>
-          </span>
-          <span class="settings-row-label">Gizlilik ve güvenlik</span>
-          <span class="settings-row-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="m9 5 7 7-7 7"></path>
-            </svg>
-          </span>
-        </a>
-
-        <a class="settings-row" href="#" aria-label="Bildirimler">
-          <span class="settings-row-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 4.3c3 0 5.2 2.2 5.2 5.4v2.9l1.8 2.4v1H5v-1l1.8-2.4V9.7c0-3.2 2.2-5.4 5.2-5.4z"></path>
-              <path d="M9.7 18.1c.3 1.1 1.2 1.8 2.3 1.8s2-.7 2.3-1.8"></path>
-            </svg>
-          </span>
-          <span class="settings-row-label">Bildirimler</span>
-          <span class="settings-row-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="m9 5 7 7-7 7"></path>
-            </svg>
-          </span>
-        </a>
-
-        <a class="settings-row" href="#" aria-label="İçerik ve medya">
-          <span class="settings-row-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <rect x="4" y="5" width="16" height="14" rx="2"></rect>
-              <path d="M4 10h16"></path>
-            </svg>
-          </span>
-          <span class="settings-row-label">İçerik ve medya</span>
-          <span class="settings-row-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="m9 5 7 7-7 7"></path>
-            </svg>
-          </span>
-        </a>
-
-        <a class="settings-row" href="#" aria-label="Erişilebilirlik">
-          <span class="settings-row-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="5" r="2"></circle>
-              <path d="M6 9h12"></path>
-              <path d="M12 9v10"></path>
-              <path d="m8.8 19 3.2-4 3.2 4"></path>
-            </svg>
-          </span>
-          <span class="settings-row-label">Erişilebilirlik</span>
-          <span class="settings-row-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="m9 5 7 7-7 7"></path>
-            </svg>
-          </span>
-        </a>
-
-        <a class="settings-row" href="#" aria-label="Diller">
+        <a class="settings-row" href="language-settings.html" aria-label="Diller">
           <span class="settings-row-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="8"></circle>
@@ -168,6 +111,22 @@
             </svg>
           </span>
           <span class="settings-row-label">Diller</span>
+          <span class="settings-row-chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="m9 5 7 7-7 7"></path>
+            </svg>
+          </span>
+        </a>
+
+        <a class="settings-row" href="#" aria-label="Geribildirim">
+          <span class="settings-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v5A2.5 2.5 0 0 1 16.5 15H11l-4 4v-4H7.5A2.5 2.5 0 0 1 5 12.5z"></path>
+              <path d="M9 9.5h6"></path>
+              <path d="M9 12h4"></path>
+            </svg>
+          </span>
+          <span class="settings-row-label">Geribildirim</span>
           <span class="settings-row-chevron" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="m9 5 7 7-7 7"></path>
@@ -211,7 +170,14 @@
       <button id="settingsSignOutBtn" class="settings-signout" type="button">Çıkış yap</button>
     </main>
 
-    <script src="header-search.js?v=20260227-18"></script>
+    <script src="web-runtime.js?v=20260302-01"></script>
+    <script src="header-state.js?v=20260302-01"></script>
+  <script src="header-i18n.js?v=20260303-03"></script>
+  <script src="header-nav.js?v=20260302-01"></script>
+  <script src="header-shell.js?v=20260302-02"></script>
+  <script src="header-search-ui.js?v=20260303-04"></script>
+  <script src="header-search-data.js?v=20260303-06"></script>
+    <script src="header-search.js?v=20260303-20"></script>
     <script src="profile.js"></script>
   </body>
 </html>

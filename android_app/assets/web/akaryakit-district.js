@@ -127,8 +127,8 @@ function renderHeader() {
   if (akaryakitDistrictCityLink) {
     akaryakitDistrictCityLink.textContent = state.city || "İl";
     akaryakitDistrictCityLink.href = state.city
-      ? `akaryakit-city.html?sehir=${encodeURIComponent(state.city)}`
-      : "akaryakit.html";
+      ? `keyif-city.html?sehir=${encodeURIComponent(state.city)}`
+      : "keyif.html";
   }
 
   document.title = hasLocation
