@@ -4,3 +4,13 @@
 /tmp/
 node_modules/
 backend/.env
+*.backup.json
+*.conflict-backup
+data/address-quality-report.json
+android_app/assets/web/data/address-quality-report.json
+data/*-progress.json
+android_app/assets/web/data/*-progress.json
+data/*grid-review.json
+android_app/assets/web/data/*grid-review.json
+data/google-maps-*.example.json
+android_app/assets/web/data/google-maps-*.example.json

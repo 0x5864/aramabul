@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2c3531" />
+    <title>aramabul | Dil Ayarları</title>
+    <meta name="description" content="Uygulama dili seçimini güncelle." />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260227" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260303-18" />
+    <link rel="stylesheet" href="profile.css?v=20260301-04" />
+  </head>
+  <body class="profile-page settings-page language-page">
+    <div class="texture"></div>
+
+    <header class="global-header-band" role="banner">
+      <nav class="topbar global-topbar">
+        <a class="brand" href="index.html" aria-label="aramabul">
+          <span class="brand-wordmark">aramabul</span>
+        </a>
+      </nav>
+      <div class="global-topline">
+        <div class="global-topline-inner">
+          <a href="index.html">Anasayfa</a>
+          <span>/</span>
+          <a href="profile.html?action=profile">Ayarlar</a>
+          <span>/</span>
+          <span>Dil Ayarları</span>
+        </div>
+      </div>
+    </header>
+
+    <form class="header-search profile-hidden-search" action="search.html" method="get" role="search" aria-label="Genel arama">
+      <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
+      <input id="headerSearchInput" class="header-search-input" type="search" name="mekan" placeholder="Ne bulmamı istersin?" />
+      <button class="header-search-btn" type="submit">Bul</button>
+    </form>
+
+    <main class="settings-shell language-shell">
+      <section class="settings-card language-card" aria-label="Dil seçenekleri">
+        <div class="language-card-head">
+          <h2>Dil seç</h2>
+          <p>Uygulama metinleri bu seçime göre güncellenir.</p>
+        </div>
+        <div class="language-options" role="list">
+          <button class="language-option" data-language-choice="TR" type="button">
+            <span class="language-option-code">TR</span>
+            <span class="language-option-name">Türkçe</span>
+          </button>
+          <button class="language-option" data-language-choice="EN" type="button">
+            <span class="language-option-code">EN</span>
+            <span class="language-option-name">English</span>
+          </button>
+          <button class="language-option" data-language-choice="DE" type="button">
+            <span class="language-option-code">DE</span>
+            <span class="language-option-name">Deutsch</span>
+          </button>
+          <button class="language-option" data-language-choice="RU" type="button">
+            <span class="language-option-code">RU</span>
+            <span class="language-option-name">Русский</span>
+          </button>
+        </div>
+        <p id="languageSaveMessage" class="language-save-message" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <script src="web-runtime.js?v=20260302-01"></script>
+    <script src="header-state.js?v=20260302-01"></script>
+  <script src="header-i18n.js?v=20260303-03"></script>
+  <script src="header-nav.js?v=20260302-01"></script>
+  <script src="header-shell.js?v=20260302-02"></script>
+  <script src="header-search-ui.js?v=20260303-04"></script>
+  <script src="header-search-data.js?v=20260303-06"></script>
+    <script src="header-search.js?v=20260303-20"></script>
+    <script src="language-settings.js?v=20260301-02"></script>
+  </body>
+</html>

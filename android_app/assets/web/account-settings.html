@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2c3531" />
+    <title>arama bul | Hesap</title>
+    <meta name="description" content="Hesap bilgilerini görüntüle ve güncelle." />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260227" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260303-18" />
+    <link rel="stylesheet" href="profile.css?v=20260301-04" />
+  </head>
+  <body class="profile-page settings-page account-page">
+    <div class="texture"></div>
+
+    <header class="global-header-band" role="banner">
+      <nav class="topbar global-topbar">
+        <a class="brand" href="index.html" aria-label="arama bul">
+          <span class="brand-wordmark">arama bul</span>
+        </a>
+      </nav>
+      <div class="global-topline">
+        <div class="global-topline-inner">
+          <a href="profile.html?action=profile">Ayarlar</a>
+          <span>/</span>
+          <span>Hesap</span>
+        </div>
+      </div>
+    </header>
+
+    <form class="header-search profile-hidden-search" action="search.html" method="get" role="search" aria-label="Genel arama">
+      <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
+      <input id="headerSearchInput" class="header-search-input" type="search" name="mekan" placeholder="Ne bulmamı istersin?" />
+      <button class="header-search-btn" type="submit">Bul</button>
+    </form>
+
+    <main class="settings-shell account-shell">
+      <section class="settings-card account-info-card">
+        <div class="settings-account-head">
+          <div class="settings-avatar" id="accountAvatar" aria-hidden="true">M</div>
+          <div>
+            <h2 id="accountDisplayName">Misafir</h2>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-card account-editor-card" aria-label="Hesap düzenleme">
+        <div class="language-card-head">
+          <h2>Hesap bilgileri</h2>
+          <p>Adını ve e-postanı burada güncelleyebilirsin.</p>
+        </div>
+        <form id="accountSettingsForm" class="settings-signup-form" novalidate>
+          <label class="settings-signup-field">
+            <span>Ad Soyad</span>
+            <input id="accountNameInput" type="text" name="name" autocomplete="name" required />
+          </label>
+          <label class="settings-signup-field">
+            <span>E-posta</span>
+            <input id="accountEmailInput" type="email" name="email" autocomplete="email" required />
+          </label>
+          <p id="accountSettingsMessage" class="settings-signup-message" aria-live="polite"></p>
+          <div class="account-settings-actions">
+            <button id="accountSaveBtn" class="settings-signup-submit" type="submit">Kaydet</button>
+            <button id="accountSignupBtn" class="account-secondary-btn" type="button">Kayıt ol</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="header-search.js?v=20260303-21"></script>
+    <script src="account-settings.js?v=20260301-01"></script>
+  </body>
+</html>
