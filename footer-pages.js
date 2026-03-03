@@ -6,9 +6,8 @@
     lead: "Yeni bir işletme veya hizmet noktası eklemek için aşağıdaki formu doldurup gönder tuşuna basınız.",
     cards: [],
     form: {
-      title: "Bilgi gönderme kutusu",
-      description:
-        "İl, ilçe ve mahalle seçimini sırayla yapın. Uygun eşleşme bulunduğunda posta kodu otomatik gelir.",
+      title: "",
+      description: "",
       submitLabel: "Gönder",
       successText:
         "Bilgiler alındı. Adres alanlarını PTT kaynağıyla eşleştirdiysen inceleme daha hızlı ilerler.",
@@ -535,9 +534,11 @@
     const card = document.createElement("section");
     card.className = "content-page-form-card";
 
-    const heading = document.createElement("h2");
-    heading.textContent = title || "Bilgi gönder";
-    card.append(heading);
+    if (title) {
+      const heading = document.createElement("h2");
+      heading.textContent = title;
+      card.append(heading);
+    }
 
     if (description) {
       const text = document.createElement("p");

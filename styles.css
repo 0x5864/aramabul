@@ -922,16 +922,26 @@ main > * {
 .content-page-field textarea {
   width: 100%;
   border: 1px solid rgba(1, 29, 54, 0.14);
-  border-radius: 14px;
+  border-radius: 16px;
   background: #ffffff;
-  padding: 0.72rem 0.8rem;
+  padding: 0.78rem 0.9rem;
   font: inherit;
   color: #162123;
 }
 
 .content-page-field select {
   appearance: none;
-  background: #eef1f4;
+  min-height: 58px;
+  border-radius: 18px;
+  border-color: rgba(1, 29, 54, 0.1);
+  background-color: #e9edf1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23606c77' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px 8px;
+  padding: 0.98rem 2.8rem 0.98rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .content-page-field select[data-empty="true"] {
@@ -939,17 +949,18 @@ main > * {
 }
 
 .content-page-field select[data-empty="false"] {
-  background: #ffffff;
+  background-color: #ffffff;
   color: #162123;
 }
 
 .content-page-field select:focus,
 .content-page-field select:active {
-  background: #ffffff;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(2, 129, 194, 0.08);
 }
 
 .content-page-field select:disabled {
-  background: #eef1f4;
+  background-color: #e9edf1;
   color: rgba(22, 33, 35, 0.56);
   cursor: not-allowed;
 }
