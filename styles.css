@@ -860,6 +860,196 @@ main > * {
   color: rgba(255, 255, 255, 0.9);
 }
 
+.content-page-form-shell {
+  display: flex;
+}
+
+.content-page-form-shell[hidden] {
+  display: none !important;
+}
+
+.content-page-form-card {
+  border: 1px solid rgba(1, 29, 54, 0.12);
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.88);
+  padding: 1.1rem;
+  width: 100%;
+  max-width: min(100%, calc(50% - 0.7rem));
+}
+
+.content-page-form-card h2 {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.2;
+  color: #011d36;
+}
+
+.content-page-form-card > p {
+  margin: 0.5rem 0 0;
+  font-size: 0.92rem;
+  color: rgba(22, 33, 35, 0.82);
+}
+
+.content-page-form {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.content-page-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.content-page-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.content-page-field[data-span="full"] {
+  grid-column: 1 / -1;
+}
+
+.content-page-field span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(1, 29, 54, 0.8);
+}
+
+.content-page-field input,
+.content-page-field select,
+.content-page-field textarea {
+  width: 100%;
+  border: 1px solid rgba(1, 29, 54, 0.14);
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 0.72rem 0.8rem;
+  font: inherit;
+  color: #162123;
+}
+
+.content-page-field select {
+  appearance: none;
+  background: #eef1f4;
+}
+
+.content-page-field select[data-empty="true"] {
+  color: rgba(22, 33, 35, 0.58);
+}
+
+.content-page-field select[data-empty="false"] {
+  background: #ffffff;
+  color: #162123;
+}
+
+.content-page-field select:focus,
+.content-page-field select:active {
+  background: #ffffff;
+}
+
+.content-page-field select:disabled {
+  background: #eef1f4;
+  color: rgba(22, 33, 35, 0.56);
+  cursor: not-allowed;
+}
+
+.content-page-field textarea {
+  min-height: 108px;
+  resize: vertical;
+}
+
+.content-page-field input:focus,
+.content-page-field select:focus,
+.content-page-field textarea:focus {
+  outline: 2px solid rgba(2, 129, 194, 0.18);
+  border-color: rgba(2, 129, 194, 0.4);
+}
+
+.content-page-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.content-page-form-button {
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #011d36, #0281c2);
+  color: #ffffff;
+  padding: 0.78rem 1.1rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.content-page-form-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(1, 29, 54, 0.14);
+  border-radius: 999px;
+  background: rgba(1, 29, 54, 0.04);
+  color: #011d36;
+  padding: 0.76rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.content-page-form-link:hover {
+  background: rgba(2, 129, 194, 0.08);
+}
+
+.content-page-form-note {
+  margin: 0;
+  font-size: 0.82rem;
+  color: rgba(22, 33, 35, 0.7);
+}
+
+.content-page-form-status {
+  margin: 0;
+  font-size: 0.88rem;
+  color: rgba(22, 33, 35, 0.82);
+}
+
+.content-page-form-status[data-state="success"] {
+  color: #0b6b4f;
+}
+
+.content-page-form-status[data-state="error"] {
+  color: #8a2d1b;
+}
+
+.content-page-check {
+  grid-column: 1 / -1;
+}
+
+.content-page-check-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border: 1px solid rgba(1, 29, 54, 0.12);
+  border-radius: 16px;
+  background: rgba(1, 29, 54, 0.03);
+  padding: 0.8rem 0.9rem;
+}
+
+.content-page-check input {
+  margin: 0.1rem 0 0;
+  width: 1rem;
+  height: 1rem;
+  accent-color: #0281c2;
+}
+
+.content-page-check-text {
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: rgba(1, 29, 54, 0.82);
+}
+
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2308,6 +2498,14 @@ body.search-choice-open {
 
   .category-card-grid {
     grid-template-columns: 1fr;
+  }
+
+  .content-page-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-page-form-card {
+    max-width: 100%;
   }
 
   .yr-footer-grid {

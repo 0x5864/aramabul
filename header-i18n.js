@@ -16,7 +16,7 @@
     ],
     [
       "footer-page.html?sayfa=restoran-ekle",
-      "footer-page.html?sayfa=fiyat-ekle",
+      "footer-page.html?sayfa=yer-ekle",
       "footer-page.html?sayfa=is-birligi",
     ],
     [

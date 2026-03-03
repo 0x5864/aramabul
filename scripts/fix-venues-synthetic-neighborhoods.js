@@ -58,6 +58,7 @@ const GENERIC_PARTS = [
   'iş merkezi',
   'mahalle',
   'mahallesi',
+  'merkez',
 ];
 
 const BUSINESS_PARTS = [
@@ -117,6 +118,10 @@ function isSyntheticNeighborhood(value) {
   return /\/.+\s+Mah\.?$/u.test(text);
 }
 
+function localityKey(record) {
+  return `${fold(record.city)}|${fold(record.district)}`;
+}
+
 function stripLeadingLabels(value) {
   return String(value || '')
     .replace(/^[\s:./-]+/u, '')
@@ -138,7 +143,26 @@ function isGenericPart(value) {
     return true;
   }
 
-  return GENERIC_PARTS.some((part) => text.includes(part));
+  const tokens = text.split(/\s+/).filter(Boolean);
+
+  return GENERIC_PARTS.some((part) => {
+    const partTokens = part.split(/\s+/).filter(Boolean);
+    if (partTokens.length === 0) {
+      return false;
+    }
+
+    if (partTokens.length === 1) {
+      return tokens.includes(partTokens[0]);
+    }
+
+    for (let index = 0; index <= tokens.length - partTokens.length; index += 1) {
+      if (partTokens.every((token, offset) => tokens[index + offset] === token)) {
+        return true;
+      }
+    }
+
+    return false;
+  });
 }
 
 function isBusinessPart(value) {
@@ -147,7 +171,26 @@ function isBusinessPart(value) {
     return false;
   }
 
-  return BUSINESS_PARTS.some((part) => text.includes(part));
+  const tokens = text.split(/\s+/).filter(Boolean);
+
+  return BUSINESS_PARTS.some((part) => {
+    const partTokens = part.split(/\s+/).filter(Boolean);
+    if (partTokens.length === 0) {
+      return false;
+    }
+
+    if (partTokens.length === 1) {
+      return tokens.includes(partTokens[0]);
+    }
+
+    for (let index = 0; index <= tokens.length - partTokens.length; index += 1) {
+      if (partTokens.every((token, offset) => tokens[index + offset] === token)) {
+        return true;
+      }
+    }
+
+    return false;
+  });
 }
 
 function matchesLocationName(candidate, record) {
@@ -218,25 +261,250 @@ function looksLikeCandidate(value, record) {
   return true;
 }
 
-function findNeighborhoodCandidate(record) {
+function buildKnownNeighborhoodLookup(records) {
+  const lookup = new Map();
+
+  for (const record of records) {
+    if (!record.neighborhood || isSyntheticNeighborhood(record.neighborhood)) {
+      continue;
+    }
+
+    const key = localityKey(record);
+    const core = normalizeCandidateCore(record.neighborhood);
+    const foldedCore = fold(core);
+    if (!foldedCore) {
+      continue;
+    }
+
+    if (!lookup.has(key)) {
+      lookup.set(key, new Map());
+    }
+
+    const options = lookup.get(key);
+    const current = options.get(foldedCore) || { label: `${toTitleCase(core)} Mah.`, count: 0 };
+    current.count += 1;
+    options.set(foldedCore, current);
+  }
+
+  return lookup;
+}
+
+function knownNeighborhoodFromAddress(record, knownNeighborhoods) {
   const parts = String(record.address || '')
     .split(',')
     .map((part) => part.trim())
     .filter(Boolean);
+  const localKnown = knownNeighborhoods.get(localityKey(record));
+  if (!localKnown) {
+    return '';
+  }
 
   for (const part of parts.slice(0, 2)) {
     if (!looksLikeCandidate(part, record)) {
       continue;
     }
 
-    return `${toTitleCase(normalizeCandidateCore(part))} Mah.`;
+    const core = normalizeCandidateCore(part);
+    const known = localKnown.get(fold(core));
+    if (!known) {
+      continue;
+    }
+
+    return known.label;
   }
 
   return '';
 }
 
+function knownNeighborhoodFromAddressAliases(record, knownNeighborhoods) {
+  const localKnown = knownNeighborhoods.get(localityKey(record));
+  if (!localKnown) {
+    return '';
+  }
+
+  const parts = String(record.address || '')
+    .split(',')
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  for (const part of parts.slice(0, 3)) {
+    for (const text of trimmedPartVariants(part)) {
+      const folded = fold(text);
+      if (!folded) {
+        continue;
+      }
+
+      const special = specialAddressAlias(record, folded, localKnown);
+      if (special) {
+        return special.label;
+      }
+
+      const direct = lookupKnownNeighborhood(localKnown, text);
+      const directWordCount = text.split(/\s+/).filter(Boolean).length;
+      if (direct && directWordCount >= 2 && looksLikeKnownPhrase(text, record)) {
+        return direct.label;
+      }
+
+      if (/\b(?:bahcesehir|başakşehir)\s+\d+\s+k[ıi]s[ıi]m\b/u.test(folded)) {
+        const kisim = localKnown.get('kısım') || localKnown.get('kisim');
+        if (kisim) {
+          return kisim.label;
+        }
+      }
+
+      if (/\bbasaksehir\s+\d+\s+etap\b/u.test(folded) || /\bbaşakşehir\s+\d+\s+etap\b/u.test(folded)) {
+        const etap = localKnown.get('etap');
+        if (etap) {
+          return etap.label;
+        }
+      }
+    }
+  }
+
+  return '';
+}
+
+function phraseCandidates(value) {
+  const words = normalizeCandidateCore(value)
+    .split(/\s+/)
+    .filter(Boolean);
+  const results = [];
+
+  for (let size = Math.min(3, words.length); size >= 1; size -= 1) {
+    for (let start = 0; start <= words.length - size; start += 1) {
+      results.push(words.slice(start, start + size).join(' '));
+    }
+  }
+
+  return results;
+}
+
+function lookupKnownNeighborhood(localKnown, phrase) {
+  const direct = localKnown.get(fold(phrase));
+  if (direct) {
+    return direct;
+  }
+
+  const compact = localKnown.get(fold(String(phrase || '').replace(/\s+/g, '')));
+  if (compact) {
+    return compact;
+  }
+
+  return null;
+}
+
+function trimmedPartVariants(value) {
+  const base = normalizeCandidateCore(value);
+  const variants = new Set([base]);
+  const noTail = base
+    .replace(/\b(?:no|numara)\b.*$/iu, '')
+    .replace(/\b(?:blok|bina|dükkan|dukkan)\b.*$/iu, '')
+    .replace(/[.:/-]+\s*$/u, '')
+    .trim();
+
+  if (noTail) {
+    variants.add(noTail);
+  }
+
+  return Array.from(variants).filter(Boolean);
+}
+
+function specialAddressAlias(record, foldedText, localKnown) {
+  const key = localityKey(record);
+
+  if (key === 'izmir|cesme' || key === 'ızmir|cesme') {
+    if (/^16\s+eyl[üu]l$/u.test(foldedText)) {
+      return { label: '16 Eylül Mah.' };
+    }
+  }
+
+  if (key === 'istanbul|basaksehir' || key === 'ıstanbul|basaksehir') {
+    if (/\bbahcesehir\s+\d+\s+k[ıi]s[ıi]m\b/u.test(foldedText)) {
+      return localKnown.get('kısım') || localKnown.get('kisim') || { label: 'Kısım Mah.' };
+    }
+
+    if (/\bbasaksehir\s+\d+\s+etap\b/u.test(foldedText)) {
+      return localKnown.get('etap') || { label: 'Etap Mah.' };
+    }
+  }
+
+  return null;
+}
+
+function looksLikeKnownPhrase(phrase, record) {
+  const text = normalizeCandidateCore(phrase);
+  if (!text) {
+    return false;
+  }
+
+  if (!/[\p{L}]/u.test(text)) {
+    return false;
+  }
+
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  if (wordCount > 3) {
+    return false;
+  }
+
+  if (matchesLocationName(text, record)) {
+    return false;
+  }
+
+  if (wordCount === 1 && isGenericPart(text)) {
+    return false;
+  }
+
+  return true;
+}
+
+function knownNeighborhoodFromSynthetic(record, knownNeighborhoods) {
+  const localKnown = knownNeighborhoods.get(localityKey(record));
+  if (!localKnown) {
+    return '';
+  }
+
+  const rawCore = String(record.neighborhood || '')
+    .replace(/\b(mahalle(si)?|mah\.?|mh\.?)$/iu, '')
+    .trim();
+
+  const segments = rawCore
+    .split('/')
+    .map((segment) => segment.trim())
+    .filter(Boolean);
+
+  for (const segment of segments) {
+    for (const phrase of phraseCandidates(segment)) {
+      if (!looksLikeCandidate(phrase, record)) {
+        continue;
+      }
+
+      const known = localKnown.get(fold(phrase));
+      if (known) {
+        return known.label;
+      }
+    }
+  }
+
+  return '';
+}
+
+function findNeighborhoodCandidate(record, knownNeighborhoods) {
+  const fromSynthetic = knownNeighborhoodFromSynthetic(record, knownNeighborhoods);
+  if (fromSynthetic) {
+    return fromSynthetic;
+  }
+
+  const fromAddress = knownNeighborhoodFromAddress(record, knownNeighborhoods);
+  if (fromAddress) {
+    return fromAddress;
+  }
+
+  return knownNeighborhoodFromAddressAliases(record, knownNeighborhoods);
+}
+
 function applyFixes(targetPath, dryRun) {
   const records = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
+  const knownNeighborhoods = buildKnownNeighborhoodLookup(records);
   let changed = 0;
 
   for (const record of records) {
@@ -244,7 +512,7 @@ function applyFixes(targetPath, dryRun) {
       continue;
     }
 
-    const candidate = findNeighborhoodCandidate(record);
+    const candidate = findNeighborhoodCandidate(record, knownNeighborhoods);
     if (!candidate || candidate === record.neighborhood) {
       continue;
     }

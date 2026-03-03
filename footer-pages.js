@@ -1,5 +1,24 @@
 (() => {
   const DEFAULT_KEY = "hakkimizda";
+  const PLACE_SUBMISSION_CONTENT = {
+    eyebrow: "İş ortaklığı",
+    title: "Yer ekle",
+    lead: "Yeni bir işletme veya hizmet noktası eklemek için aşağıdaki formu doldurup gönder tuşuna basınız.",
+    cards: [],
+    form: {
+      title: "Bilgi gönderme kutusu",
+      description:
+        "İl, ilçe ve mahalle seçimini sırayla yapın. Uygun eşleşme bulunduğunda posta kodu otomatik gelir.",
+      submitLabel: "Gönder",
+      successText:
+        "Bilgiler alındı. Adres alanlarını PTT kaynağıyla eşleştirdiysen inceleme daha hızlı ilerler.",
+      districtsUrl: "data/districts.json",
+      neighborhoodsUrl: "data/location-neighborhoods.json",
+      postcodesUrl: "data/location-postcodes.json",
+      officialSourceUrl: "https://postakodu.ptt.gov.tr/",
+      officialSourceLabel: "PTT Posta Kodu ekranı",
+    },
+  };
   const PAGE_CONTENT = Object.freeze({
     "app-store": {
       eyebrow: "Mobil uygulama",
@@ -56,20 +75,20 @@
     hakkimizda: {
       eyebrow: "",
       title: "Hakkımızda",
-      lead: "aramabul, insanın bir yeri ararken en kısa yoldan net bilgi bulmasını amaçlayan sade bir keşif ürünüdür.",
+      lead: "Aramabul, kullanıcının bir yeri ararken, en kısa yoldan ve net bilgi bulmasını amaçlayan sade tasarımlı bir yardımcıdır.",
       cards: [
         {
-          title: "Neden varız?",
+          title: "Neden var?",
           paragraphs: [
             "İnsanlar çoğu zaman bir yerin adını değil, ihtiyacını bilir. Biz de aramayı ihtiyaçtan başlatıyoruz.",
-            "Amaç, gereksiz kalabalığı azaltmak ve doğru kategoriye daha hızlı ulaşmak.",
+            "Amaç, gereksiz kalabalığı ve çabayı azaltarak, ihtiyaç duyduğunuz hizmet ve ürüne daha hızlı ulaşmanızı sağlamak.",
           ],
         },
         {
-          title: "Nasıl çalışıyoruz?",
+          title: "Nasıl çalışır?",
           paragraphs: [
-            "Kategori, şehir ve ilçe katmanlarını sade tutuyoruz.",
-            "Bilgiyi kutu yapısında sunuyor, kullanıcıyı uzun sayfalar yerine net karar alanına taşıyoruz.",
+            "Kategori, şehir ve ilçe katmanları sırasıyla, önce alt kategoriler, son olarak da hizmet mekanları seçenekleri ile sizi buluşturuyoruz.",
+            "Bilgiyi kutu yapısında sunarak, kullanıcıyı uzun sayfalarda dolaştırmadan net karar alanına ulaştırıyoruz. İhtiyaç duyduğunuz hizmeti alacağınız mekanı, tüm ulaşım ve iletişim bilgileri ile, en kullanıcı dostu biçimde görmenizi sağlıyoruz.",
           ],
         },
         {
@@ -77,8 +96,7 @@
           bullets: [
             "Basit arayüz",
             "Açık bilgi",
-            "Hızlı yönlendirme",
-            "Kolay güncelleme",
+            "Hızlı ve ayrıntılı yönlendirme",
           ],
         },
       ],
@@ -333,34 +351,8 @@
         },
       ],
     },
-    "fiyat-ekle": {
-      eyebrow: "İş ortaklığı",
-      title: "Fiyat ekle",
-      lead: "Fiyat bilgisi ekleme sayfası, kullanıcıya net ve güvenilir karşılaştırma sağlamak için tasarlanır.",
-      cards: [
-        {
-          title: "Fiyat gönderirken",
-          bullets: [
-            "Ürün veya hizmet adı",
-            "Net fiyat",
-            "Tarih bilgisi",
-            "Varsa kampanya notu",
-          ],
-        },
-        {
-          title: "Kalite kuralı",
-          paragraphs: [
-            "Belirsiz, tarih vermeyen veya kaynağı karışık fiyatlar doğrudan yayınlanmaz.",
-          ],
-        },
-        {
-          title: "Yayın mantığı",
-          paragraphs: [
-            "Amaç, kullanıcıyı yanıltmadan en sade fiyat bilgisini göstermek.",
-          ],
-        },
-      ],
-    },
+    "yer-ekle": PLACE_SUBMISSION_CONTENT,
+    "fiyat-ekle": PLACE_SUBMISSION_CONTENT,
     "is-birligi": {
       eyebrow: "İş ortaklığı",
       title: "İş birliği",
@@ -513,6 +505,389 @@
     });
   }
 
+  function renderSubmissionForm(formConfig) {
+    const wrap = document.querySelector("#contentPageFormSection");
+    if (!(wrap instanceof HTMLElement)) {
+      return;
+    }
+
+    wrap.innerHTML = "";
+    wrap.hidden = true;
+
+    if (!formConfig || typeof formConfig !== "object") {
+      return;
+    }
+
+    const title = String(formConfig.title || "").trim();
+    const description = String(formConfig.description || "").trim();
+    const submitLabel = String(formConfig.submitLabel || "Gönder").trim();
+    const note = String(formConfig.note || "").trim();
+    const successText = String(formConfig.successText || "Bilgiler hazırlandı.").trim();
+    const districtsUrl = String(formConfig.districtsUrl || "").trim();
+    const neighborhoodsUrl = String(formConfig.neighborhoodsUrl || "").trim();
+    const postcodesUrl = String(formConfig.postcodesUrl || "").trim();
+    const officialSourceUrl = String(formConfig.officialSourceUrl || "").trim();
+    const officialSourceLabel = String(formConfig.officialSourceLabel || "Resmi kaynağı aç").trim();
+    const districtsByCity = {};
+    const neighborhoodsByLocation = {};
+    let postalCodeByLocation = {};
+
+    const card = document.createElement("section");
+    card.className = "content-page-form-card";
+
+    const heading = document.createElement("h2");
+    heading.textContent = title || "Bilgi gönder";
+    card.append(heading);
+
+    if (description) {
+      const text = document.createElement("p");
+      text.textContent = description;
+      card.append(text);
+    }
+
+    const form = document.createElement("form");
+    form.className = "content-page-form";
+    form.noValidate = true;
+
+    const grid = document.createElement("div");
+    grid.className = "content-page-form-grid";
+
+    function buildField(labelText, control, span = "half") {
+      const label = document.createElement("label");
+      label.className = "content-page-field";
+      label.dataset.span = span;
+      label.append(control);
+      return label;
+    }
+
+    function buildInput(type, name, placeholder, required, autocomplete = "") {
+      const input = document.createElement("input");
+      input.type = type;
+      input.name = name;
+      input.placeholder = placeholder;
+      input.required = required;
+      if (autocomplete) {
+        input.autocomplete = autocomplete;
+      }
+      return input;
+    }
+
+    function buildCheckField(control, labelText) {
+      const label = document.createElement("label");
+      label.className = "content-page-check";
+
+      const row = document.createElement("span");
+      row.className = "content-page-check-box";
+
+      const textNode = document.createElement("span");
+      textNode.className = "content-page-check-text";
+      textNode.textContent = labelText;
+
+      row.append(control);
+      row.append(textNode);
+      label.append(row);
+      return label;
+    }
+
+    function normalizeLocationToken(value) {
+      return String(value || "")
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase("tr-TR")
+        .replace(/\bmah(allesi)?\b/gi, "mah")
+        .replace(/\bkoyu\b/gi, "koy")
+        .replace(/[^a-z0-9çğıöşü]+/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function formatNeighborhoodName(value) {
+      return String(value || "")
+        .replace(/Mah\.\.+/gi, "Mah.")
+        .replace(/\.\.+/g, ".")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function locationKey(...parts) {
+      return parts.map((part) => normalizeLocationToken(part)).join("|");
+    }
+
+    function syncSelectState(selectNode) {
+      selectNode.dataset.empty = selectNode.value ? "false" : "true";
+    }
+
+    function fillSelect(selectNode, placeholder, values) {
+      selectNode.innerHTML = "";
+
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = placeholder;
+      selectNode.append(defaultOption);
+
+      values.forEach((value) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        selectNode.append(option);
+      });
+
+      selectNode.value = "";
+      syncSelectState(selectNode);
+    }
+
+    const businessName = buildInput("text", "businessName", "İşletme adı", true, "organization");
+    const phone = buildInput("tel", "phone", "Telefon numarası", true, "tel");
+    const website = buildInput("url", "website", "https://ornek.com", false, "url");
+    const citySelect = document.createElement("select");
+    const districtSelect = document.createElement("select");
+    const neighborhoodSelect = document.createElement("select");
+    const street = buildInput("text", "street", "Sokak / Cadde / Bulvar", true, "street-address");
+    const doorNumber = buildInput("text", "doorNumber", "Bina no / Kapı no", true, "address-line2");
+    const postalCode = buildInput("text", "postalCode", "Posta kodu", true, "postal-code");
+    const pttVerified = document.createElement("input");
+    const notes = document.createElement("textarea");
+
+    postalCode.inputMode = "numeric";
+    postalCode.maxLength = 5;
+    postalCode.pattern = "\\d{5}";
+    pttVerified.type = "checkbox";
+    pttVerified.name = "pttVerified";
+    pttVerified.required = true;
+
+    citySelect.name = "city";
+    citySelect.required = true;
+    districtSelect.name = "district";
+    districtSelect.required = true;
+    neighborhoodSelect.name = "neighborhood";
+    neighborhoodSelect.required = true;
+    districtSelect.disabled = true;
+    neighborhoodSelect.disabled = true;
+    citySelect.disabled = true;
+
+    postalCode.readOnly = true;
+
+    notes.name = "notes";
+    notes.placeholder = "Varsa kısa açıklama, yakın nokta veya ek adres notu";
+
+    fillSelect(citySelect, "İl", []);
+    fillSelect(districtSelect, "İlçe", []);
+    fillSelect(neighborhoodSelect, "Mahalle", []);
+
+    function syncPostalCode() {
+      const selectedCity = citySelect.value;
+      const selectedDistrict = districtSelect.value;
+      const selectedNeighborhood = neighborhoodSelect.value;
+      const hasFullSelection = Boolean(selectedCity && selectedDistrict && selectedNeighborhood);
+      const key = hasFullSelection ? locationKey(selectedCity, selectedDistrict, selectedNeighborhood) : "";
+      const matchedPostalCode = key ? String(postalCodeByLocation[key] || "").trim() : "";
+
+      postalCode.value = matchedPostalCode;
+      postalCode.readOnly = !hasFullSelection || Boolean(matchedPostalCode);
+      postalCode.placeholder = !hasFullSelection
+        ? "Posta kodu"
+        : matchedPostalCode
+          ? "Posta kodu"
+          : "Posta kodu (manuel)";
+    }
+
+    function updateNeighborhoods() {
+      const selectedCity = citySelect.value;
+      const selectedDistrict = districtSelect.value;
+      const key = selectedCity && selectedDistrict ? locationKey(selectedCity, selectedDistrict) : "";
+      const neighborhoods = key ? neighborhoodsByLocation[key] || [] : [];
+
+      fillSelect(neighborhoodSelect, "Mahalle", neighborhoods);
+      neighborhoodSelect.disabled = neighborhoods.length === 0;
+      syncSelectState(neighborhoodSelect);
+      syncPostalCode();
+    }
+
+    function updateDistricts() {
+      const selectedCity = citySelect.value;
+      const districts = selectedCity ? districtsByCity[selectedCity] || [] : [];
+
+      fillSelect(districtSelect, "İlçe", districts);
+      districtSelect.disabled = districts.length === 0;
+      fillSelect(neighborhoodSelect, "Mahalle", []);
+      neighborhoodSelect.disabled = true;
+      syncSelectState(districtSelect);
+      syncSelectState(neighborhoodSelect);
+      syncPostalCode();
+    }
+
+    citySelect.addEventListener("change", () => {
+      syncSelectState(citySelect);
+      updateDistricts();
+    });
+    districtSelect.addEventListener("change", () => {
+      syncSelectState(districtSelect);
+      updateNeighborhoods();
+    });
+    neighborhoodSelect.addEventListener("change", () => {
+      syncSelectState(neighborhoodSelect);
+      syncPostalCode();
+    });
+
+    grid.append(buildField("İşletme adı", businessName, "full"));
+    grid.append(buildField("İl", citySelect));
+    grid.append(buildField("İlçe", districtSelect));
+    grid.append(buildField("Mahalle", neighborhoodSelect));
+    grid.append(buildField("Sokak / Cadde", street));
+    grid.append(buildField("Bina / Kapı no", doorNumber));
+    grid.append(buildField("Posta kodu", postalCode));
+    grid.append(buildField("Telefon bilgisi", phone));
+    grid.append(buildField("Web sitesi (varsa)", website));
+    grid.append(
+      buildCheckField(
+        pttVerified,
+        "Mahalle, sokak ve posta kodunu PTT Posta Kodu kaynağından kontrol ederek doldurduğumu onaylıyorum.",
+      ),
+    );
+    grid.append(buildField("Ek not", notes, "full"));
+
+    const actions = document.createElement("div");
+    actions.className = "content-page-form-actions";
+
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.className = "content-page-form-button";
+    submitButton.textContent = submitLabel;
+    actions.append(submitButton);
+
+    if (officialSourceUrl) {
+      const sourceLink = document.createElement("a");
+      sourceLink.className = "content-page-form-link";
+      sourceLink.href = officialSourceUrl;
+      sourceLink.target = "_blank";
+      sourceLink.rel = "noreferrer noopener";
+      sourceLink.textContent = officialSourceLabel;
+      actions.append(sourceLink);
+    }
+
+    if (note) {
+      const noteNode = document.createElement("p");
+      noteNode.className = "content-page-form-note";
+      noteNode.textContent = note;
+      actions.append(noteNode);
+    }
+
+    const status = document.createElement("p");
+    status.className = "content-page-form-status";
+    status.setAttribute("aria-live", "polite");
+
+    async function loadDistricts() {
+      if (!districtsUrl || !neighborhoodsUrl) {
+        fillSelect(citySelect, "İl", []);
+        fillSelect(districtSelect, "İlçe", []);
+        fillSelect(neighborhoodSelect, "Mahalle", []);
+        status.dataset.state = "error";
+        status.textContent = "İl, ilçe ve mahalle için veri kaynağı tanımlanmadı.";
+        return;
+      }
+
+      try {
+        const [districtResponse, neighborhoodResponse, postcodeResponse] = await Promise.all([
+          fetch(districtsUrl, { cache: "no-store" }),
+          fetch(neighborhoodsUrl, { cache: "no-store" }),
+          postcodesUrl ? fetch(postcodesUrl, { cache: "no-store" }) : null,
+        ]);
+
+        if (!districtResponse.ok || !neighborhoodResponse.ok) {
+          throw new Error("location fetch failed");
+        }
+
+        const [districtPayload, neighborhoodPayload, postcodePayload] = await Promise.all([
+          districtResponse.json(),
+          neighborhoodResponse.json(),
+          postcodeResponse && postcodeResponse.ok ? postcodeResponse.json() : {},
+        ]);
+
+        if (!districtPayload || typeof districtPayload !== "object" || Array.isArray(districtPayload)) {
+          throw new Error("invalid payload");
+        }
+
+        if (!neighborhoodPayload || typeof neighborhoodPayload !== "object" || Array.isArray(neighborhoodPayload)) {
+          throw new Error("invalid neighborhood payload");
+        }
+
+        if (postcodePayload && typeof postcodePayload === "object" && !Array.isArray(postcodePayload)) {
+          postalCodeByLocation = postcodePayload;
+        }
+
+        const cities = Object.keys(districtPayload).sort((left, right) => left.localeCompare(right, "tr"));
+        cities.forEach((city) => {
+          const districts = Array.isArray(districtPayload[city]) ? districtPayload[city] : [];
+          districtsByCity[city] = [...districts].sort((left, right) => left.localeCompare(right, "tr"));
+        });
+
+        Object.keys(neighborhoodPayload).forEach((city) => {
+          const districtMap = neighborhoodPayload[city];
+          if (!districtMap || typeof districtMap !== "object" || Array.isArray(districtMap)) {
+            return;
+          }
+
+          Object.keys(districtMap).forEach((district) => {
+            const rawNeighborhoods = Array.isArray(districtMap[district]) ? districtMap[district] : [];
+            const cleaned = rawNeighborhoods
+              .map((item) => formatNeighborhoodName(item))
+              .filter(Boolean)
+              .filter((item, index, source) => source.indexOf(item) === index)
+              .sort((left, right) => left.localeCompare(right, "tr"));
+
+            neighborhoodsByLocation[locationKey(city, district)] = cleaned;
+          });
+        });
+
+        fillSelect(citySelect, "İl", cities);
+        citySelect.disabled = cities.length === 0;
+        fillSelect(districtSelect, "İlçe", []);
+        districtSelect.disabled = true;
+        fillSelect(neighborhoodSelect, "Mahalle", []);
+        neighborhoodSelect.disabled = true;
+        syncSelectState(citySelect);
+        syncSelectState(districtSelect);
+        syncSelectState(neighborhoodSelect);
+        status.dataset.state = "";
+        status.textContent = "";
+      } catch (_error) {
+        fillSelect(citySelect, "İl", []);
+        fillSelect(districtSelect, "İlçe", []);
+        fillSelect(neighborhoodSelect, "Mahalle", []);
+        citySelect.disabled = true;
+        districtSelect.disabled = true;
+        neighborhoodSelect.disabled = true;
+        status.dataset.state = "error";
+        status.textContent =
+          "İl, ilçe veya mahalle verisi yüklenemedi. Adresi PTT kaynağından kontrol ederek elle tamamlamalısın.";
+      }
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        status.dataset.state = "error";
+        status.textContent =
+          "Lütfen zorunlu alanları eksiksiz doldur, adres seçimlerini tamamla, posta kodu otomatik gelmezse 5 hane olarak gir ve PTT doğrulamasını onayla.";
+        return;
+      }
+
+      status.dataset.state = "success";
+      status.textContent = successText;
+    });
+
+    form.append(grid);
+    form.append(actions);
+    form.append(status);
+    card.append(form);
+
+    wrap.append(card);
+    wrap.hidden = false;
+    loadDistricts();
+  }
+
   function renderStrip(strip) {
     const wrap = document.querySelector("#contentPageStrip");
     const titleNode = document.querySelector("#contentPageStripTitle");
@@ -555,6 +930,7 @@
     }
 
     renderCards(Array.isArray(content.cards) ? content.cards : []);
+    renderSubmissionForm(content.form);
     renderStrip(content.strip);
   }
 
