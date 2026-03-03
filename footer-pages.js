@@ -1,21 +1,20 @@
 (() => {
   const DEFAULT_KEY = "hakkimizda";
   const PLACE_SUBMISSION_CONTENT = {
+    hideHero: true,
     eyebrow: "İş ortaklığı",
     title: "Yer ekle",
     lead: "Yeni bir işletme veya hizmet noktası eklemek için aşağıdaki formu doldurup gönder tuşuna basınız.",
     cards: [],
     form: {
-      title: "",
-      description: "",
+      title: "Bilgi gönderme",
+      description: "Yeni bir işletme veya hizmet noktası eklemek için aşağıdaki formu doldurup gönder tuşuna basınız.",
       submitLabel: "Gönder",
       successText:
         "Bilgiler alındı. Adres alanlarını PTT kaynağıyla eşleştirdiysen inceleme daha hızlı ilerler.",
       districtsUrl: "data/districts.json",
       neighborhoodsUrl: "data/location-neighborhoods.json",
       postcodesUrl: "data/location-postcodes.json",
-      officialSourceUrl: "https://postakodu.ptt.gov.tr/",
-      officialSourceLabel: "PTT Posta Kodu ekranı",
     },
   };
   const PAGE_CONTENT = Object.freeze({
@@ -472,6 +471,11 @@
     }
 
     grid.innerHTML = "";
+    grid.hidden = !Array.isArray(cards) || cards.length === 0;
+
+    if (grid.hidden) {
+      return;
+    }
 
     cards.forEach((cardData) => {
       const card = document.createElement("article");
@@ -525,8 +529,6 @@
     const districtsUrl = String(formConfig.districtsUrl || "").trim();
     const neighborhoodsUrl = String(formConfig.neighborhoodsUrl || "").trim();
     const postcodesUrl = String(formConfig.postcodesUrl || "").trim();
-    const officialSourceUrl = String(formConfig.officialSourceUrl || "").trim();
-    const officialSourceLabel = String(formConfig.officialSourceLabel || "Resmi kaynağı aç").trim();
     const districtsByCity = {};
     const neighborhoodsByLocation = {};
     let postalCodeByLocation = {};
@@ -573,30 +575,14 @@
       return input;
     }
 
-    function buildCheckField(control, labelText) {
-      const label = document.createElement("label");
-      label.className = "content-page-check";
-
-      const row = document.createElement("span");
-      row.className = "content-page-check-box";
-
-      const textNode = document.createElement("span");
-      textNode.className = "content-page-check-text";
-      textNode.textContent = labelText;
-
-      row.append(control);
-      row.append(textNode);
-      label.append(row);
-      return label;
-    }
-
     function normalizeLocationToken(value) {
       return String(value || "")
-        .normalize("NFKD")
-        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
         .toLocaleLowerCase("tr-TR")
         .replace(/\bmah(allesi)?\b/gi, "mah")
-        .replace(/\bkoyu\b/gi, "koy")
+        .replace(/\bkoy(u)?\b/gi, "koy")
+        .replace(/\bköy(ü)?\b/gi, "köy")
         .replace(/[^a-z0-9çğıöşü]+/gi, " ")
         .replace(/\s+/g, " ")
         .trim();
@@ -638,23 +624,25 @@
     }
 
     const businessName = buildInput("text", "businessName", "İşletme adı", true, "organization");
-    const phone = buildInput("tel", "phone", "Telefon numarası", true, "tel");
-    const website = buildInput("url", "website", "https://ornek.com", false, "url");
     const citySelect = document.createElement("select");
     const districtSelect = document.createElement("select");
     const neighborhoodSelect = document.createElement("select");
     const street = buildInput("text", "street", "Sokak / Cadde / Bulvar", true, "street-address");
     const doorNumber = buildInput("text", "doorNumber", "Bina no / Kapı no", true, "address-line2");
     const postalCode = buildInput("text", "postalCode", "Posta kodu", true, "postal-code");
-    const pttVerified = document.createElement("input");
-    const notes = document.createElement("textarea");
+    const phoneAreaCode = buildInput("text", "phoneAreaCode", "Alan kodu", true, "tel-area-code");
+    const phoneNumber = buildInput("tel", "phoneNumber", "Telefon numarası", true, "tel-local");
+    const website = buildInput("url", "website", "https://ornek.com", false, "url");
 
     postalCode.inputMode = "numeric";
     postalCode.maxLength = 5;
     postalCode.pattern = "\\d{5}";
-    pttVerified.type = "checkbox";
-    pttVerified.name = "pttVerified";
-    pttVerified.required = true;
+    phoneAreaCode.inputMode = "numeric";
+    phoneAreaCode.maxLength = 3;
+    phoneAreaCode.pattern = "\\d{3}";
+    phoneNumber.inputMode = "numeric";
+    phoneNumber.maxLength = 7;
+    phoneNumber.pattern = "\\d{7}";
 
     citySelect.name = "city";
     citySelect.required = true;
@@ -667,9 +655,6 @@
     citySelect.disabled = true;
 
     postalCode.readOnly = true;
-
-    notes.name = "notes";
-    notes.placeholder = "Varsa kısa açıklama, yakın nokta veya ek adres notu";
 
     fillSelect(citySelect, "İl", []);
     fillSelect(districtSelect, "İlçe", []);
@@ -731,22 +716,23 @@
     });
 
     grid.append(buildField("İşletme adı", businessName, "full"));
-    grid.append(buildField("İl", citySelect));
-    grid.append(buildField("İlçe", districtSelect));
-    grid.append(buildField("Mahalle", neighborhoodSelect));
+    grid.append(buildField("İl", citySelect, "full"));
+    grid.append(buildField("İlçe", districtSelect, "full"));
+    grid.append(buildField("Mahalle", neighborhoodSelect, "full"));
     grid.append(buildField("Sokak / Cadde", street));
     grid.append(buildField("Bina / Kapı no", doorNumber));
-    grid.append(buildField("Posta kodu", postalCode));
-    grid.append(buildField("Telefon bilgisi", phone));
-    grid.append(buildField("Web sitesi (varsa)", website));
-    grid.append(
-      buildCheckField(
-        pttVerified,
-        "Mahalle, sokak ve posta kodunu PTT Posta Kodu kaynağından kontrol ederek doldurduğumu onaylıyorum.",
-      ),
-    );
-    grid.append(buildField("Ek not", notes, "full"));
+    const phoneGroup = document.createElement("div");
+    phoneGroup.className = "content-page-phone-group";
 
+    const countryCode = document.createElement("span");
+    countryCode.className = "content-page-phone-prefix";
+    countryCode.textContent = "+90";
+
+    phoneGroup.append(countryCode, phoneAreaCode, phoneNumber);
+
+    grid.append(buildField("Posta kodu", postalCode));
+    grid.append(buildField("Telefon bilgisi", phoneGroup, "full"));
+    grid.append(buildField("Web sitesi (varsa)", website, "full"));
     const actions = document.createElement("div");
     actions.className = "content-page-form-actions";
 
@@ -755,16 +741,6 @@
     submitButton.className = "content-page-form-button";
     submitButton.textContent = submitLabel;
     actions.append(submitButton);
-
-    if (officialSourceUrl) {
-      const sourceLink = document.createElement("a");
-      sourceLink.className = "content-page-form-link";
-      sourceLink.href = officialSourceUrl;
-      sourceLink.target = "_blank";
-      sourceLink.rel = "noreferrer noopener";
-      sourceLink.textContent = officialSourceLabel;
-      actions.append(sourceLink);
-    }
 
     if (note) {
       const noteNode = document.createElement("p");
@@ -871,7 +847,7 @@
         form.reportValidity();
         status.dataset.state = "error";
         status.textContent =
-          "Lütfen zorunlu alanları eksiksiz doldur, adres seçimlerini tamamla, posta kodu otomatik gelmezse 5 hane olarak gir ve PTT doğrulamasını onayla.";
+          "Lütfen zorunlu alanları eksiksiz doldur, adres seçimlerini tamamla ve posta kodu otomatik gelmezse 5 hane olarak gir.";
         return;
       }
 
@@ -911,9 +887,14 @@
     const lead = String(content.lead || "").trim();
     const shell = document.querySelector(".content-page-shell");
     const eyebrowNode = document.querySelector("#contentPageEyebrow");
+    const heroNode = document.querySelector(".content-page-hero");
 
     if (shell instanceof HTMLElement) {
       shell.dataset.pageKey = key;
+    }
+
+    if (heroNode instanceof HTMLElement) {
+      heroNode.hidden = Boolean(content.hideHero);
     }
 
     if (eyebrowNode instanceof HTMLElement) {
