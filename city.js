@@ -261,7 +261,6 @@ const CITY_I18N = {
     footerDiscoverTitle: "Keşfet",
     footerAbout: "Hakkımızda",
     footerCareer: "Kariyer",
-    footerTech: "Teknoloji",
     footerContact: "İletişim",
     footerHelpTitle: "Yardım",
     footerFaq: "Sıkça Sorulan Sorular",
@@ -317,7 +316,6 @@ const CITY_I18N = {
     footerDiscoverTitle: "Discover",
     footerAbout: "About us",
     footerCareer: "Careers",
-    footerTech: "Technology",
     footerContact: "Contact",
     footerHelpTitle: "Help",
     footerFaq: "Frequently Asked Questions",
@@ -373,7 +371,6 @@ const CITY_I18N = {
     footerDiscoverTitle: "Обзор",
     footerAbout: "О нас",
     footerCareer: "Карьера",
-    footerTech: "Технологии",
     footerContact: "Контакты",
     footerHelpTitle: "Помощь",
     footerFaq: "Частые вопросы",
@@ -429,7 +426,6 @@ const CITY_I18N = {
     footerDiscoverTitle: "Entdecken",
     footerAbout: "Über uns",
     footerCareer: "Karriere",
-    footerTech: "Technologie",
     footerContact: "Kontakt",
     footerHelpTitle: "Hilfe",
     footerFaq: "Häufige Fragen",
@@ -484,7 +480,6 @@ const CITY_I18N = {
     footerDiscoverTitle: "探索",
     footerAbout: "关于我们",
     footerCareer: "招聘",
-    footerTech: "技术",
     footerContact: "联系",
     footerHelpTitle: "帮助",
     footerFaq: "常见问题",
@@ -642,7 +637,7 @@ function applyCityStaticTranslations() {
       items[0].textContent = cityT("footerAbout");
     }
     if (items[1]) {
-      items[1].textContent = cityT("footerTech");
+      items[1].textContent = cityT("footerAddPrice");
     }
     if (items[2]) {
       items[2].textContent = cityT("footerContact");
@@ -659,16 +654,7 @@ function applyCityStaticTranslations() {
       items[0].textContent = cityT("footerFaq");
     }
     if (items[1]) {
-      items[1].textContent = cityT("footerKvkk");
-    }
-    if (items[2]) {
-      items[2].textContent = cityT("footerPrivacy");
-    }
-    if (items[3]) {
-      items[3].textContent = cityT("footerTerms");
-    }
-    if (items[4]) {
-      items[4].textContent = cityT("footerCookies");
+      items[1].textContent = cityT("footerCookies");
     }
   }
 
@@ -679,10 +665,13 @@ function applyCityStaticTranslations() {
       title.textContent = cityT("footerPartnerTitle");
     }
     if (items[0]) {
-      items[0].textContent = cityT("footerAddPrice");
+      items[0].textContent = cityT("footerTerms");
     }
     if (items[1]) {
-      items[1].textContent = cityT("footerCollab");
+      items[1].textContent = cityT("footerKvkk");
+    }
+    if (items[2]) {
+      items[2].textContent = cityT("footerPrivacy");
     }
   }
 

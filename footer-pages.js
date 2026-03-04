@@ -7,7 +7,7 @@
     lead: "Yeni bir işletme veya hizmet noktası eklemek için aşağıdaki formu doldurup gönder tuşuna basınız.",
     cards: [],
     form: {
-      title: "Bilgi gönderme",
+      title: "Yer ekle",
       description: "Yeni bir işletme veya hizmet noktası eklemek için aşağıdaki formu doldurup gönder tuşuna basınız.",
       submitLabel: "Gönder",
       successText:
@@ -95,35 +95,6 @@
             "Basit arayüz",
             "Açık bilgi",
             "Hızlı ve ayrıntılı yönlendirme",
-          ],
-        },
-      ],
-    },
-    teknoloji: {
-      eyebrow: "Altyapı",
-      title: "Teknoloji",
-      lead: "Bu alanda veri akışı, sayfa mantığı ve içerik güncelleme biçimi için kısa bir çerçeve sunuyoruz.",
-      cards: [
-        {
-          title: "Veri düzeni",
-          paragraphs: [
-            "Kategori verileri ayrı dosyalarda tutulur. Böylece her alan kendi güncelleme hızında ilerler.",
-            "Bu yaklaşım, kategori bazlı bakım ve hızlı düzeltme işini kolaylaştırır.",
-          ],
-        },
-        {
-          title: "Ön yüz yaklaşımı",
-          paragraphs: [
-            "Statik sayfalar ve hafif istemci kodu ile hızlı açılan bir yapı hedeflenir.",
-            "Kritik akışlarda az adım, düşük yük ve kolay gezinme önceliklidir.",
-          ],
-        },
-        {
-          title: "Sıradaki teknik adımlar",
-          bullets: [
-            "Daha iyi veri doğrulama",
-            "Senkron içerik güncelleme",
-            "Daha net hata geri bildirimi",
           ],
         },
       ],
@@ -230,7 +201,7 @@
     kosullar: {
       eyebrow: "Yasal",
       title: "Kullanım Koşulları",
-      lead: "Bu alan, sitenin adil ve güvenli kullanım çerçevesini basit dille özetler.",
+      lead: "",
       cards: [
         {
           title: "Kullanım sınırları",
@@ -244,12 +215,6 @@
           title: "İçerik güncellemeleri",
           paragraphs: [
             "Sayfadaki içerikler zaman içinde güncellenebilir, taşınabilir veya yeniden düzenlenebilir.",
-          ],
-        },
-        {
-          title: "Hizmet durumu",
-          paragraphs: [
-            "Bazı bölümler test aşamasında olabilir. Bu yüzden zaman zaman tasarım veya akış değişebilir.",
           ],
         },
       ],
@@ -307,38 +272,6 @@
     },
     "yer-ekle": PLACE_SUBMISSION_CONTENT,
     "fiyat-ekle": PLACE_SUBMISSION_CONTENT,
-    "is-birligi": {
-      eyebrow: "İş ortaklığı",
-      title: "İş birliği",
-      lead: "Markalar, yerel işletmeler ve içerik ortakları ile çalışmak için ilk iş birliği çerçevesini burada topladık.",
-      cards: [
-        {
-          title: "Kimlerle çalışıyoruz?",
-          bullets: [
-            "Yerel işletmeler",
-            "Kategori bazlı veri sağlayıcılar",
-            "Şehir odaklı içerik ortakları",
-          ],
-        },
-        {
-          title: "Nasıl ilerler?",
-          paragraphs: [
-            "İhtiyaç, kapsam ve teslim şekli kısa bir görüşme ile netleşir.",
-            "Ardından örnek akış ve yayın planı paylaşılır.",
-          ],
-        },
-        {
-          title: "Önem verdiğimiz şey",
-          paragraphs: [
-            "Kısa, net ve kullanıcıya gerçek fayda sağlayan ortaklıklar kurmak.",
-          ],
-        },
-      ],
-      strip: {
-        title: "Bir sonraki adım",
-        text: "İstersen bu alanı daha sonra gerçek başvuru formu ve teklif akışına çevirebiliriz.",
-      },
-    },
     instagram: {
       eyebrow: "Sosyal",
       title: "Instagram",

@@ -1,5 +1,6 @@
 (() => {
   const runtime = window.ARAMABUL_RUNTIME;
+  const AUTH_SESSION_KEY = runtime.storageKeys.authSession;
   const LANG_STORAGE_KEY = runtime.storageKeys.language;
   const THEME_STORAGE_KEY = runtime.storageKeys.theme;
   const LANGUAGE_META = {
@@ -15,8 +16,11 @@
     RU: "Выбран язык {code}.",
   };
 
+  const settingsAvatar = document.querySelector("#settingsAvatar");
+  const settingsName = document.querySelector("#settingsName");
+  const settingsHandle = document.querySelector("#settingsHandle");
+  const settingsSignOutBtn = document.querySelector("#settingsSignOutBtn");
   const languageButtons = [...document.querySelectorAll("[data-language-choice]")];
-  const backButton = document.querySelector("#languageBackBtn");
   const headingLink = document.querySelector(".settings-home-link");
   const saveMessage = document.querySelector("#languageSaveMessage");
 
@@ -28,8 +32,16 @@
     runtime.writeStorageValue(key, value);
   }
 
+  function removeStorageValue(key) {
+    runtime.removeStorageValue(key);
+  }
+
   function dispatchCompatEvent(name, detail = {}) {
     runtime.dispatch(name, detail);
+  }
+
+  function normalizeEmail(value) {
+    return String(value || "").trim().toLocaleLowerCase("en-US");
   }
 
   function readLanguage() {
@@ -50,8 +62,62 @@
     }
   }
 
-  function goBackToSettings() {
-    window.location.assign("profile.html?action=profile");
+  function readSession() {
+    try {
+      const raw = readStorageValue(AUTH_SESSION_KEY);
+      if (!raw) {
+        return null;
+      }
+
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") {
+        return null;
+      }
+
+      const name = String(parsed.name || "").trim();
+      const email = normalizeEmail(parsed.email);
+      if (!name || !email) {
+        return null;
+      }
+
+      return { name, email };
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function toHandleText(session) {
+    if (!session?.email) {
+      return "@giris-yapilmadi";
+    }
+
+    const raw = session.email.split("@")[0] || session.email;
+    const slug = raw
+      .toLocaleLowerCase("tr")
+      .replace(/[^a-z0-9._-]/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+    return `@${slug || "kullanici"}.aramabul`;
+  }
+
+  function renderSessionSummary() {
+    const session = readSession();
+    const userName = session?.name || "Misafir";
+    const initial = userName.charAt(0).toLocaleUpperCase("tr") || "M";
+
+    if (settingsAvatar) {
+      settingsAvatar.textContent = initial;
+    }
+    if (settingsName) {
+      settingsName.textContent = userName;
+    }
+    if (settingsHandle) {
+      settingsHandle.textContent = toHandleText(session);
+    }
+    if (settingsSignOutBtn instanceof HTMLButtonElement) {
+      settingsSignOutBtn.disabled = !session;
+      settingsSignOutBtn.textContent = session ? "Çıkış yap" : "Çıkış için giriş yap";
+    }
   }
 
   function setMessage(text) {
@@ -86,14 +152,24 @@
     dispatchCompatEvent("aramabul:languagechange", { language: selectedCode });
   }
 
-  if (backButton) {
-    backButton.addEventListener("click", goBackToSettings);
-  }
-
   if (headingLink) {
     headingLink.addEventListener("click", (event) => {
       event.preventDefault();
-      goBackToSettings();
+      window.location.assign("index.html");
+    });
+  }
+
+  if (settingsSignOutBtn) {
+    settingsSignOutBtn.addEventListener("click", () => {
+      const session = readSession();
+      if (!session) {
+        window.location.assign("index.html");
+        return;
+      }
+
+      removeStorageValue(AUTH_SESSION_KEY);
+      dispatchCompatEvent("aramabul:authchange");
+      renderSessionSummary();
     });
   }
 
@@ -115,4 +191,9 @@
   }
 
   applyLanguage(readLanguage(), false);
+  renderSessionSummary();
+
+  document.addEventListener("aramabul:authchange", () => {
+    renderSessionSummary();
+  });
 })();

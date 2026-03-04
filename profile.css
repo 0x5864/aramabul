@@ -75,8 +75,15 @@
   margin: 0;
   display: grid;
   gap: 0.65rem;
-  padding: 0.65rem 0.65rem calc(6.7rem + env(safe-area-inset-bottom, 0px)) var(--header-line-start);
+  padding-top: 0.65rem;
+  padding-right: 0.65rem;
+  padding-bottom: calc(6.7rem + env(safe-area-inset-bottom, 0px));
+  padding-left: var(--header-line-start);
   background: var(--bg);
+}
+
+.settings-dashboard-shell {
+  gap: 0.85rem;
 }
 
 .settings-shell * {
@@ -88,7 +95,7 @@
 }
 
 .settings-account-card {
-  margin-top: 0.15rem;
+  margin-top: 0;
 }
 
 .settings-menu-card {
@@ -97,6 +104,43 @@
 
 .settings-signout {
   margin-top: 0.3rem;
+}
+
+.settings-layout {
+  display: grid;
+  grid-template-columns: minmax(132px, 34vw) minmax(0, 1fr);
+  gap: 0.85rem;
+  margin-inline-start: 0;
+  align-items: start;
+}
+
+.settings-sidebar-card {
+  padding: 0.32rem 0;
+}
+
+.settings-panel-stack {
+  min-width: 0;
+}
+
+.settings-panel-card {
+  padding: 1rem;
+}
+
+.settings-panel-card[hidden] {
+  display: none !important;
+}
+
+.settings-sidebar-card .settings-row {
+  border-radius: 0;
+}
+
+.settings-sidebar-card .settings-row:last-of-type {
+  border-bottom: 1px solid var(--line);
+}
+
+.settings-sidebar-card .settings-signout {
+  width: calc(100% - 1.4rem);
+  margin: 0.7rem 0.7rem 0.18rem;
 }
 
 .settings-signout:disabled {
@@ -130,6 +174,14 @@
 
 .settings-signout:active:not(:disabled) {
   background: rgba(201, 42, 74, 0.12);
+}
+
+.settings-row.is-active {
+  background: rgba(44, 53, 49, 0.08);
+}
+
+.settings-row.is-active .settings-row-chevron {
+  color: rgba(22, 33, 35, 0.82);
 }
 
 .settings-card {
@@ -277,6 +329,30 @@
   cursor: pointer;
   font: inherit;
   text-align: left;
+}
+
+.settings-panel-link {
+  min-height: 42px;
+  width: fit-content;
+  margin-top: 0.9rem;
+  border: 1px solid rgba(22, 33, 35, 0.18);
+  border-radius: 12px;
+  background: #fffdf8;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.9rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.settings-panel-link:hover {
+  background: rgba(11, 92, 148, 0.05);
+}
+
+.settings-panel-link:focus-visible {
+  outline: 2px solid rgba(30, 167, 255, 0.72);
+  outline-offset: 2px;
 }
 
 .settings-row-icon {
@@ -513,9 +589,36 @@ body.theme-dark .settings-inline-toast {
   color: var(--ink);
 }
 
+body.theme-dark .settings-row.is-active {
+  background: rgba(44, 53, 49, 0.08);
+}
+
 body.theme-dark .settings-signup-head p,
 body.theme-dark .settings-signup-field span {
   color: rgba(22, 33, 35, 0.72);
+}
+
+@media (min-width: 900px) {
+  .settings-dashboard-shell {
+    max-width: 1080px;
+    margin: 0;
+    padding-left: var(--header-line-start);
+    padding-right: var(--header-line-start);
+  }
+
+  .settings-layout {
+    grid-template-columns: minmax(248px, 280px) minmax(0, 1fr);
+  }
+
+  .settings-sidebar-card {
+    position: sticky;
+    top: 5.7rem;
+  }
+
+  .account-settings-actions {
+    grid-template-columns: repeat(2, minmax(0, max-content));
+    justify-content: start;
+  }
 }
 
 body.theme-dark .language-card-head p,

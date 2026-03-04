@@ -1058,9 +1058,9 @@ main > * {
   margin: 0 0 1.45rem;
   padding: 0;
   background: transparent;
-  font-size: 1.28rem;
+  font-size: clamp(1rem, 2.5vw, 1.85rem);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.05;
 }
 
 .content-page-shell[data-page-key="yer-ekle"] .content-page-form {
