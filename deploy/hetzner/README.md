@@ -118,6 +118,21 @@ systemctl status nginx
 ss -ltnp | grep 8787
 ```
 
+## 11. One-command deploy (after each push)
+
+After you commit and push from your local machine, SSH to the server and run:
+
+```bash
+bash /var/www/aramabul/deploy/hetzner/deploy.sh
+```
+
+This script does:
+
+- `git pull --ff-only origin main`
+- `npm ci --omit=dev` (only when needed)
+- `pm2 restart aramabul`
+- `pm2 save`
+
 ## Security notes
 
 - Keep Node bound to `127.0.0.1`
