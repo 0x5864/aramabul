@@ -1639,6 +1639,16 @@ main > * {
   text-decoration: none;
 }
 
+.featured-venue-pill.is-one-star {
+  border-color: #2f6fd6;
+  box-shadow: inset 0 0 0 1px rgba(47, 111, 214, 0.16);
+}
+
+.featured-venue-pill.is-two-star {
+  border-color: #cf3b32;
+  box-shadow: inset 0 0 0 1px rgba(207, 59, 50, 0.16);
+}
+
 .province-grid {
   display: grid;
   gap: 0.4rem;

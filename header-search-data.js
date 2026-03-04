@@ -2,7 +2,7 @@
   const runtime = window.ARAMABUL_RUNTIME;
   const CATEGORY_SEARCH_ROUTES = [
     { href: "keyif.html", keywords: ["yemek", "food", "restoran", "restaurant", "lokanta"] },
-    { href: "hizmetler.html", keywords: ["hizmetler", "service", "services"] },
+    { href: "hizmetler.html", keywords: ["hizmetler", "service", "services", "akaryakit", "akaryakıt", "benzin", "petrol", "fuel"] },
     { href: "kuafor.html", keywords: ["kuafor", "kuaför", "berber", "sac", "saç", "guzellik", "güzellik"] },
     { href: "veteriner.html", keywords: ["veteriner", "vet", "hayvan"] },
     { href: "saglik.html", keywords: ["eczane", "pharmacy", "saglik", "sağlık", "health", "klinik", "clinic"] },
@@ -11,7 +11,7 @@
     { href: "hastane.html", keywords: ["hastane", "hospital"] },
     { href: "banka.html", keywords: ["banka", "bank"] },
     { href: "otel.html", keywords: ["otel", "hotel", "konaklama"] },
-    { href: "gezi.html", keywords: ["gezi", "seyahat", "ulasim", "ulaşım", "travel", "transport"] },
+    { href: "gezi.html", keywords: ["gezi", "seyahat", "travel", "transport", "kamp", "kamp alani", "kamp alanı", "camping", "kamping", "karavan", "bungalov", "pansiyon", "konaklama", "otel"] },
     { href: "atm.html", keywords: ["atm"] },
     { href: "kargo.html", keywords: ["kargo", "cargo"] },
     { href: "noter.html", keywords: ["noter", "notary"] },

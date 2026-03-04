@@ -72,6 +72,7 @@ function queryParams() {
   return {
     city: (url.searchParams.get("sehir") || url.searchParams.get("city") || "").trim(),
     district: (url.searchParams.get("ilce") || url.searchParams.get("district") || "").trim(),
+    subcategorySource: (url.searchParams.get("tur") || url.searchParams.get("type") || "").trim(),
     venueName: (url.searchParams.get("mekan") || url.searchParams.get("venue") || "").trim(),
     sourcePlaceId: (url.searchParams.get("pid") || "").trim(),
   };
@@ -168,6 +169,9 @@ const CATEGORY_DEFINITIONS = {
     secondaryDataFile: "data/veteriner.json",
     secondaryRowTitle: "Veterinerler",
     secondaryCountLabel: "veteriner",
+    tertiaryDataFile: "data/akaryakit.json",
+    tertiaryRowTitle: "Akaryakıt İstasyonları",
+    tertiaryCountLabel: "akaryakıt istasyonu",
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
     districtLinkHeading: "Hizmet Türleri",
@@ -184,9 +188,29 @@ const CATEGORY_DEFINITIONS = {
         pagePath: "hizmetler-veteriner.html",
         countLabel: "veteriner",
       },
+      {
+        source: "tertiary",
+        title: "Akaryakıt İstasyonları",
+        pagePath: "hizmetler-akaryakit.html",
+        countLabel: "akaryakıt istasyonu",
+      },
     ],
     useDistrictCatalog: true,
-    matcherKeywords: ["hizmetler", "service", "kuafor", "kuaför", "veteriner", "vet"],
+    matcherKeywords: [
+      "hizmetler",
+      "service",
+      "kuafor",
+      "kuaför",
+      "veteriner",
+      "vet",
+      "akaryakit",
+      "akaryakıt",
+      "benzin",
+      "petrol",
+      "istasyon",
+      "fuel",
+      "gas station",
+    ],
   },
   eczane: {
     name: "Sağlık",
@@ -253,28 +277,46 @@ const CATEGORY_DEFINITIONS = {
   seyahat: {
     name: "Gezi",
     pageBase: "gezi",
-    titleUnit: "akaryakıt istasyonu",
-    primaryRowTitle: "Akaryakıt İstasyonları",
-    dataFile: "data/akaryakit.json",
+    titleUnit: "kamp alanı",
+    primaryRowTitle: "Kamp Alanları",
+    dataFile: "data/gezi-kamp-alanlari.json",
+    secondaryDataFile: "data/gezi-pansiyonlar.json",
+    secondaryRowTitle: "Pansiyonlar",
+    secondaryCountLabel: "pansiyon",
+    includeSecondaryInNavigation: true,
     useDistrictCatalog: true,
     preferVenueBackedDistricts: true,
+    rootSubcategoryFirst: true,
+    districtLinkHeading: "Gezi Türleri",
+    subcategoryVenuePagePath: "gezi-mekanlar.html",
+    districtLinkPages: [
+      {
+        source: "primary",
+        title: "Kamp Alanları",
+        countLabel: "kamp alanı",
+      },
+      {
+        source: "secondary",
+        title: "Pansiyonlar",
+        countLabel: "pansiyon",
+      },
+    ],
     matcherKeywords: [
       "gezi",
       "seyahat",
       "ulasim",
       "ulaşım",
-      "akaryakit",
-      "akaryakıt",
-      "benzin",
-      "petrol",
-      "durak",
-      "duraklar",
-      "otobus",
-      "otobüs",
-      "metro",
-      "tramvay",
-      "istasyon",
-      "station",
+      "kamp",
+      "kamp alani",
+      "kamp alanı",
+      "camping",
+      "kamping",
+      "karavan",
+      "bungalov",
+      "pansiyon",
+      "konaklama",
+      "otel",
+      "hotel",
     ],
   },
   otopark: {
@@ -521,6 +563,65 @@ function readFallbackData() {
   }
 
   return payload;
+}
+
+function applyCategoryPageTranslations() {
+  const headerI18n = window.ARAMABUL_HEADER_I18N;
+  if (!headerI18n || typeof headerI18n !== "object") {
+    return;
+  }
+
+  if (typeof headerI18n.applyStaticPageTranslations === "function") {
+    headerI18n.applyStaticPageTranslations();
+  }
+
+  if (typeof headerI18n.normalizeFooterUi === "function") {
+    headerI18n.normalizeFooterUi();
+  }
+}
+
+function translateCategoryUiLabel(value) {
+  const text = String(value || "").trim();
+  if (!text) {
+    return "";
+  }
+
+  const headerI18n = window.ARAMABUL_HEADER_I18N;
+  if (!headerI18n || typeof headerI18n.getStaticUiTranslation !== "function") {
+    return text;
+  }
+
+  const lang =
+    typeof window.ARAMABUL_GET_LANGUAGE === "function"
+      ? window.ARAMABUL_GET_LANGUAGE()
+      : "TR";
+  return headerI18n.getStaticUiTranslation(text, lang) || text;
+}
+
+function formatProvinceDistrictHeading(cityName, districtName, suffixText = "") {
+  const city = String(cityName || "").trim();
+  const district = String(districtName || "").trim();
+  const suffix = String(suffixText || "").trim();
+  const parts = [];
+
+  if (city) {
+    parts.push(`${city} ${translateCategoryUiLabel("İli")}`);
+  }
+
+  if (district) {
+    parts.push(`${district} ${translateCategoryUiLabel("İlçesi")}`);
+  }
+
+  if (suffix) {
+    const translatedSuffix = translateCategoryUiLabel(suffix);
+    if (parts.length === 0) {
+      parts.push(translatedSuffix);
+    } else {
+      parts[parts.length - 1] = `${parts[parts.length - 1]} ${translatedSuffix}`;
+    }
+  }
+
+  return parts.join(" / ");
 }
 
 function readFallbackFoodData() {
@@ -1903,7 +2004,18 @@ function resolveDistrictList(
   return venueDistricts;
 }
 
-function renderRootPage(definition, venues, districtMap = null) {
+function renderRootPage(
+  definition,
+  venues,
+  districtMap = null,
+  secondaryVenues = [],
+  tertiaryVenues = [],
+  quaternaryVenues = [],
+  quinaryVenues = [],
+  senaryVenues = [],
+  septenaryVenues = [],
+  octonaryVenues = [],
+) {
   const groupGrid = document.querySelector("#categoryGroupGrid");
 
   if (!groupGrid) {
@@ -1911,6 +2023,47 @@ function renderRootPage(definition, venues, districtMap = null) {
   }
 
   groupGrid.innerHTML = "";
+
+  if (definition.rootSubcategoryFirst && Array.isArray(definition.districtLinkPages) && definition.districtLinkPages.length > 0) {
+    const row = document.createElement("article");
+    row.className = "province-row";
+
+    const rowTitle = document.createElement("h4");
+    rowTitle.className = "province-region";
+    rowTitle.textContent =
+      translateCategoryUiLabel(String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler");
+
+    const chips = document.createElement("div");
+    chips.className = "province-cities";
+
+    definition.districtLinkPages.forEach((item) => {
+      const sourceVenues = item.source === "secondary"
+        ? secondaryVenues
+        : item.source === "tertiary"
+          ? tertiaryVenues
+          : item.source === "quaternary"
+            ? quaternaryVenues
+            : item.source === "quinary"
+              ? quinaryVenues
+              : item.source === "senary"
+                ? senaryVenues
+                : item.source === "septenary"
+                  ? septenaryVenues
+                  : item.source === "octonary"
+                    ? octonaryVenues
+                    : venues;
+      const chip = document.createElement("a");
+      chip.className = "province-pill yemek-pill yemek-pill-link";
+      chip.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(item.source)}`;
+      chip.textContent = `${translateCategoryUiLabel(item.title)} (${sourceVenues.length})`;
+      chip.setAttribute("aria-label", `${item.title} listesini aç`);
+      chips.append(chip);
+    });
+
+    row.append(rowTitle, chips);
+    groupGrid.append(row);
+    return;
+  }
 
   const useDistrictCatalog = definition.useDistrictCatalog && hasUsableDistrictCatalog(districtMap);
   const citySet = useDistrictCatalog
@@ -1955,13 +2108,69 @@ function renderRootPage(definition, venues, districtMap = null) {
   });
 }
 
-function renderCityPage(definition, venues, districtMap = null, navigationVenues = venues) {
+function renderCityPage(definition, venues, districtMap = null, navigationVenues = venues, secondaryVenues = []) {
   const cityTitle = document.querySelector("#categoryCityTitle");
   const cityBreadcrumb = document.querySelector("#categoryCityBreadcrumb");
   const districtGrid = document.querySelector("#categoryDistrictGrid");
-  const { city } = queryParams();
+  const { city, subcategorySource: requestedSubcategorySource } = queryParams();
 
   if (!districtGrid) {
+    return;
+  }
+
+  const subcategorySource = requestedSubcategorySource || "primary";
+  const subcategoryDefinition = (definition.districtLinkPages || []).find((item) => item.source === subcategorySource)
+    || { title: definition.primaryRowTitle || "Mekanlar" };
+  const citySourceVenues =
+    definition.rootSubcategoryFirst && subcategorySource === "secondary"
+      ? secondaryVenues
+      : venues;
+
+  if (definition.rootSubcategoryFirst) {
+    districtGrid.innerHTML = "";
+
+    const cityNames = [...new Set(citySourceVenues.map((venue) => String(venue.city || "").trim()).filter(Boolean))]
+      .sort((left, right) => left.localeCompare(right, "tr"));
+
+    if (cityTitle) {
+      cityTitle.textContent = translateCategoryUiLabel("İller");
+    }
+
+    if (cityBreadcrumb) {
+      cityBreadcrumb.textContent = translateCategoryUiLabel(subcategoryDefinition.title);
+    }
+
+    document.title = `aramabul | ${translateCategoryUiLabel(subcategoryDefinition.title)} ${translateCategoryUiLabel("İller")}`;
+
+    if (cityNames.length === 0) {
+      const empty = document.createElement("article");
+      empty.className = "empty-state";
+      empty.textContent = "Bu kategori için il verisi bulunamadı.";
+      districtGrid.append(empty);
+      return;
+    }
+
+    const row = document.createElement("article");
+    row.className = "province-row";
+
+    const rowTitle = document.createElement("h4");
+    rowTitle.className = "province-region";
+    rowTitle.textContent = translateCategoryUiLabel("İller");
+
+    const chips = document.createElement("div");
+    chips.className = "province-cities";
+
+    cityNames.forEach((cityName) => {
+      const chip = document.createElement("a");
+      chip.className = "province-pill yemek-pill yemek-pill-link";
+      chip.href = `${definition.pageBase}-district.html?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(cityName)}`;
+      chip.textContent = cityName;
+      chip.setAttribute("aria-label", `${cityName} ili ${subcategoryDefinition.title.toLocaleLowerCase("tr")} ilçelerini aç`);
+      chips.append(chip);
+    });
+
+    row.append(rowTitle, chips);
+    districtGrid.append(row);
     return;
   }
 
@@ -1977,7 +2186,7 @@ function renderCityPage(definition, venues, districtMap = null, navigationVenues
 
   if (!matchedCity) {
     if (cityTitle) {
-      cityTitle.textContent = "İlçeler";
+      cityTitle.textContent = translateCategoryUiLabel("İlçeler");
     }
 
     if (cityBreadcrumb) {
@@ -2000,14 +2209,14 @@ function renderCityPage(definition, venues, districtMap = null, navigationVenues
   );
 
   if (cityTitle) {
-    cityTitle.textContent = `${matchedCity} İli`;
+    cityTitle.textContent = `${matchedCity} ${translateCategoryUiLabel("İli")}`;
   }
 
   if (cityBreadcrumb) {
     cityBreadcrumb.textContent = matchedCity;
   }
 
-  document.title = `aramabul | ${matchedCity} İli`;
+  document.title = `aramabul | ${matchedCity} ${translateCategoryUiLabel("İli")}`;
 
   if (districts.length === 0) {
     const empty = document.createElement("article");
@@ -2022,7 +2231,7 @@ function renderCityPage(definition, venues, districtMap = null, navigationVenues
 
   const rowTitle = document.createElement("h4");
   rowTitle.className = "province-region";
-  rowTitle.textContent = "İlçeler";
+  rowTitle.textContent = translateCategoryUiLabel("İlçeler");
 
   const chips = document.createElement("div");
   chips.className = "province-cities";
@@ -2053,7 +2262,95 @@ function renderDistrictPage(
   const districtBreadcrumb = document.querySelector("#categoryDistrictBreadcrumb");
   const districtCityLink = document.querySelector("#categoryDistrictCityLink");
   const venueGrid = document.querySelector("#categoryVenueGrid");
+  const { subcategorySource: requestedSubcategorySource } = queryParams();
   if (!venueGrid) {
+    return;
+  }
+
+  const subcategorySource = requestedSubcategorySource || "primary";
+  const subcategoryDefinition = (definition.districtLinkPages || []).find((item) => item.source === subcategorySource)
+    || { title: definition.primaryRowTitle || "Mekanlar" };
+
+  if (definition.rootSubcategoryFirst) {
+    const sourceVenues = subcategorySource === "secondary" ? secondaryVenues : venues;
+    const useDistrictCatalog = definition.useDistrictCatalog && hasUsableDistrictCatalog(districtMap);
+    const { matchedCity } = resolveDistrictMatches(
+      sourceVenues,
+      districtMap || {},
+      useDistrictCatalog,
+      sourceVenues,
+      Boolean(definition.preferVenueBackedDistricts),
+    );
+
+    if (districtCityLink) {
+      districtCityLink.textContent = matchedCity || translateCategoryUiLabel("İl");
+      districtCityLink.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}`;
+    }
+
+    if (districtBreadcrumb) {
+      districtBreadcrumb.textContent = matchedCity || translateCategoryUiLabel("İl");
+    }
+
+    venueGrid.innerHTML = "";
+
+    if (!matchedCity) {
+      if (districtTitle) {
+        districtTitle.textContent = translateCategoryUiLabel("İlçeler");
+      }
+
+      const empty = document.createElement("article");
+      empty.className = "empty-state";
+      empty.textContent = "Bu il için ilçe verisi bulunamadı.";
+      venueGrid.append(empty);
+      return;
+    }
+
+    const districts = resolveDistrictList(
+      matchedCity,
+      sourceVenues,
+      districtMap || {},
+      useDistrictCatalog,
+      Boolean(definition.preferVenueBackedDistricts),
+    );
+
+    if (districtTitle) {
+      districtTitle.textContent = `${matchedCity} ${translateCategoryUiLabel("İli")}`;
+    }
+
+    document.title = `aramabul | ${matchedCity} ${translateCategoryUiLabel("İli")}`;
+
+    if (districts.length === 0) {
+      const empty = document.createElement("article");
+      empty.className = "empty-state";
+      empty.textContent = "Bu il için ilçe verisi bulunamadı.";
+      venueGrid.append(empty);
+      return;
+    }
+
+    const row = document.createElement("article");
+    row.className = "province-row";
+
+    const rowTitle = document.createElement("h4");
+    rowTitle.className = "province-region";
+    rowTitle.textContent = translateCategoryUiLabel("İlçeler");
+
+    const chips = document.createElement("div");
+    chips.className = "province-cities";
+
+    const venuePagePath = String(definition.subcategoryVenuePagePath || `${definition.pageBase}-mekanlar.html`).trim();
+
+    districts.forEach((districtName) => {
+      const chip = document.createElement("a");
+      chip.className = "province-pill yemek-pill yemek-pill-link";
+      chip.href =
+        `${venuePagePath}?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(districtName)}`;
+      chip.textContent = districtName;
+      chip.setAttribute("aria-label", `${districtName} ilçesindeki ${subcategoryDefinition.title.toLocaleLowerCase("tr")} listesini aç`);
+      chips.append(chip);
+    });
+
+    row.append(rowTitle, chips);
+    venueGrid.append(row);
     return;
   }
 
@@ -2138,10 +2435,10 @@ function renderDistrictPage(
     if (districtFamilyCenters.length > 0) {
       stats.push(`${districtFamilyCenters.length} adet aile sağlığı merkezi`);
     }
-    districtTitle.textContent = `${matchedDistrict} İlçesi (${stats.join(", ")})`;
+    districtTitle.textContent = `${matchedDistrict} ${translateCategoryUiLabel("İlçesi")} (${stats.join(", ")})`;
   }
 
-  document.title = `aramabul | ${matchedCity} İli / ${matchedDistrict} İlçesi ${definition.name}`;
+  document.title = `aramabul | ${formatProvinceDistrictHeading(matchedCity, matchedDistrict, definition.name)}`;
 
   if (
     mergedPrimaryVenues.length === 0
@@ -2163,21 +2460,21 @@ function renderDistrictPage(
 
     if (isTransitCategory && transitGroups) {
       if (transitGroups.fuel.length > 0) {
-        venueGrid.append(renderVenueRow("Akaryakıt İstasyonları", transitGroups.fuel));
+        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Akaryakıt İstasyonları"), transitGroups.fuel));
       }
       if (transitGroups.charge.length > 0) {
-        venueGrid.append(renderVenueRow("Şarj İstasyonları", transitGroups.charge));
+        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Şarj İstasyonları"), transitGroups.charge));
       }
       if (transitGroups.parking.length > 0) {
-        venueGrid.append(renderVenueRow("Otoparklar", transitGroups.parking));
+        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Otoparklar"), transitGroups.parking));
       }
       if (transitGroups.other.length > 0) {
-        venueGrid.append(renderVenueRow("Diğer Ulaşım Noktaları", transitGroups.other));
+        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Diğer Ulaşım Noktaları"), transitGroups.other));
       }
       return;
     }
 
-    const primaryTitle = String(definition.primaryRowTitle || "Mekanlar").trim() || "Mekanlar";
+    const primaryTitle = translateCategoryUiLabel(String(definition.primaryRowTitle || "Mekanlar").trim() || "Mekanlar");
     venueGrid.append(renderVenueRow(primaryTitle, mergedPrimaryVenues));
   };
 
@@ -2186,7 +2483,8 @@ function renderDistrictPage(
       return;
     }
 
-    const baseSecondaryTitle = String(definition.secondaryRowTitle || "Nöbetçi Eczaneler").trim() || "Nöbetçi Eczaneler";
+    const baseSecondaryTitle =
+      translateCategoryUiLabel(String(definition.secondaryRowTitle || "Nöbetçi Eczaneler").trim() || "Nöbetçi Eczaneler");
     venueGrid.append(renderVenueRow(baseSecondaryTitle, mergedSecondaryVenues, dutyDateLabel));
   };
 
@@ -2196,7 +2494,7 @@ function renderDistrictPage(
     });
 
     if (districtFamilyCenters.length > 0) {
-      venueGrid.append(renderVenueRow("Aile Sağlığı Merkezleri", districtFamilyCenters));
+      venueGrid.append(renderVenueRow(translateCategoryUiLabel("Aile Sağlığı Merkezleri"), districtFamilyCenters));
     }
   };
 
@@ -2270,7 +2568,7 @@ function renderDistrictLinkPage(
 
   if (!matchedCity || !matchedDistrict) {
     if (districtTitle) {
-      districtTitle.textContent = `İlçe ${definition.name} Türleri`;
+      districtTitle.textContent = `${translateCategoryUiLabel("İlçe")} ${translateCategoryUiLabel(definition.name)} ${translateCategoryUiLabel("Türler")}`;
     }
 
     const empty = document.createElement("article");
@@ -2345,16 +2643,17 @@ function renderDistrictLinkPage(
   }
 
   if (districtTitle) {
-    districtTitle.textContent = `${matchedCity} İli / ${matchedDistrict} İlçesi`;
+    districtTitle.textContent = formatProvinceDistrictHeading(matchedCity, matchedDistrict);
   }
 
-  document.title = `aramabul | ${matchedCity} İli / ${matchedDistrict} İlçesi ${definition.name}`;
+  document.title = `aramabul | ${formatProvinceDistrictHeading(matchedCity, matchedDistrict, definition.name)}`;
   const row = document.createElement("article");
   row.className = "province-row";
 
   const rowTitle = document.createElement("h4");
   rowTitle.className = "province-region";
-  rowTitle.textContent = String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler";
+  rowTitle.textContent =
+    translateCategoryUiLabel(String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler");
 
   const chips = document.createElement("div");
   chips.className = "province-cities";
@@ -2382,7 +2681,7 @@ function renderDistrictLinkPage(
     const chip = document.createElement("a");
     chip.className = "province-pill yemek-pill yemek-pill-link";
     chip.href = `${item.pagePath}?sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(matchedDistrict)}`;
-    chip.textContent = `${item.title} (${sourceVenues.length})`;
+    chip.textContent = `${translateCategoryUiLabel(item.title)} (${sourceVenues.length})`;
     chip.setAttribute("aria-label", `${matchedDistrict} ilçesi ${item.title.toLocaleLowerCase("tr")} listesini aç`);
     chips.append(chip);
   });
@@ -2413,7 +2712,8 @@ function renderDistrictSubcategoryPage(
   navigationVenues = venues,
 ) {
   const body = document.body;
-  const subcategorySource = String(body?.dataset?.subcategorySource || "primary").trim();
+  const requestedSubcategorySource = queryParams().subcategorySource;
+  const subcategorySource = String(requestedSubcategorySource || body?.dataset?.subcategorySource || "primary").trim();
   const pageTitle = document.querySelector("#categorySubcategoryTitle");
   const cityLink = document.querySelector("#categorySubcategoryCityLink");
   const districtLink = document.querySelector("#categorySubcategoryDistrictLink");
@@ -2435,26 +2735,36 @@ function renderDistrictSubcategoryPage(
 
   if (cityLink) {
     cityLink.textContent = matchedCity || "İl";
-    cityLink.href = matchedCity
-      ? `${definition.pageBase}-city.html?sehir=${encodeURIComponent(matchedCity)}`
-      : String(definition.rootPagePath || `${definition.pageBase}.html`).trim();
+    if (definition.rootSubcategoryFirst) {
+      cityLink.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}`;
+    } else {
+      cityLink.href = matchedCity
+        ? `${definition.pageBase}-city.html?sehir=${encodeURIComponent(matchedCity)}`
+        : String(definition.rootPagePath || `${definition.pageBase}.html`).trim();
+    }
   }
 
   if (districtLink) {
     districtLink.textContent = matchedDistrict || "İlçe";
-    districtLink.href = matchedCity && matchedDistrict
-      ? `${definition.pageBase}-district.html?sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(matchedDistrict)}`
-      : String(definition.rootPagePath || `${definition.pageBase}.html`).trim();
+    if (definition.rootSubcategoryFirst) {
+      districtLink.href = matchedCity
+        ? `${definition.pageBase}-district.html?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(matchedCity)}`
+        : `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}`;
+    } else {
+      districtLink.href = matchedCity && matchedDistrict
+        ? `${definition.pageBase}-district.html?sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(matchedDistrict)}`
+        : String(definition.rootPagePath || `${definition.pageBase}.html`).trim();
+    }
   }
 
   venueGrid.innerHTML = "";
 
   if (!matchedCity || !matchedDistrict) {
     if (pageTitle) {
-      pageTitle.textContent = "İlçe Mekanları";
+      pageTitle.textContent = translateCategoryUiLabel("İlçe Mekanları");
     }
     if (breadcrumb) {
-      breadcrumb.textContent = "Mekanlar";
+      breadcrumb.textContent = translateCategoryUiLabel("Mekanlar");
     }
 
     const empty = document.createElement("article");
@@ -2492,14 +2802,14 @@ function renderDistrictSubcategoryPage(
       : { title: definition.primaryRowTitle || "Mekanlar" });
 
   if (breadcrumb) {
-    breadcrumb.textContent = subcategoryDefinition.title;
+    breadcrumb.textContent = translateCategoryUiLabel(subcategoryDefinition.title);
   }
 
   if (pageTitle) {
-    pageTitle.textContent = `${matchedCity} İli / ${matchedDistrict} İlçesi ${subcategoryDefinition.title}`;
+    pageTitle.textContent = formatProvinceDistrictHeading(matchedCity, matchedDistrict, subcategoryDefinition.title);
   }
 
-  document.title = `aramabul | ${matchedCity} İli / ${matchedDistrict} İlçesi ${subcategoryDefinition.title}`;
+  document.title = `aramabul | ${formatProvinceDistrictHeading(matchedCity, matchedDistrict, subcategoryDefinition.title)}`;
 
   if (districtVenues.length === 0) {
     const empty = document.createElement("article");
@@ -2518,7 +2828,7 @@ function renderDistrictSubcategoryPage(
       ? sortVenuesByGoogleRating(displayDistrictVenues)
       : districtVenues;
 
-  venueGrid.append(renderVenueRow(subcategoryDefinition.title, orderedDistrictVenues));
+  venueGrid.append(renderVenueRow(translateCategoryUiLabel(subcategoryDefinition.title), orderedDistrictVenues));
   autoOpenRequestedVenue(orderedDistrictVenues);
 }
 
@@ -2531,7 +2841,8 @@ async function initCategoryPage() {
 
   const categoryKey = String(body.dataset.categoryKey || "").trim();
   const pageType = String(body.dataset.categoryPage || "").trim();
-  const subcategorySource = String(body.dataset.subcategorySource || "primary").trim();
+  const requestedSubcategorySource = queryParams().subcategorySource;
+  const subcategorySource = String(requestedSubcategorySource || body.dataset.subcategorySource || "primary").trim();
   const baseDefinition = CATEGORY_DEFINITIONS[categoryKey];
   const definition = baseDefinition ? { key: categoryKey, ...baseDefinition } : null;
 
@@ -2547,35 +2858,43 @@ async function initCategoryPage() {
   const loadPrimaryVenues =
     pageType === "district"
     || (requiresVenueBackedNavigation && Boolean(definition.dataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.dataFile))
     || (!canUseDistrictCatalog && (pageType === "root" || pageType === "city" || pageType === "district-links"))
     || (pageType === "district-subcategory" && (subcategorySource === "primary" || !canUseDistrictCatalog));
 
   const loadSecondaryVenues =
     (pageType === "district" && Boolean(definition.secondaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.secondaryDataFile))
     || (requiresVenueBackedNavigation && Boolean(definition.secondaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "secondary");
 
   const loadTertiaryVenues =
     (pageType === "district" && Boolean(definition.tertiaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.tertiaryDataFile))
     || (requiresVenueBackedNavigation && Boolean(definition.tertiaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "tertiary");
 
   const loadQuaternaryVenues =
     (pageType === "district" && Boolean(definition.quaternaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.quaternaryDataFile))
     || (requiresVenueBackedNavigation && Boolean(definition.quaternaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "quaternary");
 
   const loadQuinaryVenues =
-    (requiresVenueBackedNavigation && Boolean(definition.quinaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
+    (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.quinaryDataFile))
+    || (requiresVenueBackedNavigation && Boolean(definition.quinaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "quinary");
   const loadSenaryVenues =
-    (requiresVenueBackedNavigation && Boolean(definition.senaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
+    (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.senaryDataFile))
+    || (requiresVenueBackedNavigation && Boolean(definition.senaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "senary");
   const loadSeptenaryVenues =
-    (requiresVenueBackedNavigation && Boolean(definition.septenaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
+    (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.septenaryDataFile))
+    || (requiresVenueBackedNavigation && Boolean(definition.septenaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "septenary");
   const loadOctonaryVenues =
-    (requiresVenueBackedNavigation && Boolean(definition.octonaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
+    (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.octonaryDataFile))
+    || (requiresVenueBackedNavigation && Boolean(definition.octonaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "octonary");
 
   const venues = loadPrimaryVenues ? await loadCategoryVenues(categoryKey) : [];
@@ -2614,12 +2933,25 @@ async function initCategoryPage() {
     : venues;
 
   if (pageType === "root") {
-    renderRootPage(definition, navigationVenues, districtMap);
+    renderRootPage(
+      definition,
+      venues,
+      districtMap,
+      secondaryVenues,
+      tertiaryVenues,
+      quaternaryVenues,
+      quinaryVenues,
+      senaryVenues,
+      septenaryVenues,
+      octonaryVenues,
+    );
+    applyCategoryPageTranslations();
     return;
   }
 
   if (pageType === "city") {
-    renderCityPage(definition, venues, districtMap, navigationVenues);
+    renderCityPage(definition, venues, districtMap, navigationVenues, secondaryVenues);
+    applyCategoryPageTranslations();
     return;
   }
 
@@ -2633,6 +2965,7 @@ async function initCategoryPage() {
       quaternaryVenues,
       navigationVenues,
     );
+    applyCategoryPageTranslations();
     return;
   }
 
@@ -2650,6 +2983,7 @@ async function initCategoryPage() {
       octonaryVenues,
       navigationVenues,
     );
+    applyCategoryPageTranslations();
     return;
   }
 
@@ -2667,6 +3001,7 @@ async function initCategoryPage() {
       octonaryVenues,
       navigationVenues,
     );
+    applyCategoryPageTranslations();
   }
 }
 

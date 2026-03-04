@@ -15,6 +15,32 @@
   const accountSettingsMessage = document.querySelector("#accountSettingsMessage");
   const accountSaveBtn = document.querySelector("#accountSaveBtn");
   const accountSignupBtn = document.querySelector("#accountSignupBtn");
+  const feedbackForm = document.querySelector("#settingsFeedbackForm");
+  const feedbackName = document.querySelector("#settingsFeedbackName");
+  const feedbackEmail = document.querySelector("#settingsFeedbackEmail");
+  const feedbackSubject = document.querySelector("#settingsFeedbackSubject");
+  const feedbackPhoneAreaCode = document.querySelector("#settingsFeedbackPhoneAreaCode");
+  const feedbackPhoneNumber = document.querySelector("#settingsFeedbackPhoneNumber");
+  const feedbackMessage = document.querySelector("#settingsFeedbackMessage");
+  const feedbackStatus = document.querySelector("#settingsFeedbackStatus");
+  const panelButtons = [...document.querySelectorAll("[data-settings-panel-trigger]")];
+  const panels = [...document.querySelectorAll("[data-settings-panel]")];
+  const settingsSidebarCard = document.querySelector(".settings-sidebar-card");
+  const settingsPanelStack = document.querySelector(".settings-panel-stack");
+  const FEEDBACK_TARGETS = Object.freeze({
+    destek: {
+      address: "destek@aramabul.com",
+      subject: "Genel Konular",
+    },
+    ortaklik: {
+      address: "ortaklik@aramabul.com",
+      subject: "İş Birliği Talebi",
+    },
+    icerik: {
+      address: "icerik@aramabul.com",
+      subject: "İçerik Düzeltmeleri",
+    },
+  });
 
   function readStorageValue(key) {
     return runtime.readStorageValue(key);
@@ -144,6 +170,33 @@
     openSignup();
   }
 
+  function setFeedbackStatus(text) {
+    if (feedbackStatus) {
+      feedbackStatus.textContent = text;
+      feedbackStatus.classList.toggle("is-ok", !text || text.startsWith("Mesajın "));
+    }
+  }
+
+  function activatePanel(panelKey) {
+    const nextPanel = panelKey === "feedback" || panelKey === "help" || panelKey === "about" ? panelKey : "account";
+
+    panelButtons.forEach((button) => {
+      const key = String(button.dataset.settingsPanelTrigger || "");
+      const isActive = key === nextPanel;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      if (isActive) {
+        button.setAttribute("aria-current", "page");
+      } else {
+        button.removeAttribute("aria-current");
+      }
+    });
+
+    panels.forEach((panel) => {
+      panel.hidden = String(panel.dataset.settingsPanel || "") !== nextPanel;
+    });
+  }
+
   function renderAccount() {
     const session = readSession();
     const userName = session?.name || "Misafir";
@@ -176,6 +229,12 @@
     if (settingsSignOutBtn instanceof HTMLButtonElement) {
       settingsSignOutBtn.disabled = !session;
       settingsSignOutBtn.textContent = session ? "Çıkış yap" : "Çıkış için giriş yap";
+    }
+    if (feedbackName instanceof HTMLInputElement && !feedbackName.value.trim()) {
+      feedbackName.value = session ? userName : "";
+    }
+    if (feedbackEmail instanceof HTMLInputElement && !feedbackEmail.value.trim()) {
+      feedbackEmail.value = userEmail;
     }
 
     if (!session) {
@@ -280,9 +339,57 @@
     });
   }
 
+  if (feedbackForm) {
+    feedbackForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = String(feedbackName instanceof HTMLInputElement ? feedbackName.value : "").trim();
+      const email = normalizeEmail(feedbackEmail instanceof HTMLInputElement ? feedbackEmail.value : "");
+      const subject = String(feedbackSubject instanceof HTMLSelectElement ? feedbackSubject.value : "").trim();
+      const areaCode = String(feedbackPhoneAreaCode instanceof HTMLInputElement ? feedbackPhoneAreaCode.value : "").trim();
+      const phoneNumber = String(feedbackPhoneNumber instanceof HTMLInputElement ? feedbackPhoneNumber.value : "").trim();
+      const message = String(feedbackMessage instanceof HTMLTextAreaElement ? feedbackMessage.value : "").trim();
+      const selectedTarget = FEEDBACK_TARGETS[subject];
+
+      if (!name || !email || !selectedTarget || !message) {
+        if (feedbackForm instanceof HTMLFormElement) {
+          feedbackForm.reportValidity();
+        }
+        setFeedbackStatus("Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.");
+        return;
+      }
+
+      const messageLines = [
+        `Ad Soyad: ${name}`,
+        `E-posta: ${email}`,
+      ];
+
+      if (areaCode || phoneNumber) {
+        messageLines.push(`Telefon: +90 ${areaCode} ${phoneNumber}`.trim());
+      }
+
+      messageLines.push("", message);
+
+      const mailtoHref =
+        `mailto:${selectedTarget.address}`
+        + `?subject=${encodeURIComponent(selectedTarget.subject)}`
+        + `&body=${encodeURIComponent(messageLines.join("\n"))}`;
+
+      setFeedbackStatus("Mesajın seçilen konuya göre hazırlandı.");
+      window.location.href = mailtoHref;
+    });
+  }
+
+  panelButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const key = String(button.dataset.settingsPanelTrigger || "");
+      activatePanel(key);
+    });
+  });
+
   applyTheme(readTheme(), false);
   renderAccount();
   normalizeLegacySignupRoute();
+  activatePanel("account");
 
   document.addEventListener("aramabul:authchange", () => {
     renderAccount();

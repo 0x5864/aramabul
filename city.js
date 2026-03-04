@@ -524,6 +524,21 @@ function currentLocale() {
   return LANGUAGE_LOCALES[getCurrentLanguage()] || LANGUAGE_LOCALES.TR;
 }
 
+function applyHeaderStaticTranslations() {
+  const headerI18n = window.ARAMABUL_HEADER_I18N;
+  if (!headerI18n || typeof headerI18n !== "object") {
+    return;
+  }
+
+  if (typeof headerI18n.applyStaticPageTranslations === "function") {
+    headerI18n.applyStaticPageTranslations();
+  }
+
+  if (typeof headerI18n.normalizeFooterUi === "function") {
+    headerI18n.normalizeFooterUi();
+  }
+}
+
 function cityT(key, replacements = {}) {
   const lang = getCurrentLanguage();
   const languagePack = CITY_I18N[lang] || CITY_I18N.TR;
@@ -1823,6 +1838,8 @@ function renderSidebarCategories() {
 
     categoryFlyoutList.append(button);
   });
+
+  applyHeaderStaticTranslations();
 }
 
 function renderEmptyState() {
