@@ -5,6 +5,7 @@ APP_USER="${APP_USER:-aramabul}"
 APP_DIR="${APP_DIR:-/var/www/aramabul}"
 APP_NAME="${APP_NAME:-aramabul}"
 BRANCH="${BRANCH:-main}"
+HEALTHCHECK_URLS="${HEALTHCHECK_URLS:-https://aramabul.com https://www.aramabul.com}"
 
 as_app() {
   sudo -u "${APP_USER}" -H bash -lc "$*"
@@ -52,4 +53,24 @@ as_app "pm2 save"
 
 echo "==> PM2 status"
 as_app "pm2 status"
+
+if command -v systemctl >/dev/null 2>&1; then
+  if [[ "${EUID}" -eq 0 ]]; then
+    echo "==> Nginx status"
+    systemctl status nginx --no-pager
+  else
+    echo "==> Skipping nginx status check (run script as root to enable it)"
+  fi
+fi
+
+if command -v curl >/dev/null 2>&1; then
+  for url in ${HEALTHCHECK_URLS}; do
+    echo "==> Health check: ${url}"
+    curl --fail --silent --show-error --location --head "${url}" >/dev/null
+  done
+  echo "==> Health checks passed"
+else
+  echo "==> Skipping URL health checks (curl not found)"
+fi
+
 echo "==> Deploy completed"

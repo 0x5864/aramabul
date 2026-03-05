@@ -132,6 +132,8 @@ This script does:
 - `npm ci --omit=dev` (only when needed)
 - `pm2 restart aramabul`
 - `pm2 save`
+- `systemctl status nginx --no-pager` (when run as root)
+- `curl -I -L` checks for `aramabul.com` and `www.aramabul.com`
 
 ## Security notes
 
