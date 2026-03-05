@@ -259,6 +259,8 @@ function renderCategoryRootInlineAdCard(config) {
   const card = document.createElement("aside");
   card.className = "province-ad-slot category-root-ad-slot";
   card.setAttribute("aria-label", "Reklam");
+  card.style.width = "100%";
+  card.style.maxWidth = "220px";
 
   const label = document.createElement("span");
   label.className = "province-ad-label";
@@ -266,14 +268,18 @@ function renderCategoryRootInlineAdCard(config) {
 
   const body = document.createElement("div");
   body.className = "province-ad-slot-body";
+  body.style.minHeight = "0";
+  body.style.aspectRatio = "1 / 1";
 
   const adElement = document.createElement("ins");
-  adElement.className = "adsbygoogle province-adsense-unit";
+  adElement.className = "adsbygoogle province-adsense-unit category-root-adsense-unit";
   adElement.style.display = "block";
+  adElement.style.width = "100%";
+  adElement.style.height = "100%";
+  adElement.style.minHeight = "0";
   adElement.dataset.adClient = config.client;
   adElement.dataset.adSlot = config.slot;
   adElement.dataset.adFormat = "auto";
-  adElement.dataset.fullWidthResponsive = "true";
 
   body.append(adElement);
   card.append(label, body);
@@ -2165,13 +2171,18 @@ function renderRootPage(
     const row = document.createElement("article");
     row.className = "province-row";
 
+    const headingStack = document.createElement("div");
+    headingStack.className = "province-heading-stack";
+    headingStack.style.minWidth = "0";
+    headingStack.style.display = "grid";
+    headingStack.style.alignContent = "start";
+    headingStack.style.gap = "0.45rem";
+
     const rowTitle = document.createElement("h4");
     rowTitle.className = "province-region";
     rowTitle.textContent =
       translateCategoryUiLabel(String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler");
-
-    const rowBody = document.createElement("div");
-    rowBody.className = "province-row-stack";
+    headingStack.append(rowTitle);
 
     const chips = document.createElement("div");
     chips.className = "province-cities";
@@ -2203,11 +2214,10 @@ function renderRootPage(
     const categoryRootAdConfig = resolveCategoryRootAdConfig();
     const categoryRootAdCard = renderCategoryRootInlineAdCard(categoryRootAdConfig);
     if (categoryRootAdCard) {
-      rowBody.append(categoryRootAdCard);
+      headingStack.append(categoryRootAdCard);
     }
-    rowBody.append(chips);
 
-    row.append(rowTitle, rowBody);
+    row.append(headingStack, chips);
     groupGrid.append(row);
     return;
   }
