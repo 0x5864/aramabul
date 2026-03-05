@@ -3005,3 +3005,11 @@ body.search-choice-open {
     grid-template-columns: 1fr;
   }
 }
+
+body.home-page {
+  padding-bottom: 0;
+}
+
+body.home-page .mobile-bottom-nav {
+  display: none !important;
+}

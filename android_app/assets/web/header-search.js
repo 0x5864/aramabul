@@ -825,6 +825,16 @@
     return currentPageName() === "index.html" || currentPageName() === "";
   }
 
+  function syncHomeAltbarVisibility() {
+    const homeAltbar = document.querySelector(".home-altbar-inline");
+    if (!(homeAltbar instanceof HTMLElement)) {
+      return;
+    }
+
+    const shouldShow = isHomePage() && window.matchMedia("(max-width: 1200px)").matches;
+    homeAltbar.style.display = shouldShow ? "flex" : "none";
+  }
+
   function getNavLabels() {
     const lang =
       typeof window.NEREDEYENIR_GET_LANGUAGE === "function"
@@ -834,6 +844,10 @@
   }
 
   function createMobileBottomNav() {
+    if (isHomePage()) {
+      return;
+    }
+
     const existing = document.querySelector(".mobile-bottom-nav");
     if (existing) {
       return;
@@ -1033,6 +1047,8 @@
 
   applySearchUiLanguage();
   hideTopLayerForCategoryPages();
+  syncHomeAltbarVisibility();
+  window.addEventListener("resize", syncHomeAltbarVisibility);
   createMobileBottomNav();
   document.addEventListener("neredeyenir:languagechange", () => {
     applySearchUiLanguage();
