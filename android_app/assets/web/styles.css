@@ -1263,6 +1263,32 @@ main > * {
   gap: 0.45rem;
 }
 
+.province-ad-slot {
+  flex: 1 1 100%;
+  border: 1px solid rgba(22, 33, 35, 0.14);
+  border-radius: 4px;
+  background: rgba(245, 249, 253, 0.78);
+  padding: 0.44rem 0.52rem 0.5rem;
+}
+
+.province-ad-label {
+  display: inline-block;
+  margin: 0 0 0.35rem;
+  font-size: 0.74rem;
+  line-height: 1;
+  color: rgba(22, 33, 35, 0.66);
+  letter-spacing: 0.01em;
+}
+
+.province-ad-slot-body {
+  min-height: 110px;
+}
+
+.province-adsense-unit {
+  width: 100%;
+  min-height: 102px;
+}
+
 .city-detail {
   border-radius: 30px;
   border: 1px solid var(--box-border);

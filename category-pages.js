@@ -1,6 +1,9 @@
 const ASSET_VERSION = "20260301-02";
 const CATEGORY_VENUES_JSON_PATH = "data/venues.json";
 const DISTRICTS_JSON_PATH = "data/districts.json";
+const DISTRICT_INLINE_AD_INSERT_AFTER = 6;
+const DISTRICT_INLINE_AD_SCRIPT_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+const DISTRICT_INLINE_AD_CONFIG_SCRIPT_PATH = "ads-config.js";
 const runtime = window.ARAMABUL_RUNTIME;
 const FALLBACK_SCRIPTS = Object.freeze({
   data: "data/fallback-data.js?v=20260302-01",
@@ -65,6 +68,176 @@ async function fetchJsonWithFallback(path, fallbackValue) {
   }
 
   return fallbackValue;
+}
+
+let districtInlineAdScriptPromise = null;
+let districtInlineAdConfigPromise = null;
+
+function hasDistrictInlineAdRuntimeConfig() {
+  return Boolean(window.ARAMABUL_ADS_CONFIG && typeof window.ARAMABUL_ADS_CONFIG === "object");
+}
+
+function isAdsConfigScriptPath(path) {
+  const normalized = stripQuery(path).toLocaleLowerCase("en-US");
+  return normalized.endsWith("/ads-config.js") || normalized.endsWith("ads-config.js");
+}
+
+function appendScriptTag(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = src;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`failed_to_load_script:${src}`));
+    document.head.appendChild(script);
+  });
+}
+
+async function ensureDistrictInlineAdConfigLoaded() {
+  if (hasDistrictInlineAdRuntimeConfig()) {
+    return window.ARAMABUL_ADS_CONFIG;
+  }
+
+  if (districtInlineAdConfigPromise) {
+    return districtInlineAdConfigPromise;
+  }
+
+  districtInlineAdConfigPromise = (async () => {
+    const existingScript = [...document.scripts].find((script) => {
+      const source = script.getAttribute("src") || script.src || "";
+      return isAdsConfigScriptPath(source);
+    });
+    if (existingScript) {
+      return hasDistrictInlineAdRuntimeConfig() ? window.ARAMABUL_ADS_CONFIG : null;
+    }
+
+    const candidates = candidateAssetPaths(DISTRICT_INLINE_AD_CONFIG_SCRIPT_PATH);
+    for (const candidate of candidates) {
+      try {
+        if (runtime && typeof runtime.loadScriptOnce === "function") {
+          await runtime.loadScriptOnce(candidate);
+        } else {
+          await appendScriptTag(candidate);
+        }
+        if (hasDistrictInlineAdRuntimeConfig()) {
+          return window.ARAMABUL_ADS_CONFIG;
+        }
+      } catch (_error) {
+        // Keep trying fallback candidates.
+      }
+    }
+
+    return null;
+  })();
+
+  return districtInlineAdConfigPromise;
+}
+
+function parsePositiveInteger(value, fallbackValue) {
+  const parsed = Number.parseInt(String(value || "").trim(), 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallbackValue;
+}
+
+function resolveDistrictInlineAdConfig() {
+  const body = document.body;
+  const runtimeConfig = window.ARAMABUL_ADS_CONFIG && typeof window.ARAMABUL_ADS_CONFIG === "object"
+    ? window.ARAMABUL_ADS_CONFIG
+    : {};
+  const enabledFromBody = String(body?.dataset?.districtAdEnabled || "").trim().toLowerCase();
+  const enabledFromRuntime = String(runtimeConfig.districtInlineEnabled || "").trim().toLowerCase();
+  const enabled = enabledFromBody !== "off" && enabledFromRuntime !== "off" && enabledFromRuntime !== "false";
+  if (!enabled) {
+    return null;
+  }
+
+  const client = String(body?.dataset?.adsenseClient || runtimeConfig.adsenseClient || "").trim();
+  const slot = String(body?.dataset?.districtInlineAdSlot || runtimeConfig.districtInlineAdSlot || "").trim();
+  if (!client || !slot) {
+    return null;
+  }
+
+  return {
+    client,
+    slot,
+    insertAfter: parsePositiveInteger(body?.dataset?.districtInlineAdAfter || runtimeConfig.districtInlineAdAfter, DISTRICT_INLINE_AD_INSERT_AFTER),
+  };
+}
+
+function ensureDistrictInlineAdScript(client) {
+  if (districtInlineAdScriptPromise) {
+    return districtInlineAdScriptPromise;
+  }
+
+  const scriptSource = `${DISTRICT_INLINE_AD_SCRIPT_SRC}?client=${encodeURIComponent(client)}`;
+  const existing = [...document.scripts].find((script) => String(script.src || "").includes(DISTRICT_INLINE_AD_SCRIPT_SRC));
+  if (existing) {
+    districtInlineAdScriptPromise = Promise.resolve();
+    return districtInlineAdScriptPromise;
+  }
+
+  districtInlineAdScriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.async = true;
+    script.crossOrigin = "anonymous";
+    script.src = scriptSource;
+    script.onload = () => resolve();
+    script.onerror = () => {
+      districtInlineAdScriptPromise = null;
+      reject(new Error("failed_to_load_adsense_script"));
+    };
+    document.head.appendChild(script);
+  });
+
+  return districtInlineAdScriptPromise;
+}
+
+function requestDistrictInlineAdFill(adElement, config) {
+  if (!adElement || !config) {
+    return;
+  }
+
+  ensureDistrictInlineAdScript(config.client)
+    .then(() => {
+      try {
+        window.adsbygoogle = window.adsbygoogle || [];
+        window.adsbygoogle.push({});
+      } catch (_error) {
+        // Ignore ad rendering failures so list rendering never breaks.
+      }
+    })
+    .catch(() => {
+      // Ignore script load failures so list rendering never breaks.
+    });
+}
+
+function renderDistrictInlineAdCard(config) {
+  if (!config) {
+    return null;
+  }
+
+  const card = document.createElement("aside");
+  card.className = "province-ad-slot";
+  card.setAttribute("aria-label", "Reklam");
+
+  const label = document.createElement("span");
+  label.className = "province-ad-label";
+  label.textContent = "Reklam";
+
+  const body = document.createElement("div");
+  body.className = "province-ad-slot-body";
+
+  const adElement = document.createElement("ins");
+  adElement.className = "adsbygoogle province-adsense-unit";
+  adElement.style.display = "block";
+  adElement.dataset.adClient = config.client;
+  adElement.dataset.adSlot = config.slot;
+  adElement.dataset.adFormat = "auto";
+  adElement.dataset.fullWidthResponsive = "true";
+
+  body.append(adElement);
+  card.append(label, body);
+  requestDistrictInlineAdFill(adElement, config);
+  return card;
 }
 
 function queryParams() {
@@ -1735,7 +1908,9 @@ function filterDistrictVenueSlice(definition, venues, city, district) {
   return shouldDedupeDistrictNameSlices(definition) ? dedupeByName(filtered) : filtered;
 }
 
-function renderVenueRow(title, venues, subtitle = "") {
+function renderVenueRow(title, venues, subtitle = "", options = {}) {
+  const adContext = options && typeof options === "object" ? options.adContext : null;
+  const adConfig = options && typeof options === "object" ? options.adConfig : null;
   const row = document.createElement("article");
   row.className = "province-row";
 
@@ -1756,7 +1931,7 @@ function renderVenueRow(title, venues, subtitle = "") {
   const chips = document.createElement("div");
   chips.className = "province-cities";
 
-  venues.forEach((venue) => {
+  venues.forEach((venue, index) => {
     const chip = document.createElement("button");
     chip.className = "province-pill yemek-pill yemek-pill-link";
     chip.type = "button";
@@ -1766,6 +1941,21 @@ function renderVenueRow(title, venues, subtitle = "") {
       openVenueMapFocus(venue);
     });
     chips.append(chip);
+
+    const shouldInsertAd = Boolean(
+      adContext
+      && adConfig
+      && adContext.inserted !== true
+      && venues.length > adConfig.insertAfter
+      && index + 1 === adConfig.insertAfter,
+    );
+    if (shouldInsertAd) {
+      const adCard = renderDistrictInlineAdCard(adConfig);
+      if (adCard) {
+        chips.append(adCard);
+        adContext.inserted = true;
+      }
+    }
   });
 
   row.append(rowTitle, chips);
@@ -2516,6 +2706,15 @@ function renderDistrictPage(
     return;
   }
 
+  const districtInlineAdConfig = resolveDistrictInlineAdConfig();
+  const districtInlineAdContext = { inserted: false };
+  const districtRowRenderOptions = districtInlineAdConfig
+    ? {
+      adConfig: districtInlineAdConfig,
+      adContext: districtInlineAdContext,
+    }
+    : null;
+
   const appendPrimaryVenues = () => {
     if (mergedPrimaryVenues.length === 0) {
       return;
@@ -2523,22 +2722,28 @@ function renderDistrictPage(
 
     if (isTransitCategory && transitGroups) {
       if (transitGroups.fuel.length > 0) {
-        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Akaryakıt İstasyonları"), transitGroups.fuel));
+        venueGrid.append(
+          renderVenueRow(translateCategoryUiLabel("Akaryakıt İstasyonları"), transitGroups.fuel, "", districtRowRenderOptions),
+        );
       }
       if (transitGroups.charge.length > 0) {
-        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Şarj İstasyonları"), transitGroups.charge));
+        venueGrid.append(
+          renderVenueRow(translateCategoryUiLabel("Şarj İstasyonları"), transitGroups.charge, "", districtRowRenderOptions),
+        );
       }
       if (transitGroups.parking.length > 0) {
-        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Otoparklar"), transitGroups.parking));
+        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Otoparklar"), transitGroups.parking, "", districtRowRenderOptions));
       }
       if (transitGroups.other.length > 0) {
-        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Diğer Ulaşım Noktaları"), transitGroups.other));
+        venueGrid.append(
+          renderVenueRow(translateCategoryUiLabel("Diğer Ulaşım Noktaları"), transitGroups.other, "", districtRowRenderOptions),
+        );
       }
       return;
     }
 
     const primaryTitle = translateCategoryUiLabel(String(definition.primaryRowTitle || "Mekanlar").trim() || "Mekanlar");
-    venueGrid.append(renderVenueRow(primaryTitle, mergedPrimaryVenues));
+    venueGrid.append(renderVenueRow(primaryTitle, mergedPrimaryVenues, "", districtRowRenderOptions));
   };
 
   const appendSecondaryVenues = () => {
@@ -2548,16 +2753,18 @@ function renderDistrictPage(
 
     const baseSecondaryTitle =
       translateCategoryUiLabel(String(definition.secondaryRowTitle || "Nöbetçi Eczaneler").trim() || "Nöbetçi Eczaneler");
-    venueGrid.append(renderVenueRow(baseSecondaryTitle, mergedSecondaryVenues, dutyDateLabel));
+    venueGrid.append(renderVenueRow(baseSecondaryTitle, mergedSecondaryVenues, dutyDateLabel, districtRowRenderOptions));
   };
 
   const appendHealthSupportRows = () => {
     hospitalGroups.forEach((group) => {
-      venueGrid.append(renderVenueRow(group.title, group.venues));
+      venueGrid.append(renderVenueRow(group.title, group.venues, "", districtRowRenderOptions));
     });
 
     if (districtFamilyCenters.length > 0) {
-      venueGrid.append(renderVenueRow(translateCategoryUiLabel("Aile Sağlığı Merkezleri"), districtFamilyCenters));
+      venueGrid.append(
+        renderVenueRow(translateCategoryUiLabel("Aile Sağlığı Merkezleri"), districtFamilyCenters, "", districtRowRenderOptions),
+      );
     }
   };
 
@@ -2891,7 +3098,21 @@ function renderDistrictSubcategoryPage(
       ? sortVenuesByGoogleRating(displayDistrictVenues)
       : districtVenues;
 
-  venueGrid.append(renderVenueRow(translateCategoryUiLabel(subcategoryDefinition.title), orderedDistrictVenues));
+  const districtInlineAdConfig = resolveDistrictInlineAdConfig();
+  const districtInlineAdOptions = districtInlineAdConfig
+    ? {
+      adConfig: districtInlineAdConfig,
+      adContext: { inserted: false },
+    }
+    : null;
+  venueGrid.append(
+    renderVenueRow(
+      translateCategoryUiLabel(subcategoryDefinition.title),
+      orderedDistrictVenues,
+      "",
+      districtInlineAdOptions,
+    ),
+  );
   autoOpenRequestedVenue(orderedDistrictVenues);
 }
 
@@ -2904,6 +3125,7 @@ async function initCategoryPage() {
 
   const categoryKey = String(body.dataset.categoryKey || "").trim();
   const pageType = String(body.dataset.categoryPage || "").trim();
+  await ensureDistrictInlineAdConfigLoaded();
   const requestedSubcategorySource = queryParams().subcategorySource;
   const subcategorySource = String(requestedSubcategorySource || body.dataset.subcategorySource || "primary").trim();
   const baseDefinition = CATEGORY_DEFINITIONS[categoryKey];

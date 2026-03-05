@@ -1,0 +1,13 @@
+(() => {
+  const current = window.ARAMABUL_ADS_CONFIG && typeof window.ARAMABUL_ADS_CONFIG === "object"
+    ? window.ARAMABUL_ADS_CONFIG
+    : {};
+
+  window.ARAMABUL_ADS_CONFIG = {
+    ...current,
+    districtInlineEnabled: true,
+    districtInlineAdAfter: 6,
+    adsenseClient: "ca-pub-REPLACE_WITH_YOUR_CLIENT_ID",
+    districtInlineAdSlot: "REPLACE_WITH_DISTRICT_INLINE_SLOT_ID",
+  };
+})();
