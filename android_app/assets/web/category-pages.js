@@ -932,7 +932,7 @@ function queryParams() {
 }
 
 function normalizeFacilityType(value) {
-  return normalizeForMatch(value).replace(/\s+/g, " ").trim();
+  return normalizeSearchText(value).replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function resolveVenueFacilityType(venue) {
@@ -3374,6 +3374,10 @@ async function initCategoryPage() {
     || (pageType === "district-subcategory" && subcategorySource === "octonary");
   const loadDynamicTypeItems =
     pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.dynamicTypeDataFile);
+  const loadDynamicTypeVenues =
+    Boolean(definition.dynamicTypeVenueDataFile)
+    && (pageType === "city" || pageType === "district" || pageType === "district-subcategory")
+    && subcategorySource === "dynamic";
   const venues = loadPrimaryVenues ? await loadCategoryVenues(categoryKey) : [];
   const secondaryVenues = loadSecondaryVenues && definition.secondaryDataFile
     ? await loadCategoryDataFile(definition.secondaryDataFile)
@@ -3403,6 +3407,9 @@ async function initCategoryPage() {
         count: Number(item?.count) || 0,
       }))
       .filter((item) => item.type && item.count > 0)
+    : [];
+  const dynamicTypeVenues = loadDynamicTypeVenues && definition.dynamicTypeVenueDataFile
+    ? await loadCategoryDataFile(definition.dynamicTypeVenueDataFile)
     : [];
   const navigationVenues = definition.includeSecondaryInNavigation
     ? dedupeVenues([
@@ -3447,6 +3454,7 @@ async function initCategoryPage() {
       senaryVenues,
       septenaryVenues,
       octonaryVenues,
+      dynamicTypeVenues,
     );
     return;
   }
@@ -3463,6 +3471,7 @@ async function initCategoryPage() {
       senaryVenues,
       septenaryVenues,
       octonaryVenues,
+      dynamicTypeVenues,
       navigationVenues,
     );
     return;
@@ -3497,6 +3506,7 @@ async function initCategoryPage() {
       senaryVenues,
       septenaryVenues,
       octonaryVenues,
+      dynamicTypeVenues,
       navigationVenues,
     );
   }

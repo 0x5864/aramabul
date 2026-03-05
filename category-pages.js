@@ -345,7 +345,7 @@ function normalizeSearchText(value) {
 }
 
 function normalizeFacilityType(value) {
-  return normalizeForMatch(value).replace(/\s+/g, " ").trim();
+  return normalizeSearchText(value).replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function resolveVenueFacilityType(venue) {

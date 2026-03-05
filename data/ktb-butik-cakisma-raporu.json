@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-03-05T18:40:15.010Z",
+  "oldBoutiqueCount": 1248,
+  "officialBoutiqueCount": 153,
+  "overlapCount": 28,
+  "uniqueUnion": 1373,
+  "sampleOverlap": [
+    {
+      "city": "MUĞLA",
+      "district": "BODRUM",
+      "name": "ELEMENTA BOUTIQUE HOTEL"
+    },
+    {
+      "city": "ADANA",
+      "district": "SEYHAN",
+      "name": "AKKOÇ BUTİK OTEL"
+    },
+    {
+      "city": "MUĞLA",
+      "district": "ULA",
+      "name": "KERME OTTOMAN KONAK"
+    },
+    {
+      "city": "İZMİR",
+      "district": "KONAK",
+      "name": "MARLIGHT BUTİK OTEL"
+    },
+    {
+      "city": "İZMİR",
+      "district": "FOÇA",
+      "name": "BÜLBÜL YUVASI BUTİK OTEL"
+    },
+    {
+      "city": "MUĞLA",
+      "district": "ORTACA",
+      "name": "DALYAN RESORT SPA"
+    },
+    {
+      "city": "YALOVA",
+      "district": "TERMAL",
+      "name": "LİMAK THERMAL BOUTIQUE HOTEL"
+    },
+    {
+      "city": "DENİZLİ",
+      "district": "PAMUKKALE",
+      "name": "ŞİİR OTEL"
+    },
+    {
+      "city": "İZMİR",
+      "district": "KONAK",
+      "name": "MET HOTEL"
+    },
+    {
+      "city": "AYDIN",
+      "district": "KUŞADASI",
+      "name": "LA VİSTA"
+    },
+    {
+      "city": "SAMSUN",
+      "district": "ATAKUM",
+      "name": "VENN BUTİK OTEL"
+    },
+    {
+      "city": "KAYSERİ",
+      "district": "KOCASİNAN",
+      "name": "İMAMOĞLU PAŞA BUTİK OTEL"
+    },
+    {
+      "city": "MUĞLA",
+      "district": "MİLAS",
+      "name": "BUTİK OTEL YALIÇAPKINI"
+    },
+    {
+      "city": "KAYSERİ",
+      "district": "KOCASİNAN",
+      "name": "FİER LİFE CENTER"
+    },
+    {
+      "city": "MARDİN",
+      "district": "ARTUKLU",
+      "name": "İZALA HOTEL"
+    },
+    {
+      "city": "MUĞLA",
+      "district": "BODRUM",
+      "name": "LIV HOTEL BY BELLAZURE"
+    },
+    {
+      "city": "İSTANBUL",
+      "district": "ŞİŞLİ",
+      "name": "LA WİSTERİA BOUTİQUE HOTEL İSTANBUL"
+    },
+    {
+      "city": "İSTANBUL",
+      "district": "ŞİŞLİ",
+      "name": "RENATA HOTEL"
+    },
+    {
+      "city": "MUĞLA",
+      "district": "ORTACA",
+      "name": "DALYAN MİCHELANGELO BUTİK OTEL"
+    },
+    {
+      "city": "MUĞLA",
+      "district": "DATÇA",
+      "name": "CAPE KRIO BOUTIQUE HOTEL & SPA"
+    }
+  ]
+}
