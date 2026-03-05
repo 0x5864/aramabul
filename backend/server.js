@@ -128,6 +128,7 @@ app.use((req, res, next) => {
         "https://maps.google.com",
         "https://googleads.g.doubleclick.net",
         "https://tpc.googlesyndication.com",
+        "https://*.adtrafficquality.google",
       ].join(" "),
       "form-action 'self'",
     ].join("; "),
