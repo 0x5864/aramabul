@@ -109,6 +109,7 @@ app.use((req, res, next) => {
         "https://googleads.g.doubleclick.net",
         "https://tpc.googlesyndication.com",
         "https://partner.googleadservices.com",
+        "https://*.adtrafficquality.google",
       ].join(" "),
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
