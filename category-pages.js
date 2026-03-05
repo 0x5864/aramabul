@@ -405,7 +405,7 @@ const CATEGORY_DEFINITIONS = {
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
-    districtLinkHeading: "Hizmet Türleri",
+    districtLinkHeading: "Hizmet Alt Kategorileri",
     subcategoryVenuePagePath: "hizmetler-mekanlar.html",
     districtLinkPages: [
       {
@@ -455,7 +455,7 @@ const CATEGORY_DEFINITIONS = {
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
-    districtLinkHeading: "Sağlık Türleri",
+    districtLinkHeading: "Sağlık Alt Kategorileri",
     subcategoryVenuePagePath: "saglik-mekanlar.html",
     districtLinkPages: [
       {
@@ -543,7 +543,7 @@ const CATEGORY_DEFINITIONS = {
     useDistrictCatalog: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
-    districtLinkHeading: "Gezi Türleri",
+    districtLinkHeading: "Gezi Alt Kategorileri",
     subcategoryVenuePagePath: "gezi-mekanlar.html",
     districtLinkPages: [
       {
