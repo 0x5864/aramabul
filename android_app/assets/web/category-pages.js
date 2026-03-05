@@ -1423,6 +1423,78 @@ function dedupeByName(venues) {
     .sort((left, right) => left.name.localeCompare(right.name, "tr"));
 }
 
+function venueIdentityKeyForCount(venue) {
+  if (!venue || typeof venue !== "object") {
+    return "";
+  }
+
+  const placeId = String(venue.sourcePlaceId || "").trim();
+  if (placeId) {
+    return `pid:${placeId}`;
+  }
+
+  const cityKey = normalizeName(venue.city);
+  const districtKey = normalizeName(venue.district);
+  const nameKey = normalizeName(venue.name);
+  if (!cityKey || !districtKey || !nameKey) {
+    return "";
+  }
+
+  return `${cityKey}:${districtKey}:${nameKey}`;
+}
+
+function buildCityVenueCountMap(venues) {
+  const counts = new Map();
+  const seen = new Set();
+
+  venues.forEach((venue) => {
+    const identityKey = venueIdentityKeyForCount(venue);
+    if (!identityKey || seen.has(identityKey)) {
+      return;
+    }
+    seen.add(identityKey);
+
+    const cityKey = normalizeName(venue.city);
+    if (!cityKey) {
+      return;
+    }
+
+    counts.set(cityKey, (counts.get(cityKey) || 0) + 1);
+  });
+
+  return counts;
+}
+
+function buildDistrictVenueCountMap(venues, cityName) {
+  const counts = new Map();
+  const seen = new Set();
+  const cityKey = normalizeName(cityName);
+  if (!cityKey) {
+    return counts;
+  }
+
+  venues.forEach((venue) => {
+    if (normalizeName(venue.city) !== cityKey) {
+      return;
+    }
+
+    const identityKey = venueIdentityKeyForCount(venue);
+    if (!identityKey || seen.has(identityKey)) {
+      return;
+    }
+    seen.add(identityKey);
+
+    const districtKey = normalizeName(venue.district);
+    if (!districtKey) {
+      return;
+    }
+
+    counts.set(districtKey, (counts.get(districtKey) || 0) + 1);
+  });
+
+  return counts;
+}
+
 function simplifyVenueBrandLabel(value) {
   const raw = String(value || "").trim();
   if (!raw) {
@@ -2259,6 +2331,8 @@ function renderRootPage(
     return;
   }
 
+  const cityVenueCounts = buildCityVenueCountMap(venues);
+
   groups.forEach((group) => {
     const row = document.createElement("article");
     row.className = "province-row";
@@ -2274,7 +2348,8 @@ function renderRootPage(
       const chip = document.createElement("a");
       chip.className = "province-pill yemek-pill yemek-pill-link";
       chip.href = `${definition.pageBase}-city.html?sehir=${encodeURIComponent(provinceName)}`;
-      chip.textContent = provinceName;
+      const cityCount = cityVenueCounts.get(normalizeName(provinceName)) || 0;
+      chip.textContent = `${provinceName} (${cityCount})`;
       chip.setAttribute("aria-label", `${provinceName} ilinin ilçelerini aç`);
       chips.append(chip);
     });
@@ -2360,12 +2435,14 @@ function renderCityPage(
 
     const chips = document.createElement("div");
     chips.className = "province-cities";
+    const cityVenueCounts = buildCityVenueCountMap(citySourceVenues);
 
     cityNames.forEach((cityName) => {
       const chip = document.createElement("a");
       chip.className = "province-pill yemek-pill yemek-pill-link";
       chip.href = `${definition.pageBase}-district.html?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(cityName)}`;
-      chip.textContent = cityName;
+      const cityCount = cityVenueCounts.get(normalizeName(cityName)) || 0;
+      chip.textContent = `${cityName} (${cityCount})`;
       chip.setAttribute("aria-label", `${cityName} ili ${subcategoryDefinition.title.toLocaleLowerCase("tr")} ilçelerini aç`);
       chips.append(chip);
     });
@@ -2436,12 +2513,14 @@ function renderCityPage(
 
   const chips = document.createElement("div");
   chips.className = "province-cities";
+  const districtVenueCounts = buildDistrictVenueCountMap(navigationVenues, matchedCity);
 
   districts.forEach((districtName) => {
     const chip = document.createElement("a");
     chip.className = "province-pill yemek-pill yemek-pill-link";
     chip.href = `${definition.pageBase}-district.html?sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(districtName)}`;
-    chip.textContent = districtName;
+    const districtCount = districtVenueCounts.get(normalizeName(districtName)) || 0;
+    chip.textContent = `${districtName} (${districtCount})`;
     chip.setAttribute("aria-label", `${districtName} ilçesindeki mekanları aç`);
     chips.append(chip);
   });
@@ -2555,6 +2634,7 @@ function renderDistrictPage(
 
     const chips = document.createElement("div");
     chips.className = "province-cities";
+    const districtVenueCounts = buildDistrictVenueCountMap(sourceVenues, matchedCity);
 
     const venuePagePath = String(definition.subcategoryVenuePagePath || `${definition.pageBase}-mekanlar.html`).trim();
 
@@ -2563,7 +2643,8 @@ function renderDistrictPage(
       chip.className = "province-pill yemek-pill yemek-pill-link";
       chip.href =
         `${venuePagePath}?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(districtName)}`;
-      chip.textContent = districtName;
+      const districtCount = districtVenueCounts.get(normalizeName(districtName)) || 0;
+      chip.textContent = `${districtName} (${districtCount})`;
       chip.setAttribute("aria-label", `${districtName} ilçesindeki ${subcategoryDefinition.title.toLocaleLowerCase("tr")} listesini aç`);
       chips.append(chip);
     });
