@@ -5,6 +5,8 @@
 
   window.ARAMABUL_ADS_CONFIG = {
     ...current,
+    categoryRootAdEnabled: true,
+    categoryRootAdSlot: "REPLACE_WITH_CATEGORY_ROOT_SLOT_ID",
     districtInlineEnabled: true,
     districtInlineAdAfter: 6,
     adsenseClient: "ca-pub-REPLACE_WITH_YOUR_CLIENT_ID",

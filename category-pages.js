@@ -163,6 +163,27 @@ function resolveDistrictInlineAdConfig() {
   };
 }
 
+function resolveCategoryRootAdConfig() {
+  const body = document.body;
+  const runtimeConfig = window.ARAMABUL_ADS_CONFIG && typeof window.ARAMABUL_ADS_CONFIG === "object"
+    ? window.ARAMABUL_ADS_CONFIG
+    : {};
+  const enabledFromBody = String(body?.dataset?.categoryRootAdEnabled || "").trim().toLowerCase();
+  const enabledFromRuntime = String(runtimeConfig.categoryRootAdEnabled || "").trim().toLowerCase();
+  const enabled = enabledFromBody !== "off" && enabledFromRuntime !== "off" && enabledFromRuntime !== "false";
+  if (!enabled) {
+    return null;
+  }
+
+  const client = String(body?.dataset?.adsenseClient || runtimeConfig.adsenseClient || "").trim();
+  const slot = String(body?.dataset?.categoryRootAdSlot || runtimeConfig.categoryRootAdSlot || runtimeConfig.districtInlineAdSlot || "").trim();
+  if (!client || !slot) {
+    return null;
+  }
+
+  return { client, slot };
+}
+
 function ensureDistrictInlineAdScript(client) {
   if (districtInlineAdScriptPromise) {
     return districtInlineAdScriptPromise;
@@ -217,6 +238,36 @@ function renderDistrictInlineAdCard(config) {
 
   const card = document.createElement("aside");
   card.className = "province-ad-slot";
+  card.setAttribute("aria-label", "Reklam");
+
+  const label = document.createElement("span");
+  label.className = "province-ad-label";
+  label.textContent = "Reklam";
+
+  const body = document.createElement("div");
+  body.className = "province-ad-slot-body";
+
+  const adElement = document.createElement("ins");
+  adElement.className = "adsbygoogle province-adsense-unit";
+  adElement.style.display = "block";
+  adElement.dataset.adClient = config.client;
+  adElement.dataset.adSlot = config.slot;
+  adElement.dataset.adFormat = "auto";
+  adElement.dataset.fullWidthResponsive = "true";
+
+  body.append(adElement);
+  card.append(label, body);
+  requestDistrictInlineAdFill(adElement, config);
+  return card;
+}
+
+function renderCategoryRootInlineAdCard(config) {
+  if (!config) {
+    return null;
+  }
+
+  const card = document.createElement("aside");
+  card.className = "province-ad-slot category-root-ad-slot";
   card.setAttribute("aria-label", "Reklam");
 
   const label = document.createElement("span");
@@ -2243,6 +2294,9 @@ function renderRootPage(
     rowTitle.textContent =
       translateCategoryUiLabel(String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler");
 
+    const rowBody = document.createElement("div");
+    rowBody.className = "province-row-stack";
+
     const chips = document.createElement("div");
     chips.className = "province-cities";
 
@@ -2270,7 +2324,14 @@ function renderRootPage(
       chips.append(chip);
     });
 
-    row.append(rowTitle, chips);
+    const categoryRootAdConfig = resolveCategoryRootAdConfig();
+    const categoryRootAdCard = renderCategoryRootInlineAdCard(categoryRootAdConfig);
+    if (categoryRootAdCard) {
+      rowBody.append(categoryRootAdCard);
+    }
+    rowBody.append(chips);
+
+    row.append(rowTitle, rowBody);
     groupGrid.append(row);
     return;
   }
