@@ -608,7 +608,7 @@ const CATEGORY_DEFINITIONS = {
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
-    districtLinkHeading: "Keyif Türleri",
+    districtLinkHeading: "Keyif Alt Kategorileri",
     subcategoryVenuePagePath: "keyif-mekanlar.html",
     districtLinkPages: [
       {
