@@ -2302,11 +2302,17 @@ function renderRootPage(
     headingStack.style.alignContent = "start";
     headingStack.style.gap = "0.45rem";
 
-    const rowTitle = document.createElement("h4");
-    rowTitle.className = "province-region";
-    rowTitle.textContent =
+    const rowHeadingText =
       translateCategoryUiLabel(String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler");
-    headingStack.append(rowTitle);
+    const pageHeading = document.querySelector(".section-head.province-head h3");
+    const pageHeadingText = pageHeading ? String(pageHeading.textContent || "").trim() : "";
+    const shouldRenderRowTitle = normalizeName(pageHeadingText) !== normalizeName(rowHeadingText);
+    if (shouldRenderRowTitle) {
+      const rowTitle = document.createElement("h4");
+      rowTitle.className = "province-region";
+      rowTitle.textContent = rowHeadingText;
+      headingStack.append(rowTitle);
+    }
 
     const chips = document.createElement("div");
     chips.className = "province-cities";
@@ -2341,7 +2347,12 @@ function renderRootPage(
       headingStack.append(categoryRootAdCard);
     }
 
-    row.append(headingStack, chips);
+    if (headingStack.childElementCount > 0) {
+      row.append(headingStack, chips);
+    } else {
+      row.style.gridTemplateColumns = "1fr";
+      row.append(chips);
+    }
     groupGrid.append(row);
     return;
   }
