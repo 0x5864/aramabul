@@ -174,24 +174,23 @@ const CATEGORY_DEFINITIONS = {
     tertiaryCountLabel: "akaryakıt istasyonu",
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
+    rootSubcategoryFirst: true,
     districtLinkHeading: "Hizmet Türleri",
+    subcategoryVenuePagePath: "hizmetler-mekanlar.html",
     districtLinkPages: [
       {
         source: "primary",
         title: "Kuaförler",
-        pagePath: "hizmetler-kuafor.html",
         countLabel: "kuaför",
       },
       {
         source: "secondary",
         title: "Veterinerler",
-        pagePath: "hizmetler-veteriner.html",
         countLabel: "veteriner",
       },
       {
         source: "tertiary",
         title: "Akaryakıt İstasyonları",
-        pagePath: "hizmetler-akaryakit.html",
         countLabel: "akaryakıt istasyonu",
       },
     ],
@@ -223,6 +222,33 @@ const CATEGORY_DEFINITIONS = {
     secondaryRowTitle: "Nöbetçi Eczaneler",
     tertiaryDataFile: "data/health-hospitals.json",
     quaternaryDataFile: "data/health-family-centers.json",
+    includeSecondaryInNavigation: true,
+    preferVenueBackedDistricts: true,
+    rootSubcategoryFirst: true,
+    districtLinkHeading: "Sağlık Türleri",
+    subcategoryVenuePagePath: "saglik-mekanlar.html",
+    districtLinkPages: [
+      {
+        source: "primary",
+        title: "Eczaneler",
+        countLabel: "eczane",
+      },
+      {
+        source: "secondary",
+        title: "Nöbetçi Eczaneler",
+        countLabel: "nöbetçi eczane",
+      },
+      {
+        source: "tertiary",
+        title: "Hastaneler",
+        countLabel: "hastane",
+      },
+      {
+        source: "quaternary",
+        title: "Aile Sağlığı Merkezleri",
+        countLabel: "aile sağlığı merkezi",
+      },
+    ],
     useDistrictCatalog: true,
     matcherKeywords: ["eczane", "pharmacy", "apteka", "saglik", "sağlık", "health", "klinik", "clinic"],
   },
@@ -351,54 +377,48 @@ const CATEGORY_DEFINITIONS = {
     octonaryDataFile: "data/keyif-cigkofte.json",
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
+    rootSubcategoryFirst: true,
     districtLinkHeading: "Mekan Türleri",
+    subcategoryVenuePagePath: "keyif-mekanlar.html",
     districtLinkPages: [
       {
         source: "primary",
         title: "Meyhaneler",
-        pagePath: "keyif-meyhane.html",
         countLabel: "meyhane",
       },
       {
         source: "secondary",
         title: "Restoranlar",
-        pagePath: "keyif-restoran.html",
         countLabel: "restoran",
       },
       {
         source: "tertiary",
         title: "Kahvaltı Mekanları",
-        pagePath: "keyif-kahvalti.html",
         countLabel: "kahvaltı mekanı",
       },
       {
         source: "quaternary",
         title: "Kebapçılar",
-        pagePath: "keyif-kebap.html",
         countLabel: "kebapçı",
       },
       {
         source: "quinary",
         title: "Kafeler",
-        pagePath: "keyif-kafe.html",
         countLabel: "kafe",
       },
       {
         source: "senary",
         title: "Dönerciler",
-        pagePath: "keyif-doner.html",
         countLabel: "dönerci",
       },
       {
         source: "septenary",
         title: "Pide ve Lahmacun",
-        pagePath: "keyif-pide.html",
         countLabel: "pide ve lahmacun",
       },
       {
         source: "octonary",
         title: "Çiğ Köfteciler",
-        pagePath: "keyif-cigkofte.html",
         countLabel: "çiğ köfteci",
       },
     ],
@@ -2108,7 +2128,19 @@ function renderRootPage(
   });
 }
 
-function renderCityPage(definition, venues, districtMap = null, navigationVenues = venues, secondaryVenues = []) {
+function renderCityPage(
+  definition,
+  venues,
+  districtMap = null,
+  navigationVenues = venues,
+  secondaryVenues = [],
+  tertiaryVenues = [],
+  quaternaryVenues = [],
+  quinaryVenues = [],
+  senaryVenues = [],
+  septenaryVenues = [],
+  octonaryVenues = [],
+) {
   const cityTitle = document.querySelector("#categoryCityTitle");
   const cityBreadcrumb = document.querySelector("#categoryCityBreadcrumb");
   const districtGrid = document.querySelector("#categoryDistrictGrid");
@@ -2121,10 +2153,23 @@ function renderCityPage(definition, venues, districtMap = null, navigationVenues
   const subcategorySource = requestedSubcategorySource || "primary";
   const subcategoryDefinition = (definition.districtLinkPages || []).find((item) => item.source === subcategorySource)
     || { title: definition.primaryRowTitle || "Mekanlar" };
-  const citySourceVenues =
-    definition.rootSubcategoryFirst && subcategorySource === "secondary"
+  const citySourceVenues = definition.rootSubcategoryFirst
+    ? subcategorySource === "secondary"
       ? secondaryVenues
-      : venues;
+      : subcategorySource === "tertiary"
+        ? tertiaryVenues
+        : subcategorySource === "quaternary"
+          ? quaternaryVenues
+          : subcategorySource === "quinary"
+            ? quinaryVenues
+            : subcategorySource === "senary"
+              ? senaryVenues
+              : subcategorySource === "septenary"
+                ? septenaryVenues
+                : subcategorySource === "octonary"
+                  ? octonaryVenues
+                  : venues
+    : venues;
 
   if (definition.rootSubcategoryFirst) {
     districtGrid.innerHTML = "";
@@ -2256,6 +2301,10 @@ function renderDistrictPage(
   secondaryVenues = [],
   tertiaryVenues = [],
   quaternaryVenues = [],
+  quinaryVenues = [],
+  senaryVenues = [],
+  septenaryVenues = [],
+  octonaryVenues = [],
   navigationVenues = venues,
 ) {
   const districtTitle = document.querySelector("#categoryDistrictTitle");
@@ -2272,7 +2321,21 @@ function renderDistrictPage(
     || { title: definition.primaryRowTitle || "Mekanlar" };
 
   if (definition.rootSubcategoryFirst) {
-    const sourceVenues = subcategorySource === "secondary" ? secondaryVenues : venues;
+    const sourceVenues = subcategorySource === "secondary"
+      ? secondaryVenues
+      : subcategorySource === "tertiary"
+        ? tertiaryVenues
+        : subcategorySource === "quaternary"
+          ? quaternaryVenues
+          : subcategorySource === "quinary"
+            ? quinaryVenues
+            : subcategorySource === "senary"
+              ? senaryVenues
+              : subcategorySource === "septenary"
+                ? septenaryVenues
+                : subcategorySource === "octonary"
+                  ? octonaryVenues
+          : venues;
     const useDistrictCatalog = definition.useDistrictCatalog && hasUsableDistrictCatalog(districtMap);
     const { matchedCity } = resolveDistrictMatches(
       sourceVenues,
@@ -2283,7 +2346,7 @@ function renderDistrictPage(
     );
 
     if (districtCityLink) {
-      districtCityLink.textContent = matchedCity || translateCategoryUiLabel("İl");
+      districtCityLink.textContent = translateCategoryUiLabel(subcategoryDefinition.title);
       districtCityLink.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}`;
     }
 
@@ -2950,7 +3013,19 @@ async function initCategoryPage() {
   }
 
   if (pageType === "city") {
-    renderCityPage(definition, venues, districtMap, navigationVenues, secondaryVenues);
+    renderCityPage(
+      definition,
+      venues,
+      districtMap,
+      navigationVenues,
+      secondaryVenues,
+      tertiaryVenues,
+      quaternaryVenues,
+      quinaryVenues,
+      senaryVenues,
+      septenaryVenues,
+      octonaryVenues,
+    );
     applyCategoryPageTranslations();
     return;
   }
@@ -2963,6 +3038,10 @@ async function initCategoryPage() {
       secondaryVenues,
       tertiaryVenues,
       quaternaryVenues,
+      quinaryVenues,
+      senaryVenues,
+      septenaryVenues,
+      octonaryVenues,
       navigationVenues,
     );
     applyCategoryPageTranslations();

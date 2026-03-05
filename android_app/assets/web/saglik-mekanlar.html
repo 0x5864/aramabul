@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>arama bul | Keyif</title>
+    <title>arama bul | Sağlık Mekanları</title>
     <meta
       name="description"
-      content="Önce mekan türünü seç, sonra il, ilçe ve mekan adımında ilerle."
+      content="Seçtiğin sağlık türü için ilçe bazında mekanları kutu listesinde gör ve Google Maps'te aç."
     />
     <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
     <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
@@ -19,7 +19,11 @@
     />
     <link rel="stylesheet" href="styles.css?v=20260303-18" />
   </head>
-  <body class="akaryakit-page" data-category-key="akaryakit" data-category-page="root">
+  <body
+    class="eczane-district-page"
+    data-category-key="eczane"
+    data-category-page="district-subcategory"
+  >
     <div class="texture"></div>
 
     <header class="global-header-band">
@@ -44,7 +48,13 @@
         <div class="global-topline-inner">
           <a href="index.html">Anasayfa</a>
           <span>/</span>
-          <span>Keyif</span>
+          <a href="saglik.html">Sağlık</a>
+          <span>/</span>
+          <a id="categorySubcategoryCityLink" href="saglik.html">İl</a>
+          <span>/</span>
+          <a id="categorySubcategoryDistrictLink" href="saglik.html">İlçe</a>
+          <span>/</span>
+          <span id="categorySubcategoryBreadcrumb">Mekanlar</span>
         </div>
       </div>
     </header>
@@ -52,11 +62,11 @@
     <main class="hero">
       <section class="section-head province-head">
         <div>
-          <h3>Mekan Türleri</h3>
+          <h3 id="categorySubcategoryTitle">Sağlık Mekanları</h3>
         </div>
       </section>
 
-      <section id="categoryGroupGrid" class="province-grid" aria-label="Türkiye illeri"></section>
+      <section id="categorySubcategoryVenueGrid" class="province-grid" aria-label="Sağlık mekan listesi"></section>
     </main>
 
     <footer class="yr-footer" aria-label="Alt Bant">
@@ -107,8 +117,8 @@
     </footer>
 
     <script src="data/fallback-data.js?v=20260224-10"></script>
-    <script src="data/fallback-food-data.js?v=20260228-01"></script>
+    <script src="data/fallback-category-data.js?v=20260224-10"></script>
     <script src="header-search.js?v=20260303-21"></script>
-    <script src="category-pages.js?v=20260305-02"></script>
+    <script src="category-pages.js?v=20260305-03"></script>
   </body>
 </html>

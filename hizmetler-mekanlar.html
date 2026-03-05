@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>arama bul | Keyif</title>
+    <title>aramabul | Hizmet Mekanları</title>
     <meta
       name="description"
-      content="Önce mekan türünü seç, sonra il, ilçe ve mekan adımında ilerle."
+      content="Seçtiğin hizmet türü için ilçe bazında mekanları kutu listesinde gör ve Google Maps'te aç."
     />
     <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
     <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
@@ -19,13 +19,17 @@
     />
     <link rel="stylesheet" href="styles.css?v=20260303-18" />
   </head>
-  <body class="akaryakit-page" data-category-key="akaryakit" data-category-page="root">
+  <body
+    class="hizmetler-district-page"
+    data-category-key="hizmetler"
+    data-category-page="district-subcategory"
+  >
     <div class="texture"></div>
 
     <header class="global-header-band">
       <nav class="topbar global-topbar">
-        <a class="brand" href="index.html" aria-label="arama bul">
-          <span class="brand-wordmark">arama bul</span>
+        <a class="brand" href="index.html" aria-label="aramabul">
+          <span class="brand-wordmark">aramabul</span>
         </a>
         <form class="header-search" action="search.html" method="get" role="search" aria-label="Genel arama">
           <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
@@ -44,7 +48,13 @@
         <div class="global-topline-inner">
           <a href="index.html">Anasayfa</a>
           <span>/</span>
-          <span>Keyif</span>
+          <a href="hizmetler.html">Hizmetler</a>
+          <span>/</span>
+          <a id="categorySubcategoryCityLink" href="hizmetler.html">İl</a>
+          <span>/</span>
+          <a id="categorySubcategoryDistrictLink" href="hizmetler.html">İlçe</a>
+          <span>/</span>
+          <span id="categorySubcategoryBreadcrumb">Mekanlar</span>
         </div>
       </div>
     </header>
@@ -52,11 +62,11 @@
     <main class="hero">
       <section class="section-head province-head">
         <div>
-          <h3>Mekan Türleri</h3>
+          <h3 id="categorySubcategoryTitle">Hizmet Mekanları</h3>
         </div>
       </section>
 
-      <section id="categoryGroupGrid" class="province-grid" aria-label="Türkiye illeri"></section>
+      <section id="categorySubcategoryVenueGrid" class="province-grid" aria-label="Hizmet mekan listesi"></section>
     </main>
 
     <footer class="yr-footer" aria-label="Alt Bant">
@@ -105,10 +115,14 @@
         </div>
       </div>
     </footer>
-
-    <script src="data/fallback-data.js?v=20260224-10"></script>
-    <script src="data/fallback-food-data.js?v=20260228-01"></script>
-    <script src="header-search.js?v=20260303-21"></script>
-    <script src="category-pages.js?v=20260305-02"></script>
+    <script src="web-runtime.js?v=20260302-01"></script>
+    <script src="header-state.js?v=20260302-01"></script>
+  <script src="header-i18n.js?v=20260304-11"></script>
+  <script src="header-nav.js?v=20260302-01"></script>
+  <script src="header-shell.js?v=20260302-02"></script>
+  <script src="header-search-ui.js?v=20260303-04"></script>
+  <script src="header-search-data.js?v=20260303-08"></script>
+    <script src="header-search.js?v=20260303-20"></script>
+    <script src="category-pages.js?v=20260305-01"></script>
   </body>
 </html>
