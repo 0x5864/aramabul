@@ -10,7 +10,7 @@
     { href: "keyif.html", keywords: ["keyif", "meyhane", "meyhaneler", "rakı", "raki", "kafe", "cafe", "kahve", "kahvaltı", "kahvalti", "kebap", "doner", "döner", "pide", "lahmacun", "cigkofte", "çiğ köfte"] },
     { href: "hastane.html", keywords: ["hastane", "hospital"] },
     { href: "banka.html", keywords: ["banka", "bank"] },
-    { href: "otel.html", keywords: ["otel", "hotel", "konaklama"] },
+    { href: "gezi-city.html?tur=dynamic&tt=Otel", keywords: ["otel", "hotel", "konaklama"] },
     { href: "gezi.html", keywords: ["gezi", "seyahat", "travel", "transport", "kamp", "kamp alani", "kamp alanı", "camping", "kamping", "karavan", "bungalov", "pansiyon", "konaklama", "otel"] },
     { href: "atm.html", keywords: ["atm"] },
     { href: "kargo.html", keywords: ["kargo", "cargo"] },
