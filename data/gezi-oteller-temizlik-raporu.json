@@ -1,0 +1,126 @@
+{
+  "generatedAt": "2026-03-05T14:36:03.196Z",
+  "dryRun": false,
+  "turob": {
+    "totalRecords": 277,
+    "categoryStats": [
+      {
+        "categorySlug": "5-yildizli-oteller",
+        "stars": 5,
+        "pagesFetched": 11,
+        "rawItems": 114
+      },
+      {
+        "categorySlug": "4-yildizli-oteller",
+        "stars": 4,
+        "pagesFetched": 10,
+        "rawItems": 105
+      },
+      {
+        "categorySlug": "3-yildizli-oteller",
+        "stars": 3,
+        "pagesFetched": 6,
+        "rawItems": 49
+      },
+      {
+        "categorySlug": "2-yildizli-oteller",
+        "stars": 2,
+        "pagesFetched": 2,
+        "rawItems": 6
+      },
+      {
+        "categorySlug": "1-yildizli-oteller",
+        "stars": 1,
+        "pagesFetched": 2,
+        "rawItems": 3
+      }
+    ]
+  },
+  "geziOteller": {
+    "beforeTotal": 967,
+    "removedNonHotelCount": 13,
+    "removedDuplicateCount": 0,
+    "afterTotal": 954,
+    "matchedWithTurobCount": 2,
+    "removedNonHotelSamples": [
+      {
+        "name": "Şehir Lokantası",
+        "city": "Aydın",
+        "district": "Kuşadası",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Teras Public House",
+        "city": "Balıkesir",
+        "district": "Bandırma",
+        "cuisine": "Bar"
+      },
+      {
+        "name": "Tefenni Taraftar Büfesi fast food",
+        "city": "Burdur",
+        "district": "Tefenni",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Kale lokantası",
+        "city": "Gaziantep",
+        "district": "Araban",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "DERECİK- ŞEMDİNLİ-Baran Büfe Tekel Bayii ŞEMDİNLİ - MERKEZ-DERECİK",
+        "city": "Hakkari",
+        "district": "Şemdinli",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Home Cake & Restaurants",
+        "city": "Hatay",
+        "district": "Arsuz",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Barbecue House",
+        "city": "İstanbul",
+        "district": "Fatih",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Osmanbey Balkan Lokantası",
+        "city": "İstanbul",
+        "district": "Şişli",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Alikaya Lezzet lokantası",
+        "city": "Kastamonu",
+        "district": "Devrekani",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Hanımeli Restorant Çiçekdağı",
+        "city": "Kırşehir",
+        "district": "Çiçekdağı",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Hacı Baba Et Lokantası 1942",
+        "city": "Malatya",
+        "district": "Yeşilyurt",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Mithat Usta Et Lokantası",
+        "city": "Tunceli",
+        "district": "Çemişgezek",
+        "cuisine": "Restoran"
+      },
+      {
+        "name": "Van Hacıbey Çorba Paça Salonu ( Restorant )",
+        "city": "Van",
+        "district": "İpekyolu",
+        "cuisine": "Çorba"
+      }
+    ]
+  }
+}

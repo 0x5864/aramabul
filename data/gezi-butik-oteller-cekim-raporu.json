@@ -1,0 +1,19 @@
+{
+  "startedAt": "2026-03-05T14:46:47.611Z",
+  "finishedAt": "2026-03-05T14:46:57.443Z",
+  "baseUrl": "https://www.neredekal.com/tema/butik-oteller/",
+  "requestedMaxPages": 200,
+  "plannedPages": 50,
+  "fetchedPages": 50,
+  "failedPages": 0,
+  "rawCount": 1250,
+  "uniqueCount": 1250,
+  "estimatedTotalPages": 72,
+  "platformPageLimit": 50,
+  "firstPageTotalCount": 1779,
+  "firstPageMaxPageLimit": 50,
+  "outputFiles": [
+    "/Users/metintuncgenc/Documents/aramabul/data/gezi-butik-oteller.json",
+    "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-butik-oteller.json"
+  ]
+}

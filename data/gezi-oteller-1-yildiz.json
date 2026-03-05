@@ -1,0 +1,53 @@
+[
+  {
+    "city": "Bolu",
+    "district": "Göynük",
+    "name": "Göynük Hotel",
+    "cuisine": "Otel",
+    "address": "Gazi Süleymanpaşa Bulv.No.15 Göynük Bolu / Karadeniz / Göynük",
+    "neighborhood": "",
+    "postalCode": "",
+    "mapsUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6076.962267129251!2d30.785769!3d40.398191!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xaa666072d688c52f!2zR8O2eW7DvGsgT3RlbA!5e0!3m2!1str!2str!4v1619642456275!5m2!1str!2str",
+    "website": "http://www.goynukotel.net/",
+    "phone": "+90 374 451 62 78",
+    "photoUrl": "",
+    "editorialSummary": "",
+    "sourcePlaceId": "",
+    "source": "turob",
+    "stars": 1
+  },
+  {
+    "city": "İstanbul",
+    "district": "Şahkulu mh. Galip Dede cad. No:56 Beyoğlu-İstanbul",
+    "name": "Hotel Duo Galata (II)",
+    "cuisine": "Otel",
+    "address": "Şahkulu mh. Galip Dede cad. No:56 Beyoğlu-İstanbul",
+    "neighborhood": "",
+    "postalCode": "",
+    "mapsUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12039.757952831758!2d28.9746595!3d41.0265798!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd92d288bba04b6d8!2sDuo%20Galata%20Hotel!5e0!3m2!1sen!2str!4v1651238567877!5m2!1sen!2str",
+    "website": "www.duogalata.com",
+    "phone": "0212 243 36 96",
+    "photoUrl": "",
+    "editorialSummary": "",
+    "sourcePlaceId": "",
+    "source": "turob",
+    "stars": 1
+  },
+  {
+    "city": "İstanbul",
+    "district": "Sultanahmet",
+    "name": "Valide Sultan Konağı",
+    "cuisine": "Otel",
+    "address": "İshakpaşa cad. Kutlu Gün sk. No.1 S.Ahmet İst. / İst - Avrupa Yakası / Sultanahmet",
+    "neighborhood": "",
+    "postalCode": "",
+    "mapsUrl": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6021.661000031599!2d28.981499000000003!3d41.00708300000001!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xebef5d0b2cfb9b55!2sHotel%20Valide%20Sultan!5e0!3m2!1str!2str!4v1627453610341!5m2!1str!2str",
+    "website": "http://www.hotelvalidesultan.com/",
+    "phone": "90 212 517 65 58",
+    "photoUrl": "",
+    "editorialSummary": "",
+    "sourcePlaceId": "",
+    "source": "turob",
+    "stars": 1
+  }
+]
