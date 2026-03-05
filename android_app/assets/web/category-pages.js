@@ -453,6 +453,9 @@ const CATEGORY_DEFINITIONS = {
     secondaryDataFile: "data/gezi-pansiyonlar.json",
     secondaryRowTitle: "Pansiyonlar",
     secondaryCountLabel: "pansiyon",
+    tertiaryDataFile: "data/gezi-oteller.json",
+    tertiaryRowTitle: "Oteller",
+    tertiaryCountLabel: "otel",
     includeSecondaryInNavigation: true,
     useDistrictCatalog: true,
     preferVenueBackedDistricts: true,
@@ -469,6 +472,11 @@ const CATEGORY_DEFINITIONS = {
         source: "secondary",
         title: "Pansiyonlar",
         countLabel: "pansiyon",
+      },
+      {
+        source: "tertiary",
+        title: "Oteller",
+        countLabel: "otel",
       },
     ],
     matcherKeywords: [
