@@ -65,15 +65,11 @@
   },
   {
     "type": "Otel",
-    "count": 9949
+    "count": 12587
   },
   {
     "type": "Otel, Golf Tesisi",
     "count": 7
-  },
-  {
-    "type": "Otel, Tatil Köyü",
-    "count": 6
   },
   {
     "type": "Özel Konaklama Tesisi",
@@ -97,11 +93,7 @@
   },
   {
     "type": "Tatil Köyü",
-    "count": 85
-  },
-  {
-    "type": "Tatil Köyü, Otel",
-    "count": 6
+    "count": 97
   },
   {
     "type": "Termal Tesis",

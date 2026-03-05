@@ -3524,19 +3524,31 @@ async function initCategoryPage() {
     : [];
   let dynamicTypeVenues = rawDynamicTypeVenues;
 
-  const shouldMergeLegacyCampingIntoDynamic =
-    definition.key === "seyahat"
-    && subcategorySource === "dynamic"
-    && isCampingFacilityType(requestedFacilityType);
+  if (definition.key === "seyahat" && subcategorySource === "dynamic") {
+    const mergedLegacyVenues = [];
 
-  if (shouldMergeLegacyCampingIntoDynamic) {
-    const legacyCampingVenues = venues.length > 0
-      ? venues
-      : await loadCategoryVenues(categoryKey);
-    if (legacyCampingVenues.length > 0) {
+    if (isCampingFacilityType(requestedFacilityType)) {
+      const legacyCampingVenues = venues.length > 0
+        ? venues
+        : await loadCategoryVenues(categoryKey);
+      mergedLegacyVenues.push(...legacyCampingVenues.map((venue) => mapLegacyCampingVenueToDynamicVenue(venue)));
+    }
+
+    if (isHotelFacilityType(requestedFacilityType)) {
+      const legacyHotelVenueGroups = await Promise.all(
+        LEGACY_SEYAHAT_HOTEL_DATA_FILES.map((path) => loadCategoryDataFile(path)),
+      );
+      mergedLegacyVenues.push(
+        ...legacyHotelVenueGroups
+          .flat()
+          .map((venue) => mapLegacyHotelVenueToDynamicVenue(venue)),
+      );
+    }
+
+    if (mergedLegacyVenues.length > 0) {
       dynamicTypeVenues = dedupeDynamicTypeVenues([
         ...rawDynamicTypeVenues,
-        ...legacyCampingVenues.map((venue) => mapLegacyCampingVenueToDynamicVenue(venue)),
+        ...mergedLegacyVenues,
       ]);
     }
   }

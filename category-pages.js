@@ -2611,11 +2611,8 @@ function renderRootPage(
       chips.append(chip);
     });
 
+    const shouldAppendDynamicToMainRow = staticDistrictLinkPages.length === 0;
     if (Array.isArray(dynamicTypeItems) && dynamicTypeItems.length > 0) {
-      const dynamicRow = document.createElement("article");
-      dynamicRow.className = "province-row";
-      dynamicRow.style.gridTemplateColumns = "1fr";
-
       const dynamicChips = document.createElement("div");
       dynamicChips.className = "province-cities";
 
@@ -2639,8 +2636,15 @@ function renderRootPage(
       });
 
       if (dynamicChips.childElementCount > 0) {
-        dynamicRow.append(dynamicChips);
-        groupGrid.append(dynamicRow);
+        if (shouldAppendDynamicToMainRow) {
+          chips.append(...Array.from(dynamicChips.children));
+        } else {
+          const dynamicRow = document.createElement("article");
+          dynamicRow.className = "province-row";
+          dynamicRow.style.gridTemplateColumns = "1fr";
+          dynamicRow.append(dynamicChips);
+          groupGrid.append(dynamicRow);
+        }
       }
     }
 
