@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-03-05T18:28:29.193Z",
+  "finishedAt": "2026-03-05T18:28:32.507Z",
+  "sourceUrl": "https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr",
+  "minTypeCount": 5,
+  "sourceCount": 25107,
+  "mappedCount": 25008,
+  "dedupedAllCount": 24819,
+  "geziCount": 24489,
+  "keyifCount": 330,
+  "geziTypeCount": 30,
+  "keyifTypeCount": 2,
+  "allTypeCount": 32
+}

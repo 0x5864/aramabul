@@ -103,7 +103,13 @@ app.use((req, res, next) => {
       "object-src 'none'",
       "frame-ancestors 'self'",
       "img-src 'self' data: https:",
-      "script-src 'self' https://pagead2.googlesyndication.com",
+      [
+        "script-src 'self'",
+        "https://pagead2.googlesyndication.com",
+        "https://googleads.g.doubleclick.net",
+        "https://tpc.googlesyndication.com",
+        "https://partner.googleadservices.com",
+      ].join(" "),
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       [
@@ -112,6 +118,7 @@ app.use((req, res, next) => {
         "https://pagead2.googlesyndication.com",
         "https://googleads.g.doubleclick.net",
         "https://tpc.googlesyndication.com",
+        "https://partner.googleadservices.com",
       ].join(" "),
       [
         "frame-src 'self'",

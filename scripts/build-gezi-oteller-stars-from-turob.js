@@ -337,16 +337,30 @@ function writeJson(filePath, payload) {
   fs.writeFileSync(filePath, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
 }
 
+function writeMergedOtherHotels(allByStar) {
+  const oneStar = allByStar.get(1) || [];
+  const twoStar = allByStar.get(2) || [];
+  const merged = dedupeRecords([...twoStar, ...oneStar]);
+
+  writeJson(path.join(OUTPUT_DIR, "gezi-oteller-diger.json"), merged);
+  writeJson(path.join(OUTPUT_ANDROID_DIR, "gezi-oteller-diger.json"), merged);
+
+  return merged.length;
+}
+
 async function run() {
   const report = {
     generatedAt: new Date().toISOString(),
     dryRun: DRY_RUN,
     categories: [],
+    mergedOtherHotelsCount: 0,
   };
+  const recordsByStar = new Map();
 
   for (const category of STAR_CATEGORIES) {
     console.log(`${category.title} cekiliyor...`);
     const hotels = await buildCategoryHotels(category);
+    recordsByStar.set(category.stars, hotels);
     report.categories.push({
       slug: category.slug,
       stars: category.stars,
@@ -362,6 +376,7 @@ async function run() {
   }
 
   if (!DRY_RUN) {
+    report.mergedOtherHotelsCount = writeMergedOtherHotels(recordsByStar);
     writeJson(REPORT_FILE, report);
   }
 

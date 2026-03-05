@@ -38,6 +38,7 @@
     "build:keyif:food:data": "node scripts/build-keyif-food-aggregate.js",
     "build:keyif:merge:yemek": "node scripts/merge-yemek-into-keyif.js && node scripts/build-keyif-food-aggregate.js",
     "build:keyif:ratings": "node scripts/enrich-keyif-ratings.js",
+    "build:ktb:mevcut-alt-kategori-ekle": "node scripts/merge-ktb-into-existing-subcategories.js",
     "build:ulasim:data": "node scripts/fetch-akaryakit.js",
     "build:health:data": "node scripts/build-health-from-saglikkurumlari.js && node scripts/merge-eah-hospitals.js && node scripts/merge-istanbul-asm.js",
     "build:health:eah": "node scripts/merge-eah-hospitals.js",
@@ -49,7 +50,9 @@
     "build:asm:data": "node scripts/build-category-data.js --category asm",
     "build:dis-klinikleri:data": "node scripts/build-category-data.js --category dis-klinikleri",
     "build:duraklar:data": "node scripts/build-category-data.js --category duraklar",
-    "build:otopark:data": "node scripts/build-category-data.js --category otopark"
+    "build:otopark:data": "node scripts/build-category-data.js --category otopark",
+    "build:gezi:butik-oteller:data": "node scripts/fetch-gezi-butik-oteller.js",
+    "build:gezi:oteller:ktb-sync": "node scripts/sync-gezi-oteller-stars-with-ktb.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

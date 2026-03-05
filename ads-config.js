@@ -6,10 +6,10 @@
   window.ARAMABUL_ADS_CONFIG = {
     ...current,
     categoryRootAdEnabled: true,
-    categoryRootAdSlot: "REPLACE_WITH_CATEGORY_ROOT_SLOT_ID",
+    categoryRootAdSlot: "3244140507",
     districtInlineEnabled: true,
     districtInlineAdAfter: 6,
-    adsenseClient: "ca-pub-REPLACE_WITH_YOUR_CLIENT_ID",
-    districtInlineAdSlot: "REPLACE_WITH_DISTRICT_INLINE_SLOT_ID",
+    adsenseClient: "ca-pub-3016888060216617",
+    districtInlineAdSlot: "3244140507",
   };
 })();

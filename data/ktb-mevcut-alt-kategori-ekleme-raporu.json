@@ -1,0 +1,68 @@
+{
+  "startedAt": "2026-03-05T16:58:04.409Z",
+  "finishedAt": "2026-03-05T16:58:08.793Z",
+  "sourceUrl": "https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr",
+  "sourceTotalCount": 25106,
+  "skippedUnclassified": 99,
+  "skippedInvalid": 0,
+  "additions": {
+    "geziKamp": 2468,
+    "geziPansiyon": 9081,
+    "gezi5": 54,
+    "gezi4": 58,
+    "gezi3": 27,
+    "geziDiger": 7476,
+    "geziButik": 13,
+    "keyifMeyhane": 33,
+    "keyifRestoran": 274
+  },
+  "totals": {
+    "geziKamp": 2547,
+    "geziPansiyon": 10386,
+    "gezi5": 1205,
+    "gezi4": 1295,
+    "gezi3": 1793,
+    "geziDiger": 8455,
+    "geziButik": 228,
+    "keyifMeyhane": 1237,
+    "keyifRestoran": 28421
+  },
+  "outputFiles": {
+    "geziKamp": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-kamp-alanlari.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-kamp-alanlari.json"
+    },
+    "geziPansiyon": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-pansiyonlar.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-pansiyonlar.json"
+    },
+    "gezi5": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-oteller-5-yildiz.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-oteller-5-yildiz.json"
+    },
+    "gezi4": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-oteller-4-yildiz.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-oteller-4-yildiz.json"
+    },
+    "gezi3": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-oteller-3-yildiz.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-oteller-3-yildiz.json"
+    },
+    "geziDiger": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-oteller-diger.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-oteller-diger.json"
+    },
+    "geziButik": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-butik-oteller.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-butik-oteller.json"
+    },
+    "keyifMeyhane": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/keyif.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/keyif.json"
+    },
+    "keyifRestoran": {
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/keyif-restoran.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/keyif-restoran.json"
+    }
+  }
+}

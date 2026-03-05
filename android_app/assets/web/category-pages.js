@@ -448,6 +448,8 @@ const CATEGORY_DEFINITIONS = {
     name: "Gezi",
     pageBase: "gezi",
     titleUnit: "kamp alanı",
+    dynamicTypeDataFile: "data/ktb-tesis-turleri-gezi.json",
+    dynamicTypeVenueDataFile: "data/ktb-tesis-kayitlari-gezi.json",
     primaryRowTitle: "Kamp Alanları",
     dataFile: "data/gezi-kamp-alanlari.json",
     secondaryDataFile: "data/gezi-pansiyonlar.json",
@@ -462,12 +464,9 @@ const CATEGORY_DEFINITIONS = {
     quinaryDataFile: "data/gezi-oteller-3-yildiz.json",
     quinaryRowTitle: "3 Yıldızlı Oteller",
     quinaryCountLabel: "otel",
-    senaryDataFile: "data/gezi-oteller-2-yildiz.json",
-    senaryRowTitle: "2 Yıldızlı Oteller",
+    senaryDataFile: "data/gezi-oteller-diger.json",
+    senaryRowTitle: "Diğer Oteller",
     senaryCountLabel: "otel",
-    septenaryDataFile: "data/gezi-oteller-1-yildiz.json",
-    septenaryRowTitle: "1 Yıldızlı Oteller",
-    septenaryCountLabel: "otel",
     includeSecondaryInNavigation: true,
     useDistrictCatalog: true,
     preferVenueBackedDistricts: true,
@@ -502,12 +501,7 @@ const CATEGORY_DEFINITIONS = {
       },
       {
         source: "senary",
-        title: "2 Yıldızlı Oteller",
-        countLabel: "otel",
-      },
-      {
-        source: "septenary",
-        title: "1 Yıldızlı Oteller",
+        title: "Diğer Oteller",
         countLabel: "otel",
       },
     ],
@@ -522,14 +516,14 @@ const CATEGORY_DEFINITIONS = {
       "camping",
       "kamping",
       "karavan",
+      "butik otel",
       "bungalov",
       "pansiyon",
       "konaklama",
       "5 yildizli otel",
       "4 yildizli otel",
       "3 yildizli otel",
-      "2 yildizli otel",
-      "1 yildizli otel",
+      "diger oteller",
       "otel",
       "hotel",
     ],
@@ -553,6 +547,8 @@ const CATEGORY_DEFINITIONS = {
     name: "Keyif",
     pageBase: "keyif",
     titleUnit: "meyhane",
+    dynamicTypeDataFile: "data/ktb-tesis-turleri-keyif.json",
+    dynamicTypeVenueDataFile: "data/ktb-tesis-kayitlari-keyif.json",
     primaryRowTitle: "Meyhaneler",
     dataFile: "data/keyif.json",
     secondaryDataFile: "data/keyif-restoran.json",
@@ -724,6 +720,7 @@ const ALL_PROVINCES = RAW_REGION_GROUPS.flatMap((group) => group.provinces);
 
 let allVenuesPromise = null;
 const categoryDataPromiseCache = new Map();
+const rawArrayDataPromiseCache = new Map();
 let districtMapPromise = null;
 
 function readFallbackData() {
@@ -928,9 +925,35 @@ function queryParams() {
     city: (url.searchParams.get("sehir") || url.searchParams.get("city") || "").trim(),
     district: (url.searchParams.get("ilce") || url.searchParams.get("district") || "").trim(),
     subcategorySource: (url.searchParams.get("tur") || url.searchParams.get("type") || "").trim(),
+    facilityType: (url.searchParams.get("tt") || url.searchParams.get("tesis") || url.searchParams.get("facilityType") || "").trim(),
     venueName: (url.searchParams.get("mekan") || url.searchParams.get("venue") || "").trim(),
     sourcePlaceId: (url.searchParams.get("pid") || "").trim(),
   };
+}
+
+function normalizeFacilityType(value) {
+  return normalizeForMatch(value).replace(/\s+/g, " ").trim();
+}
+
+function resolveVenueFacilityType(venue) {
+  return pickFirstText(venue?.sourceTesisTuru, venue?.type, venue?.cuisine);
+}
+
+function filterDynamicTypeVenues(venues, requestedType) {
+  const typeText = String(requestedType || "").trim();
+  if (!typeText) {
+    return [];
+  }
+
+  const normalizedRequestedType = normalizeFacilityType(typeText);
+  if (!normalizedRequestedType) {
+    return [];
+  }
+
+  return venues.filter((venue) => {
+    const venueType = normalizeFacilityType(resolveVenueFacilityType(venue));
+    return venueType === normalizedRequestedType;
+  });
 }
 
 function findNameMatch(queryValue, values) {
@@ -2173,6 +2196,31 @@ async function loadCategoryDataFile(dataFilePath) {
   return categoryDataPromiseCache.get(cacheKey);
 }
 
+async function loadRawArrayDataFile(dataFilePath) {
+  const cacheKey = String(dataFilePath || "").trim();
+  if (!cacheKey) {
+    return [];
+  }
+
+  if (!rawArrayDataPromiseCache.has(cacheKey)) {
+    const fallbackPayload = fallbackPayloadForDataFile(cacheKey);
+    if (Array.isArray(fallbackPayload)) {
+      rawArrayDataPromiseCache.set(cacheKey, Promise.resolve(fallbackPayload));
+      return rawArrayDataPromiseCache.get(cacheKey);
+    }
+
+    const promise = fetchJsonWithFallback(cacheKey, [])
+      .then((payload) => {
+        return Array.isArray(payload) ? payload : [];
+      })
+      .catch(() => []);
+
+    rawArrayDataPromiseCache.set(cacheKey, promise);
+  }
+
+  return rawArrayDataPromiseCache.get(cacheKey);
+}
+
 async function loadCategoryVenues(categoryKey) {
   const baseDefinition = CATEGORY_DEFINITIONS[categoryKey];
   const definition = baseDefinition ? { key: categoryKey, ...baseDefinition } : null;
@@ -2275,6 +2323,7 @@ function renderRootPage(
   senaryVenues = [],
   septenaryVenues = [],
   octonaryVenues = [],
+  dynamicTypeItems = [],
 ) {
   const groupGrid = document.querySelector("#categoryGroupGrid");
 
@@ -2333,6 +2382,39 @@ function renderRootPage(
       chip.setAttribute("aria-label", `${item.title} listesini aç`);
       chips.append(chip);
     });
+
+    if (Array.isArray(dynamicTypeItems) && dynamicTypeItems.length > 0) {
+      const dynamicRow = document.createElement("article");
+      dynamicRow.className = "province-row";
+      dynamicRow.style.gridTemplateColumns = "1fr";
+
+      const dynamicChips = document.createElement("div");
+      dynamicChips.className = "province-cities";
+
+      const sortedDynamicTypeItems = [...dynamicTypeItems].sort((left, right) => {
+        return String(left?.type || "").localeCompare(String(right?.type || ""), "tr");
+      });
+
+      sortedDynamicTypeItems.forEach((item) => {
+        const typeLabel = String(item?.type || "").trim();
+        const typeCount = Number(item?.count) || 0;
+        if (!typeLabel || typeCount <= 0) {
+          return;
+        }
+
+        const chip = document.createElement("a");
+        chip.className = "province-pill yemek-pill yemek-pill-link";
+        chip.href = `${definition.pageBase}-city.html?tur=dynamic&tt=${encodeURIComponent(typeLabel)}`;
+        chip.textContent = `${translateCategoryUiLabel(typeLabel)} (${typeCount})`;
+        chip.setAttribute("aria-label", `${typeLabel} için il listesini aç`);
+        dynamicChips.append(chip);
+      });
+
+      if (dynamicChips.childElementCount > 0) {
+        dynamicRow.append(dynamicChips);
+        groupGrid.append(dynamicRow);
+      }
+    }
 
     const categoryRootAdConfig = resolveCategoryRootAdConfig();
     const categoryRootAdCard = renderCategoryRootInlineAdCard(categoryRootAdConfig);
@@ -2408,18 +2490,24 @@ function renderCityPage(
   senaryVenues = [],
   septenaryVenues = [],
   octonaryVenues = [],
+  dynamicTypeVenues = [],
 ) {
   const cityTitle = document.querySelector("#categoryCityTitle");
   const cityBreadcrumb = document.querySelector("#categoryCityBreadcrumb");
   const districtGrid = document.querySelector("#categoryDistrictGrid");
-  const { city, subcategorySource: requestedSubcategorySource } = queryParams();
+  const { city, subcategorySource: requestedSubcategorySource, facilityType } = queryParams();
 
   if (!districtGrid) {
     return;
   }
 
   const subcategorySource = requestedSubcategorySource || "primary";
+  const dynamicTypeTitle = String(facilityType || "").trim() || "Resmi Tesis Türleri";
+  const filteredDynamicTypeVenues = filterDynamicTypeVenues(dynamicTypeVenues, facilityType);
   const subcategoryDefinition = (definition.districtLinkPages || []).find((item) => item.source === subcategorySource)
+    || (subcategorySource === "dynamic"
+      ? { title: dynamicTypeTitle }
+      : null)
     || { title: definition.primaryRowTitle || "Mekanlar" };
   const citySourceVenues = definition.rootSubcategoryFirst
     ? subcategorySource === "secondary"
@@ -2436,6 +2524,8 @@ function renderCityPage(
                 ? septenaryVenues
                 : subcategorySource === "octonary"
                   ? octonaryVenues
+                  : subcategorySource === "dynamic"
+                    ? filteredDynamicTypeVenues
                   : venues
     : venues;
 
@@ -2477,7 +2567,10 @@ function renderCityPage(
     cityNames.forEach((cityName) => {
       const chip = document.createElement("a");
       chip.className = "province-pill yemek-pill yemek-pill-link";
-      chip.href = `${definition.pageBase}-district.html?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(cityName)}`;
+      const facilityTypeQuery = subcategorySource === "dynamic" && facilityType
+        ? `&tt=${encodeURIComponent(facilityType)}`
+        : "";
+      chip.href = `${definition.pageBase}-district.html?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(cityName)}${facilityTypeQuery}`;
       const cityCount = cityVenueCounts.get(normalizeName(cityName)) || 0;
       chip.textContent = `${cityName} (${cityCount})`;
       chip.setAttribute("aria-label", `${cityName} ili ${subcategoryDefinition.title.toLocaleLowerCase("tr")} ilçelerini aç`);
@@ -2577,19 +2670,25 @@ function renderDistrictPage(
   senaryVenues = [],
   septenaryVenues = [],
   octonaryVenues = [],
+  dynamicTypeVenues = [],
   navigationVenues = venues,
 ) {
   const districtTitle = document.querySelector("#categoryDistrictTitle");
   const districtBreadcrumb = document.querySelector("#categoryDistrictBreadcrumb");
   const districtCityLink = document.querySelector("#categoryDistrictCityLink");
   const venueGrid = document.querySelector("#categoryVenueGrid");
-  const { subcategorySource: requestedSubcategorySource } = queryParams();
+  const { subcategorySource: requestedSubcategorySource, facilityType } = queryParams();
   if (!venueGrid) {
     return;
   }
 
   const subcategorySource = requestedSubcategorySource || "primary";
+  const dynamicTypeTitle = String(facilityType || "").trim() || "Resmi Tesis Türleri";
+  const filteredDynamicTypeVenues = filterDynamicTypeVenues(dynamicTypeVenues, facilityType);
   const subcategoryDefinition = (definition.districtLinkPages || []).find((item) => item.source === subcategorySource)
+    || (subcategorySource === "dynamic"
+      ? { title: dynamicTypeTitle }
+      : null)
     || { title: definition.primaryRowTitle || "Mekanlar" };
 
   if (definition.rootSubcategoryFirst) {
@@ -2607,6 +2706,8 @@ function renderDistrictPage(
                 ? septenaryVenues
                 : subcategorySource === "octonary"
                   ? octonaryVenues
+                  : subcategorySource === "dynamic"
+                    ? filteredDynamicTypeVenues
           : venues;
     const useDistrictCatalog = definition.useDistrictCatalog && hasUsableDistrictCatalog(districtMap);
     const { matchedCity } = resolveDistrictMatches(
@@ -2619,7 +2720,10 @@ function renderDistrictPage(
 
     if (districtCityLink) {
       districtCityLink.textContent = translateCategoryUiLabel(subcategoryDefinition.title);
-      districtCityLink.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}`;
+      const facilityTypeQuery = subcategorySource === "dynamic" && facilityType
+        ? `&tt=${encodeURIComponent(facilityType)}`
+        : "";
+      districtCityLink.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}${facilityTypeQuery}`;
     }
 
     if (districtBreadcrumb) {
@@ -2678,8 +2782,11 @@ function renderDistrictPage(
     districts.forEach((districtName) => {
       const chip = document.createElement("a");
       chip.className = "province-pill yemek-pill yemek-pill-link";
+      const facilityTypeQuery = subcategorySource === "dynamic" && facilityType
+        ? `&tt=${encodeURIComponent(facilityType)}`
+        : "";
       chip.href =
-        `${venuePagePath}?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(districtName)}`;
+        `${venuePagePath}?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(districtName)}${facilityTypeQuery}`;
       const districtCount = districtVenueCounts.get(normalizeName(districtName)) || 0;
       chip.textContent = `${districtName} (${districtCount})`;
       chip.setAttribute("aria-label", `${districtName} ilçesindeki ${subcategoryDefinition.title.toLocaleLowerCase("tr")} listesini aç`);
@@ -3053,11 +3160,17 @@ function renderDistrictSubcategoryPage(
   senaryVenues = [],
   septenaryVenues = [],
   octonaryVenues = [],
+  dynamicTypeVenues = [],
   navigationVenues = venues,
 ) {
   const body = document.body;
-  const requestedSubcategorySource = queryParams().subcategorySource;
+  const { subcategorySource: requestedSubcategorySource, facilityType } = queryParams();
   const subcategorySource = String(requestedSubcategorySource || body?.dataset?.subcategorySource || "primary").trim();
+  const facilityTypeQuery = subcategorySource === "dynamic" && facilityType
+    ? `&tt=${encodeURIComponent(facilityType)}`
+    : "";
+  const dynamicTypeTitle = String(facilityType || "").trim() || "Resmi Tesis Türleri";
+  const filteredDynamicTypeVenues = filterDynamicTypeVenues(dynamicTypeVenues, facilityType);
   const pageTitle = document.querySelector("#categorySubcategoryTitle");
   const cityLink = document.querySelector("#categorySubcategoryCityLink");
   const districtLink = document.querySelector("#categorySubcategoryDistrictLink");
@@ -3080,7 +3193,7 @@ function renderDistrictSubcategoryPage(
   if (cityLink) {
     cityLink.textContent = matchedCity || "İl";
     if (definition.rootSubcategoryFirst) {
-      cityLink.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}`;
+      cityLink.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}${facilityTypeQuery}`;
     } else {
       cityLink.href = matchedCity
         ? `${definition.pageBase}-city.html?sehir=${encodeURIComponent(matchedCity)}`
@@ -3092,8 +3205,8 @@ function renderDistrictSubcategoryPage(
     districtLink.textContent = matchedDistrict || "İlçe";
     if (definition.rootSubcategoryFirst) {
       districtLink.href = matchedCity
-        ? `${definition.pageBase}-district.html?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(matchedCity)}`
-        : `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}`;
+        ? `${definition.pageBase}-district.html?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(matchedCity)}${facilityTypeQuery}`
+        : `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}${facilityTypeQuery}`;
     } else {
       districtLink.href = matchedCity && matchedDistrict
         ? `${definition.pageBase}-district.html?sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(matchedDistrict)}`
@@ -3134,6 +3247,8 @@ function renderDistrictSubcategoryPage(
         ? septenaryVenues
       : subcategorySource === "octonary"
         ? octonaryVenues
+      : subcategorySource === "dynamic"
+        ? filteredDynamicTypeVenues
       : venues;
   const districtVenues = dedupeByName(
     sourceVenues.filter((venue) => {
@@ -3141,6 +3256,9 @@ function renderDistrictSubcategoryPage(
     }),
   );
   const subcategoryDefinition = (definition.districtLinkPages || []).find((item) => item.source === subcategorySource)
+    || (subcategorySource === "dynamic"
+      ? { title: dynamicTypeTitle }
+      : null)
     || (subcategorySource === "secondary"
       ? { title: definition.secondaryRowTitle || "Mekanlar" }
       : { title: definition.primaryRowTitle || "Mekanlar" });
@@ -3209,9 +3327,11 @@ async function initCategoryPage() {
 
   const loadPrimaryVenues =
     pageType === "district"
+    || pageType === "city"
+    || pageType === "district-links"
     || (requiresVenueBackedNavigation && Boolean(definition.dataFile))
     || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.dataFile))
-    || (!canUseDistrictCatalog && (pageType === "root" || pageType === "city" || pageType === "district-links"))
+    || (!canUseDistrictCatalog && pageType === "root")
     || (pageType === "district-subcategory" && (subcategorySource === "primary" || !canUseDistrictCatalog));
 
   const loadSecondaryVenues =
@@ -3233,22 +3353,27 @@ async function initCategoryPage() {
     || (pageType === "district-subcategory" && subcategorySource === "quaternary");
 
   const loadQuinaryVenues =
-    (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.quinaryDataFile))
+    (pageType === "district" && Boolean(definition.quinaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.quinaryDataFile))
     || (requiresVenueBackedNavigation && Boolean(definition.quinaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "quinary");
   const loadSenaryVenues =
-    (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.senaryDataFile))
+    (pageType === "district" && Boolean(definition.senaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.senaryDataFile))
     || (requiresVenueBackedNavigation && Boolean(definition.senaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "senary");
   const loadSeptenaryVenues =
-    (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.septenaryDataFile))
+    (pageType === "district" && Boolean(definition.septenaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.septenaryDataFile))
     || (requiresVenueBackedNavigation && Boolean(definition.septenaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "septenary");
   const loadOctonaryVenues =
-    (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.octonaryDataFile))
+    (pageType === "district" && Boolean(definition.octonaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.octonaryDataFile))
     || (requiresVenueBackedNavigation && Boolean(definition.octonaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "octonary");
-
+  const loadDynamicTypeItems =
+    pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.dynamicTypeDataFile);
   const venues = loadPrimaryVenues ? await loadCategoryVenues(categoryKey) : [];
   const secondaryVenues = loadSecondaryVenues && definition.secondaryDataFile
     ? await loadCategoryDataFile(definition.secondaryDataFile)
@@ -3270,6 +3395,14 @@ async function initCategoryPage() {
     : [];
   const octonaryVenues = loadOctonaryVenues && definition.octonaryDataFile
     ? await loadCategoryDataFile(definition.octonaryDataFile)
+    : [];
+  const dynamicTypeItems = loadDynamicTypeItems && definition.dynamicTypeDataFile
+    ? (await loadRawArrayDataFile(definition.dynamicTypeDataFile))
+      .map((item) => ({
+        type: String(item?.type || "").trim(),
+        count: Number(item?.count) || 0,
+      }))
+      .filter((item) => item.type && item.count > 0)
     : [];
   const navigationVenues = definition.includeSecondaryInNavigation
     ? dedupeVenues([
@@ -3296,6 +3429,7 @@ async function initCategoryPage() {
       senaryVenues,
       septenaryVenues,
       octonaryVenues,
+      dynamicTypeItems,
     );
     return;
   }

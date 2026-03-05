@@ -1,19 +1,121 @@
 {
-  "startedAt": "2026-03-05T14:46:47.611Z",
-  "finishedAt": "2026-03-05T14:46:57.443Z",
-  "baseUrl": "https://www.neredekal.com/tema/butik-oteller/",
-  "requestedMaxPages": 200,
-  "plannedPages": 50,
-  "fetchedPages": 50,
-  "failedPages": 0,
-  "rawCount": 1250,
-  "uniqueCount": 1250,
-  "estimatedTotalPages": 72,
-  "platformPageLimit": 50,
-  "firstPageTotalCount": 1779,
-  "firstPageMaxPageLimit": 50,
+  "startedAt": "2026-03-05T16:21:42.965Z",
+  "finishedAt": "2026-03-05T16:21:47.598Z",
+  "sourceUrl": "https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr",
+  "sourceTotalCount": 25106,
+  "selectedBeforeDedupe": 229,
+  "firstPassDedupeCount": 229,
+  "numericVariantCollapsedGroups": 2,
+  "numericVariantRemovedCount": 14,
+  "selectedByType": 153,
+  "selectedByNamePlusType": 76,
+  "uniqueCount": 215,
+  "typeCount": 32,
+  "minDynamicTypeCount": 5,
+  "keyifTypeCount": 2,
+  "geziTypeCount": 30,
+  "keyifTypeSample": [
+    {
+      "type": "Lokanta",
+      "count": 293
+    },
+    {
+      "type": "Müstakil Eğlence Yeri",
+      "count": 24
+    }
+  ],
+  "geziTypeSample": [
+    {
+      "type": "Apart Otel",
+      "count": 1528
+    },
+    {
+      "type": "Butik Otel",
+      "count": 152
+    },
+    {
+      "type": "Camping",
+      "count": 329
+    },
+    {
+      "type": "Çiftlik Evi-köy Evi",
+      "count": 5
+    },
+    {
+      "type": "Dağ Evi",
+      "count": 8
+    },
+    {
+      "type": "Gastronomi Tesisi",
+      "count": 572
+    },
+    {
+      "type": "Günübirlik Tesis",
+      "count": 101
+    },
+    {
+      "type": "Kırsal Turizm Tesisi",
+      "count": 66
+    },
+    {
+      "type": "Kış Sporları Mekanik Tesisi",
+      "count": 14
+    },
+    {
+      "type": "Konaklama Amaçlı Mesire Yeri",
+      "count": 7
+    },
+    {
+      "type": "Konaklamalı Orman Parkı",
+      "count": 5
+    },
+    {
+      "type": "Kongre Ve Sergi Merkezi",
+      "count": 6
+    },
+    {
+      "type": "Mola Noktası",
+      "count": 13
+    },
+    {
+      "type": "Motel",
+      "count": 270
+    },
+    {
+      "type": "Otel",
+      "count": 10008
+    },
+    {
+      "type": "Otel, Golf Tesisi",
+      "count": 7
+    },
+    {
+      "type": "Otel, Otel",
+      "count": 12
+    },
+    {
+      "type": "Otel, Tatil Köyü",
+      "count": 6
+    },
+    {
+      "type": "Özel Konaklama Tesisi",
+      "count": 668
+    },
+    {
+      "type": "Özel Tesis",
+      "count": 420
+    }
+  ],
+  "cityCount": 42,
+  "cityDistrictCount": 97,
   "outputFiles": [
     "/Users/metintuncgenc/Documents/aramabul/data/gezi-butik-oteller.json",
-    "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-butik-oteller.json"
+    "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-butik-oteller.json",
+    "/Users/metintuncgenc/Documents/aramabul/data/ktb-tesis-turleri.json",
+    "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/ktb-tesis-turleri.json",
+    "/Users/metintuncgenc/Documents/aramabul/data/ktb-tesis-turleri-keyif.json",
+    "/Users/metintuncgenc/Documents/aramabul/data/ktb-tesis-turleri-gezi.json",
+    "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/ktb-tesis-turleri-keyif.json",
+    "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/ktb-tesis-turleri-gezi.json"
   ]
 }

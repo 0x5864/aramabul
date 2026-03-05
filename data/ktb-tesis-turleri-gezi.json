@@ -1,0 +1,122 @@
+[
+  {
+    "type": "Apart Otel",
+    "count": 1524
+  },
+  {
+    "type": "Butik Otel",
+    "count": 1402
+  },
+  {
+    "type": "Camping",
+    "count": 327
+  },
+  {
+    "type": "Çiftlik Evi-köy Evi",
+    "count": 5
+  },
+  {
+    "type": "Dağ Evi",
+    "count": 8
+  },
+  {
+    "type": "Gastronomi Tesisi",
+    "count": 571
+  },
+  {
+    "type": "Günübirlik Tesis",
+    "count": 101
+  },
+  {
+    "type": "Kırsal Turizm Tesisi",
+    "count": 65
+  },
+  {
+    "type": "Kış Sporları Mekanik Tesisi",
+    "count": 13
+  },
+  {
+    "type": "Konaklama Amaçlı Mesire Yeri",
+    "count": 7
+  },
+  {
+    "type": "Konaklamalı Orman Parkı",
+    "count": 5
+  },
+  {
+    "type": "Kongre Ve Sergi Merkezi",
+    "count": 6
+  },
+  {
+    "type": "Mola Noktası",
+    "count": 13
+  },
+  {
+    "type": "Motel",
+    "count": 269
+  },
+  {
+    "type": "Otel",
+    "count": 9937
+  },
+  {
+    "type": "Otel, Golf Tesisi",
+    "count": 7
+  },
+  {
+    "type": "Otel, Otel",
+    "count": 12
+  },
+  {
+    "type": "Otel, Tatil Köyü",
+    "count": 6
+  },
+  {
+    "type": "Özel Konaklama Tesisi",
+    "count": 666
+  },
+  {
+    "type": "Özel Tesis",
+    "count": 418
+  },
+  {
+    "type": "Pansiyon",
+    "count": 9320
+  },
+  {
+    "type": "Plaj",
+    "count": 796
+  },
+  {
+    "type": "Rıhtım Ve İskele",
+    "count": 7
+  },
+  {
+    "type": "Tatil Köyü",
+    "count": 85
+  },
+  {
+    "type": "Tatil Köyü, Otel",
+    "count": 6
+  },
+  {
+    "type": "Termal Tesis",
+    "count": 5
+  },
+  {
+    "type": "Yat Çekek Yeri",
+    "count": 5
+  },
+  {
+    "type": "Yat Limanı",
+    "count": 34
+  },
+  {
+    "type": "Yat Yanaşma Yeri",
+    "count": 10
+  },
+  {
+    "type": "Yüzer Deniz Turizmi Araçları (kendinden Hareket Kabiliyeti Olan Yüzer Deniz Turizmi Araçları)",
+    "count": 38
+  }
+]
