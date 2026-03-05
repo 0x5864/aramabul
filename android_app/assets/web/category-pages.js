@@ -522,7 +522,7 @@ const CATEGORY_DEFINITIONS = {
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
-    districtLinkHeading: "Mekan Türleri",
+    districtLinkHeading: "Keyif Türleri",
     subcategoryVenuePagePath: "keyif-mekanlar.html",
     districtLinkPages: [
       {
