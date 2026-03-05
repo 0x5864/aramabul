@@ -7,6 +7,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 const ANDROID_DATA_DIR = path.join(ROOT, "android_app", "assets", "web", "data");
 const SOURCE_URL = "https://www.ktb.gov.tr/genel/searchhotelgenel.aspx?lang=tr";
+const LEGACY_PANSIYON_FILE = "ktb-pansiyon-ek-kayitlari.json";
 
 const OUTPUT_FILES = {
   geziVenues: "ktb-tesis-kayitlari-gezi.json",
@@ -18,6 +19,7 @@ const OUTPUT_FILES = {
 };
 
 const MIN_TYPE_COUNT = Number.parseInt(process.env.KTB_MIN_DYNAMIC_TYPE_COUNT || "5", 10);
+const MIN_NUMERIC_CLUSTER_SIZE = Number.parseInt(process.env.KTB_MIN_NUMERIC_CLUSTER_SIZE || "3", 10);
 const DRY_RUN = process.argv.includes("--dry-run");
 
 const TURKISH_ASCII_MAP = {
@@ -69,12 +71,14 @@ function toTitleCaseTr(value) {
 function normalizeTypeName(value) {
   const raw = normalizeText(value);
   const normalized = normalizeForMatch(raw);
+  const normalizedRule = normalizeTypeForRule(raw);
   if (!raw || !normalized) {
     return "";
   }
 
   const compact = normalized.replace(/\s+/g, " ");
   if (compact === "OTEL" || compact === "HOTEL") return "Otel";
+  if (compact === "OTEL, OTEL" || normalizedRule === "OTEL OTEL") return "Otel";
   if (compact === "PANSIYON") return "Pansiyon";
   if (compact === "APART OTEL") return "Apart Otel";
   if (compact === "BUTIK OTEL") return "Butik Otel";
@@ -217,6 +221,206 @@ function dedupeVenues(venues) {
   });
 }
 
+function stripTypeWordsFromName(value) {
+  return normalizeForMatch(value)
+    .replace(
+      /\b(PANSIYON|OTEL|HOTEL|APART|APART OTEL|KONAK|RESIDENCE|RESIDANCE|BUNGALOV|CAMPING|KAMPING)\b/g,
+      " "
+    )
+    .replace(/[^A-Z0-9 ]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getVenueCompletenessScore(venue) {
+  const fields = ["address", "phone", "website", "mapsUrl", "postalCode", "neighborhood", "photoUrl"];
+  return fields.reduce((score, field) => {
+    return score + (normalizeText(venue[field]).length > 0 ? 1 : 0);
+  }, 0);
+}
+
+function choosePreferredVenue(left, right) {
+  const leftIsKtb = normalizeText(left.source).toLowerCase() === "ktb";
+  const rightIsKtb = normalizeText(right.source).toLowerCase() === "ktb";
+  if (leftIsKtb !== rightIsKtb) {
+    return leftIsKtb ? left : right;
+  }
+
+  const leftScore = getVenueCompletenessScore(left);
+  const rightScore = getVenueCompletenessScore(right);
+  if (leftScore !== rightScore) {
+    return leftScore > rightScore ? left : right;
+  }
+
+  const leftNameLength = normalizeText(left.name).length;
+  const rightNameLength = normalizeText(right.name).length;
+  return leftNameLength >= rightNameLength ? left : right;
+}
+
+function dedupePansiyonConflicts(venues) {
+  const nonPansiyon = [];
+  const pansiyonGroups = new Map();
+
+  venues.forEach((venue) => {
+    const type = normalizeForMatch(venue.sourceTesisTuru || venue.cuisine);
+    if (type !== "PANSIYON") {
+      nonPansiyon.push(venue);
+      return;
+    }
+
+    const key = [
+      normalizeForMatch(venue.city),
+      normalizeForMatch(venue.district),
+      stripTypeWordsFromName(venue.name),
+    ].join("|");
+    const finalKey = key.endsWith("|") ? `${key}${normalizeForMatch(venue.name)}` : key;
+    const current = pansiyonGroups.get(finalKey);
+    if (!current) {
+      pansiyonGroups.set(finalKey, venue);
+      return;
+    }
+    pansiyonGroups.set(finalKey, choosePreferredVenue(current, venue));
+  });
+
+  return dedupeVenues([...nonPansiyon, ...pansiyonGroups.values()]);
+}
+
+function stripCampingWordsFromName(value) {
+  return normalizeForMatch(value)
+    .replace(/\b(CAMPING|KAMPING|KAMPINGI|KAMP ALANI|CAMP)\b/g, " ")
+    .replace(/[^A-Z0-9 ]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function dedupeCampingConflicts(venues) {
+  const nonCamping = [];
+  const campingGroups = new Map();
+  const campingGroupCounts = new Map();
+
+  venues.forEach((venue) => {
+    const type = normalizeForMatch(venue.sourceTesisTuru || venue.cuisine);
+    if (type !== "CAMPING") {
+      nonCamping.push(venue);
+      return;
+    }
+
+    const keyCore = stripCampingWordsFromName(venue.name);
+    const key = [
+      normalizeForMatch(venue.city),
+      normalizeForMatch(venue.district),
+      keyCore || normalizeForMatch(venue.name),
+    ].join("|");
+    campingGroupCounts.set(key, (campingGroupCounts.get(key) || 0) + 1);
+
+    const current = campingGroups.get(key);
+    if (!current) {
+      campingGroups.set(key, venue);
+      return;
+    }
+    campingGroups.set(key, choosePreferredVenue(current, venue));
+  });
+
+  let clusterCount = 0;
+  let removedCount = 0;
+  campingGroupCounts.forEach((count) => {
+    if (count > 1) {
+      clusterCount += 1;
+      removedCount += count - 1;
+    }
+  });
+  const deduped = dedupeVenues([...nonCamping, ...campingGroups.values()]);
+
+  return {
+    venues: deduped,
+    clusterCount,
+    removedCount,
+  };
+}
+
+function stripTrailingUnitNumber(value) {
+  return normalizeText(value).replace(/\s*[-–]?\s*\d+[A-Za-zÇĞİIÖŞÜçğıöşü]?\s*$/u, "").trim();
+}
+
+function hasNumericSuffix(value) {
+  const text = normalizeText(value);
+  return stripTrailingUnitNumber(text) !== text;
+}
+
+function hasContactDetail(venue) {
+  const fields = ["phone", "website", "mapsUrl", "postalCode", "neighborhood", "photoUrl"];
+  return fields.some((field) => normalizeText(venue[field]).length > 0);
+}
+
+function dedupeNumericSuffixClusters(venues) {
+  const groups = new Map();
+  const passthrough = [];
+  let removedCount = 0;
+
+  venues.forEach((venue) => {
+    const type = normalizeText(venue.sourceTesisTuru || venue.cuisine);
+    const baseName = stripTrailingUnitNumber(venue.name);
+    if (!type || !baseName || !hasNumericSuffix(venue.name)) {
+      passthrough.push(venue);
+      return;
+    }
+
+    const key = [
+      normalizeForMatch(venue.city),
+      normalizeForMatch(venue.district),
+      normalizeForMatch(type),
+      normalizeForMatch(baseName),
+    ].join("|");
+    if (!groups.has(key)) {
+      groups.set(key, []);
+    }
+    groups.get(key).push({ venue });
+  });
+
+  const merged = [];
+  groups.forEach((entries) => {
+    const eligible = entries.length >= MIN_NUMERIC_CLUSTER_SIZE
+      && entries.every(({ venue }) => normalizeText(venue.source).toLowerCase() === "ktb")
+      && entries.every(({ venue }) => !hasContactDetail(venue));
+
+    if (!eligible) {
+      entries.forEach(({ venue }) => {
+        passthrough.push(venue);
+      });
+      return;
+    }
+    removedCount += entries.length - 1;
+
+    const chosen = entries
+      .map((item) => item.venue)
+      .sort((left, right) => {
+        const scoreDiff = getVenueCompletenessScore(right) - getVenueCompletenessScore(left);
+        if (scoreDiff !== 0) return scoreDiff;
+        const nameDiff = normalizeText(left.name).length - normalizeText(right.name).length;
+        if (nameDiff !== 0) return nameDiff;
+        return normalizeText(left.name).localeCompare(normalizeText(right.name), "tr");
+      })[0];
+
+    const mergedBelgeNos = entries
+      .map(({ venue }) => normalizeText(venue.sourceBelgeNo))
+      .filter(Boolean)
+      .sort((left, right) => left.localeCompare(right, "tr"));
+    const baseName = stripTrailingUnitNumber(chosen.name) || chosen.name;
+    merged.push({
+      ...chosen,
+      name: baseName,
+      sourceBelgeNo: mergedBelgeNos[0] || chosen.sourceBelgeNo,
+      editorialSummary: `KTB resmi tesis kaydından (searchhotelgenel) eklendi. ${entries.length} adet numaralı alt kayıt tekilleştirildi.`,
+    });
+  });
+
+  return {
+    venues: dedupeVenues([...passthrough, ...merged]),
+    clusterCount: merged.length,
+    removedCount,
+  };
+}
+
 function buildTypeSummary(venues) {
   const map = new Map();
   venues.forEach((venue) => {
@@ -239,6 +443,61 @@ function writeJson(baseDir, fileName, payload) {
   const filePath = path.join(baseDir, fileName);
   ensureParentDir(filePath);
   fs.writeFileSync(filePath, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
+}
+
+function loadLegacyPansiyonVenues(filePath) {
+  if (!fs.existsSync(filePath)) {
+    process.stdout.write(`[ktb-katman] legacy pansiyon dosyasi bulunamadi: ${filePath}\n`);
+    return [];
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  } catch (error) {
+    process.stdout.write(`[ktb-katman] legacy pansiyon dosyasi okunamadi: ${String(error.message || error)}\n`);
+    return [];
+  }
+
+  if (!Array.isArray(parsed)) {
+    process.stdout.write("[ktb-katman] legacy pansiyon dosya formati gecersiz, dizi bekleniyordu.\n");
+    return [];
+  }
+
+  return parsed
+    .map((item) => {
+      const city = toTitleCaseTr(item.city);
+      const district = toTitleCaseTr(item.district) || "Merkez";
+      const name = normalizeText(item.name);
+      if (!city || !district || !name) {
+        return null;
+      }
+
+      const address = normalizeText(item.address) || [district, city, "Türkiye"].join(", ");
+      return {
+        city,
+        district,
+        name,
+        cuisine: "Pansiyon",
+        address,
+        neighborhood: normalizeText(item.neighborhood),
+        postalCode: normalizeText(item.postalCode),
+        mapsUrl: normalizeText(item.mapsUrl),
+        website: normalizeText(item.website),
+        phone: normalizeText(item.phone),
+        photoUrl: normalizeText(item.photoUrl),
+        editorialSummary:
+          normalizeText(item.editorialSummary) || "Legacy pansiyon kaydindan resmi Pansiyon turune aktarildi.",
+        sourcePlaceId: normalizeText(item.sourcePlaceId),
+        source: "legacy-pansiyon",
+        sourceTesisTuru: "Pansiyon",
+        sourceBelgeNo: "",
+        sourceBelgeTuru: "",
+        sourceBelgeDurumu: "",
+        sourceTesisSinifi: "",
+      };
+    })
+    .filter(Boolean);
 }
 
 async function fetchSourceHtml() {
@@ -269,13 +528,20 @@ async function main() {
     .map((record) => buildVenueFromRecord(record))
     .filter(Boolean);
   const dedupedAllVenues = dedupeVenues(mappedVenues);
+  const legacyPansiyonVenues = loadLegacyPansiyonVenues(path.join(DATA_DIR, LEGACY_PANSIYON_FILE));
 
-  const geziVenues = dedupedAllVenues.filter((venue) => !isKeyifType(venue.sourceTesisTuru));
+  const geziVenuesFromKtb = dedupedAllVenues.filter((venue) => !isKeyifType(venue.sourceTesisTuru));
   const keyifVenues = dedupedAllVenues.filter((venue) => isKeyifType(venue.sourceTesisTuru));
+  const geziVenuesWithLegacy = dedupeVenues([...geziVenuesFromKtb, ...legacyPansiyonVenues]);
+  const geziVenuesAfterPansiyon = dedupePansiyonConflicts(geziVenuesWithLegacy);
+  const campingDedupe = dedupeCampingConflicts(geziVenuesAfterPansiyon);
+  const numericSuffixDedupe = dedupeNumericSuffixClusters(campingDedupe.venues);
+  const geziVenues = numericSuffixDedupe.venues;
+  const allVenuesWithLegacy = dedupeVenues([...geziVenues, ...keyifVenues]);
 
   const geziTypes = buildTypeSummary(geziVenues);
   const keyifTypes = buildTypeSummary(keyifVenues);
-  const allTypes = buildTypeSummary(dedupedAllVenues);
+  const allTypes = buildTypeSummary(allVenuesWithLegacy);
 
   const report = {
     startedAt,
@@ -285,6 +551,11 @@ async function main() {
     sourceCount: records.length,
     mappedCount: mappedVenues.length,
     dedupedAllCount: dedupedAllVenues.length,
+    legacyPansiyonCount: legacyPansiyonVenues.length,
+    campingClusterCount: campingDedupe.clusterCount,
+    campingClusterRemovedCount: campingDedupe.removedCount,
+    numericClusterCount: numericSuffixDedupe.clusterCount,
+    numericClusterRemovedCount: numericSuffixDedupe.removedCount,
     geziCount: geziVenues.length,
     keyifCount: keyifVenues.length,
     geziTypeCount: geziTypes.length,

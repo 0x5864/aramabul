@@ -11,7 +11,7 @@ const REPORT_FILE = path.join(DATA_DIR, "ktb-mevcut-alt-kategori-ekleme-raporu.j
 
 const TARGET_FILES = {
   geziKamp: "gezi-kamp-alanlari.json",
-  geziPansiyon: "gezi-pansiyonlar.json",
+  geziPansiyon: "ktb-pansiyon-ek-kayitlari.json",
   gezi5: "gezi-oteller-5-yildiz.json",
   gezi4: "gezi-oteller-4-yildiz.json",
   gezi3: "gezi-oteller-3-yildiz.json",

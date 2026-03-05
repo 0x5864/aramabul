@@ -1,9 +1,15 @@
-const ASSET_VERSION = "20260301-02";
+const ASSET_VERSION = "20260305-03";
 const CATEGORY_VENUES_JSON_PATH = "data/venues.json";
 const DISTRICTS_JSON_PATH = "data/districts.json";
 const DISTRICT_INLINE_AD_INSERT_AFTER = 6;
 const DISTRICT_INLINE_AD_SCRIPT_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
 const DISTRICT_INLINE_AD_CONFIG_SCRIPT_PATH = "ads-config.js";
+const LEGACY_SEYAHAT_HOTEL_DATA_FILES = Object.freeze([
+  "data/gezi-oteller-5-yildiz.json",
+  "data/gezi-oteller-4-yildiz.json",
+  "data/gezi-oteller-3-yildiz.json",
+  "data/gezi-oteller-diger.json",
+]);
 const runtime = window.ARAMABUL_RUNTIME;
 const FALLBACK_SCRIPTS = Object.freeze({
   data: "data/fallback-data.js?v=20260302-01",
@@ -352,6 +358,147 @@ function resolveVenueFacilityType(venue) {
   return pickFirstText(venue?.sourceTesisTuru, venue?.type, venue?.cuisine);
 }
 
+function isCampingFacilityType(value) {
+  const normalized = normalizeFacilityType(value);
+  return normalized === "camping" || normalized === "kamping" || normalized === "kamp alani";
+}
+
+function isHotelFacilityType(value) {
+  const normalized = normalizeFacilityType(value);
+  return normalized === "otel" || normalized === "hotel";
+}
+
+function mapLegacyCampingVenueToDynamicVenue(venue) {
+  return {
+    ...venue,
+    cuisine: "Camping",
+    sourceTesisTuru: "Camping",
+    source: pickFirstText(venue?.source, "legacy-camping"),
+  };
+}
+
+function mapLegacyHotelVenueToDynamicVenue(venue) {
+  return {
+    ...venue,
+    cuisine: "Otel",
+    sourceTesisTuru: "Otel",
+    source: pickFirstText(venue?.source, "legacy-hotel"),
+  };
+}
+
+function stripDynamicNameNumericSuffix(value) {
+  const raw = String(value || "").trim();
+  if (!raw) {
+    return "";
+  }
+
+  const compact = raw
+    .replace(/(?:[\s-]+)\d{3,6}$/u, "")
+    .replace(/([A-Za-zÇĞİIÖŞÜçğıöşü])\d{3,6}$/u, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+  return compact || raw;
+}
+
+function dynamicVenueLocalityKey(venue) {
+  const cityKey = normalizeName(venue?.city);
+  const districtKey = normalizeName(venue?.district);
+  if (cityKey && districtKey) {
+    return `${cityKey}:${districtKey}`;
+  }
+  return cityKey || districtKey || "_";
+}
+
+function buildDynamicVenueNameSetByLocality(venues) {
+  const namesByLocality = new Map();
+
+  venues.forEach((venue) => {
+    const localityKey = dynamicVenueLocalityKey(venue);
+    const rawNameKey = normalizeName(venue?.name);
+    if (!rawNameKey) {
+      return;
+    }
+
+    const existing = namesByLocality.get(localityKey);
+    if (existing) {
+      existing.add(rawNameKey);
+      return;
+    }
+
+    namesByLocality.set(localityKey, new Set([rawNameKey]));
+  });
+
+  return namesByLocality;
+}
+
+function resolveDynamicVenueNameKey(venue, namesByLocality) {
+  const rawNameKey = normalizeName(venue?.name);
+  if (!rawNameKey) {
+    return "";
+  }
+
+  const strippedNameKey = normalizeName(stripDynamicNameNumericSuffix(venue?.name));
+  if (!strippedNameKey || strippedNameKey === rawNameKey) {
+    return rawNameKey;
+  }
+
+  const localityKey = dynamicVenueLocalityKey(venue);
+  const localityNames = namesByLocality.get(localityKey);
+  if (localityNames && localityNames.has(strippedNameKey)) {
+    return strippedNameKey;
+  }
+
+  return rawNameKey;
+}
+
+function scoreDynamicVenueForDedupe(venue, canonicalNameKey) {
+  const rawNameKey = normalizeName(venue?.name);
+  let score = venueInfoRichnessScore(venue);
+
+  if (rawNameKey && rawNameKey === canonicalNameKey) {
+    score += 100;
+  }
+
+  if (!/\d{3,6}\s*$/u.test(String(venue?.name || "").trim())) {
+    score += 2;
+  }
+
+  return score;
+}
+
+function dedupeDynamicTypeVenues(venues) {
+  if (!Array.isArray(venues) || venues.length === 0) {
+    return [];
+  }
+
+  const namesByLocality = buildDynamicVenueNameSetByLocality(venues);
+  const bestByKey = new Map();
+
+  venues.forEach((venue) => {
+    const canonicalNameKey = resolveDynamicVenueNameKey(venue, namesByLocality);
+    if (!canonicalNameKey) {
+      return;
+    }
+
+    const localityKey = dynamicVenueLocalityKey(venue);
+    const identityKey = `${localityKey}:${canonicalNameKey}`;
+    const existing = bestByKey.get(identityKey);
+
+    if (!existing) {
+      bestByKey.set(identityKey, venue);
+      return;
+    }
+
+    const existingScore = scoreDynamicVenueForDedupe(existing, canonicalNameKey);
+    const candidateScore = scoreDynamicVenueForDedupe(venue, canonicalNameKey);
+    if (candidateScore > existingScore) {
+      bestByKey.set(identityKey, venue);
+    }
+  });
+
+  return [...bestByKey.values()];
+}
+
 function filterDynamicTypeVenues(venues, requestedType) {
   const typeText = String(requestedType || "").trim();
   if (!typeText) {
@@ -363,10 +510,12 @@ function filterDynamicTypeVenues(venues, requestedType) {
     return [];
   }
 
-  return venues.filter((venue) => {
+  const filtered = venues.filter((venue) => {
     const venueType = normalizeFacilityType(resolveVenueFacilityType(venue));
     return venueType === normalizedRequestedType;
   });
+
+  return dedupeDynamicTypeVenues(filtered);
 }
 
 function findNameMatch(queryValue, values) {
@@ -564,59 +713,12 @@ const CATEGORY_DEFINITIONS = {
     dynamicTypeVenueDataFile: "data/ktb-tesis-kayitlari-gezi.json",
     primaryRowTitle: "Kamp Alanları",
     dataFile: "data/gezi-kamp-alanlari.json",
-    secondaryDataFile: "data/gezi-pansiyonlar.json",
-    secondaryRowTitle: "Pansiyonlar",
-    secondaryCountLabel: "pansiyon",
-    tertiaryDataFile: "data/gezi-oteller-5-yildiz.json",
-    tertiaryRowTitle: "5 Yıldızlı Oteller",
-    tertiaryCountLabel: "otel",
-    quaternaryDataFile: "data/gezi-oteller-4-yildiz.json",
-    quaternaryRowTitle: "4 Yıldızlı Oteller",
-    quaternaryCountLabel: "otel",
-    quinaryDataFile: "data/gezi-oteller-3-yildiz.json",
-    quinaryRowTitle: "3 Yıldızlı Oteller",
-    quinaryCountLabel: "otel",
-    senaryDataFile: "data/gezi-oteller-diger.json",
-    senaryRowTitle: "Diğer Oteller",
-    senaryCountLabel: "otel",
-    includeSecondaryInNavigation: true,
     useDistrictCatalog: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
     districtLinkHeading: "Gezi alt kategorileri",
     subcategoryVenuePagePath: "gezi-mekanlar.html",
-    districtLinkPages: [
-      {
-        source: "primary",
-        title: "Kamp Alanları",
-        countLabel: "kamp alanı",
-      },
-      {
-        source: "secondary",
-        title: "Pansiyonlar",
-        countLabel: "pansiyon",
-      },
-      {
-        source: "tertiary",
-        title: "5 Yıldızlı Oteller",
-        countLabel: "otel",
-      },
-      {
-        source: "quaternary",
-        title: "4 Yıldızlı Oteller",
-        countLabel: "otel",
-      },
-      {
-        source: "quinary",
-        title: "3 Yıldızlı Oteller",
-        countLabel: "otel",
-      },
-      {
-        source: "senary",
-        title: "Diğer Oteller",
-        countLabel: "otel",
-      },
-    ],
+    districtLinkPages: [],
     matcherKeywords: [
       "gezi",
       "seyahat",
@@ -2455,9 +2557,12 @@ function renderRootPage(
 
   groupGrid.innerHTML = "";
 
-  if (definition.rootSubcategoryFirst && Array.isArray(definition.districtLinkPages) && definition.districtLinkPages.length > 0) {
+  if (definition.rootSubcategoryFirst) {
     const row = document.createElement("article");
     row.className = "province-row";
+    const staticDistrictLinkPages = Array.isArray(definition.districtLinkPages)
+      ? definition.districtLinkPages
+      : [];
 
     const headingStack = document.createElement("div");
     headingStack.className = "province-heading-stack";
@@ -2470,7 +2575,8 @@ function renderRootPage(
       translateCategoryUiLabel(String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler");
     const pageHeading = document.querySelector(".section-head.province-head h3");
     const pageHeadingText = pageHeading ? String(pageHeading.textContent || "").trim() : "";
-    const shouldRenderRowTitle = normalizeName(pageHeadingText) !== normalizeName(rowHeadingText);
+    const shouldRenderRowTitle = staticDistrictLinkPages.length > 0
+      && normalizeName(pageHeadingText) !== normalizeName(rowHeadingText);
     if (shouldRenderRowTitle) {
       const rowTitle = document.createElement("h4");
       rowTitle.className = "province-region";
@@ -2481,7 +2587,7 @@ function renderRootPage(
     const chips = document.createElement("div");
     chips.className = "province-cities";
 
-    definition.districtLinkPages.forEach((item) => {
+    staticDistrictLinkPages.forEach((item) => {
       const sourceVenues = item.source === "secondary"
         ? secondaryVenues
         : item.source === "tertiary"
@@ -2544,13 +2650,16 @@ function renderRootPage(
       headingStack.append(categoryRootAdCard);
     }
 
-    if (headingStack.childElementCount > 0) {
-      row.append(headingStack, chips);
-    } else {
-      row.style.gridTemplateColumns = "1fr";
-      row.append(chips);
+    const hasStaticRowContent = headingStack.childElementCount > 0 || chips.childElementCount > 0;
+    if (hasStaticRowContent) {
+      if (headingStack.childElementCount > 0) {
+        row.append(headingStack, chips);
+      } else {
+        row.style.gridTemplateColumns = "1fr";
+        row.append(chips);
+      }
+      groupGrid.append(row);
     }
-    groupGrid.append(row);
     return;
   }
 
@@ -3450,7 +3559,9 @@ async function initCategoryPage() {
   const categoryKey = String(body.dataset.categoryKey || "").trim();
   const pageType = String(body.dataset.categoryPage || "").trim();
   await ensureDistrictInlineAdConfigLoaded();
-  const requestedSubcategorySource = queryParams().subcategorySource;
+  const params = queryParams();
+  const requestedSubcategorySource = params.subcategorySource;
+  const requestedFacilityType = params.facilityType;
   const subcategorySource = String(requestedSubcategorySource || body.dataset.subcategorySource || "primary").trim();
   const baseDefinition = CATEGORY_DEFINITIONS[categoryKey];
   const definition = baseDefinition ? { key: categoryKey, ...baseDefinition } : null;
@@ -3547,9 +3658,40 @@ async function initCategoryPage() {
       }))
       .filter((item) => item.type && item.count > 0)
     : [];
-  const dynamicTypeVenues = loadDynamicTypeVenues && definition.dynamicTypeVenueDataFile
+  const rawDynamicTypeVenues = loadDynamicTypeVenues && definition.dynamicTypeVenueDataFile
     ? await loadCategoryDataFile(definition.dynamicTypeVenueDataFile)
     : [];
+  let dynamicTypeVenues = rawDynamicTypeVenues;
+
+  if (definition.key === "seyahat" && subcategorySource === "dynamic") {
+    const mergedLegacyVenues = [];
+
+    if (isCampingFacilityType(requestedFacilityType)) {
+      const legacyCampingVenues = venues.length > 0
+        ? venues
+        : await loadCategoryVenues(categoryKey);
+      mergedLegacyVenues.push(...legacyCampingVenues.map((venue) => mapLegacyCampingVenueToDynamicVenue(venue)));
+    }
+
+    if (isHotelFacilityType(requestedFacilityType)) {
+      const legacyHotelVenueGroups = await Promise.all(
+        LEGACY_SEYAHAT_HOTEL_DATA_FILES.map((path) => loadCategoryDataFile(path)),
+      );
+      mergedLegacyVenues.push(
+        ...legacyHotelVenueGroups
+          .flat()
+          .map((venue) => mapLegacyHotelVenueToDynamicVenue(venue)),
+      );
+    }
+
+    if (mergedLegacyVenues.length > 0) {
+      dynamicTypeVenues = dedupeDynamicTypeVenues([
+        ...rawDynamicTypeVenues,
+        ...mergedLegacyVenues,
+      ]);
+    }
+  }
+
   const navigationVenues = definition.includeSecondaryInNavigation
     ? dedupeVenues([
       ...venues,

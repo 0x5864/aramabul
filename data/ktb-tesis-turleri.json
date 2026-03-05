@@ -5,11 +5,11 @@
   },
   {
     "type": "Butik Otel",
-    "count": 152
+    "count": 140
   },
   {
     "type": "Camping",
-    "count": 327
+    "count": 326
   },
   {
     "type": "Çiftlik Evi-köy Evi",
@@ -29,7 +29,7 @@
   },
   {
     "type": "Kırsal Turizm Tesisi",
-    "count": 65
+    "count": 63
   },
   {
     "type": "Kış Sporları Mekanik Tesisi",
@@ -65,15 +65,11 @@
   },
   {
     "type": "Otel",
-    "count": 9937
+    "count": 9949
   },
   {
     "type": "Otel, Golf Tesisi",
     "count": 7
-  },
-  {
-    "type": "Otel, Otel",
-    "count": 12
   },
   {
     "type": "Otel, Tatil Köyü",
@@ -89,7 +85,7 @@
   },
   {
     "type": "Pansiyon",
-    "count": 9320
+    "count": 10232
   },
   {
     "type": "Plaj",

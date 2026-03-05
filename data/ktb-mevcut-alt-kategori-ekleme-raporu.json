@@ -33,8 +33,8 @@
       "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-kamp-alanlari.json"
     },
     "geziPansiyon": {
-      "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-pansiyonlar.json",
-      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/gezi-pansiyonlar.json"
+      "web": "/Users/metintuncgenc/Documents/aramabul/data/ktb-pansiyon-ek-kayitlari.json",
+      "android": "/Users/metintuncgenc/Documents/aramabul/android_app/assets/web/data/ktb-pansiyon-ek-kayitlari.json"
     },
     "gezi5": {
       "web": "/Users/metintuncgenc/Documents/aramabul/data/gezi-oteller-5-yildiz.json",
