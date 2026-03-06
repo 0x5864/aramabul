@@ -364,21 +364,15 @@ const CATEGORY_DEFINITIONS = {
   kultur: {
     name: "Kültür",
     pageBase: "kultur",
-    titleUnit: "kültür mekanı",
-    primaryRowTitle: "Opera ve Bale",
-    dataFile: "data/kultur-opera-bale.json",
-    secondaryDataFile: "data/kultur-devlet-tiyatrolari.json",
-    secondaryRowTitle: "Devlet Tiyatroları",
-    secondaryCountLabel: "devlet tiyatrosu",
-    tertiaryDataFile: "data/kultur-sehir-tiyatrolari.json",
-    tertiaryRowTitle: "Şehir Tiyatroları",
-    tertiaryCountLabel: "şehir tiyatrosu",
-    quaternaryDataFile: "data/kultur-ozel-tiyatrolar.json",
-    quaternaryRowTitle: "Özel Tiyatrolar",
-    quaternaryCountLabel: "özel tiyatro",
-    quinaryDataFile: "data/kultur-muzeler.json",
-    quinaryRowTitle: "Müzeler",
-    quinaryCountLabel: "müze",
+    titleUnit: "müze",
+    primaryRowTitle: "Müzeler",
+    dataFile: "data/kultur-muzeler.json",
+    secondaryDataFile: "data/kultur-oren-yerleri.json",
+    secondaryRowTitle: "Ören yerleri",
+    secondaryCountLabel: "ören yeri",
+    tertiaryDataFile: "data/kultur-camiler.json",
+    tertiaryRowTitle: "Tarihi Camiler",
+    tertiaryCountLabel: "cami",
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
@@ -387,57 +381,44 @@ const CATEGORY_DEFINITIONS = {
     districtLinkPages: [
       {
         source: "primary",
-        title: "Opera ve Bale",
-        countLabel: "opera ve bale mekanı",
+        title: "Müzeler",
+        countLabel: "müze",
       },
       {
         source: "secondary",
-        title: "Devlet Tiyatroları",
-        countLabel: "devlet tiyatrosu",
+        title: "Ören yerleri",
+        countLabel: "ören yeri",
       },
       {
         source: "tertiary",
-        title: "Şehir Tiyatroları",
-        countLabel: "şehir tiyatrosu",
-      },
-      {
-        source: "quaternary",
-        title: "Özel Tiyatrolar",
-        countLabel: "özel tiyatro",
-      },
-      {
-        source: "quinary",
-        title: "Müzeler",
-        countLabel: "müze",
+        title: "Tarihi Camiler",
+        countLabel: "cami",
       },
     ],
     useDistrictCatalog: true,
     matcherKeywords: [
       "kultur",
       "kültür",
-      "opera",
-      "bale",
-      "opera ve bale",
-      "tiyatro",
-      "devlet tiyatrosu",
-      "devlet tiyatrolari",
-      "devlet tiyatroları",
-      "şehir tiyatrosu",
-      "şehir tiyatroları",
-      "sehir tiyatrosu",
-      "sehir tiyatrolari",
-      "özel tiyatro",
-      "özel tiyatrolar",
-      "ozel tiyatro",
-      "ozel tiyatrolar",
       "müze",
       "müzeler",
       "muze",
       "muzeler",
-      "devlet opera",
-      "sahne sanatlari",
-      "sahne sanatları",
-      "performans",
+      "ören yeri",
+      "ören yerleri",
+      "oren yeri",
+      "oren yerleri",
+      "örenyeri",
+      "orenyeri",
+      "antik kent",
+      "höyük",
+      "hoyuk",
+      "cami",
+      "camii",
+      "camiler",
+      "tarihi cami",
+      "tarihi camiler",
+      "mescit",
+      "mosque",
     ],
   },
   sanat: {
@@ -455,6 +436,9 @@ const CATEGORY_DEFINITIONS = {
     quaternaryDataFile: "data/kultur-ozel-tiyatrolar.json",
     quaternaryRowTitle: "Özel Tiyatrolar",
     quaternaryCountLabel: "özel tiyatro",
+    quinaryDataFile: "data/sanat-galeriler.json",
+    quinaryRowTitle: "Galeriler",
+    quinaryCountLabel: "galeri",
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
@@ -477,6 +461,11 @@ const CATEGORY_DEFINITIONS = {
         countLabel: "şehir tiyatrosu",
       },
       {
+        source: "quinary",
+        title: "Galeriler",
+        countLabel: "galeri",
+      },
+      {
         source: "quaternary",
         title: "Özel Tiyatrolar",
         countLabel: "özel tiyatro",
@@ -495,6 +484,9 @@ const CATEGORY_DEFINITIONS = {
       "devlet tiyatrosu",
       "şehir tiyatrosu",
       "özel tiyatro",
+      "galeri",
+      "galeriler",
+      "gallery",
       "kultur",
       "kültür",
     ],
@@ -658,6 +650,8 @@ const CATEGORY_DEFINITIONS = {
     septenaryDataFile: "data/keyif-pide.json",
     octonaryDataFile: "data/keyif-cigkofte.json",
     nonaryDataFile: "data/keyif-michelin-guide.json",
+    denaryDataFile: "data/keyif-pub-bar.json",
+    undenaryDataFile: "data/keyif-lokantalar.json",
     includeSecondaryInNavigation: true,
     preferVenueBackedDistricts: true,
     rootSubcategoryFirst: true,
@@ -709,6 +703,16 @@ const CATEGORY_DEFINITIONS = {
         title: "Michelin Guide",
         countLabel: "michelin guide mekanı",
       },
+      {
+        source: "denary",
+        title: "Pub&Bar",
+        countLabel: "pub&bar mekanı",
+      },
+      {
+        source: "undenary",
+        title: "Lokantalar",
+        countLabel: "lokanta",
+      },
     ],
     useDistrictCatalog: true,
     matcherKeywords: [
@@ -721,6 +725,14 @@ const CATEGORY_DEFINITIONS = {
       "coffee",
       "espresso",
       "taverna",
+      "pub",
+      "bar",
+      "cocktail",
+      "kokteyl",
+      "lokanta",
+      "lokantalar",
+      "esnaf lokantasi",
+      "esnaf lokantası",
       "fasil",
       "rakı",
       "raki",
@@ -2591,6 +2603,8 @@ function renderRootPage(
   septenaryVenues = [],
   octonaryVenues = [],
   nonaryVenues = [],
+  denaryVenues = [],
+  undenaryVenues = [],
   dynamicTypeItems = [],
 ) {
   const groupGrid = document.querySelector("#categoryGroupGrid");
@@ -2648,6 +2662,10 @@ function renderRootPage(
                     ? octonaryVenues
                     : item.source === "nonary"
                       ? nonaryVenues
+                    : item.source === "denary"
+                      ? denaryVenues
+                    : item.source === "undenary"
+                      ? undenaryVenues
                     : venues;
       const chip = document.createElement("a");
       chip.className = "province-pill yemek-pill yemek-pill-link";
@@ -2768,6 +2786,8 @@ function renderCityPage(
   septenaryVenues = [],
   octonaryVenues = [],
   nonaryVenues = [],
+  denaryVenues = [],
+  undenaryVenues = [],
   dynamicTypeVenues = [],
 ) {
   const cityTitle = document.querySelector("#categoryCityTitle");
@@ -2804,6 +2824,10 @@ function renderCityPage(
                   ? octonaryVenues
                 : subcategorySource === "nonary"
                   ? nonaryVenues
+                : subcategorySource === "denary"
+                  ? denaryVenues
+                : subcategorySource === "undenary"
+                  ? undenaryVenues
                   : subcategorySource === "dynamic"
                     ? filteredDynamicTypeVenues
                   : venues
@@ -2951,6 +2975,8 @@ function renderDistrictPage(
   septenaryVenues = [],
   octonaryVenues = [],
   nonaryVenues = [],
+  denaryVenues = [],
+  undenaryVenues = [],
   dynamicTypeVenues = [],
   navigationVenues = venues,
 ) {
@@ -2989,6 +3015,10 @@ function renderDistrictPage(
                   ? octonaryVenues
                 : subcategorySource === "nonary"
                   ? nonaryVenues
+                : subcategorySource === "denary"
+                  ? denaryVenues
+                : subcategorySource === "undenary"
+                  ? undenaryVenues
                   : subcategorySource === "dynamic"
                     ? filteredDynamicTypeVenues
           : venues;
@@ -3269,6 +3299,8 @@ function renderDistrictLinkPage(
   septenaryVenues = [],
   octonaryVenues = [],
   nonaryVenues = [],
+  denaryVenues = [],
+  undenaryVenues = [],
   navigationVenues = venues,
 ) {
   const districtTitle = document.querySelector("#categoryDistrictTitle");
@@ -3323,6 +3355,8 @@ function renderDistrictLinkPage(
   const districtSeptenaryVenues = filterDistrictVenueSlice(definition, septenaryVenues, matchedCity, matchedDistrict);
   const districtOctonaryVenues = filterDistrictVenueSlice(definition, octonaryVenues, matchedCity, matchedDistrict);
   const districtNonaryVenues = filterDistrictVenueSlice(definition, nonaryVenues, matchedCity, matchedDistrict);
+  const districtDenaryVenues = filterDistrictVenueSlice(definition, denaryVenues, matchedCity, matchedDistrict);
+  const districtUndenaryVenues = filterDistrictVenueSlice(definition, undenaryVenues, matchedCity, matchedDistrict);
   const preparedDistrictVenues = shouldMergeDisplayVenueGroups(definition)
     ? mergeVenueGroupForDisplay(districtVenues)
     : districtVenues;
@@ -3350,6 +3384,12 @@ function renderDistrictLinkPage(
   const preparedDistrictNonaryVenues = shouldMergeDisplayVenueGroups(definition)
     ? mergeVenueGroupForDisplay(districtNonaryVenues)
     : districtNonaryVenues;
+  const preparedDistrictDenaryVenues = shouldMergeDisplayVenueGroups(definition)
+    ? mergeVenueGroupForDisplay(districtDenaryVenues)
+    : districtDenaryVenues;
+  const preparedDistrictUndenaryVenues = shouldMergeDisplayVenueGroups(definition)
+    ? mergeVenueGroupForDisplay(districtUndenaryVenues)
+    : districtUndenaryVenues;
 
   const linkDefinitions = Array.isArray(definition.districtLinkPages)
     ? definition.districtLinkPages
@@ -3364,6 +3404,8 @@ function renderDistrictLinkPage(
     { source: "septenary", venues: preparedDistrictSeptenaryVenues },
     { source: "octonary", venues: preparedDistrictOctonaryVenues },
     { source: "nonary", venues: preparedDistrictNonaryVenues },
+    { source: "denary", venues: preparedDistrictDenaryVenues },
+    { source: "undenary", venues: preparedDistrictUndenaryVenues },
   ];
 
   const requestedVenueRedirect = redirectRequestedVenueFromDistrictLinks(
@@ -3415,6 +3457,10 @@ function renderDistrictLinkPage(
           ? preparedDistrictOctonaryVenues
         : item.source === "nonary"
           ? preparedDistrictNonaryVenues
+        : item.source === "denary"
+          ? preparedDistrictDenaryVenues
+        : item.source === "undenary"
+          ? preparedDistrictUndenaryVenues
         : preparedDistrictVenues;
     if (sourceVenues.length === 0) {
       return;
@@ -3452,6 +3498,8 @@ function renderDistrictSubcategoryPage(
   septenaryVenues = [],
   octonaryVenues = [],
   nonaryVenues = [],
+  denaryVenues = [],
+  undenaryVenues = [],
   dynamicTypeVenues = [],
   navigationVenues = venues,
 ) {
@@ -3463,6 +3511,13 @@ function renderDistrictSubcategoryPage(
     : "";
   const dynamicTypeTitle = String(facilityType || "").trim() || "Resmi Tesis Türleri";
   const filteredDynamicTypeVenues = filterDynamicTypeVenues(dynamicTypeVenues, facilityType);
+  const subcategoryDefinition = (definition.districtLinkPages || []).find((item) => item.source === subcategorySource)
+    || (subcategorySource === "dynamic"
+      ? { title: dynamicTypeTitle }
+      : null)
+    || (subcategorySource === "secondary"
+      ? { title: definition.secondaryRowTitle || "Mekanlar" }
+      : { title: definition.primaryRowTitle || "Mekanlar" });
   const pageTitle = document.querySelector("#categorySubcategoryTitle");
   const cityLink = document.querySelector("#categorySubcategoryCityLink");
   const districtLink = document.querySelector("#categorySubcategoryDistrictLink");
@@ -3483,10 +3538,11 @@ function renderDistrictSubcategoryPage(
   );
 
   if (cityLink) {
-    cityLink.textContent = matchedCity || "İl";
     if (definition.rootSubcategoryFirst) {
+      cityLink.textContent = translateCategoryUiLabel(subcategoryDefinition.title);
       cityLink.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}${facilityTypeQuery}`;
     } else {
+      cityLink.textContent = matchedCity || "İl";
       cityLink.href = matchedCity
         ? `${definition.pageBase}-city.html?sehir=${encodeURIComponent(matchedCity)}`
         : String(definition.rootPagePath || `${definition.pageBase}.html`).trim();
@@ -3494,12 +3550,13 @@ function renderDistrictSubcategoryPage(
   }
 
   if (districtLink) {
-    districtLink.textContent = matchedDistrict || "İlçe";
     if (definition.rootSubcategoryFirst) {
+      districtLink.textContent = matchedCity || translateCategoryUiLabel("İl");
       districtLink.href = matchedCity
         ? `${definition.pageBase}-district.html?tur=${encodeURIComponent(subcategorySource)}&sehir=${encodeURIComponent(matchedCity)}${facilityTypeQuery}`
         : `${definition.pageBase}-city.html?tur=${encodeURIComponent(subcategorySource)}${facilityTypeQuery}`;
     } else {
+      districtLink.textContent = matchedDistrict || "İlçe";
       districtLink.href = matchedCity && matchedDistrict
         ? `${definition.pageBase}-district.html?sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(matchedDistrict)}`
         : String(definition.rootPagePath || `${definition.pageBase}.html`).trim();
@@ -3513,7 +3570,9 @@ function renderDistrictSubcategoryPage(
       pageTitle.textContent = "İlçe Mekanları";
     }
     if (breadcrumb) {
-      breadcrumb.textContent = "Mekanlar";
+      breadcrumb.textContent = definition.rootSubcategoryFirst
+        ? translateCategoryUiLabel("İlçe")
+        : "Mekanlar";
     }
 
     const empty = document.createElement("article");
@@ -3541,6 +3600,10 @@ function renderDistrictSubcategoryPage(
         ? octonaryVenues
       : subcategorySource === "nonary"
         ? nonaryVenues
+      : subcategorySource === "denary"
+        ? denaryVenues
+      : subcategorySource === "undenary"
+        ? undenaryVenues
       : subcategorySource === "dynamic"
         ? filteredDynamicTypeVenues
       : venues;
@@ -3549,16 +3612,10 @@ function renderDistrictSubcategoryPage(
       return normalizeName(venue.city) === normalizedCity && normalizeName(venue.district) === normalizedDistrict;
     }),
   );
-  const subcategoryDefinition = (definition.districtLinkPages || []).find((item) => item.source === subcategorySource)
-    || (subcategorySource === "dynamic"
-      ? { title: dynamicTypeTitle }
-      : null)
-    || (subcategorySource === "secondary"
-      ? { title: definition.secondaryRowTitle || "Mekanlar" }
-      : { title: definition.primaryRowTitle || "Mekanlar" });
-
   if (breadcrumb) {
-    breadcrumb.textContent = subcategoryDefinition.title;
+    breadcrumb.textContent = definition.rootSubcategoryFirst
+      ? matchedDistrict
+      : subcategoryDefinition.title;
   }
 
   if (pageTitle) {
@@ -3673,6 +3730,16 @@ async function initCategoryPage() {
     || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.nonaryDataFile))
     || (requiresVenueBackedNavigation && Boolean(definition.nonaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
     || (pageType === "district-subcategory" && subcategorySource === "nonary");
+  const loadDenaryVenues =
+    (pageType === "district" && Boolean(definition.denaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.denaryDataFile))
+    || (requiresVenueBackedNavigation && Boolean(definition.denaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
+    || (pageType === "district-subcategory" && subcategorySource === "denary");
+  const loadUndenaryVenues =
+    (pageType === "district" && Boolean(definition.undenaryDataFile))
+    || (pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.undenaryDataFile))
+    || (requiresVenueBackedNavigation && Boolean(definition.undenaryDataFile) && Boolean(definition.includeSecondaryInNavigation))
+    || (pageType === "district-subcategory" && subcategorySource === "undenary");
   const loadDynamicTypeItems =
     pageType === "root" && Boolean(definition.rootSubcategoryFirst) && Boolean(definition.dynamicTypeDataFile);
   const loadDynamicTypeVenues =
@@ -3703,6 +3770,12 @@ async function initCategoryPage() {
     : [];
   const nonaryVenues = loadNonaryVenues && definition.nonaryDataFile
     ? await loadCategoryDataFile(definition.nonaryDataFile)
+    : [];
+  const denaryVenues = loadDenaryVenues && definition.denaryDataFile
+    ? await loadCategoryDataFile(definition.denaryDataFile)
+    : [];
+  const undenaryVenues = loadUndenaryVenues && definition.undenaryDataFile
+    ? await loadCategoryDataFile(definition.undenaryDataFile)
     : [];
   const dynamicTypeItems = loadDynamicTypeItems && definition.dynamicTypeDataFile
     ? (await loadRawArrayDataFile(definition.dynamicTypeDataFile))
@@ -3757,6 +3830,8 @@ async function initCategoryPage() {
       ...septenaryVenues,
       ...octonaryVenues,
       ...nonaryVenues,
+      ...denaryVenues,
+      ...undenaryVenues,
     ])
     : venues;
 
@@ -3773,6 +3848,8 @@ async function initCategoryPage() {
       septenaryVenues,
       octonaryVenues,
       nonaryVenues,
+      denaryVenues,
+      undenaryVenues,
       dynamicTypeItems,
     );
     return;
@@ -3792,6 +3869,8 @@ async function initCategoryPage() {
       septenaryVenues,
       octonaryVenues,
       nonaryVenues,
+      denaryVenues,
+      undenaryVenues,
       dynamicTypeVenues,
     );
     return;
@@ -3810,6 +3889,8 @@ async function initCategoryPage() {
       septenaryVenues,
       octonaryVenues,
       nonaryVenues,
+      denaryVenues,
+      undenaryVenues,
       dynamicTypeVenues,
       navigationVenues,
     );
@@ -3829,6 +3910,8 @@ async function initCategoryPage() {
       septenaryVenues,
       octonaryVenues,
       nonaryVenues,
+      denaryVenues,
+      undenaryVenues,
       navigationVenues,
     );
     return;
@@ -3847,6 +3930,8 @@ async function initCategoryPage() {
       septenaryVenues,
       octonaryVenues,
       nonaryVenues,
+      denaryVenues,
+      undenaryVenues,
       dynamicTypeVenues,
       navigationVenues,
     );

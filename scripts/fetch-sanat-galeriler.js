@@ -20,6 +20,8 @@ const SOURCE_URL = "https://tiyatrolar.com.tr/galeriler";
 const LOAD_MORE_URL = "https://tiyatrolar.com.tr/frontend/load_more_location_via_ajax/?type_enum=galeri";
 const REQUEST_TIMEOUT_MS = 30000;
 const MAX_PAGES = 600;
+const DETAIL_CONCURRENCY = 6;
+const DETAIL_MAX_RETRY = 2;
 const SOURCE_LABEL = "Kaynak: tiyatrolar.com.tr/galeriler";
 
 const CITY_NORMALIZATION = Object.freeze({
@@ -95,11 +97,6 @@ function toAbsoluteUrl(href) {
   } catch (_error) {
     return "";
   }
-}
-
-function readAttr(html, attrName) {
-  const match = html.match(new RegExp(`${attrName}="([^"]+)"`, "i"));
-  return match ? cleanText(match[1]) : "";
 }
 
 function extractInitialCardsHtml(pageHtml) {
@@ -183,6 +180,218 @@ async function fetchText(url, options = {}) {
   }
 }
 
+function normalizeForLookup(value) {
+  return cleanText(value)
+    .toLocaleLowerCase("tr")
+    .replaceAll("ı", "i")
+    .replaceAll("ğ", "g")
+    .replaceAll("ü", "u")
+    .replaceAll("ş", "s")
+    .replaceAll("ö", "o")
+    .replaceAll("ç", "c");
+}
+
+function parsePostalCode(address) {
+  const match = cleanText(address).match(/\b\d{5}\b/);
+  return match ? match[0] : "";
+}
+
+function parseDistrictFromAddress(address, city) {
+  const normalizedCity = normalizeForLookup(city);
+  const source = cleanText(address);
+  if (!source || !normalizedCity) {
+    return "";
+  }
+
+  const slashMatch = source.match(/([^,/]+)\s*\/\s*([^,/]+)\s*$/);
+  if (!slashMatch) {
+    return "";
+  }
+
+  const districtCandidate = cleanText(slashMatch[1]);
+  const cityCandidate = normalizeForLookup(slashMatch[2]);
+  if (cityCandidate !== normalizedCity) {
+    return "";
+  }
+
+  return districtCandidate || "";
+}
+
+function extractDetailBlock(html) {
+  const match = String(html || "").match(
+    /<div class="oyun-location no-border">([\s\S]*?)<\/div><div class="border-section">/i,
+  );
+  return match ? match[1] : "";
+}
+
+function extractDetailAddress(detailBlock) {
+  const match = detailBlock.match(/<p class="full">([\s\S]*?)<\/p>/i);
+  if (!match) {
+    return "";
+  }
+  return cleanText(match[1]);
+}
+
+function extractDetailPhone(detailBlock) {
+  const telMatch = detailBlock.match(/<span class="tel">([\s\S]*?)<\/span>/i);
+  if (telMatch) {
+    return cleanText(telMatch[1]);
+  }
+
+  const pTelMatch = detailBlock.match(/<p[^>]*>\s*<i class="ico-tel"><\/i>\s*([\s\S]*?)<\/p>/i);
+  return pTelMatch ? cleanText(pTelMatch[1]) : "";
+}
+
+function extractDetailEmail(detailBlock) {
+  const mailtoMatch = detailBlock.match(/href="mailto:([^"]+)"/i);
+  if (mailtoMatch) {
+    return cleanText(mailtoMatch[1]);
+  }
+
+  const textMatch = detailBlock.match(/<i class="ico-email"><\/i>\s*<a[^>]*>([\s\S]*?)<\/a>/i);
+  return textMatch ? cleanText(textMatch[1]) : "";
+}
+
+function extractDetailExternalWebsite(detailBlock) {
+  const webMatch = detailBlock.match(
+    /<i class="ico-web"><\/i>\s*<a[^>]*href="([^"]+)"[^>]*>/i,
+  );
+  if (!webMatch) {
+    return "";
+  }
+  return toAbsoluteUrl(webMatch[1]);
+}
+
+function extractDetailMapsUrl(detailBlock, fallbackName, fallbackCity) {
+  const iframeMatch = detailBlock.match(/<iframe[^>]*src="([^"]+)"/i);
+  if (iframeMatch) {
+    return toAbsoluteUrl(iframeMatch[1]);
+  }
+
+  return `https://maps.google.com/?q=${encodeURIComponent(`${fallbackName} ${fallbackCity}`)}`;
+}
+
+function extractDetailPrimaryPhoto(html) {
+  const firstImageMatch = String(html || "").match(/<img class="first-image"[^>]*src="([^"]+)"/i);
+  if (firstImageMatch) {
+    const image = toAbsoluteUrl(firstImageMatch[1]);
+    if (image && !image.includes("/no-img/")) {
+      return image;
+    }
+  }
+
+  return "";
+}
+
+function extractBreadcrumbCityAndDistrict(html) {
+  const cityMatch = String(html || "").match(/\/galeriler\?il=\d+">([^<]+)<\/a>/i);
+  const districtMatch = String(html || "").match(/\/galeriler\?il=\d+(?:&|&amp;)ilce=\d+">([^<]+)<\/a>/i);
+
+  return {
+    city: normalizeCity(cityMatch ? cityMatch[1] : ""),
+    district: cleanText(districtMatch ? districtMatch[1] : ""),
+  };
+}
+
+async function fetchTextWithRetry(url, options = {}, maxRetry = DETAIL_MAX_RETRY) {
+  let lastError = null;
+  for (let attempt = 0; attempt <= maxRetry; attempt += 1) {
+    try {
+      return await fetchText(url, options);
+    } catch (error) {
+      lastError = error;
+      if (attempt < maxRetry) {
+        await new Promise((resolve) => setTimeout(resolve, (attempt + 1) * 500));
+      }
+    }
+  }
+  throw lastError || new Error("request_failed");
+}
+
+function applyDetailToVenue(venue, detailHtml) {
+  const detailBlock = extractDetailBlock(detailHtml);
+  if (!detailBlock) {
+    return venue;
+  }
+
+  const breadcrumb = extractBreadcrumbCityAndDistrict(detailHtml);
+  const parsedAddress = extractDetailAddress(detailBlock);
+  const address = parsedAddress || venue.address;
+  const city = breadcrumb.city || venue.city;
+  const district = breadcrumb.district || parseDistrictFromAddress(address, city) || venue.district || "Merkez";
+  const phone = extractDetailPhone(detailBlock) || venue.phone || "";
+  const email = extractDetailEmail(detailBlock) || "";
+  const mapsUrl = extractDetailMapsUrl(detailBlock, venue.name, city);
+  const postalCode = parsePostalCode(address);
+  const externalWebsite = extractDetailExternalWebsite(detailBlock);
+  const photoUrl = extractDetailPrimaryPhoto(detailHtml) || venue.photoUrl || "";
+
+  return {
+    ...venue,
+    city,
+    district,
+    address,
+    phone,
+    email,
+    postalCode,
+    mapsUrl,
+    photoUrl,
+    website: externalWebsite || venue.website,
+    sourceDetailUrl: venue.website,
+    editorialSummary: `${SOURCE_LABEL} ve galeri detay sayfasından alındı.`,
+  };
+}
+
+async function enrichVenueWithDetails(venue) {
+  const detailUrl = toAbsoluteUrl(venue.website);
+  if (!detailUrl) {
+    return venue;
+  }
+
+  try {
+    const html = await fetchTextWithRetry(detailUrl);
+    return applyDetailToVenue(venue, html);
+  } catch (_error) {
+    return venue;
+  }
+}
+
+async function mapWithConcurrency(items, concurrency, mapper) {
+  const total = items.length;
+  const output = new Array(total);
+  let nextIndex = 0;
+  let completed = 0;
+
+  async function worker() {
+    while (true) {
+      const currentIndex = nextIndex;
+      if (currentIndex >= total) {
+        return;
+      }
+      nextIndex += 1;
+
+      output[currentIndex] = await mapper(items[currentIndex], currentIndex);
+      completed += 1;
+      if (completed % 25 === 0 || completed === total) {
+        console.log(`[sanat-galeriler] Detay alindi: ${completed}/${total}`);
+      }
+    }
+  }
+
+  const workerCount = Math.max(1, Math.min(concurrency, total));
+  const workers = Array.from({ length: workerCount }, () => worker());
+  await Promise.all(workers);
+  return output;
+}
+
+async function enrichAllGalleryDetails(venues) {
+  if (!Array.isArray(venues) || venues.length === 0) {
+    return [];
+  }
+
+  return await mapWithConcurrency(venues, DETAIL_CONCURRENCY, enrichVenueWithDetails);
+}
+
 function readInitialOffset(pageHtml) {
   const buttonMatch = pageHtml.match(/class="btn_load_more_item[^"]*"[^>]*\soffset="(\d+)"/i);
   const value = buttonMatch ? Number.parseInt(buttonMatch[1], 10) : 21;
@@ -243,7 +452,10 @@ function writeJson(filePath, value) {
 }
 
 async function main() {
-  const venues = await fetchAllGalleryCards();
+  const baseVenues = await fetchAllGalleryCards();
+  console.log(`[sanat-galeriler] Liste kaydi: ${baseVenues.length}`);
+  const detailedVenues = await enrichAllGalleryDetails(baseVenues);
+  const venues = dedupeVenues(detailedVenues);
   writeJson(OUTPUT_FILE, venues);
 
   if (fs.existsSync(path.dirname(ANDROID_OUTPUT_FILE))) {
