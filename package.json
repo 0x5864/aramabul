@@ -38,6 +38,7 @@
     "build:keyif:food:data": "node scripts/build-keyif-food-aggregate.js",
     "build:keyif:merge:yemek": "node scripts/merge-yemek-into-keyif.js && node scripts/build-keyif-food-aggregate.js",
     "build:keyif:ratings": "node scripts/enrich-keyif-ratings.js",
+    "build:sanat:galeriler:data": "node scripts/fetch-sanat-galeriler.js",
     "build:ktb:mevcut-alt-kategori-ekle": "node scripts/merge-ktb-into-existing-subcategories.js",
     "build:ulasim:data": "node scripts/fetch-akaryakit.js",
     "build:health:data": "node scripts/build-health-from-saglikkurumlari.js && node scripts/merge-eah-hospitals.js && node scripts/merge-istanbul-asm.js",
