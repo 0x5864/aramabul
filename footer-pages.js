@@ -896,12 +896,12 @@
         },
         ortaklik: {
           label: footerT("İş Birliği"),
-          address: "ortaklik@aramabul.com",
+          address: "destek@aramabul.com",
           subject: footerT("İş Birliği"),
         },
         icerik: {
           label: footerT("İçerik Düzeltmeleri"),
-          address: "icerik@aramabul.com",
+          address: "destek@aramabul.com",
           subject: footerT("İçerik Düzeltmeleri"),
         },
       });

@@ -751,6 +751,68 @@
     normalizeFooterUi();
   });
 
+  function initializeFooterComingSoonNotice() {
+    const footer = document.querySelector(".yr-footer");
+    if (!(footer instanceof HTMLElement)) {
+      return;
+    }
+
+    const links = footer.querySelectorAll(".store-badge, .yr-footer-social a");
+    if (!links.length) {
+      return;
+    }
+
+    let noticeNode = footer.querySelector(".yr-footer-coming-soon");
+    const ensureNotice = () => {
+      if (noticeNode instanceof HTMLElement) {
+        return noticeNode;
+      }
+
+      noticeNode = document.createElement("p");
+      noticeNode.className = "yr-footer-coming-soon";
+      noticeNode.hidden = true;
+      noticeNode.textContent = "Yakında hizmete girecektir.";
+      noticeNode.style.margin = "8px 0 0";
+      noticeNode.style.fontSize = "12px";
+      noticeNode.style.color = "#d7e3ff";
+
+      const footerBottom = footer.querySelector(".yr-footer-bottom");
+      if (footerBottom instanceof HTMLElement) {
+        footerBottom.append(noticeNode);
+      } else {
+        footer.append(noticeNode);
+      }
+      return noticeNode;
+    };
+
+    const showNotice = () => {
+      const node = ensureNotice();
+      node.hidden = false;
+      const activeTimer = Number.parseInt(String(node.dataset.timerId || ""), 10);
+      if (Number.isFinite(activeTimer)) {
+        window.clearTimeout(activeTimer);
+      }
+      const timerId = window.setTimeout(() => {
+        node.hidden = true;
+        node.dataset.timerId = "";
+      }, 2800);
+      node.dataset.timerId = String(timerId);
+    };
+
+    links.forEach((link) => {
+      if (!(link instanceof HTMLAnchorElement) || link.dataset.comingSoonBound === "1") {
+        return;
+      }
+      link.dataset.comingSoonBound = "1";
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        showNotice();
+      });
+    });
+  }
+
+  initializeFooterComingSoonNotice();
+
   const form = document.querySelector(".header-search");
   if (!form) {
     return;
