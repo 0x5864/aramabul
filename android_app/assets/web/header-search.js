@@ -762,40 +762,49 @@
       return;
     }
 
-    let noticeNode = footer.querySelector(".yr-footer-coming-soon");
-    const ensureNotice = () => {
-      if (noticeNode instanceof HTMLElement) {
-        return noticeNode;
+    let toastNode = document.querySelector(".yr-coming-soon-toast");
+    const ensureToast = () => {
+      if (toastNode instanceof HTMLElement) {
+        return toastNode;
       }
 
-      noticeNode = document.createElement("p");
-      noticeNode.className = "yr-footer-coming-soon";
-      noticeNode.hidden = true;
-      noticeNode.textContent = "Yakında hizmete girecektir.";
-      noticeNode.style.margin = "8px 0 0";
-      noticeNode.style.fontSize = "12px";
-      noticeNode.style.color = "#d7e3ff";
-
-      const footerBottom = footer.querySelector(".yr-footer-bottom");
-      if (footerBottom instanceof HTMLElement) {
-        footerBottom.append(noticeNode);
-      } else {
-        footer.append(noticeNode);
-      }
-      return noticeNode;
+      toastNode = document.createElement("div");
+      toastNode.className = "yr-coming-soon-toast";
+      toastNode.textContent = "Yakında hizmete girecektir.";
+      toastNode.setAttribute("role", "status");
+      toastNode.setAttribute("aria-live", "polite");
+      toastNode.style.position = "fixed";
+      toastNode.style.left = "50%";
+      toastNode.style.bottom = "24px";
+      toastNode.style.transform = "translateX(-50%) translateY(12px)";
+      toastNode.style.opacity = "0";
+      toastNode.style.pointerEvents = "none";
+      toastNode.style.zIndex = "9999";
+      toastNode.style.padding = "10px 14px";
+      toastNode.style.borderRadius = "10px";
+      toastNode.style.background = "#ffffff";
+      toastNode.style.color = "#3f3f3f";
+      toastNode.style.fontSize = "12px";
+      toastNode.style.fontWeight = "600";
+      toastNode.style.boxShadow = "0 10px 24px rgba(0, 0, 0, 0.28)";
+      toastNode.style.transition = "opacity 180ms ease, transform 180ms ease";
+      document.body.append(toastNode);
+      return toastNode;
     };
 
     const showNotice = () => {
-      const node = ensureNotice();
-      node.hidden = false;
+      const node = ensureToast();
+      node.style.opacity = "1";
+      node.style.transform = "translateX(-50%) translateY(0)";
       const activeTimer = Number.parseInt(String(node.dataset.timerId || ""), 10);
       if (Number.isFinite(activeTimer)) {
         window.clearTimeout(activeTimer);
       }
       const timerId = window.setTimeout(() => {
-        node.hidden = true;
+        node.style.opacity = "0";
+        node.style.transform = "translateX(-50%) translateY(12px)";
         node.dataset.timerId = "";
-      }, 2800);
+      }, 1800);
       node.dataset.timerId = String(timerId);
     };
 
@@ -1617,6 +1626,62 @@
     setSubmitButtonLabel(isLoading ? labels.loading : labels.idle);
   }
 
+  let searchNotFoundToastApi = null;
+
+  function ensureSearchNotFoundToast() {
+    if (searchNotFoundToastApi) {
+      return searchNotFoundToastApi;
+    }
+
+    if (!document.body) {
+      return null;
+    }
+
+    const toast = document.createElement("div");
+    toast.className = "yr-search-not-found-toast";
+    toast.textContent = "Aradığınız kayda ulaşılamamıştır.";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    toast.style.position = "fixed";
+    toast.style.left = "50%";
+    toast.style.top = "96px";
+    toast.style.bottom = "auto";
+    toast.style.transform = "translateX(-50%) translateY(10px)";
+    toast.style.opacity = "0";
+    toast.style.pointerEvents = "none";
+    toast.style.zIndex = "10000";
+    toast.style.padding = "10px 14px";
+    toast.style.borderRadius = "10px";
+    toast.style.background = "#ffffff";
+    toast.style.color = "#3f3f3f";
+    toast.style.fontSize = "12px";
+    toast.style.fontWeight = "600";
+    toast.style.boxShadow = "0 10px 24px rgba(0, 0, 0, 0.22)";
+    toast.style.transition = "opacity 180ms ease, transform 180ms ease";
+    document.body.append(toast);
+
+    const show = () => {
+      const rect = form.getBoundingClientRect();
+      toast.style.left = `${Math.round(rect.left + (rect.width / 2))}px`;
+      toast.style.top = `${Math.round(rect.bottom + 10)}px`;
+      toast.style.opacity = "1";
+      toast.style.transform = "translateX(-50%) translateY(0)";
+      const activeTimer = Number.parseInt(String(toast.dataset.timerId || ""), 10);
+      if (Number.isFinite(activeTimer)) {
+        window.clearTimeout(activeTimer);
+      }
+      const timerId = window.setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(-50%) translateY(10px)";
+        toast.dataset.timerId = "";
+      }, 1800);
+      toast.dataset.timerId = String(timerId);
+    };
+
+    searchNotFoundToastApi = { show };
+    return searchNotFoundToastApi;
+  }
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -1649,7 +1714,7 @@
         return;
       }
 
-      window.alert("Aradığınız kayda ulaşılamamıştır.");
+      ensureSearchNotFoundToast()?.show();
       input.focus();
     } finally {
       setLoadingState(false);
