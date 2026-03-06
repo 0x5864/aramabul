@@ -58,6 +58,7 @@
     { pageBase: "dis-klinikleri", dataPath: "data/dis-klinikleri.json", fallbacks: [] },
     { pageBase: "duraklar", dataPath: "data/duraklar.json", fallbacks: [] },
     { pageBase: "otopark", dataPath: "data/otopark.json", fallbacks: [] },
+    { pageBase: "gezi", dataPath: "data/ktb-tesis-kayitlari-gezi.json", fallbacks: [], dynamicTypeEnabled: true },
   ];
   const DISTRICT_ROUTE_PAGE_BASES = new Set([
     "yemek",
@@ -182,6 +183,9 @@
     const postalCode = sanitizeText(record.postalCode || record.postcode);
     const address = sanitizeText(record.address);
     const sourcePlaceId = sanitizeText(record.sourcePlaceId || record.placeId);
+    const dynamicType = options.dynamicTypeEnabled
+      ? sanitizeText(record.sourceTesisTuru || record.type || record.cuisine)
+      : "";
     const pageBase = sanitizeText(options.pageBase || "yemek");
 
     if (!name) {
@@ -196,11 +200,12 @@
       postalCode,
       address,
       sourcePlaceId,
+      dynamicType,
       pageBase,
       openAsRestaurant: Boolean(options.openAsRestaurant),
       canonicalName: canonicalize(name),
       canonicalSearchBlob: canonicalize(
-        [name, city, district, neighborhood, postalCode, address, pageBase].join(" "),
+        [name, city, district, neighborhood, postalCode, address, pageBase, dynamicType].join(" "),
       ),
     };
   }
@@ -387,7 +392,10 @@
 
   async function loadCategoryDataset(source) {
     const payload = await fetchVenuePayload(source.dataPath);
-    const records = normalizeVenueCollection(payload, { pageBase: source.pageBase });
+    const records = normalizeVenueCollection(payload, {
+      pageBase: source.pageBase,
+      dynamicTypeEnabled: Boolean(source.dynamicTypeEnabled),
+    });
     if (records.length > 0) {
       return records;
     }
@@ -395,7 +403,10 @@
     const fallbackCollections = await Promise.all(
       source.fallbacks.map(async (fallback) => {
         const fallbackRecords = await readFallbackCollection(fallback.globalKey, fallback.property);
-        return normalizeVenueCollection(fallbackRecords, { pageBase: source.pageBase });
+        return normalizeVenueCollection(fallbackRecords, {
+          pageBase: source.pageBase,
+          dynamicTypeEnabled: Boolean(source.dynamicTypeEnabled),
+        });
       }),
     );
 
@@ -571,6 +582,13 @@
     };
   }
 
+  function notFoundResult(message = "Kayıt bulunamamıştır.") {
+    return {
+      type: "not_found",
+      message: String(message || "").trim() || "Kayıt bulunamamıştır.",
+    };
+  }
+
   function choiceLabelFor(record) {
     const city = sanitizeText(record.city);
     const district = sanitizeText(record.district);
@@ -616,6 +634,34 @@
     const pageBase = sanitizeText(record.pageBase);
     if (!pageBase) {
       return cityUrlFor(record.city || record.name || "");
+    }
+
+    const dynamicType = sanitizeText(record.dynamicType);
+    if (pageBase === "gezi" && dynamicType) {
+      if (record.city && record.district) {
+        const targetUrl = new URL("gezi-mekanlar.html", window.location.href);
+        targetUrl.searchParams.set("tur", "dynamic");
+        targetUrl.searchParams.set("tt", dynamicType);
+        targetUrl.searchParams.set("sehir", toSlug(record.city));
+        targetUrl.searchParams.set("ilce", toSlug(record.district));
+        applyVenueParams(targetUrl, record);
+        return `${targetUrl.pathname}${targetUrl.search}`;
+      }
+
+      if (record.city) {
+        const targetUrl = new URL("gezi-district.html", window.location.href);
+        targetUrl.searchParams.set("tur", "dynamic");
+        targetUrl.searchParams.set("tt", dynamicType);
+        targetUrl.searchParams.set("sehir", toSlug(record.city));
+        applyVenueParams(targetUrl, record);
+        return `${targetUrl.pathname}${targetUrl.search}`;
+      }
+
+      const targetUrl = new URL("gezi-city.html", window.location.href);
+      targetUrl.searchParams.set("tur", "dynamic");
+      targetUrl.searchParams.set("tt", dynamicType);
+      applyVenueParams(targetUrl, record);
+      return `${targetUrl.pathname}${targetUrl.search}`;
     }
 
     if (record.city && record.district && DISTRICT_ROUTE_PAGE_BASES.has(pageBase)) {
@@ -673,7 +719,10 @@
       return routeResult(categoryUrlFor(matchedRecord));
     }
 
-    const matchedCategoryPage = findMatchingCategoryPage(query);
+    const queryTokenCount = canonicalize(query).split(" ").filter(Boolean).length;
+    const matchedCategoryPage = queryTokenCount === 1
+      ? findMatchingCategoryPage(query)
+      : null;
     if (matchedCategoryPage) {
       return routeResult(matchedCategoryPage);
     }
@@ -683,7 +732,7 @@
       return routeResult(cityUrlFor(matchedCity));
     }
 
-    return routeResult(cityUrlFor(query));
+    return notFoundResult();
   }
 
   window.ARAMABUL_HEADER_SEARCH_DATA = {

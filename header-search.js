@@ -155,6 +155,14 @@
     },
   };
 
+  const SEARCH_NOT_FOUND_COPY = {
+    TR: "Kayıt bulunamamıştır.",
+    EN: "No records found.",
+    RU: "Запись не найдена.",
+    DE: "Kein Eintrag gefunden.",
+    ZH: "未找到记录。",
+  };
+
   let searchChoiceModalApi = null;
 
   function currentLanguageCode() {
@@ -163,6 +171,11 @@
     }
 
     return readStoredLanguage();
+  }
+
+  function searchNotFoundMessage() {
+    const lang = currentLanguageCode();
+    return SEARCH_NOT_FOUND_COPY[lang] || SEARCH_NOT_FOUND_COPY.TR;
   }
 
   function searchChoiceCopy() {
@@ -286,6 +299,10 @@
     return searchChoiceModalApi;
   }
 
+  input.addEventListener("input", () => {
+    input.setCustomValidity("");
+  });
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -301,6 +318,14 @@
       const result = await headerSearchData.resolveQuery(query);
       if (result && typeof result === "object" && result.type === "choices") {
         ensureSearchChoiceModal()?.open(result);
+        return;
+      }
+
+      if (result && typeof result === "object" && result.type === "not_found") {
+        const notFoundMessage = String(result.message || "").trim() || searchNotFoundMessage();
+        input.setCustomValidity(notFoundMessage);
+        form.reportValidity();
+        input.focus();
         return;
       }
 
