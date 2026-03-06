@@ -1649,7 +1649,8 @@
         return;
       }
 
-      window.location.assign(cityUrlFor(query));
+      window.alert("Aradığınız kayda ulaşılamamıştır.");
+      input.focus();
     } finally {
       setLoadingState(false);
     }

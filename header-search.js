@@ -384,9 +384,7 @@
       }
 
       if (result && typeof result === "object" && result.type === "not_found") {
-        const notFoundMessage = String(result.message || "").trim() || searchNotFoundMessage();
-        input.setCustomValidity(notFoundMessage);
-        form.reportValidity();
+        window.alert("Aradığınız kayda ulaşılamamıştır.");
         input.focus();
         return;
       }
