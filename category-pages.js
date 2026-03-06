@@ -1180,22 +1180,169 @@ function applyCategoryPageTranslations() {
   }
 }
 
+const DYNAMIC_CATEGORY_LABEL_TRANSLATIONS = {
+  EN: {
+    "Resmi Tesis Türleri": "Official Facility Types",
+    "Apart Otel": "Aparthotel",
+    "Butik Otel": "Boutique Hotel",
+    "Camping": "Camping",
+    "Kamping": "Camping",
+    "Çiftlik Evi-köy Evi": "Farmhouse - Village House",
+    "Çiftlik Evi-Köy Evi": "Farmhouse - Village House",
+    "Dağ Evi": "Mountain House",
+    "Gastronomi Tesisi": "Gastronomy Facility",
+    "Günübirlik Tesis": "Day-use Facility",
+    "Kırsal Turizm Tesisi": "Rural Tourism Facility",
+    "Kış Sporları Mekanik Tesisi": "Winter Sports Mechanical Facility",
+    "Konaklama Amaçlı Mesire Yeri": "Lodging Recreation Area",
+    "Konaklamalı Orman Parkı": "Forest Park with Lodging",
+    "Kongre Ve Sergi Merkezi": "Congress and Exhibition Center",
+    "Mola Noktası": "Rest Stop",
+    "Motel": "Motel",
+    "Otel": "Hotel",
+    "Otel, Golf Tesisi": "Hotel, Golf Facility",
+    "Özel Konaklama Tesisi": "Private Accommodation Facility",
+    "Özel Tesis": "Private Facility",
+    "Pansiyon": "Guesthouse",
+    "Plaj": "Beach",
+    "Rıhtım Ve İskele": "Pier and Dock",
+    "Rıhtım ve İskele": "Pier and Dock",
+    "Tatil Köyü": "Holiday Village",
+    "Tatil Köyü, Otel": "Holiday Village, Hotel",
+    "Otel, Tatil Köyü": "Hotel, Holiday Village",
+    "Termal Tesis": "Thermal Facility",
+    "Yat Çekek Yeri": "Boatyard",
+    "Yat Limanı": "Marina",
+    "Yat Yanaşma Yeri": "Yacht Berthing Area",
+    "Deniz Turizmi Araçları": "Marine Tourism Vehicles",
+  },
+  RU: {
+    "Resmi Tesis Türleri": "Официальные типы объектов",
+    "Apart Otel": "Апарт-отель",
+    "Butik Otel": "Бутик-отель",
+    "Camping": "Кемпинг",
+    "Kamping": "Кемпинг",
+    "Çiftlik Evi-köy Evi": "Фермерский дом - деревенский дом",
+    "Çiftlik Evi-Köy Evi": "Фермерский дом - деревенский дом",
+    "Dağ Evi": "Горный дом",
+    "Gastronomi Tesisi": "Гастрономический объект",
+    "Günübirlik Tesis": "Объект дневного пребывания",
+    "Kırsal Turizm Tesisi": "Объект сельского туризма",
+    "Kış Sporları Mekanik Tesisi": "Механический объект зимних видов спорта",
+    "Konaklama Amaçlı Mesire Yeri": "Зона отдыха с размещением",
+    "Konaklamalı Orman Parkı": "Лесной парк с размещением",
+    "Kongre Ve Sergi Merkezi": "Конгрессно-выставочный центр",
+    "Mola Noktası": "Пункт отдыха",
+    "Motel": "Мотель",
+    "Otel": "Отель",
+    "Otel, Golf Tesisi": "Отель, гольф-объект",
+    "Özel Konaklama Tesisi": "Частный объект размещения",
+    "Özel Tesis": "Частный объект",
+    "Pansiyon": "Пансион",
+    "Plaj": "Пляж",
+    "Rıhtım Ve İskele": "Причал и пирс",
+    "Rıhtım ve İskele": "Причал и пирс",
+    "Tatil Köyü": "Курортный поселок",
+    "Tatil Köyü, Otel": "Курортный поселок, отель",
+    "Otel, Tatil Köyü": "Отель, курортный поселок",
+    "Termal Tesis": "Термальный объект",
+    "Yat Çekek Yeri": "Яхт-верфь",
+    "Yat Limanı": "Марина",
+    "Yat Yanaşma Yeri": "Место швартовки яхт",
+    "Deniz Turizmi Araçları": "Средства морского туризма",
+  },
+  DE: {
+    "Resmi Tesis Türleri": "Offizielle Anlagetypen",
+    "Apart Otel": "Apartmenthotel",
+    "Butik Otel": "Boutique-Hotel",
+    "Camping": "Camping",
+    "Kamping": "Camping",
+    "Çiftlik Evi-köy Evi": "Bauernhaus - Dorfhaus",
+    "Çiftlik Evi-Köy Evi": "Bauernhaus - Dorfhaus",
+    "Dağ Evi": "Berghaus",
+    "Gastronomi Tesisi": "Gastronomiebetrieb",
+    "Günübirlik Tesis": "Tagesanlage",
+    "Kırsal Turizm Tesisi": "Ländliche Tourismusanlage",
+    "Kış Sporları Mekanik Tesisi": "Mechanische Wintersportanlage",
+    "Konaklama Amaçlı Mesire Yeri": "Erholungsgebiet mit Übernachtung",
+    "Konaklamalı Orman Parkı": "Waldpark mit Übernachtung",
+    "Kongre Ve Sergi Merkezi": "Kongress- und Messezentrum",
+    "Mola Noktası": "Rastpunkt",
+    "Motel": "Motel",
+    "Otel": "Hotel",
+    "Otel, Golf Tesisi": "Hotel, Golfanlage",
+    "Özel Konaklama Tesisi": "Private Unterkunftsanlage",
+    "Özel Tesis": "Private Anlage",
+    "Pansiyon": "Pension",
+    "Plaj": "Strand",
+    "Rıhtım Ve İskele": "Kai und Pier",
+    "Rıhtım ve İskele": "Kai und Pier",
+    "Tatil Köyü": "Ferienresort",
+    "Tatil Köyü, Otel": "Ferienresort, Hotel",
+    "Otel, Tatil Köyü": "Hotel, Ferienresort",
+    "Termal Tesis": "Thermalanlage",
+    "Yat Çekek Yeri": "Bootswerft",
+    "Yat Limanı": "Yachthafen",
+    "Yat Yanaşma Yeri": "Yacht-Anlegestelle",
+    "Deniz Turizmi Araçları": "Fahrzeuge für Meerestourismus",
+  },
+  ZH: {
+    "Resmi Tesis Türleri": "官方设施类型",
+    "Apart Otel": "公寓酒店",
+    "Butik Otel": "精品酒店",
+    "Camping": "露营地",
+    "Kamping": "露营地",
+    "Çiftlik Evi-köy Evi": "农庄/乡村民宿",
+    "Çiftlik Evi-Köy Evi": "农庄/乡村民宿",
+    "Dağ Evi": "山间小屋",
+    "Gastronomi Tesisi": "美食设施",
+    "Günübirlik Tesis": "一日游设施",
+    "Kırsal Turizm Tesisi": "乡村旅游设施",
+    "Kış Sporları Mekanik Tesisi": "冬季运动机械设施",
+    "Konaklama Amaçlı Mesire Yeri": "可住宿休闲区",
+    "Konaklamalı Orman Parkı": "可住宿森林公园",
+    "Kongre Ve Sergi Merkezi": "会议与展览中心",
+    "Mola Noktası": "休息点",
+    "Motel": "汽车旅馆",
+    "Otel": "酒店",
+    "Otel, Golf Tesisi": "酒店/高尔夫设施",
+    "Özel Konaklama Tesisi": "私人住宿设施",
+    "Özel Tesis": "私人设施",
+    "Pansiyon": "民宿",
+    "Plaj": "海滩",
+    "Rıhtım Ve İskele": "码头与栈桥",
+    "Rıhtım ve İskele": "码头与栈桥",
+    "Tatil Köyü": "度假村",
+    "Tatil Köyü, Otel": "度假村/酒店",
+    "Otel, Tatil Köyü": "酒店/度假村",
+    "Termal Tesis": "温泉设施",
+    "Yat Çekek Yeri": "游艇上排区",
+    "Yat Limanı": "游艇码头",
+    "Yat Yanaşma Yeri": "游艇靠泊点",
+    "Deniz Turizmi Araçları": "海上旅游载具",
+  },
+};
+
 function translateCategoryUiLabel(value) {
   const text = String(value || "").trim();
   if (!text) {
     return "";
   }
 
-  const headerI18n = window.ARAMABUL_HEADER_I18N;
-  if (!headerI18n || typeof headerI18n.getStaticUiTranslation !== "function") {
-    return text;
-  }
-
   const lang =
     typeof window.ARAMABUL_GET_LANGUAGE === "function"
-      ? window.ARAMABUL_GET_LANGUAGE()
+      ? String(window.ARAMABUL_GET_LANGUAGE() || "TR").toUpperCase()
       : "TR";
-  return headerI18n.getStaticUiTranslation(text, lang) || text;
+  const headerI18n = window.ARAMABUL_HEADER_I18N;
+  if (headerI18n && typeof headerI18n.getStaticUiTranslation === "function") {
+    const translated = headerI18n.getStaticUiTranslation(text, lang) || text;
+    if (translated !== text) {
+      return translated;
+    }
+  }
+
+  const fallbackMap = DYNAMIC_CATEGORY_LABEL_TRANSLATIONS[lang] || null;
+  return (fallbackMap && fallbackMap[text]) || text;
 }
 
 function formatProvinceDistrictHeading(cityName, districtName, suffixText = "") {
