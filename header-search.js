@@ -33,7 +33,23 @@
     return headerI18n.normalizeFooterUi();
   }
 
+  function markMobileChromeBrowser() {
+    if (!(document.body instanceof HTMLElement) || typeof navigator === "undefined") {
+      return;
+    }
+
+    const ua = String(navigator.userAgent || "");
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+    const isChromeFamily = /Chrome|CriOS/i.test(ua);
+    const isWebView = /\bwv\b|; wv\)|Version\/\d+(\.\d+)?[^)]*Chrome/i.test(ua);
+    const isOtherBrowser = /EdgA|EdgiOS|OPR|SamsungBrowser|YaBrowser/i.test(ua);
+    const isMobileChrome = isMobile && isChromeFamily && !isWebView && !isOtherBrowser;
+
+    document.body.classList.toggle("mobile-chrome-browser", isMobileChrome);
+  }
+
   applyTheme(readStoredTheme(), false);
+  markMobileChromeBrowser();
   applyStaticPageTranslations();
   normalizeFooterUi();
   window.addEventListener("load", () => {
