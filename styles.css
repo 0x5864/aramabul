@@ -1599,12 +1599,20 @@ main > * {
 
 .home-page .province-help {
   margin-top: 0.12rem;
-  max-width: none;
-  white-space: nowrap;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.38;
 }
 
 .home-page .section-head.province-head {
   margin-bottom: 1.32rem;
+}
+
+.home-page .section-head.province-head > div {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .bank-total {
@@ -2929,6 +2937,10 @@ body.search-choice-open {
     min-height: 2rem;
   }
 
+  .desktop-auth-link-settings {
+    display: none !important;
+  }
+
   .desktop-lang-switch .lang-switch-btn {
     min-height: 1.86rem;
     padding: 0.12rem 0.46rem;
@@ -3225,6 +3237,10 @@ body.mobile-chrome-browser.mobile-force-layout .desktop-auth-links {
 body.mobile-chrome-browser.mobile-force-layout .desktop-auth-link {
   min-width: 2rem;
   min-height: 2rem;
+}
+
+body.mobile-chrome-browser .desktop-auth-link-settings {
+  display: none !important;
 }
 
 body.mobile-chrome-browser.mobile-force-layout .desktop-lang-switch .lang-switch-btn {
