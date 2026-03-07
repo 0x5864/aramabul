@@ -1123,56 +1123,6 @@ main > * {
   display: none;
 }
 
-.home-page .top-city-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.home-page .category-home-card {
-  min-height: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  grid-template-columns: 1fr;
-  gap: 0;
-  border-radius: 4px;
-  border: 1px solid #a4b3b5;
-  background: inherit;
-  color: #106466;
-  padding: 0.3rem 0.66rem;
-}
-
-.home-page .category-home-card .top-city-thumb {
-  display: none;
-}
-
-.home-page .category-home-card .top-city-content {
-  display: block;
-}
-
-.home-page .category-home-card .top-city-name {
-  font-size: 0.82rem;
-  font-weight: 400;
-  line-height: 1.2;
-  color: #106466;
-}
-
-.home-page .category-home-card:hover,
-.home-page .category-home-card:focus-visible,
-.home-page .category-home-card.active {
-  border-color: #a4b3b5;
-  color: #15a86b;
-  background: inherit;
-  box-shadow: none;
-}
-
-.home-page .category-home-card:hover .top-city-name,
-.home-page .category-home-card:focus-visible .top-city-name,
-.home-page .category-home-card.active .top-city-name {
-  color: #15a86b;
-}
-
 .category-home-card.is-disabled {
   border-style: dashed;
   background: #f1f1f1;
