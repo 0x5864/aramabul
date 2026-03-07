@@ -29,6 +29,9 @@
   const feedbackPhoneNumber = document.querySelector("#settingsFeedbackPhoneNumber");
   const feedbackMessage = document.querySelector("#settingsFeedbackMessage");
   const feedbackStatus = document.querySelector("#settingsFeedbackStatus");
+  const feedbackHeading = document.querySelector(".settings-feedback-form-card .language-card-head h2");
+  const feedbackDescription = document.querySelector(".settings-feedback-form-card .language-card-head p");
+  const feedbackSubmit = document.querySelector(".settings-feedback-submit");
 
   function readStorageValue(key) {
     return runtime.readStorageValue(key);
@@ -116,6 +119,18 @@
     }
   }
 
+  function syncFeedbackUiCopy() {
+    if (feedbackHeading instanceof HTMLElement) {
+      feedbackHeading.textContent = translateUi("Geribildirim");
+    }
+    if (feedbackDescription instanceof HTMLElement) {
+      feedbackDescription.textContent = translateUi("Mesajını konu seçerek hızlıca iletebilirsin.");
+    }
+    if (feedbackSubmit instanceof HTMLButtonElement) {
+      feedbackSubmit.textContent = translateUi("Gönder");
+    }
+  }
+
   if (feedbackForm) {
     feedbackForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -159,4 +174,6 @@
 
   applyTheme(readTheme());
   prefillSession();
+  syncFeedbackUiCopy();
+  document.addEventListener("aramabul:languagechange", syncFeedbackUiCopy);
 })();
