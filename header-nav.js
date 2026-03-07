@@ -7,6 +7,7 @@
       signupText: "",
       loginTitle: "Giriş yap",
       loginText: "Kayıtlı hesabınla devam et.",
+      loginNeedsSignup: "Kayıtlı değilseniz, giriş yapmak için önce kayıt olun.",
       name: "Ad Soyad",
       email: "E-posta",
       password: "Şifre",
@@ -28,6 +29,7 @@
       signupText: "",
       loginTitle: "Sign in",
       loginText: "Continue with your saved account.",
+      loginNeedsSignup: "Not registered yet? Sign up first to sign in.",
       name: "Full name",
       email: "Email",
       password: "Password",
@@ -49,6 +51,7 @@
       signupText: "",
       loginTitle: "Войти",
       loginText: "Продолжите с вашим аккаунтом.",
+      loginNeedsSignup: "Если вы не зарегистрированы, сначала зарегистрируйтесь.",
       name: "Имя и фамилия",
       email: "Эл. почта",
       password: "Пароль",
@@ -70,6 +73,7 @@
       signupText: "",
       loginTitle: "Anmelden",
       loginText: "Mit deinem Konto weitermachen.",
+      loginNeedsSignup: "Noch nicht registriert? Bitte zuerst registrieren.",
       name: "Vor- und Nachname",
       email: "E-Mail",
       password: "Passwort",
@@ -91,6 +95,7 @@
       signupText: "",
       loginTitle: "登录",
       loginText: "使用已有账号继续。",
+      loginNeedsSignup: "如果你还未注册，请先注册再登录。",
       name: "姓名",
       email: "邮箱",
       password: "密码",
@@ -212,6 +217,9 @@
           </label>
           <button id="globalLoginSubmit" class="auth-submit" type="submit">${copy.loginSubmit}</button>
         </form>
+        <button id="globalLoginSignupHint" class="auth-inline-link is-hidden" type="button">
+          ${copy.loginNeedsSignup}
+        </button>
         <form id="globalSignupForm" class="auth-form" novalidate>
           <label>
             <span id="globalSignupNameLabel">${copy.name}</span>
@@ -257,6 +265,7 @@
     const signupPassword = modal.querySelector("#globalSignupPassword");
     const signupPasswordRepeat = modal.querySelector("#globalSignupPasswordRepeat");
     const loginSubmit = modal.querySelector("#globalLoginSubmit");
+    const loginSignupHint = modal.querySelector("#globalLoginSignupHint");
     const signupSubmit = modal.querySelector("#globalSignupSubmit");
     const labelNodes = {
       close: closeButton,
@@ -300,6 +309,9 @@
         text.textContent = nextText;
         text.classList.toggle("is-hidden", nextText.length === 0);
       }
+      if (loginSignupHint instanceof HTMLElement) {
+        loginSignupHint.classList.toggle("is-hidden", !isLoginMode);
+      }
 
       setMessage("");
     }
@@ -330,6 +342,9 @@
       }
       if (loginSubmit instanceof HTMLElement) {
         loginSubmit.textContent = copy.loginSubmit;
+      }
+      if (loginSignupHint instanceof HTMLElement) {
+        loginSignupHint.textContent = copy.loginNeedsSignup;
       }
       if (signupSubmit instanceof HTMLElement) {
         signupSubmit.textContent = copy.signupSubmit;
@@ -485,6 +500,12 @@
     if (signupForm instanceof HTMLFormElement) {
       signupForm.addEventListener("submit", handleSignupSubmit);
     }
+    if (loginSignupHint instanceof HTMLButtonElement) {
+      loginSignupHint.addEventListener("click", () => {
+        setMode("signup");
+        window.requestAnimationFrame(focusCurrentField);
+      });
+    }
 
     document.addEventListener("aramabul:languagechange", syncCopy);
 
@@ -538,6 +559,23 @@
       authNav.setAttribute("aria-label", labels.nav);
       authNav.innerHTML = `
         <a
+          class="desktop-auth-link desktop-auth-link-signin"
+          data-desktop-auth="signin"
+          href="#login"
+          aria-label="${labels.signin}"
+          title="${labels.signin}"
+        >
+          <span class="desktop-auth-link-icon-wrap" aria-hidden="true">
+            <svg class="desktop-auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10" cy="8.2" r="3.2"></circle>
+              <path d="M4.8 18.2c.7-2.7 2.8-4.5 5.2-4.5s4.5 1.8 5.2 4.5"></path>
+              <path d="M17 12h4"></path>
+              <path d="m19 10 2 2-2 2"></path>
+            </svg>
+          </span>
+          <span class="visually-hidden desktop-auth-link-text">${labels.signin}</span>
+        </a>
+        <a
           class="desktop-auth-link desktop-auth-link-signup"
           data-desktop-auth="signup"
           href="#signup"
@@ -575,23 +613,24 @@
           </div>
         </div>
         <a
-          class="desktop-auth-link desktop-auth-link-signin${profileMode ? " is-active" : ""}"
-          data-desktop-auth="signin"
-          href="#login"
-          aria-label="${labels.signin}"
-          title="${labels.signin}"
+          class="desktop-auth-link desktop-auth-link-settings${profileMode ? " is-active" : ""}"
+          data-desktop-auth="settings"
+          href="profile.html?action=profile"
+          aria-label="${labels.settings || labels.profile || labels.signin}"
+          title="${labels.settings || labels.profile || labels.signin}"
         >
           <span class="desktop-auth-link-icon-wrap" aria-hidden="true">
             <img class="desktop-auth-link-image" src="assets/ayar1.png?v=20260226-2" alt="" />
           </span>
-          <span class="visually-hidden desktop-auth-link-text">${labels.signin}</span>
+          <span class="visually-hidden desktop-auth-link-text">${labels.settings || labels.profile || labels.signin}</span>
         </a>
       `;
       topbar.appendChild(authNav);
     }
 
-    const signupLink = authNav.querySelector('[data-desktop-auth="signup"]');
     const signinLink = authNav.querySelector('[data-desktop-auth="signin"]');
+    const signupLink = authNav.querySelector('[data-desktop-auth="signup"]');
+    const settingsLink = authNav.querySelector('[data-desktop-auth="settings"]');
 
     function updateDesktopAuthLabels() {
       const labels = getDesktopAuthLabels();
@@ -599,33 +638,35 @@
       const hasSession = Boolean(readSession());
 
       authNav.setAttribute("aria-label", labels.nav);
+      const settingsLabel = labels.settings || labels.profile || copy.profile;
+      setDesktopLinkLabel(signinLink, labels.signin);
       setDesktopLinkLabel(signupLink, labels.signup);
-      setDesktopLinkLabel(signinLink, hasSession ? copy.profile : labels.signin);
+      setDesktopLinkLabel(settingsLink, settingsLabel);
+
+      if (signinLink instanceof HTMLElement) {
+        signinLink.classList.toggle("is-hidden", hasSession);
+      }
 
       if (signupLink instanceof HTMLElement) {
         signupLink.classList.toggle("is-hidden", hasSession);
       }
 
-      if (signinLink instanceof HTMLAnchorElement) {
-        signinLink.href = hasSession ? "profile.html?action=profile" : "#login";
+      if (settingsLink instanceof HTMLAnchorElement) {
+        settingsLink.href = "profile.html?action=profile";
       }
+    }
+
+    if (signinLink instanceof HTMLAnchorElement) {
+      signinLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        openAuthModal("login", signinLink);
+      });
     }
 
     if (signupLink instanceof HTMLAnchorElement) {
       signupLink.addEventListener("click", (event) => {
         event.preventDefault();
         openAuthModal("signup", signupLink);
-      });
-    }
-
-    if (signinLink instanceof HTMLAnchorElement) {
-      signinLink.addEventListener("click", (event) => {
-        if (readSession()) {
-          return;
-        }
-
-        event.preventDefault();
-        openAuthModal("login", signinLink);
       });
     }
 

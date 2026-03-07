@@ -812,28 +812,33 @@
   const DESKTOP_AUTH_TEXT = {
     TR: {
       nav: "Hesap bağlantıları",
-      signup: "Sign up",
-      signin: "Sign in",
+      signup: "Kayıt ol",
+      signin: "Giriş yap",
+      settings: "Ayarlar",
     },
     EN: {
       nav: "Account links",
       signup: "Sign up",
       signin: "Sign in",
+      settings: "Settings",
     },
     RU: {
       nav: "Ссылки аккаунта",
-      signup: "Sign up",
-      signin: "Sign in",
+      signup: "Регистрация",
+      signin: "Войти",
+      settings: "Настройки",
     },
     DE: {
       nav: "Kontolinks",
-      signup: "Sign up",
-      signin: "Sign in",
+      signup: "Registrieren",
+      signin: "Anmelden",
+      settings: "Einstellungen",
     },
     ZH: {
       nav: "账户链接",
-      signup: "Sign up",
-      signin: "Sign in",
+      signup: "注册",
+      signin: "登录",
+      settings: "设置",
     },
   };
 

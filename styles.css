@@ -211,10 +211,6 @@ main {
   object-fit: contain;
 }
 
-.desktop-auth-link-signin {
-  color: #8c4e2f;
-}
-
 .desktop-auth-link:hover,
 .desktop-auth-link:focus-visible {
   color: #0f7f62;
@@ -222,8 +218,12 @@ main {
   outline: none;
 }
 
-.desktop-auth-link-signin:hover,
-.desktop-auth-link-signin:focus-visible {
+.desktop-auth-link-settings {
+  color: #8c4e2f;
+}
+
+.desktop-auth-link-settings:hover,
+.desktop-auth-link-settings:focus-visible {
   color: #b45d2c;
 }
 
@@ -242,10 +242,6 @@ main {
     margin-left: auto;
     margin-top: 0;
     gap: 0.34rem;
-  }
-
-  .desktop-auth-link-signup {
-    display: none;
   }
 }
 
@@ -709,6 +705,26 @@ main {
   font: inherit;
   font-size: 0.94rem;
   cursor: pointer;
+}
+
+.auth-inline-link {
+  margin: 0.45rem 0 0;
+  border: 0;
+  background: transparent;
+  color: #116466;
+  font: inherit;
+  font-size: 0.86rem;
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+}
+
+.auth-inline-link:hover,
+.auth-inline-link:focus-visible {
+  color: #0f7f62;
+  outline: none;
 }
 
 .auth-message {
