@@ -18,7 +18,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css?v=20260307-20" />
-    <link rel="stylesheet" href="profile.css?v=20260307-45" />
+    <link rel="stylesheet" href="profile.css?v=20260307-48" />
   </head>
   <body class="profile-page settings-page language-page">
     <div class="texture"></div>
@@ -46,42 +46,274 @@
       <button class="header-search-btn" type="submit">Bul</button>
     </form>
 
-    <main class="settings-shell language-shell">
-      <section class="settings-card language-card" aria-label="Dil seçenekleri">
-        <div class="language-card-head">
-          <h2>Dil seç</h2>
-          <p>Uygulama metinleri bu seçime göre güncellenir.</p>
-        </div>
-        <div class="language-options" role="list">
-          <button class="language-option" data-language-choice="TR" type="button">
-            <span class="language-option-code">TR</span>
-            <span class="language-option-name">Türkçe</span>
+    <main class="settings-shell settings-dashboard-shell language-shell">
+      <div class="settings-layout">
+        <aside class="settings-card settings-sidebar-card" aria-label="Ayar bölümleri">
+          <a class="settings-row" href="profile.html?action=profile" aria-label="Hesap">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8.2" r="3.3"></circle>
+                <path d="M5 18.5c1-3 3.5-4.8 7-4.8s6 1.8 7 4.8"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Hesap</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
+
+          <button class="settings-row settings-row-button is-active" type="button" data-settings-panel-trigger="language" aria-pressed="true" aria-label="Diller">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8"></circle>
+                <path d="M4.4 12h15.2"></path>
+                <path d="M12 4.4a11.8 11.8 0 0 1 0 15.2"></path>
+                <path d="M12 4.4a11.8 11.8 0 0 0 0 15.2"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Diller</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
           </button>
-          <button class="language-option" data-language-choice="EN" type="button">
-            <span class="language-option-code">EN</span>
-            <span class="language-option-name">English</span>
+
+          <button class="settings-row settings-row-button" type="button" data-settings-panel-trigger="feedback" aria-pressed="false" aria-label="Geribildirim">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v5A2.5 2.5 0 0 1 16.5 15H11l-4 4v-4H7.5A2.5 2.5 0 0 1 5 12.5z"></path>
+                <path d="M9 9.5h6"></path>
+                <path d="M9 12h4"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Geribildirim</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
           </button>
-          <button class="language-option" data-language-choice="DE" type="button">
-            <span class="language-option-code">DE</span>
-            <span class="language-option-name">Deutsch</span>
+
+          <button class="settings-row settings-row-button" type="button" data-settings-panel-trigger="help" aria-pressed="false" aria-label="Yardım">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8"></circle>
+                <path d="M9.8 9.7a2.5 2.5 0 0 1 4.4 1.6c0 1.8-2.2 2.1-2.2 3.5"></path>
+                <path d="M12 17h.1"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Yardım</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
           </button>
-          <button class="language-option" data-language-choice="RU" type="button">
-            <span class="language-option-code">RU</span>
-            <span class="language-option-name">Русский</span>
+
+          <button class="settings-row settings-row-button" type="button" data-settings-panel-trigger="about" aria-pressed="false" aria-label="Hakkımızda">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="4" width="14" height="16" rx="2"></rect>
+                <path d="M12 8h.1"></path>
+                <path d="M10.9 12H12v3"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Hakkımızda</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
           </button>
-        </div>
-        <p id="languageSaveMessage" class="language-save-message" aria-live="polite"></p>
-      </section>
+
+          <button id="settingsSignOutBtn" class="settings-signout" type="button">Çıkış yap</button>
+        </aside>
+
+        <section class="settings-panel-stack">
+          <section class="settings-card settings-account-card">
+            <div class="settings-account-head">
+              <div class="settings-avatar" id="settingsAvatar" aria-hidden="true">M</div>
+              <div>
+                <h2 id="settingsName">Misafir</h2>
+              </div>
+            </div>
+          </section>
+
+          <section class="settings-card settings-panel-card language-card" data-settings-panel="language" aria-label="Dil seçenekleri">
+            <div class="language-card-head">
+              <h2>Dil seç</h2>
+              <p>Uygulama metinleri bu seçime göre güncellenir.</p>
+            </div>
+            <div class="language-options" role="list">
+              <button class="language-option" data-language-choice="TR" type="button">
+                <span class="language-option-code">TR</span>
+                <span class="language-option-name">Türkçe</span>
+              </button>
+              <button class="language-option" data-language-choice="EN" type="button">
+                <span class="language-option-code">EN</span>
+                <span class="language-option-name">English</span>
+              </button>
+              <button class="language-option" data-language-choice="DE" type="button">
+                <span class="language-option-code">DE</span>
+                <span class="language-option-name">Deutsch</span>
+              </button>
+              <button class="language-option" data-language-choice="RU" type="button">
+                <span class="language-option-code">RU</span>
+                <span class="language-option-name">Русский</span>
+              </button>
+              <button class="language-option" data-language-choice="ZH" type="button">
+                <span class="language-option-code">ZH</span>
+                <span class="language-option-name">中文</span>
+              </button>
+            </div>
+            <p id="languageSaveMessage" class="language-save-message" aria-live="polite"></p>
+          </section>
+
+          <section class="settings-card settings-panel-card account-editor-card settings-feedback-form-card" data-settings-panel="feedback" aria-label="Geribildirim" hidden>
+            <div class="language-card-head">
+              <h2>Geribildirim</h2>
+            </div>
+            <form class="settings-feedback-form" id="settingsFeedbackForm" novalidate>
+              <div class="settings-feedback-grid">
+                <label class="settings-feedback-field" data-span="full">
+                  <input id="settingsFeedbackName" type="text" name="name" placeholder="Ad Soyad" autocomplete="name" aria-label="Ad Soyad" required />
+                </label>
+                <label class="settings-feedback-field" data-span="full">
+                  <input id="settingsFeedbackEmail" type="email" name="email" placeholder="E-posta" autocomplete="email" aria-label="E-posta" required />
+                </label>
+                <label class="settings-feedback-field" data-span="full">
+                  <select id="settingsFeedbackSubject" name="subject" aria-label="Konu" required>
+                    <option value="">Konu</option>
+                    <option value="destek">Genel Konular</option>
+                    <option value="ortaklik">İş Birliği</option>
+                    <option value="icerik">İçerik Düzeltmeleri</option>
+                  </select>
+                </label>
+                <label class="settings-feedback-field" data-span="full">
+                  <div class="settings-feedback-phone-group">
+                    <span class="settings-feedback-phone-prefix" aria-hidden="true">+90</span>
+                    <input id="settingsFeedbackPhoneAreaCode" type="text" name="phoneAreaCode" placeholder="Alan kodu" inputmode="numeric" maxlength="3" pattern="\\d{3}" autocomplete="tel-area-code" aria-label="Alan kodu" />
+                    <input id="settingsFeedbackPhoneNumber" type="tel" name="phoneNumber" placeholder="Telefon numarası" inputmode="numeric" maxlength="7" pattern="\\d{7}" autocomplete="tel-local" aria-label="Telefon numarası" />
+                  </div>
+                </label>
+                <label class="settings-feedback-field" data-span="full">
+                  <textarea id="settingsFeedbackMessage" name="message" rows="6" placeholder="Mesaj" aria-label="Mesaj" required></textarea>
+                </label>
+              </div>
+              <div class="settings-feedback-actions">
+                <button class="settings-feedback-submit" type="submit">Gönder</button>
+              </div>
+              <p id="settingsFeedbackStatus" class="settings-signup-message" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="help" aria-label="Yardım" hidden>
+            <div class="language-card-head">
+              <h2>Yardım</h2>
+              <p>En çok sorulan temel konuları kısa cevaplarla burada topladık.</p>
+            </div>
+            <div class="settings-help-content">
+              <div class="settings-help-item">
+                <strong>Nasıl arama yaparım?</strong>
+                <p>Üst arama alanından doğrudan mekan adı yazabilir ya da anasayfadan kategori seçebilirsin.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Bilgi yanlışsa ne yapmalıyım?</strong>
+                <p>Geribildirim sekmesinden kısa bir not bırakabilir ya da iletişim sayfasından bize yazabilirsin.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Hesap şart mı?</strong>
+                <p>Temel gezinme için hesap gerekmez. Kayıtlı kullanıcı ayarları için hesap alanını kullanabilirsin.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="about" aria-label="Hakkında" hidden>
+            <div class="settings-help-content">
+              <div class="settings-help-item">
+                <strong>Hakkımızda</strong>
+                <p>Aramabul, kullanıcının bir yeri ararken, en kısa yoldan ve net bilgi bulmasını amaçlayan sade tasarımlı bir yardımcıdır.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Neden var?</strong>
+                <p>İnsanlar çoğu zaman bir yerin adını değil, ihtiyacını bilir. Biz de aramayı ihtiyaçtan başlatıyoruz.</p>
+                <p>Amaç, gereksiz kalabalığı ve çabayı azaltarak, ihtiyaç duyduğunuz hizmet ve ürüne daha hızlı ulaşmanızı sağlamak.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Nasıl çalışır?</strong>
+                <p>Kategori, şehir ve ilçe katmanları sırasıyla, önce alt kategoriler, son olarak da hizmet mekanları seçenekleri ile sizi buluşturuyoruz.</p>
+                <p>Bilgiyi kutu yapısında sunarak, kullanıcıyı uzun sayfalarda dolaştırmadan net karar alanına ulaştırıyoruz. İhtiyaç duyduğunuz hizmeti alacağınız mekanı, tüm ulaşım ve iletişim bilgileri ile, en kullanıcı dostu biçimde görmenizi sağlıyoruz.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Temel yaklaşımımız</strong>
+                <p>Basit arayüz</p>
+                <p>Açık bilgi</p>
+                <p>Hızlı ve ayrıntılı yönlendirme</p>
+              </div>
+            </div>
+          </section>
+        </section>
+      </div>
     </main>
+
+    <footer class="yr-footer global-footer" aria-label="Alt bilgi">
+      <div class="yr-footer-inner">
+        <div class="yr-footer-grid">
+          <section class="yr-footer-col">
+            <h4>İndirin</h4>
+            <a class="store-badge" href="#" aria-label="App Store">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">App Store</span>
+            </a>
+            <a class="store-badge" href="#" aria-label="Google Play">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">Google Play</span>
+            </a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>aramabul'u keşfet</h4>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="yer-ekle.html">Yer ekle</a>
+            <a href="iletisim.html">İletişim</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>Yardım mı lazım?</h4>
+            <a href="sss.html">Sıkça Sorulan Sorular</a>
+            <a href="cerez-politikasi.html">Çerez Politikası</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>Kurumsal</h4>
+            <a href="kullanim-kosullari.html">Kullanım Koşulları</a>
+            <a href="kvkk.html">Kişisel Verilerin Korunması</a>
+            <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
+          </section>
+        </div>
+
+        <div class="yr-footer-bottom">
+          <p>© 2026 aramabul</p>
+          <div class="yr-footer-social" aria-label="Sosyal">
+            <a href="#" aria-label="Instagram">○</a>
+            <a href="#" aria-label="Ara">◌</a>
+            <a href="#" aria-label="Dünya">◍</a>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <script src="web-runtime.js?v=20260302-01"></script>
     <script src="header-state.js?v=20260302-01"></script>
-    <script src="header-i18n.js?v=20260304-09"></script>
-    <script src="header-nav.js?v=20260307-04"></script>
-    <script src="header-shell.js?v=20260302-02"></script>
-    <script src="header-search-ui.js?v=20260303-04"></script>
-    <script src="header-search-data.js?v=20260303-06"></script>
+  <script src="header-i18n.js?v=20260304-10"></script>
+  <script src="header-nav.js?v=20260307-06"></script>
+  <script src="header-shell.js?v=20260302-02"></script>
+  <script src="header-search-ui.js?v=20260303-04"></script>
+  <script src="header-search-data.js?v=20260303-06"></script>
     <script src="header-search.js?v=20260307-22"></script>
-    <script src="language-settings.js?v=20260307-08"></script>
+    <script src="language-settings.js?v=20260307-09"></script>
   </body>
 </html>

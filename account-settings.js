@@ -20,6 +20,16 @@
     return String(value || "").trim().toLocaleLowerCase("en-US");
   }
 
+  function translateUi(text) {
+    const i18n = window.ARAMABUL_HEADER_I18N;
+    const source = String(text || "");
+    if (i18n && typeof i18n.getStaticUiTranslation === "function") {
+      const lang = typeof window.ARAMABUL_GET_LANGUAGE === "function" ? window.ARAMABUL_GET_LANGUAGE() : "TR";
+      return i18n.getStaticUiTranslation(source, lang);
+    }
+    return source;
+  }
+
   function readStorageValue(key) {
     return runtime.readStorageValue(key);
   }
@@ -156,7 +166,7 @@
       accountSignupBtn.hidden = Boolean(session);
     }
     if (!session) {
-      setMessage("Kayıtlı oturum yok. Önce kayıt ol.");
+      setMessage(translateUi("Kayıtlı oturum yok. Önce kayıt ol."));
       return;
     }
 
@@ -192,12 +202,12 @@
       const email = normalizeEmail(accountEmailInput instanceof HTMLInputElement ? accountEmailInput.value : "");
 
       if (name.length < 2) {
-        setMessage("Ad soyad en az 2 karakter olmalı.", true);
+        setMessage(translateUi("Ad soyad en az 2 karakter olmalı."), true);
         return;
       }
 
       if (!email.includes("@") || email.length < 6) {
-        setMessage("Geçerli bir e-posta gir.", true);
+        setMessage(translateUi("Geçerli bir e-posta gir."), true);
         return;
       }
 
@@ -213,7 +223,7 @@
       });
 
       if (duplicate) {
-        setMessage("Bu e-posta başka bir hesapta kayıtlı.", true);
+        setMessage(translateUi("Bu e-posta başka bir hesapta kayıtlı."), true);
         return;
       }
 
@@ -241,7 +251,7 @@
       writeUsers(nextUsers);
       writeSession({ name, email });
       renderAccount();
-      setMessage("Hesap bilgileri kaydedildi.");
+      setMessage(translateUi("Hesap bilgileri kaydedildi."));
     });
   }
 

@@ -38,12 +38,22 @@
     return String(value || "").trim().toLocaleLowerCase("en-US");
   }
 
-  function setFeedbackStatus(text) {
+  function translateUi(text) {
+    const i18n = window.ARAMABUL_HEADER_I18N;
+    const source = String(text || "");
+    if (i18n && typeof i18n.getStaticUiTranslation === "function") {
+      const lang = typeof window.ARAMABUL_GET_LANGUAGE === "function" ? window.ARAMABUL_GET_LANGUAGE() : "TR";
+      return i18n.getStaticUiTranslation(source, lang);
+    }
+    return source;
+  }
+
+  function setFeedbackStatus(text, isError = false) {
     if (!feedbackStatus) {
       return;
     }
     feedbackStatus.textContent = text;
-    feedbackStatus.classList.toggle("is-ok", !text || text.startsWith("Mesajın "));
+    feedbackStatus.classList.toggle("is-ok", !isError && Boolean(text));
   }
 
   function readTheme() {
@@ -122,7 +132,7 @@
         if (feedbackForm instanceof HTMLFormElement) {
           feedbackForm.reportValidity();
         }
-        setFeedbackStatus("Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.");
+        setFeedbackStatus(translateUi("Lütfen ad, e-posta, konu ve mesaj alanlarını doldur."), true);
         return;
       }
 
@@ -139,10 +149,10 @@
 
       const mailtoHref =
         `mailto:${selectedTarget.address}`
-        + `?subject=${encodeURIComponent(selectedTarget.subject)}`
+        + `?subject=${encodeURIComponent(translateUi(selectedTarget.subject))}`
         + `&body=${encodeURIComponent(messageLines.join("\n"))}`;
 
-      setFeedbackStatus("Mesajın seçilen konuya göre hazırlandı.");
+      setFeedbackStatus(translateUi("Mesajın seçilen konuya göre hazırlandı."));
       window.location.href = mailtoHref;
     });
   }

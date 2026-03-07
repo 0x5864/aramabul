@@ -8,12 +8,14 @@
     EN: { htmlLang: "en" },
     DE: { htmlLang: "de" },
     RU: { htmlLang: "ru" },
+    ZH: { htmlLang: "zh" },
   };
   const LANGUAGE_SAVE_MESSAGES = {
     TR: "{code} seçildi.",
     EN: "{code} selected.",
     DE: "{code} ausgewählt.",
     RU: "Выбран язык {code}.",
+    ZH: "已选择 {code}。",
   };
 
   const settingsAvatar = document.querySelector("#settingsAvatar");
@@ -68,6 +70,16 @@
 
   function normalizeEmail(value) {
     return String(value || "").trim().toLocaleLowerCase("en-US");
+  }
+
+  function translateUi(text) {
+    const i18n = window.ARAMABUL_HEADER_I18N;
+    const source = String(text || "");
+    if (i18n && typeof i18n.getStaticUiTranslation === "function") {
+      const lang = typeof window.ARAMABUL_GET_LANGUAGE === "function" ? window.ARAMABUL_GET_LANGUAGE() : "TR";
+      return i18n.getStaticUiTranslation(source, lang);
+    }
+    return source;
   }
 
   function readLanguage() {
@@ -143,7 +155,7 @@
     }
     if (settingsSignOutBtn instanceof HTMLButtonElement) {
       settingsSignOutBtn.disabled = !session;
-      settingsSignOutBtn.textContent = session ? "Çıkış yap" : "Çıkış için giriş yap";
+      settingsSignOutBtn.textContent = session ? translateUi("Çıkış yap") : translateUi("Çıkış için giriş yap");
     }
     if (feedbackName instanceof HTMLInputElement && !feedbackName.value.trim()) {
       feedbackName.value = session ? userName : "";
@@ -166,10 +178,10 @@
     return template.replace("{code}", selectedCode);
   }
 
-  function setFeedbackStatus(text) {
+  function setFeedbackStatus(text, isError = false) {
     if (feedbackStatus) {
       feedbackStatus.textContent = text;
-      feedbackStatus.classList.toggle("is-ok", !text || text.startsWith("Mesajın "));
+      feedbackStatus.classList.toggle("is-ok", !isError && Boolean(text));
     }
   }
 
@@ -273,7 +285,7 @@
         if (feedbackForm instanceof HTMLFormElement) {
           feedbackForm.reportValidity();
         }
-        setFeedbackStatus("Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.");
+        setFeedbackStatus(translateUi("Lütfen ad, e-posta, konu ve mesaj alanlarını doldur."), true);
         return;
       }
 
@@ -290,10 +302,10 @@
 
       const mailtoHref =
         `mailto:${selectedTarget.address}`
-        + `?subject=${encodeURIComponent(selectedTarget.subject)}`
+        + `?subject=${encodeURIComponent(translateUi(selectedTarget.subject))}`
         + `&body=${encodeURIComponent(messageLines.join("\n"))}`;
 
-      setFeedbackStatus("Mesajın seçilen konuya göre hazırlandı.");
+      setFeedbackStatus(translateUi("Mesajın seçilen konuya göre hazırlandı."));
       window.location.href = mailtoHref;
     });
   }

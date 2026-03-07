@@ -168,6 +168,50 @@
       "Hastaneler": "Hospitals",
       "Hakkımızda": "About us",
       "Sıkça Sorulan Sorular": "FAQ",
+      "Çıkış için giriş yap": "Sign in to sign out",
+      "Kayıtlı oturum yok. Önce kayıt ol.": "No active session. Sign up first.",
+      "Kayıt ol penceresi yakında burada açılacak.": "The sign-up window will be available here soon.",
+      "Ad soyad en az 2 karakter olmalı.": "Full name must be at least 2 characters.",
+      "Geçerli bir e-posta gir.": "Enter a valid email.",
+      "Bu e-posta başka bir hesapta kayıtlı.": "This email is already used by another account.",
+      "Hesap bilgileri kaydedildi.": "Account details saved.",
+      "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "Please fill in name, email, subject, and message.",
+      "Mesajın seçilen konuya göre hazırlandı.": "Your message is prepared for the selected topic.",
+      "Konu": "Subject",
+      "Genel Konular": "General Topics",
+      "İş Birliği": "Partnership",
+      "İçerik Düzeltmeleri": "Content Corrections",
+      "Alan kodu": "Area code",
+      "Telefon numarası": "Phone number",
+      "Mesaj": "Message",
+      "En çok sorulan temel konuları kısa cevaplarla burada topladık.": "We gathered the most common questions here with short answers.",
+      "Nasıl arama yaparım?": "How do I search?",
+      "Üst arama alanından doğrudan mekan adı yazabilir ya da anasayfadan kategori seçebilirsin.":
+        "You can type a place name in the top search box or choose a category from the home page.",
+      "Bilgi yanlışsa ne yapmalıyım?": "What should I do if information is wrong?",
+      "Geribildirim sekmesinden kısa bir not bırakabilir ya da iletişim sayfasından bize yazabilirsin.":
+        "You can leave a short note in the feedback tab or contact us from the contact page.",
+      "Hesap şart mı?": "Is an account required?",
+      "Temel gezinme için hesap gerekmez. Kayıtlı kullanıcı ayarları için hesap alanını kullanabilirsin.":
+        "You do not need an account for basic browsing. Use the account area for saved user settings.",
+      "Aramabul uygulamasının yaklaşımını ve çalışma mantığını burada bulabilirsin.":
+        "You can find Aramabul's approach and how it works here.",
+      "Aramabul, kullanıcının bir yeri ararken, en kısa yoldan ve net bilgi bulmasını amaçlayan sade tasarımlı bir yardımcıdır.":
+        "Aramabul is a simple helper designed to help users find clear location information quickly.",
+      "Neden var?": "Why does it exist?",
+      "İnsanlar çoğu zaman bir yerin adını değil, ihtiyacını bilir. Biz de aramayı ihtiyaçtan başlatıyoruz.":
+        "People often know their need, not the place name. So we start search from the need.",
+      "Amaç, gereksiz kalabalığı ve çabayı azaltarak, ihtiyaç duyduğunuz hizmet ve ürüne daha hızlı ulaşmanızı sağlamak.":
+        "The goal is to reduce clutter and effort so you can reach the service or product you need faster.",
+      "Nasıl çalışır?": "How does it work?",
+      "Kategori, şehir ve ilçe katmanları sırasıyla, önce alt kategoriler, son olarak da hizmet mekanları seçenekleri ile sizi buluşturuyoruz.":
+        "We guide you through category, city, and district layers, then present subcategories and service places.",
+      "Bilgiyi kutu yapısında sunarak, kullanıcıyı uzun sayfalarda dolaştırmadan net karar alanına ulaştırıyoruz. İhtiyaç duyduğunuz hizmeti alacağınız mekanı, tüm ulaşım ve iletişim bilgileri ile, en kullanıcı dostu biçimde görmenizi sağlıyoruz.":
+        "We present information in card format so users can reach a clear decision area without scrolling long pages. We show the right place with full transport and contact details in a user-friendly way.",
+      "Temel yaklaşımımız": "Our core approach",
+      "Basit arayüz": "Simple interface",
+      "Açık bilgi": "Clear information",
+      "Hızlı ve ayrıntılı yönlendirme": "Fast and detailed guidance",
     },
     RU: {
       "Anasayfa": "Главная",
@@ -305,6 +349,50 @@
       "Hastaneler": "Больницы",
       "Hakkımızda": "О нас",
       "Sıkça Sorulan Sorular": "Частые вопросы",
+      "Çıkış için giriş yap": "Войдите, чтобы выйти",
+      "Kayıtlı oturum yok. Önce kayıt ol.": "Нет активной сессии. Сначала зарегистрируйтесь.",
+      "Kayıt ol penceresi yakında burada açılacak.": "Окно регистрации скоро будет доступно здесь.",
+      "Ad soyad en az 2 karakter olmalı.": "Имя и фамилия должны быть не короче 2 символов.",
+      "Geçerli bir e-posta gir.": "Введите корректный e-mail.",
+      "Bu e-posta başka bir hesapta kayıtlı.": "Этот e-mail уже используется в другом аккаунте.",
+      "Hesap bilgileri kaydedildi.": "Данные аккаунта сохранены.",
+      "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "Заполните поля: имя, e-mail, тема и сообщение.",
+      "Mesajın seçilen konuya göre hazırlandı.": "Сообщение подготовлено по выбранной теме.",
+      "Konu": "Тема",
+      "Genel Konular": "Общие вопросы",
+      "İş Birliği": "Сотрудничество",
+      "İçerik Düzeltmeleri": "Исправления контента",
+      "Alan kodu": "Код зоны",
+      "Telefon numarası": "Номер телефона",
+      "Mesaj": "Сообщение",
+      "En çok sorulan temel konuları kısa cevaplarla burada topladık.": "Здесь мы собрали самые частые вопросы с краткими ответами.",
+      "Nasıl arama yaparım?": "Как выполнить поиск?",
+      "Üst arama alanından doğrudan mekan adı yazabilir ya da anasayfadan kategori seçebilirsin.":
+        "Вы можете ввести название места в верхней строке поиска или выбрать категорию на главной.",
+      "Bilgi yanlışsa ne yapmalıyım?": "Что делать, если информация неверная?",
+      "Geribildirim sekmesinden kısa bir not bırakabilir ya da iletişim sayfasından bize yazabilirsin.":
+        "Оставьте короткую заметку во вкладке обратной связи или напишите нам через страницу контактов.",
+      "Hesap şart mı?": "Нужен ли аккаунт?",
+      "Temel gezinme için hesap gerekmez. Kayıtlı kullanıcı ayarları için hesap alanını kullanabilirsin.":
+        "Для обычного просмотра аккаунт не нужен. Для сохраненных настроек используйте раздел аккаунта.",
+      "Aramabul uygulamasının yaklaşımını ve çalışma mantığını burada bulabilirsin.":
+        "Здесь вы найдете подход Aramabul и принцип его работы.",
+      "Aramabul, kullanıcının bir yeri ararken, en kısa yoldan ve net bilgi bulmasını amaçlayan sade tasarımlı bir yardımcıdır.":
+        "Aramabul — это простой сервис, помогающий быстро находить точную информацию о местах.",
+      "Neden var?": "Зачем это нужно?",
+      "İnsanlar çoğu zaman bir yerin adını değil, ihtiyacını bilir. Biz de aramayı ihtiyaçtan başlatıyoruz.":
+        "Чаще всего люди знают свою потребность, а не название места. Поэтому поиск начинается с потребности.",
+      "Amaç, gereksiz kalabalığı ve çabayı azaltarak, ihtiyaç duyduğunuz hizmet ve ürüne daha hızlı ulaşmanızı sağlamak.":
+        "Наша цель — уменьшить лишнюю сложность и помочь быстрее найти нужную услугу или товар.",
+      "Nasıl çalışır?": "Как это работает?",
+      "Kategori, şehir ve ilçe katmanları sırasıyla, önce alt kategoriler, son olarak da hizmet mekanları seçenekleri ile sizi buluşturuyoruz.":
+        "Мы ведем вас по уровням: категория, город, район, затем подкатегории и варианты мест услуг.",
+      "Bilgiyi kutu yapısında sunarak, kullanıcıyı uzun sayfalarda dolaştırmadan net karar alanına ulaştırıyoruz. İhtiyaç duyduğunuz hizmeti alacağınız mekanı, tüm ulaşım ve iletişim bilgileri ile, en kullanıcı dostu biçimde görmenizi sağlıyoruz.":
+        "Мы показываем информацию в карточках, чтобы вы быстрее приняли решение без длинной прокрутки. Вы видите подходящее место со всеми контактами и данными проездa в удобном формате.",
+      "Temel yaklaşımımız": "Наш основной подход",
+      "Basit arayüz": "Простой интерфейс",
+      "Açık bilgi": "Понятная информация",
+      "Hızlı ve ayrıntılı yönlendirme": "Быстрое и подробное направление",
     },
     DE: {
       "Anasayfa": "Startseite",
@@ -442,6 +530,50 @@
       "Hastaneler": "Krankenhäuser",
       "Hakkımızda": "Über uns",
       "Sıkça Sorulan Sorular": "FAQ",
+      "Çıkış için giriş yap": "Zum Abmelden bitte anmelden",
+      "Kayıtlı oturum yok. Önce kayıt ol.": "Keine aktive Sitzung. Bitte zuerst registrieren.",
+      "Kayıt ol penceresi yakında burada açılacak.": "Das Registrierungsfenster wird hier bald verfügbar sein.",
+      "Ad soyad en az 2 karakter olmalı.": "Der vollständige Name muss mindestens 2 Zeichen haben.",
+      "Geçerli bir e-posta gir.": "Bitte gib eine gültige E-Mail ein.",
+      "Bu e-posta başka bir hesapta kayıtlı.": "Diese E-Mail wird bereits von einem anderen Konto verwendet.",
+      "Hesap bilgileri kaydedildi.": "Kontodaten gespeichert.",
+      "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "Bitte fülle Name, E-Mail, Betreff und Nachricht aus.",
+      "Mesajın seçilen konuya göre hazırlandı.": "Deine Nachricht wurde für das gewählte Thema vorbereitet.",
+      "Konu": "Betreff",
+      "Genel Konular": "Allgemeine Themen",
+      "İş Birliği": "Zusammenarbeit",
+      "İçerik Düzeltmeleri": "Inhaltskorrekturen",
+      "Alan kodu": "Vorwahl",
+      "Telefon numarası": "Telefonnummer",
+      "Mesaj": "Nachricht",
+      "En çok sorulan temel konuları kısa cevaplarla burada topladık.": "Hier haben wir die häufigsten Fragen mit kurzen Antworten gesammelt.",
+      "Nasıl arama yaparım?": "Wie suche ich?",
+      "Üst arama alanından doğrudan mekan adı yazabilir ya da anasayfadan kategori seçebilirsin.":
+        "Du kannst den Ort direkt im oberen Suchfeld eingeben oder auf der Startseite eine Kategorie wählen.",
+      "Bilgi yanlışsa ne yapmalıyım?": "Was soll ich tun, wenn Informationen falsch sind?",
+      "Geribildirim sekmesinden kısa bir not bırakabilir ya da iletişim sayfasından bize yazabilirsin.":
+        "Du kannst im Feedback-Tab eine kurze Notiz hinterlassen oder uns über die Kontaktseite schreiben.",
+      "Hesap şart mı?": "Ist ein Konto erforderlich?",
+      "Temel gezinme için hesap gerekmez. Kayıtlı kullanıcı ayarları için hesap alanını kullanabilirsin.":
+        "Für die normale Nutzung ist kein Konto nötig. Für gespeicherte Einstellungen kannst du den Kontobereich nutzen.",
+      "Aramabul uygulamasının yaklaşımını ve çalışma mantığını burada bulabilirsin.":
+        "Hier findest du den Ansatz und die Funktionsweise von Aramabul.",
+      "Aramabul, kullanıcının bir yeri ararken, en kısa yoldan ve net bilgi bulmasını amaçlayan sade tasarımlı bir yardımcıdır.":
+        "Aramabul ist ein einfaches Tool, das dir hilft, beim Suchen eines Ortes schnell klare Informationen zu finden.",
+      "Neden var?": "Warum gibt es das?",
+      "İnsanlar çoğu zaman bir yerin adını değil, ihtiyacını bilir. Biz de aramayı ihtiyaçtan başlatıyoruz.":
+        "Menschen kennen oft ihr Bedürfnis, aber nicht den Ortsnamen. Deshalb starten wir die Suche beim Bedarf.",
+      "Amaç, gereksiz kalabalığı ve çabayı azaltarak, ihtiyaç duyduğunuz hizmet ve ürüne daha hızlı ulaşmanızı sağlamak.":
+        "Ziel ist es, unnötige Komplexität zu reduzieren und dich schneller zum passenden Service oder Produkt zu führen.",
+      "Nasıl çalışır?": "Wie funktioniert es?",
+      "Kategori, şehir ve ilçe katmanları sırasıyla, önce alt kategoriler, son olarak da hizmet mekanları seçenekleri ile sizi buluşturuyoruz.":
+        "Wir führen dich durch Kategorien, Stadt und Bezirk, dann zu Unterkategorien und passenden Service-Orten.",
+      "Bilgiyi kutu yapısında sunarak, kullanıcıyı uzun sayfalarda dolaştırmadan net karar alanına ulaştırıyoruz. İhtiyaç duyduğunuz hizmeti alacağınız mekanı, tüm ulaşım ve iletişim bilgileri ile, en kullanıcı dostu biçimde görmenizi sağlıyoruz.":
+        "Wir zeigen Informationen in Karten, damit du ohne lange Seiten schneller entscheiden kannst. So siehst du den passenden Ort mit allen Kontakt- und Wegdaten in nutzerfreundlicher Form.",
+      "Temel yaklaşımımız": "Unser Kernansatz",
+      "Basit arayüz": "Einfache Oberfläche",
+      "Açık bilgi": "Klare Informationen",
+      "Hızlı ve ayrıntılı yönlendirme": "Schnelle und detaillierte Navigation",
     },
     ZH: {
       "Anasayfa": "首页",
@@ -579,6 +711,50 @@
       "Hastaneler": "医院",
       "Hakkımızda": "关于我们",
       "Sıkça Sorulan Sorular": "常见问题",
+      "Çıkış için giriş yap": "请先登录再退出",
+      "Kayıtlı oturum yok. Önce kayıt ol.": "没有已登录会话。请先注册。",
+      "Kayıt ol penceresi yakında burada açılacak.": "注册窗口很快会在这里提供。",
+      "Ad soyad en az 2 karakter olmalı.": "姓名至少需要 2 个字符。",
+      "Geçerli bir e-posta gir.": "请输入有效邮箱。",
+      "Bu e-posta başka bir hesapta kayıtlı.": "该邮箱已被其他账号使用。",
+      "Hesap bilgileri kaydedildi.": "账户信息已保存。",
+      "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "请填写姓名、邮箱、主题和消息。",
+      "Mesajın seçilen konuya göre hazırlandı.": "你的消息已按所选主题准备好。",
+      "Konu": "主题",
+      "Genel Konular": "一般问题",
+      "İş Birliği": "合作",
+      "İçerik Düzeltmeleri": "内容修正",
+      "Alan kodu": "区号",
+      "Telefon numarası": "电话号码",
+      "Mesaj": "消息",
+      "En çok sorulan temel konuları kısa cevaplarla burada topladık.": "这里汇总了最常见问题并提供简短回答。",
+      "Nasıl arama yaparım?": "如何搜索？",
+      "Üst arama alanından doğrudan mekan adı yazabilir ya da anasayfadan kategori seçebilirsin.":
+        "你可以在顶部搜索框直接输入地点名称，或在首页选择分类。",
+      "Bilgi yanlışsa ne yapmalıyım?": "如果信息有误怎么办？",
+      "Geribildirim sekmesinden kısa bir not bırakabilir ya da iletişim sayfasından bize yazabilirsin.":
+        "你可以在反馈标签留下简短说明，或通过联系页面给我们留言。",
+      "Hesap şart mı?": "必须要账号吗？",
+      "Temel gezinme için hesap gerekmez. Kayıtlı kullanıcı ayarları için hesap alanını kullanabilirsin.":
+        "基础浏览不需要账号。若要使用已保存设置，请使用账号区域。",
+      "Aramabul uygulamasının yaklaşımını ve çalışma mantığını burada bulabilirsin.":
+        "你可以在这里了解 Aramabul 的理念和工作方式。",
+      "Aramabul, kullanıcının bir yeri ararken, en kısa yoldan ve net bilgi bulmasını amaçlayan sade tasarımlı bir yardımcıdır.":
+        "Aramabul 是一个简洁的助手，帮助用户在找地点时快速获得清晰信息。",
+      "Neden var?": "为什么存在？",
+      "İnsanlar çoğu zaman bir yerin adını değil, ihtiyacını bilir. Biz de aramayı ihtiyaçtan başlatıyoruz.":
+        "很多时候人们知道的是需求，而不是地点名称。因此我们从需求开始搜索。",
+      "Amaç, gereksiz kalabalığı ve çabayı azaltarak, ihtiyaç duyduğunuz hizmet ve ürüne daha hızlı ulaşmanızı sağlamak.":
+        "目标是减少不必要的复杂和操作，让你更快找到所需服务和产品。",
+      "Nasıl çalışır?": "如何运作？",
+      "Kategori, şehir ve ilçe katmanları sırasıyla, önce alt kategoriler, son olarak da hizmet mekanları seçenekleri ile sizi buluşturuyoruz.":
+        "我们按分类、城市、区县逐层引导，再提供子分类和服务地点选项。",
+      "Bilgiyi kutu yapısında sunarak, kullanıcıyı uzun sayfalarda dolaştırmadan net karar alanına ulaştırıyoruz. İhtiyaç duyduğunuz hizmeti alacağınız mekanı, tüm ulaşım ve iletişim bilgileri ile, en kullanıcı dostu biçimde görmenizi sağlıyoruz.":
+        "我们用卡片方式展示信息，避免在长页面中反复查找，帮助你更快做决定。你能以友好方式查看目标地点及完整交通和联系方式。",
+      "Temel yaklaşımımız": "我们的核心方法",
+      "Basit arayüz": "简洁界面",
+      "Açık bilgi": "清晰信息",
+      "Hızlı ve ayrıntılı yönlendirme": "快速且详细的引导",
     },
   };
   const STATIC_TEXT_NODE_ORIGINALS = new WeakMap();
