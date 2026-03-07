@@ -159,6 +159,17 @@ main {
   margin-top: 0.08rem;
 }
 
+.desktop-lang-switch .lang-switch-btn {
+  min-height: 2.04rem;
+  padding: 0.16rem 0.5rem;
+  border-radius: 6px;
+  background: #fffdf8;
+}
+
+.desktop-lang-switch .lang-switch-menu {
+  right: 0;
+}
+
 .desktop-auth-link {
   display: inline-flex;
   align-items: center;
@@ -227,6 +238,13 @@ main {
 
 @media (max-width: 900px) {
   .desktop-auth-links {
+    display: flex;
+    margin-left: auto;
+    margin-top: 0;
+    gap: 0.34rem;
+  }
+
+  .desktop-auth-link-signup {
     display: none;
   }
 }
@@ -2847,7 +2865,10 @@ body.search-choice-open {
   }
 
   .topbar {
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
     gap: 0.65rem;
   }
 
@@ -2862,7 +2883,25 @@ body.search-choice-open {
   }
 
   .brand {
-    width: 100%;
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .desktop-auth-links {
+    margin-top: 0;
+    margin-left: auto;
+  }
+
+  .desktop-auth-link {
+    min-width: 2rem;
+    min-height: 2rem;
+  }
+
+  .desktop-lang-switch .lang-switch-btn {
+    min-height: 1.86rem;
+    padding: 0.12rem 0.46rem;
+    font-size: 0.78rem;
   }
 
   .global-topbar .brand-wordmark,

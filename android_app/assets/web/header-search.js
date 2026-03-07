@@ -742,6 +742,51 @@
     });
   }
 
+  function createHeaderQuickActions() {
+    const topbar = document.querySelector(".global-topbar, .search-topbar, .topbar");
+    if (!(topbar instanceof HTMLElement)) {
+      return;
+    }
+
+    const existing = topbar.querySelector(".desktop-auth-links");
+    if (existing instanceof HTMLElement) {
+      return;
+    }
+
+    const actions = document.createElement("nav");
+    actions.className = "desktop-auth-links";
+    actions.setAttribute("aria-label", "Hızlı ayarlar");
+    actions.innerHTML = `
+      <div class="lang-switch desktop-lang-switch" data-lang-switch>
+        <button
+          class="lang-switch-btn"
+          type="button"
+          data-lang-trigger
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-label="Dil seç"
+          title="Dil seç"
+        >
+          <span class="lang-switch-code" data-lang-current>TR</span>
+        </button>
+        <div class="lang-switch-menu" data-lang-menu hidden>
+          <button class="lang-switch-option active" data-lang-option="TR" type="button" aria-pressed="true">TR</button>
+          <button class="lang-switch-option" data-lang-option="EN" type="button" aria-pressed="false">EN</button>
+          <button class="lang-switch-option" data-lang-option="DE" type="button" aria-pressed="false">DE</button>
+          <button class="lang-switch-option" data-lang-option="RU" type="button" aria-pressed="false">RU</button>
+        </div>
+      </div>
+      <a class="desktop-auth-link desktop-auth-link-signin" href="profile.html?action=profile" aria-label="Ayarlar" title="Ayarlar">
+        <span class="desktop-auth-link-icon-wrap" aria-hidden="true">
+          <img class="desktop-auth-link-image" src="assets/ayar1.png?v=20260226-2" alt="" />
+        </span>
+        <span class="visually-hidden">Ayarlar</span>
+      </a>
+    `;
+    topbar.appendChild(actions);
+  }
+
+  createHeaderQuickActions();
   initializeLanguageSwitcher();
   applyTheme(readStoredTheme(), false);
   applyStaticPageTranslations();

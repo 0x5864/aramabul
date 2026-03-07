@@ -33,7 +33,6 @@
     return headerI18n.normalizeFooterUi();
   }
 
-  initializeLanguageSwitcher();
   applyTheme(readStoredTheme(), false);
   applyStaticPageTranslations();
   normalizeFooterUi();
@@ -171,6 +170,7 @@
   }
 
   createDesktopAuthLinks();
+  initializeLanguageSwitcher();
   applySearchUiLanguage();
   hideTopLayerForCategoryPages();
   createMobileBottomNav();
