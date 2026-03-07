@@ -93,6 +93,7 @@
       "Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.":
         "Choose the topic you need. I will help you find the details and location.",
       "Yemek": "Food",
+      "Keyif alt kategorileri": "Leisure subcategories",
       "Kafe": "Cafe",
       "Kuaför": "Hairdresser",
       "Veteriner": "Veterinarian",
@@ -139,6 +140,7 @@
       "Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.":
         "Выберите нужную тему. Я помогу найти детали и место.",
       "Yemek": "Еда",
+      "Keyif alt kategorileri": "Подкатегории досуга",
       "Kafe": "Кафе",
       "Kuaför": "Парикмахер",
       "Veteriner": "Ветеринар",
@@ -185,6 +187,7 @@
       "Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.":
         "Wähle das passende Thema. Ich helfe dir, Details und Ort zu finden.",
       "Yemek": "Essen",
+      "Keyif alt kategorileri": "Genuss-Unterkategorien",
       "Kafe": "Café",
       "Kuaför": "Friseur",
       "Veteriner": "Tierarzt",
@@ -231,6 +234,7 @@
       "Sen aradığın başlığı seç! Onunla ilgili tüm bilgileri ve yerini bulman için sana yardım edeyim.":
         "选择你要找的主题。我会帮你找到相关信息和位置。",
       "Yemek": "美食",
+      "Keyif alt kategorileri": "休闲子分类",
       "Kafe": "咖啡馆",
       "Kuaför": "理发店",
       "Veteriner": "兽医",
