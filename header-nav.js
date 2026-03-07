@@ -21,6 +21,7 @@
       errorEmailExists: "Bu e-posta zaten kayıtlı.",
       errorInvalidCredentials: "E-posta veya şifre hatalı.",
       errorSecurity: "Tarayıcı güvenlik desteği bulunamadı.",
+      alreadyRegisteredUser: "Kayıtlı kullanıcı",
     }),
     EN: Object.freeze({
       brand: "aramabul",
@@ -43,6 +44,7 @@
       errorEmailExists: "This email is already registered.",
       errorInvalidCredentials: "Email or password is incorrect.",
       errorSecurity: "Security support is not available in this browser.",
+      alreadyRegisteredUser: "Registered user",
     }),
     RU: Object.freeze({
       brand: "aramabul",
@@ -65,6 +67,7 @@
       errorEmailExists: "Этот email уже зарегистрирован.",
       errorInvalidCredentials: "Неверный email или пароль.",
       errorSecurity: "В браузере нет нужной защиты.",
+      alreadyRegisteredUser: "Зарегистрированный пользователь",
     }),
     DE: Object.freeze({
       brand: "aramabul",
@@ -87,6 +90,7 @@
       errorEmailExists: "Diese E-Mail ist schon registriert.",
       errorInvalidCredentials: "E-Mail oder Passwort ist falsch.",
       errorSecurity: "Sicherheitsunterstuetzung ist nicht verfuegbar.",
+      alreadyRegisteredUser: "Registrierter Benutzer",
     }),
     ZH: Object.freeze({
       brand: "aramabul",
@@ -109,6 +113,7 @@
       errorEmailExists: "该邮箱已被注册。",
       errorInvalidCredentials: "邮箱或密码错误。",
       errorSecurity: "当前浏览器缺少安全支持。",
+      alreadyRegisteredUser: "已注册用户",
     }),
   });
 
@@ -768,6 +773,54 @@
     }
 
     const buttons = [...wrapper.querySelectorAll(".mobile-bottom-nav-btn")];
+    let navToastNode = null;
+
+    function showBottomNavToast(text) {
+      const message = String(text || "").trim();
+      if (!message) {
+        return;
+      }
+
+      if (!(navToastNode instanceof HTMLElement)) {
+        navToastNode = document.createElement("div");
+        navToastNode.className = "yr-mobile-nav-toast";
+        navToastNode.setAttribute("role", "status");
+        navToastNode.setAttribute("aria-live", "polite");
+        navToastNode.style.position = "fixed";
+        navToastNode.style.left = "50%";
+        navToastNode.style.bottom = "88px";
+        navToastNode.style.transform = "translateX(-50%) translateY(8px)";
+        navToastNode.style.opacity = "0";
+        navToastNode.style.pointerEvents = "none";
+        navToastNode.style.zIndex = "1500";
+        navToastNode.style.padding = "8px 12px";
+        navToastNode.style.borderRadius = "10px";
+        navToastNode.style.background = "#ffffff";
+        navToastNode.style.color = "#3f3f3f";
+        navToastNode.style.fontSize = "12px";
+        navToastNode.style.fontWeight = "600";
+        navToastNode.style.boxShadow = "0 10px 24px rgba(0, 0, 0, 0.22)";
+        navToastNode.style.transition = "opacity 180ms ease, transform 180ms ease";
+        document.body.appendChild(navToastNode);
+      }
+
+      navToastNode.textContent = message;
+      navToastNode.style.opacity = "1";
+      navToastNode.style.transform = "translateX(-50%) translateY(0)";
+      const activeTimer = Number.parseInt(String(navToastNode.dataset.timerId || ""), 10);
+      if (Number.isFinite(activeTimer)) {
+        window.clearTimeout(activeTimer);
+      }
+      const timerId = window.setTimeout(() => {
+        if (!(navToastNode instanceof HTMLElement)) {
+          return;
+        }
+        navToastNode.style.opacity = "0";
+        navToastNode.style.transform = "translateX(-50%) translateY(8px)";
+        navToastNode.dataset.timerId = "";
+      }, 1300);
+      navToastNode.dataset.timerId = String(timerId);
+    }
 
     function updateActiveNav() {
       buttons.forEach((button) => {
@@ -805,6 +858,10 @@
         }
 
         if (type === "signup") {
+          if (readSession()) {
+            showBottomNavToast(authText().alreadyRegisteredUser);
+            return;
+          }
           openAuthModal("signup", button);
           return;
         }
