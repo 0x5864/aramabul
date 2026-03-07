@@ -80,6 +80,7 @@
       "Çıkış yap": "Sign out",
       "Misafir": "Guest",
       "Kayıt ol": "Sign up",
+      "Giriş yap": "Sign in",
       "Hesabını oluştur ve ayarlarını kaydet.": "Create your account and save your settings.",
       "Ad Soyad": "Full name",
       "E-posta": "Email",
@@ -125,6 +126,7 @@
       "Çıkış yap": "Выйти",
       "Misafir": "Гость",
       "Kayıt ol": "Регистрация",
+      "Giriş yap": "Войти",
       "Hesabını oluştur ve ayarlarını kaydet.": "Создайте аккаунт и сохраните настройки.",
       "Ad Soyad": "Имя и фамилия",
       "E-posta": "Эл. почта",
@@ -170,6 +172,7 @@
       "Çıkış yap": "Abmelden",
       "Misafir": "Gast",
       "Kayıt ol": "Registrieren",
+      "Giriş yap": "Anmelden",
       "Hesabını oluştur ve ayarlarını kaydet.": "Erstelle dein Konto und speichere deine Einstellungen.",
       "Ad Soyad": "Vollständiger Name",
       "E-posta": "E-Mail",
@@ -215,6 +218,7 @@
       "Çıkış yap": "退出",
       "Misafir": "访客",
       "Kayıt ol": "注册",
+      "Giriş yap": "登录",
       "Hesabını oluştur ve ayarlarını kaydet.": "创建账户并保存设置。",
       "Ad Soyad": "姓名",
       "E-posta": "电子邮件",
@@ -776,14 +780,34 @@
           <button class="lang-switch-option" data-lang-option="RU" type="button" aria-pressed="false">RU</button>
         </div>
       </div>
-      <a class="desktop-auth-link desktop-auth-link-signin" href="profile.html?action=profile" aria-label="Ayarlar" title="Ayarlar">
+      <a class="desktop-auth-link desktop-auth-link-signin" data-header-signin-link href="profile.html?action=signup" aria-label="Giriş yap" title="Giriş yap">
         <span class="desktop-auth-link-icon-wrap" aria-hidden="true">
-          <img class="desktop-auth-link-image" src="assets/ayar1.png?v=20260226-2" alt="" />
+          <svg class="desktop-auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="9.5" cy="8.4" r="3"></circle>
+            <path d="M4.8 18.2c.7-2.6 2.7-4.3 4.7-4.3s4 1.7 4.7 4.3"></path>
+            <path d="M12.8 12h6"></path>
+            <path d="m16.2 9.6 2.4 2.4-2.4 2.4"></path>
+          </svg>
         </span>
-        <span class="visually-hidden">Ayarlar</span>
+        <span class="visually-hidden">Giriş yap</span>
       </a>
     `;
     topbar.appendChild(actions);
+
+    const signinLink = actions.querySelector("[data-header-signin-link]");
+    if (signinLink instanceof HTMLAnchorElement) {
+      signinLink.addEventListener("click", () => {
+        let hasSession = false;
+        try {
+          const raw = window.localStorage.getItem("neredeyenir.auth.session.v1");
+          const parsed = raw ? JSON.parse(raw) : null;
+          hasSession = Boolean(parsed && typeof parsed === "object" && String(parsed.email || "").trim());
+        } catch (_error) {
+          hasSession = false;
+        }
+        signinLink.href = hasSession ? "profile.html?action=profile" : "profile.html?action=signup";
+      });
+    }
   }
 
   createHeaderQuickActions();

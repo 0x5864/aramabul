@@ -170,6 +170,16 @@ main {
   height: 100%;
 }
 
+.desktop-auth-link-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .desktop-auth-link-image {
   width: 1.46rem;
   height: 1.46rem;

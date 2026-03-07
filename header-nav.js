@@ -19,6 +19,7 @@
       errorPasswordRepeat: "Şifreler eşleşmiyor.",
       errorEmailExists: "Bu e-posta zaten kayıtlı.",
       errorInvalidCredentials: "E-posta veya şifre hatalı.",
+      errorNoAccountSignupFirst: "Kayıtlı oturum yok. Önce kaydol.",
       errorSecurity: "Tarayıcı güvenlik desteği bulunamadı.",
     }),
     EN: Object.freeze({
@@ -40,6 +41,7 @@
       errorPasswordRepeat: "Passwords do not match.",
       errorEmailExists: "This email is already registered.",
       errorInvalidCredentials: "Email or password is incorrect.",
+      errorNoAccountSignupFirst: "No saved account. Please sign up first.",
       errorSecurity: "Security support is not available in this browser.",
     }),
     RU: Object.freeze({
@@ -61,6 +63,7 @@
       errorPasswordRepeat: "Пароли не совпадают.",
       errorEmailExists: "Этот email уже зарегистрирован.",
       errorInvalidCredentials: "Неверный email или пароль.",
+      errorNoAccountSignupFirst: "Сохраненной учетной записи нет. Сначала зарегистрируйтесь.",
       errorSecurity: "В браузере нет нужной защиты.",
     }),
     DE: Object.freeze({
@@ -82,6 +85,7 @@
       errorPasswordRepeat: "Die Passwoerter stimmen nicht ueberein.",
       errorEmailExists: "Diese E-Mail ist schon registriert.",
       errorInvalidCredentials: "E-Mail oder Passwort ist falsch.",
+      errorNoAccountSignupFirst: "Kein gespeichertes Konto. Bitte zuerst registrieren.",
       errorSecurity: "Sicherheitsunterstuetzung ist nicht verfuegbar.",
     }),
     ZH: Object.freeze({
@@ -103,6 +107,7 @@
       errorPasswordRepeat: "两次密码不一致。",
       errorEmailExists: "该邮箱已被注册。",
       errorInvalidCredentials: "邮箱或密码错误。",
+      errorNoAccountSignupFirst: "没有已保存的账号。请先注册。",
       errorSecurity: "当前浏览器缺少安全支持。",
     }),
   });
@@ -270,6 +275,7 @@
     const state = {
       mode: "signup",
       lastTrigger: null,
+      signupRedirectNotice: false,
     };
 
     function setMessage(value, isError = false) {
@@ -301,6 +307,33 @@
         text.classList.toggle("is-hidden", nextText.length === 0);
       }
 
+      const hasSavedUsers = readUsers().length > 0;
+      if (isLoginMode && !hasSavedUsers) {
+        state.mode = "signup";
+        state.signupRedirectNotice = true;
+        if (loginForm instanceof HTMLElement) {
+          loginForm.classList.add("is-hidden");
+        }
+        if (signupForm instanceof HTMLElement) {
+          signupForm.classList.remove("is-hidden");
+        }
+        if (title instanceof HTMLElement) {
+          title.textContent = copy.signupTitle;
+        }
+        if (text instanceof HTMLElement) {
+          text.textContent = copy.signupText;
+          text.classList.toggle("is-hidden", copy.signupText.length === 0);
+        }
+        setMessage(copy.errorNoAccountSignupFirst, true);
+        return;
+      }
+
+      if (!isLoginMode && state.signupRedirectNotice && !hasSavedUsers) {
+        setMessage(copy.errorNoAccountSignupFirst, true);
+        return;
+      }
+
+      state.signupRedirectNotice = false;
       setMessage("");
     }
 
@@ -357,6 +390,7 @@
       modal.classList.add("is-hidden");
       modal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
+      state.signupRedirectNotice = false;
       setMessage("");
 
       if (state.lastTrigger instanceof HTMLElement) {
@@ -385,6 +419,11 @@
       }
 
       const copy = authText();
+      if (readUsers().length === 0) {
+        setMode("login");
+        return;
+      }
+
       const email = normalizeEmail(loginEmail.value);
       const passwordHash = await hashPassword(loginPassword.value);
       if (!passwordHash) {
@@ -581,7 +620,12 @@
           title="${labels.signin}"
         >
           <span class="desktop-auth-link-icon-wrap" aria-hidden="true">
-            <img class="desktop-auth-link-image" src="assets/ayar1.png?v=20260226-2" alt="" />
+            <svg class="desktop-auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="9.5" cy="8.4" r="3"></circle>
+              <path d="M4.8 18.2c.7-2.6 2.7-4.3 4.7-4.3s4 1.7 4.7 4.3"></path>
+              <path d="M12.8 12h6"></path>
+              <path d="m16.2 9.6 2.4 2.4-2.4 2.4"></path>
+            </svg>
           </span>
           <span class="visually-hidden desktop-auth-link-text">${labels.signin}</span>
         </a>
