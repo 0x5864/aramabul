@@ -2256,6 +2256,11 @@ body.search-choice-open {
     flex-wrap: wrap;
     max-width: 174px;
   }
+
+  .desktop-lang-switch .lang-switch-menu {
+    left: auto;
+    right: 0;
+  }
 }
 
 @media (max-width: 860px) {
