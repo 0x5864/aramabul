@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-adsense-account" content="ca-pub-3016888060216617" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3016888060216617" crossorigin="anonymous"></script>
+    <meta name="theme-color" content="#2c3531" />
+    <title>arama bul | Geribildirim</title>
+    <meta name="description" content="Geribildirim mesajını buradan gönder." />
+    <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
+    <link rel="apple-touch-icon" href="assets/fav.png?v=20260227" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260303-18" />
+    <link rel="stylesheet" href="profile.css?v=20260307-05" />
+  </head>
+  <body class="profile-page settings-page feedback-page">
+    <div class="texture"></div>
+
+    <header class="global-header-band" role="banner">
+      <nav class="topbar global-topbar">
+        <a class="brand" href="index.html" aria-label="arama bul">
+          <span class="brand-wordmark">arama bul</span>
+        </a>
+      </nav>
+      <div class="global-topline">
+        <div class="global-topline-inner">
+          <a href="index.html">Anasayfa</a>
+          <span>/</span>
+          <a href="profile.html?action=profile">Ayarlar</a>
+          <span>/</span>
+          <span>Geribildirim</span>
+        </div>
+      </div>
+    </header>
+
+    <form class="header-search profile-hidden-search" action="search.html" method="get" role="search" aria-label="Genel arama">
+      <label class="visually-hidden" for="headerSearchInput">Arama ifadesi</label>
+      <input id="headerSearchInput" class="header-search-input" type="search" name="mekan" placeholder="Ne bulmamı istersin?" />
+      <button class="header-search-btn" type="submit">Bul</button>
+    </form>
+
+    <main class="settings-shell">
+      <section class="settings-card settings-panel-card settings-feedback-form-card" aria-label="Geribildirim formu">
+        <div class="language-card-head">
+          <h2>Geribildirim</h2>
+          <p>Mesajını konu seçerek hızlıca iletebilirsin.</p>
+        </div>
+        <form class="settings-feedback-form" id="settingsFeedbackForm" novalidate>
+          <div class="settings-feedback-grid">
+            <label class="settings-feedback-field" data-span="full">
+              <input id="settingsFeedbackName" type="text" name="name" placeholder="Ad Soyad" autocomplete="name" aria-label="Ad Soyad" required />
+            </label>
+            <label class="settings-feedback-field" data-span="full">
+              <input id="settingsFeedbackEmail" type="email" name="email" placeholder="E-posta" autocomplete="email" aria-label="E-posta" required />
+            </label>
+            <label class="settings-feedback-field" data-span="full">
+              <select id="settingsFeedbackSubject" name="subject" aria-label="Konu" required>
+                <option value="">Konu</option>
+                <option value="destek">Genel Konular</option>
+                <option value="ortaklik">İş Birliği</option>
+                <option value="icerik">İçerik Düzeltmeleri</option>
+              </select>
+            </label>
+            <label class="settings-feedback-field" data-span="full">
+              <div class="settings-feedback-phone-group">
+                <span class="settings-feedback-phone-prefix" aria-hidden="true">+90</span>
+                <input id="settingsFeedbackPhoneAreaCode" type="text" name="phoneAreaCode" placeholder="Alan kodu" inputmode="numeric" maxlength="3" pattern="\\d{3}" autocomplete="tel-area-code" aria-label="Alan kodu" />
+                <input id="settingsFeedbackPhoneNumber" type="tel" name="phoneNumber" placeholder="Telefon numarası" inputmode="numeric" maxlength="7" pattern="\\d{7}" autocomplete="tel-local" aria-label="Telefon numarası" />
+              </div>
+            </label>
+            <label class="settings-feedback-field" data-span="full">
+              <textarea id="settingsFeedbackMessage" name="message" rows="6" placeholder="Mesaj" aria-label="Mesaj" required></textarea>
+            </label>
+          </div>
+          <div class="settings-feedback-actions">
+            <button class="settings-feedback-submit" type="submit">Gönder</button>
+          </div>
+          <p id="settingsFeedbackStatus" class="settings-signup-message" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="header-search.js?v=20260303-21"></script>
+    <script src="feedback-settings.js?v=20260307-01"></script>
+  </body>
+</html>

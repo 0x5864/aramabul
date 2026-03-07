@@ -17,7 +17,6 @@
   const settingsSignupPassword = document.querySelector("#settingsSignupPassword");
   const settingsSignupPasswordRepeat = document.querySelector("#settingsSignupPasswordRepeat");
   const settingsSignupMessage = document.querySelector("#settingsSignupMessage");
-  const settingsStubLinks = [...document.querySelectorAll('.settings-menu-card a[href="#"]')];
 
   function normalizeEmail(value) {
     return String(value || "").trim().toLocaleLowerCase("en-US");
@@ -43,22 +42,6 @@
 
   function goHome() {
     window.location.assign("index.html");
-  }
-
-  function showSettingsMessage(text) {
-    const toast = document.createElement("div");
-    toast.className = "settings-inline-toast";
-    toast.textContent = text;
-    document.body.appendChild(toast);
-    window.requestAnimationFrame(() => {
-      toast.classList.add("is-visible");
-    });
-    window.setTimeout(() => {
-      toast.classList.remove("is-visible");
-      window.setTimeout(() => {
-        toast.remove();
-      }, 200);
-    }, 1400);
   }
 
   function setSignupMessage(text, isError = true) {
@@ -178,14 +161,6 @@
       renderSettings();
     });
   }
-
-  settingsStubLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      const label = (link.querySelector(".settings-row-label")?.textContent || "Bu bölüm").trim();
-      showSettingsMessage(`${label} yakında aktif olacak.`);
-    });
-  });
 
   if (settingsSignupForm) {
     settingsSignupForm.addEventListener("submit", (event) => {
