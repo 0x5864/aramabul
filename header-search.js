@@ -38,14 +38,35 @@
       return;
     }
 
-    const ua = String(navigator.userAgent || "");
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-    const isChromeFamily = /Chrome|CriOS/i.test(ua);
-    const isWebView = /\bwv\b|; wv\)|Version\/\d+(\.\d+)?[^)]*Chrome/i.test(ua);
-    const isOtherBrowser = /EdgA|EdgiOS|OPR|SamsungBrowser|YaBrowser/i.test(ua);
-    const isMobileChrome = isMobile && isChromeFamily && !isWebView && !isOtherBrowser;
+    const applyBrowserFlags = () => {
+      const ua = String(navigator.userAgent || "");
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+      const isChromeFamily = /Chrome|CriOS/i.test(ua);
+      const isWebView = /\bwv\b|; wv\)|Version\/\d+(\.\d+)?[^)]*Chrome/i.test(ua);
+      const isOtherBrowser = /EdgA|EdgiOS|OPR|SamsungBrowser|YaBrowser/i.test(ua);
+      const isMobileChrome = isMobile && isChromeFamily && !isWebView && !isOtherBrowser;
 
-    document.body.classList.toggle("mobile-chrome-browser", isMobileChrome);
+      const viewportWidth = Number(window.innerWidth || document.documentElement.clientWidth || 0);
+      const rawScreenWidth = Number(window.screen?.width || 0);
+      const rawScreenHeight = Number(window.screen?.height || 0);
+      const screenMin = Math.min(rawScreenWidth || 0, rawScreenHeight || 0);
+      const shouldForceMobileLayout = isMobileChrome && screenMin > 0 && screenMin <= 540 && viewportWidth >= 700;
+
+      document.body.classList.toggle("mobile-chrome-browser", isMobileChrome);
+      document.body.classList.toggle("mobile-force-layout", shouldForceMobileLayout);
+      document.documentElement.classList.toggle("mobile-force-layout", shouldForceMobileLayout);
+      if (shouldForceMobileLayout) {
+        document.documentElement.style.setProperty("--device-screen-width", `${screenMin}px`);
+      } else {
+        document.documentElement.style.removeProperty("--device-screen-width");
+      }
+    };
+
+    applyBrowserFlags();
+    window.addEventListener("resize", applyBrowserFlags, { passive: true });
+    if (window.visualViewport && typeof window.visualViewport.addEventListener === "function") {
+      window.visualViewport.addEventListener("resize", applyBrowserFlags, { passive: true });
+    }
   }
 
   applyTheme(readStoredTheme(), false);
