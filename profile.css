@@ -869,6 +869,12 @@ body.theme-dark .settings-signup-field span {
   }
 }
 
+@media (max-width: 699px) {
+  .settings-panel-stack {
+    display: none;
+  }
+}
+
 body.theme-dark .language-card-head p,
 body.theme-dark .language-option-code {
   color: rgba(22, 33, 35, 0.66);
@@ -1048,4 +1054,8 @@ body.settings-page.settings-force-mobile .settings-shell {
   margin: 0 !important;
   padding-inline: 0.55rem !important;
   padding-inline-start: 0.55rem !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-stack {
+  display: none !important;
 }

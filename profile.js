@@ -244,6 +244,14 @@
     document.body.classList.toggle("settings-force-mobile", shouldForceMobileLayout());
   }
 
+  function shouldUseInlinePanels() {
+    if (!panels.length) {
+      return false;
+    }
+    const desktopViewport = window.matchMedia("(min-width: 700px)").matches;
+    return desktopViewport && !shouldForceMobileLayout();
+  }
+
   function renderAccount() {
     const session = readSession();
     const userName = session?.name || "Misafir";
@@ -432,8 +440,19 @@
   }
 
   panelButtons.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
       const key = String(button.dataset.settingsPanelTrigger || "");
+      if (!key) {
+        return;
+      }
+
+      if (button instanceof HTMLAnchorElement) {
+        if (!shouldUseInlinePanels()) {
+          return;
+        }
+        event.preventDefault();
+      }
+
       activatePanel(key);
     });
   });

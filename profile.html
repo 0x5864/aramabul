@@ -18,7 +18,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css?v=20260307-27" />
-    <link rel="stylesheet" href="profile.css?v=20260307-48" />
+    <link rel="stylesheet" href="profile.css?v=20260307-49" />
   </head>
   <body class="profile-page settings-page">
     <div class="texture"></div>
@@ -47,7 +47,13 @@
     <main class="settings-shell settings-dashboard-shell">
       <div class="settings-layout">
         <aside class="settings-card settings-sidebar-card" aria-label="Ayar bölümleri">
-          <a class="settings-row" href="account-settings.html" aria-label="Hesap">
+          <a
+            class="settings-row settings-row-button is-active"
+            href="account-settings.html"
+            data-settings-panel-trigger="account"
+            aria-label="Hesap"
+            aria-current="page"
+          >
             <span class="settings-row-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <circle cx="12" cy="8.2" r="3.3"></circle>
@@ -62,7 +68,12 @@
             </span>
           </a>
 
-          <a class="settings-row" href="feedback-settings.html" aria-label="Geribildirim">
+          <a
+            class="settings-row settings-row-button"
+            href="feedback-settings.html"
+            data-settings-panel-trigger="feedback"
+            aria-label="Geribildirim"
+          >
             <span class="settings-row-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v5A2.5 2.5 0 0 1 16.5 15H11l-4 4v-4H7.5A2.5 2.5 0 0 1 5 12.5z"></path>
@@ -78,7 +89,12 @@
             </span>
           </a>
 
-          <a class="settings-row" href="help-settings.html" aria-label="Yardım">
+          <a
+            class="settings-row settings-row-button"
+            href="help-settings.html"
+            data-settings-panel-trigger="help"
+            aria-label="Yardım"
+          >
             <span class="settings-row-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="8"></circle>
@@ -94,7 +110,12 @@
             </span>
           </a>
 
-          <a class="settings-row" href="about-settings.html" aria-label="Hakkımızda">
+          <a
+            class="settings-row settings-row-button"
+            href="about-settings.html"
+            data-settings-panel-trigger="about"
+            aria-label="Hakkımızda"
+          >
             <span class="settings-row-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <rect x="5" y="4" width="14" height="16" rx="2"></rect>
@@ -113,6 +134,110 @@
           <button id="settingsSignOutBtn" class="settings-signout" type="button">Çıkış yap</button>
         </aside>
 
+        <section class="settings-panel-stack" aria-live="polite">
+          <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="account" aria-label="Hesap bilgileri">
+            <div class="language-card-head">
+              <h2>Hesap bilgileri</h2>
+              <p>Adını ve e-postanı burada güncelleyebilirsin.</p>
+            </div>
+            <form id="accountSettingsForm" class="settings-signup-form" novalidate>
+              <label class="settings-signup-field">
+                <span>Ad Soyad</span>
+                <input id="accountNameInput" type="text" name="name" autocomplete="name" required />
+              </label>
+              <label class="settings-signup-field">
+                <span>E-posta</span>
+                <input id="accountEmailInput" type="email" name="email" autocomplete="email" required />
+              </label>
+              <p id="accountSettingsMessage" class="settings-signup-message" aria-live="polite"></p>
+              <div class="account-settings-actions">
+                <button id="accountSaveBtn" class="settings-signup-submit" type="submit">Kaydet</button>
+                <button id="accountSignupBtn" class="account-secondary-btn" type="button">Kayıt ol</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="settings-card settings-panel-card account-editor-card settings-feedback-form-card" data-settings-panel="feedback" aria-label="Geribildirim" hidden>
+            <div class="language-card-head">
+              <h2>Geribildirim</h2>
+              <p>Mesajını konu seçerek hızlıca iletebilirsin.</p>
+            </div>
+            <form class="settings-feedback-form" id="settingsFeedbackForm" novalidate>
+              <div class="settings-feedback-grid">
+                <label class="settings-feedback-field" data-span="full">
+                  <input id="settingsFeedbackName" type="text" name="name" placeholder="Ad Soyad" autocomplete="name" aria-label="Ad Soyad" required />
+                </label>
+                <label class="settings-feedback-field" data-span="full">
+                  <input id="settingsFeedbackEmail" type="email" name="email" placeholder="E-posta" autocomplete="email" aria-label="E-posta" required />
+                </label>
+                <label class="settings-feedback-field" data-span="full">
+                  <select id="settingsFeedbackSubject" name="subject" aria-label="Konu" required>
+                    <option value="">Konu</option>
+                    <option value="destek">Genel Konular</option>
+                    <option value="ortaklik">İş Birliği</option>
+                    <option value="icerik">İçerik Düzeltmeleri</option>
+                  </select>
+                </label>
+                <label class="settings-feedback-field" data-span="full">
+                  <div class="settings-feedback-phone-group">
+                    <span class="settings-feedback-phone-prefix" aria-hidden="true">+90</span>
+                    <input id="settingsFeedbackPhoneAreaCode" type="text" name="phoneAreaCode" placeholder="Alan kodu" inputmode="numeric" maxlength="3" pattern="\\d{3}" autocomplete="tel-area-code" aria-label="Alan kodu" />
+                    <input id="settingsFeedbackPhoneNumber" type="tel" name="phoneNumber" placeholder="Telefon numarası" inputmode="numeric" maxlength="7" pattern="\\d{7}" autocomplete="tel-local" aria-label="Telefon numarası" />
+                  </div>
+                </label>
+                <label class="settings-feedback-field" data-span="full">
+                  <textarea id="settingsFeedbackMessage" name="message" rows="6" placeholder="Mesaj" aria-label="Mesaj" required></textarea>
+                </label>
+              </div>
+              <div class="settings-feedback-actions">
+                <button class="settings-feedback-submit" type="submit">Gönder</button>
+              </div>
+              <p id="settingsFeedbackStatus" class="settings-signup-message" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="help" aria-label="Yardım" hidden>
+            <div class="language-card-head">
+              <h2>Yardım</h2>
+              <p>En çok sorulan temel konuları kısa cevaplarla burada topladık.</p>
+            </div>
+            <div class="settings-help-content">
+              <div class="settings-help-item">
+                <strong>Nasıl arama yaparım?</strong>
+                <p>Üst arama alanından doğrudan mekan adı yazabilir ya da anasayfadan kategori seçebilirsin.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Bilgi yanlışsa ne yapmalıyım?</strong>
+                <p>Geribildirim sekmesinden kısa bir not bırakabilir ya da iletişim sayfasından bize yazabilirsin.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Hesap şart mı?</strong>
+                <p>Temel gezinme için hesap gerekmez. Kayıtlı kullanıcı ayarları için hesap alanını kullanabilirsin.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="about" aria-label="Hakkında" hidden>
+            <div class="settings-help-content">
+              <div class="settings-help-item">
+                <strong>Neden var?</strong>
+                <p>İnsanlar çoğu zaman bir yerin adını değil, ihtiyacını bilir. Biz de aramayı ihtiyaçtan başlatıyoruz.</p>
+                <p>Amaç, gereksiz kalabalığı ve çabayı azaltarak, ihtiyaç duyduğunuz hizmet ve ürüne daha hızlı ulaşmanızı sağlamak.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Nasıl çalışır?</strong>
+                <p>Kategori, şehir ve ilçe katmanları sırasıyla, önce alt kategoriler, son olarak da hizmet mekanları seçenekleri ile sizi buluşturuyoruz.</p>
+                <p>Bilgiyi kutu yapısında sunarak, kullanıcıyı uzun sayfalarda dolaştırmadan net karar alanına ulaştırıyoruz. İhtiyaç duyduğunuz hizmeti alacağınız mekanı, tüm ulaşım ve iletişim bilgileri ile, en kullanıcı dostu biçimde görmenizi sağlıyoruz.</p>
+              </div>
+              <div class="settings-help-item">
+                <strong>Temel yaklaşımımız</strong>
+                <p>Basit arayüz</p>
+                <p>Açık bilgi</p>
+                <p>Hızlı ve ayrıntılı yönlendirme</p>
+              </div>
+            </div>
+          </section>
+        </section>
       </div>
     </main>
 
@@ -171,6 +296,6 @@
   <script src="header-search-ui.js?v=20260303-04"></script>
   <script src="header-search-data.js?v=20260303-06"></script>
     <script src="header-search.js?v=20260307-24"></script>
-    <script src="profile.js?v=20260307-10"></script>
+    <script src="profile.js?v=20260307-11"></script>
   </body>
 </html>
