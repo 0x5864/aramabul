@@ -942,3 +942,110 @@ body.theme-dark .settings-row:active {
     padding-top: 0.74rem;
   }
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .settings-dashboard-shell {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .settings-layout {
+    grid-template-columns: 1fr !important;
+    margin-inline-start: 0 !important;
+    row-gap: 0.65rem !important;
+  }
+
+  .settings-sidebar-card {
+    border: 1px solid var(--line) !important;
+    border-radius: 18px !important;
+    background: #fffdf8 !important;
+    box-shadow: 0 8px 24px rgba(22, 33, 35, 0.08) !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .settings-panel-stack .settings-card {
+    border-left-width: 1px !important;
+  }
+
+  .settings-panel-stack .settings-card + .settings-card {
+    margin-top: 0.08rem !important;
+    border-top-width: 1px !important;
+  }
+
+  .settings-panel-card {
+    min-height: 0 !important;
+    border-top-left-radius: 18px !important;
+    border-bottom-left-radius: 18px !important;
+  }
+
+  .settings-panel-stack .settings-account-card {
+    border-top-left-radius: 18px !important;
+    border-bottom-left-radius: 18px !important;
+  }
+
+  .settings-sidebar-card .settings-signout {
+    width: calc(100% - 1.4rem) !important;
+    max-width: none !important;
+    margin: 0.7rem !important;
+    text-align: center !important;
+  }
+}
+
+body.settings-page.settings-force-mobile .settings-dashboard-shell {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.settings-page.settings-force-mobile .settings-layout {
+  grid-template-columns: 1fr !important;
+  margin-inline-start: 0 !important;
+  row-gap: 0.65rem !important;
+}
+
+body.settings-page.settings-force-mobile .settings-sidebar-card {
+  border: 1px solid var(--line) !important;
+  border-radius: 18px !important;
+  background: #fffdf8 !important;
+  box-shadow: 0 8px 24px rgba(22, 33, 35, 0.08) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-stack .settings-card {
+  border-left-width: 1px !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-stack .settings-card + .settings-card {
+  margin-top: 0.08rem !important;
+  border-top-width: 1px !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-card {
+  min-height: 0 !important;
+  border-top-left-radius: 18px !important;
+  border-bottom-left-radius: 18px !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-stack .settings-account-card {
+  border-top-left-radius: 18px !important;
+  border-bottom-left-radius: 18px !important;
+}
+
+body.settings-page.settings-force-mobile .settings-sidebar-card .settings-signout {
+  width: calc(100% - 1.4rem) !important;
+  max-width: none !important;
+  margin: 0.7rem !important;
+  text-align: center !important;
+}
+
+body.settings-page.settings-force-mobile .settings-shell {
+  width: 100% !important;
+  margin: 0 !important;
+  padding-inline: 0.55rem !important;
+  padding-inline-start: 0.55rem !important;
+}

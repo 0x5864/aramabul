@@ -197,6 +197,23 @@
     });
   }
 
+  function shouldForceMobileLayout() {
+    const screenWidth = Number(window.screen?.width || 0);
+    const screenHeight = Number(window.screen?.height || 0);
+    const screenMin = Math.min(screenWidth, screenHeight);
+    const viewportWidth = Number(window.innerWidth || document.documentElement.clientWidth || 0);
+    const isLikelyPhone = screenMin > 0 && screenMin <= 540;
+    const isDesktopScaledViewport = viewportWidth >= 700;
+    return isLikelyPhone && isDesktopScaledViewport;
+  }
+
+  function applyForcedMobileLayoutClass() {
+    if (!(settingsSidebarCard || settingsPanelStack)) {
+      return;
+    }
+    document.body.classList.toggle("settings-force-mobile", shouldForceMobileLayout());
+  }
+
   function renderAccount() {
     const session = readSession();
     const userName = session?.name || "Misafir";
@@ -387,9 +404,13 @@
   });
 
   applyTheme(readTheme(), false);
+  applyForcedMobileLayoutClass();
   renderAccount();
   normalizeLegacySignupRoute();
   activatePanel("account");
+
+  window.addEventListener("resize", applyForcedMobileLayoutClass, { passive: true });
+  window.addEventListener("orientationchange", applyForcedMobileLayoutClass);
 
   document.addEventListener("aramabul:authchange", () => {
     renderAccount();
