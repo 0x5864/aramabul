@@ -91,14 +91,34 @@
     try {
       const raw = readStorageValue(AUTH_USERS_KEY);
       const parsed = JSON.parse(raw || "[]");
-      return Array.isArray(parsed) ? parsed : [];
+      if (!Array.isArray(parsed)) {
+        return [];
+      }
+      return parsed.filter(
+        (user) =>
+          user &&
+          typeof user === "object" &&
+          typeof user.name === "string" &&
+          typeof user.email === "string" &&
+          typeof user.passwordHash === "string",
+      );
     } catch (_error) {
       return [];
     }
   }
 
   function writeUsers(users) {
-    writeStorageValue(AUTH_USERS_KEY, JSON.stringify(users));
+    const safeUsers = Array.isArray(users)
+      ? users.filter(
+          (user) =>
+            user &&
+            typeof user === "object" &&
+            typeof user.name === "string" &&
+            typeof user.email === "string" &&
+            typeof user.passwordHash === "string",
+        )
+      : [];
+    writeStorageValue(AUTH_USERS_KEY, JSON.stringify(safeUsers));
   }
 
   function writeSession(session) {
@@ -213,13 +233,21 @@
 
       const users = readUsers();
       const currentEmail = normalizeEmail(currentSession.email);
-      const duplicate = users.some((user) => {
-        if (!user || typeof user !== "object") {
-          return false;
-        }
+      const currentName = String(currentSession.name || "").trim();
+      const exactUser = users.find((user) => normalizeEmail(user.email) === currentEmail) || null;
+      const byNameCandidates = users.filter((user) => String(user.name || "").trim() === currentName);
+      const fallbackUser = !exactUser && byNameCandidates.length === 1 ? byNameCandidates[0] : null;
+      const sourceUser = exactUser || fallbackUser;
+      const sourceEmail = sourceUser ? normalizeEmail(sourceUser.email) : currentEmail;
 
+      if (!sourceUser) {
+        setMessage(translateUi("Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap."), true);
+        return;
+      }
+
+      const duplicate = users.some((user) => {
         const userEmail = normalizeEmail(user.email);
-        return userEmail === email && userEmail !== currentEmail;
+        return userEmail === email && userEmail !== sourceEmail;
       });
 
       if (duplicate) {
@@ -228,12 +256,8 @@
       }
 
       const nextUsers = users.map((user) => {
-        if (!user || typeof user !== "object") {
-          return user;
-        }
-
         const userEmail = normalizeEmail(user.email);
-        if (userEmail !== currentEmail) {
+        if (userEmail !== sourceEmail) {
           return user;
         }
 
@@ -241,11 +265,12 @@
           ...user,
           name,
           email,
+          passwordHash: sourceUser.passwordHash,
         };
       });
 
-      if (!nextUsers.some((user) => user && typeof user === "object" && normalizeEmail(user.email) === email)) {
-        nextUsers.push({ name, email });
+      if (!nextUsers.some((user) => normalizeEmail(user.email) === email)) {
+        nextUsers.push({ name, email, passwordHash: sourceUser.passwordHash });
       }
 
       writeUsers(nextUsers);
