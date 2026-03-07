@@ -10,6 +10,12 @@ const LEGACY_SEYAHAT_HOTEL_DATA_FILES = Object.freeze([
   "data/gezi-oteller-3-yildiz.json",
   "data/gezi-oteller-diger.json",
 ]);
+const runtime = window.ARAMABUL_RUNTIME;
+const FALLBACK_SCRIPTS = Object.freeze({
+  data: "data/fallback-data.js?v=20260302-01",
+  food: "data/fallback-food-data.js?v=20260302-01",
+  category: "data/fallback-category-data.js?v=20260302-01",
+});
 
 function withVersion(path) {
   const source = String(path || "").trim();
@@ -114,7 +120,11 @@ async function ensureDistrictInlineAdConfigLoaded() {
     const candidates = candidateAssetPaths(DISTRICT_INLINE_AD_CONFIG_SCRIPT_PATH);
     for (const candidate of candidates) {
       try {
-        await appendScriptTag(candidate);
+        if (runtime && typeof runtime.loadScriptOnce === "function") {
+          await runtime.loadScriptOnce(candidate);
+        } else {
+          await appendScriptTag(candidate);
+        }
         if (hasDistrictInlineAdRuntimeConfig()) {
           return window.ARAMABUL_ADS_CONFIG;
         }
@@ -291,6 +301,251 @@ function renderCategoryRootInlineAdCard(config) {
   card.append(label, body);
   requestDistrictInlineAdFill(adElement, config);
   return card;
+}
+
+function queryParams() {
+  const url = new URL(window.location.href);
+  return {
+    city: (url.searchParams.get("sehir") || url.searchParams.get("city") || "").trim(),
+    district: (url.searchParams.get("ilce") || url.searchParams.get("district") || "").trim(),
+    subcategorySource: (url.searchParams.get("tur") || url.searchParams.get("type") || "").trim(),
+    facilityType: (url.searchParams.get("tt") || url.searchParams.get("tesis") || url.searchParams.get("facilityType") || "").trim(),
+    venueName: (url.searchParams.get("mekan") || url.searchParams.get("venue") || "").trim(),
+    sourcePlaceId: (url.searchParams.get("pid") || "").trim(),
+  };
+}
+
+function pickFirstText(...values) {
+  for (const value of values) {
+    const text = String(value || "").trim();
+    if (text) {
+      return text;
+    }
+  }
+
+  return "";
+}
+
+function normalizeName(value) {
+  return String(value || "")
+    .trim()
+    .toLocaleLowerCase("tr")
+    .replaceAll("ı", "i")
+    .replaceAll("ğ", "g")
+    .replaceAll("ü", "u")
+    .replaceAll("ş", "s")
+    .replaceAll("ö", "o")
+    .replaceAll("ç", "c")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function normalizeSearchText(value) {
+  return String(value || "")
+    .toLocaleLowerCase("tr")
+    .replaceAll("ı", "i")
+    .replaceAll("ğ", "g")
+    .replaceAll("ü", "u")
+    .replaceAll("ş", "s")
+    .replaceAll("ö", "o")
+    .replaceAll("ç", "c");
+}
+
+function normalizeFacilityType(value) {
+  return normalizeSearchText(value).replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function resolveVenueFacilityType(venue) {
+  return pickFirstText(venue?.sourceTesisTuru, venue?.type, venue?.cuisine);
+}
+
+function isCampingFacilityType(value) {
+  const normalized = normalizeFacilityType(value);
+  return normalized === "camping" || normalized === "kamping" || normalized === "kamp alani";
+}
+
+function isHotelFacilityType(value) {
+  const normalized = normalizeFacilityType(value);
+  return normalized === "otel" || normalized === "hotel";
+}
+
+function mapLegacyCampingVenueToDynamicVenue(venue) {
+  return {
+    ...venue,
+    cuisine: "Camping",
+    sourceTesisTuru: "Camping",
+    source: pickFirstText(venue?.source, "legacy-camping"),
+  };
+}
+
+function mapLegacyHotelVenueToDynamicVenue(venue) {
+  return {
+    ...venue,
+    cuisine: "Otel",
+    sourceTesisTuru: "Otel",
+    source: pickFirstText(venue?.source, "legacy-hotel"),
+  };
+}
+
+function stripDynamicNameNumericSuffix(value) {
+  const raw = String(value || "").trim();
+  if (!raw) {
+    return "";
+  }
+
+  const compact = raw
+    .replace(/(?:[\s-]+)\d{3,6}$/u, "")
+    .replace(/([A-Za-zÇĞİIÖŞÜçğıöşü])\d{3,6}$/u, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+  return compact || raw;
+}
+
+function dynamicVenueLocalityKey(venue) {
+  const cityKey = normalizeName(venue?.city);
+  const districtKey = normalizeName(venue?.district);
+  if (cityKey && districtKey) {
+    return `${cityKey}:${districtKey}`;
+  }
+  return cityKey || districtKey || "_";
+}
+
+function buildDynamicVenueNameSetByLocality(venues) {
+  const namesByLocality = new Map();
+
+  venues.forEach((venue) => {
+    const localityKey = dynamicVenueLocalityKey(venue);
+    const rawNameKey = normalizeName(venue?.name);
+    if (!rawNameKey) {
+      return;
+    }
+
+    const existing = namesByLocality.get(localityKey);
+    if (existing) {
+      existing.add(rawNameKey);
+      return;
+    }
+
+    namesByLocality.set(localityKey, new Set([rawNameKey]));
+  });
+
+  return namesByLocality;
+}
+
+function resolveDynamicVenueNameKey(venue, namesByLocality) {
+  const rawNameKey = normalizeName(venue?.name);
+  if (!rawNameKey) {
+    return "";
+  }
+
+  const strippedNameKey = normalizeName(stripDynamicNameNumericSuffix(venue?.name));
+  if (!strippedNameKey || strippedNameKey === rawNameKey) {
+    return rawNameKey;
+  }
+
+  const localityKey = dynamicVenueLocalityKey(venue);
+  const localityNames = namesByLocality.get(localityKey);
+  if (localityNames && localityNames.has(strippedNameKey)) {
+    return strippedNameKey;
+  }
+
+  return rawNameKey;
+}
+
+function scoreDynamicVenueForDedupe(venue, canonicalNameKey) {
+  const rawNameKey = normalizeName(venue?.name);
+  let score = venueInfoRichnessScore(venue);
+
+  if (rawNameKey && rawNameKey === canonicalNameKey) {
+    score += 100;
+  }
+
+  if (!/\d{3,6}\s*$/u.test(String(venue?.name || "").trim())) {
+    score += 2;
+  }
+
+  return score;
+}
+
+function dedupeDynamicTypeVenues(venues) {
+  if (!Array.isArray(venues) || venues.length === 0) {
+    return [];
+  }
+
+  const namesByLocality = buildDynamicVenueNameSetByLocality(venues);
+  const bestByKey = new Map();
+
+  venues.forEach((venue) => {
+    const canonicalNameKey = resolveDynamicVenueNameKey(venue, namesByLocality);
+    if (!canonicalNameKey) {
+      return;
+    }
+
+    const localityKey = dynamicVenueLocalityKey(venue);
+    const identityKey = `${localityKey}:${canonicalNameKey}`;
+    const existing = bestByKey.get(identityKey);
+
+    if (!existing) {
+      bestByKey.set(identityKey, venue);
+      return;
+    }
+
+    const existingScore = scoreDynamicVenueForDedupe(existing, canonicalNameKey);
+    const candidateScore = scoreDynamicVenueForDedupe(venue, canonicalNameKey);
+    if (candidateScore > existingScore) {
+      bestByKey.set(identityKey, venue);
+    }
+  });
+
+  return [...bestByKey.values()];
+}
+
+function filterDynamicTypeVenues(venues, requestedType) {
+  const typeText = String(requestedType || "").trim();
+  if (!typeText) {
+    return [];
+  }
+
+  const normalizedRequestedType = normalizeFacilityType(typeText);
+  if (!normalizedRequestedType) {
+    return [];
+  }
+
+  const filtered = venues.filter((venue) => {
+    const venueType = normalizeFacilityType(resolveVenueFacilityType(venue));
+    return venueType === normalizedRequestedType;
+  });
+
+  return dedupeDynamicTypeVenues(filtered);
+}
+
+function findNameMatch(queryValue, values) {
+  if (!queryValue) {
+    return "";
+  }
+
+  const normalizedQuery = normalizeName(queryValue);
+  if (!normalizedQuery) {
+    return "";
+  }
+
+  const exact = values.find((value) => value === queryValue);
+  if (exact) {
+    return exact;
+  }
+
+  const normalizedExact = values.find((value) => normalizeName(value) === normalizedQuery);
+  if (normalizedExact) {
+    return normalizedExact;
+  }
+
+  if (normalizedQuery.length < 3) {
+    return "";
+  }
+
+  return values.find((value) => {
+    const normalizedValue = normalizeName(value);
+    return normalizedValue.includes(normalizedQuery) || normalizedQuery.includes(normalizedValue);
+  }) || "";
 }
 
 const CATEGORY_DEFINITIONS = {
@@ -862,17 +1117,67 @@ const categoryDataPromiseCache = new Map();
 const rawArrayDataPromiseCache = new Map();
 let districtMapPromise = null;
 
+async function ensureFallbackScript(type) {
+  const scriptSrc = FALLBACK_SCRIPTS[type];
+  if (!scriptSrc || !runtime || typeof runtime.loadScriptOnce !== "function") {
+    return false;
+  }
+
+  try {
+    await runtime.loadScriptOnce(scriptSrc);
+  } catch (_error) {
+    return false;
+  }
+
+  return true;
+}
+
+async function ensureFallbackDataLoaded() {
+  if (typeof window !== "undefined" && window.ARAMABUL_FALLBACK_DATA) {
+    return true;
+  }
+  return ensureFallbackScript("data");
+}
+
+async function ensureFallbackFoodDataLoaded() {
+  if (typeof window !== "undefined" && window.ARAMABUL_FALLBACK_FOOD_DATA) {
+    return true;
+  }
+  return ensureFallbackScript("food");
+}
+
+async function ensureFallbackCategoryDataLoaded() {
+  if (typeof window !== "undefined" && window.ARAMABUL_FALLBACK_CATEGORY_DATA) {
+    return true;
+  }
+  return ensureFallbackScript("category");
+}
 function readFallbackData() {
   if (typeof window === "undefined") {
     return null;
   }
 
-  const payload = window.NEREDEYENIR_FALLBACK_DATA;
+  const payload = window.ARAMABUL_FALLBACK_DATA;
   if (!payload || typeof payload !== "object") {
     return null;
   }
 
   return payload;
+}
+
+function applyCategoryPageTranslations() {
+  const headerI18n = window.ARAMABUL_HEADER_I18N;
+  if (!headerI18n || typeof headerI18n !== "object") {
+    return;
+  }
+
+  if (typeof headerI18n.applyStaticPageTranslations === "function") {
+    headerI18n.applyStaticPageTranslations();
+  }
+
+  if (typeof headerI18n.normalizeFooterUi === "function") {
+    headerI18n.normalizeFooterUi();
+  }
 }
 
 const DYNAMIC_CATEGORY_LABEL_TRANSLATIONS = {
@@ -1028,8 +1333,42 @@ function translateCategoryUiLabel(value) {
     typeof window.ARAMABUL_GET_LANGUAGE === "function"
       ? String(window.ARAMABUL_GET_LANGUAGE() || "TR").toUpperCase()
       : "TR";
+  const headerI18n = window.ARAMABUL_HEADER_I18N;
+  if (headerI18n && typeof headerI18n.getStaticUiTranslation === "function") {
+    const translated = headerI18n.getStaticUiTranslation(text, lang) || text;
+    if (translated !== text) {
+      return translated;
+    }
+  }
+
   const fallbackMap = DYNAMIC_CATEGORY_LABEL_TRANSLATIONS[lang] || null;
   return (fallbackMap && fallbackMap[text]) || text;
+}
+
+function formatProvinceDistrictHeading(cityName, districtName, suffixText = "") {
+  const city = String(cityName || "").trim();
+  const district = String(districtName || "").trim();
+  const suffix = String(suffixText || "").trim();
+  const parts = [];
+
+  if (city) {
+    parts.push(`${city} ${translateCategoryUiLabel("İli")}`);
+  }
+
+  if (district) {
+    parts.push(`${district} ${translateCategoryUiLabel("İlçesi")}`);
+  }
+
+  if (suffix) {
+    const translatedSuffix = translateCategoryUiLabel(suffix);
+    if (parts.length === 0) {
+      parts.push(translatedSuffix);
+    } else {
+      parts[parts.length - 1] = `${parts[parts.length - 1]} ${translatedSuffix}`;
+    }
+  }
+
+  return parts.join(" / ");
 }
 
 function readFallbackFoodData() {
@@ -1037,7 +1376,7 @@ function readFallbackFoodData() {
     return null;
   }
 
-  const payload = window.NEREDEYENIR_FALLBACK_FOOD_DATA;
+  const payload = window.ARAMABUL_FALLBACK_FOOD_DATA;
   if (!payload || typeof payload !== "object") {
     return null;
   }
@@ -1045,7 +1384,8 @@ function readFallbackFoodData() {
   return payload;
 }
 
-function fallbackFoodVenues() {
+async function fallbackFoodVenues() {
+  await ensureFallbackFoodDataLoaded();
   const payload = readFallbackFoodData();
   if (!payload || !Array.isArray(payload.yemek)) {
     return [];
@@ -1073,7 +1413,7 @@ function readFallbackCategoryData() {
     return null;
   }
 
-  const payload = window.NEREDEYENIR_FALLBACK_CATEGORY_DATA;
+  const payload = window.ARAMABUL_FALLBACK_CATEGORY_DATA;
   if (!payload || typeof payload !== "object") {
     return null;
   }
@@ -1081,418 +1421,132 @@ function readFallbackCategoryData() {
   return payload;
 }
 
-function fallbackPayloadForDataFile(dataFilePath) {
+async function fallbackPayloadForDataFile(dataFilePath) {
   const cacheKey = String(dataFilePath || "").trim();
   if (!cacheKey) {
     return null;
   }
 
-  const fallback = readFallbackData();
-  const fallbackFood = readFallbackFoodData();
-  const fallbackCategory = readFallbackCategoryData();
-
-  if (cacheKey.includes("akaryakit") && fallback && Array.isArray(fallback.akaryakit)) {
-    return fallback.akaryakit;
+  if (cacheKey.includes("nobetci-eczane")) {
+    await ensureFallbackCategoryDataLoaded();
+    const fallbackCategory = readFallbackCategoryData();
+    if (fallbackCategory && Array.isArray(fallbackCategory.nobetciEczane)) {
+      return fallbackCategory.nobetciEczane;
+    }
+    return null;
   }
 
-  if (cacheKey.includes("kafe") && fallbackFood && Array.isArray(fallbackFood.kafe)) {
-    return fallbackFood.kafe;
+  if (cacheKey.includes("akaryakit")) {
+    await ensureFallbackDataLoaded();
+    const fallback = readFallbackData();
+    if (fallback && Array.isArray(fallback.akaryakit)) {
+      return fallback.akaryakit;
+    }
   }
 
-  if (cacheKey.includes("keyif-restoran")) {
-    const foodVenues = fallbackFoodVenues();
-    return foodVenues.length > 0 ? foodVenues : null;
+  if (cacheKey.includes("kuafor")) {
+    await ensureFallbackDataLoaded();
+    const fallback = readFallbackData();
+    if (fallback && Array.isArray(fallback.kuafor)) {
+      return fallback.kuafor;
+    }
   }
 
-  if (cacheKey.includes("keyif-kahvalti")) {
-    return fallbackFoodVenues().filter((item) => matchesFallbackFoodKeywords(item, [
-      "kahvalti",
+  if (cacheKey.includes("veteriner")) {
+    await ensureFallbackCategoryDataLoaded();
+    const fallbackCategory = readFallbackCategoryData();
+    if (fallbackCategory && Array.isArray(fallbackCategory.veteriner)) {
+      return fallbackCategory.veteriner;
+    }
+  }
+
+  if (cacheKey.includes("eczane")) {
+    await ensureFallbackCategoryDataLoaded();
+    const fallbackCategory = readFallbackCategoryData();
+    if (fallbackCategory && Array.isArray(fallbackCategory.eczane)) {
+      return fallbackCategory.eczane;
+    }
+  }
+
+  if (cacheKey.includes("yemek") || cacheKey.includes("keyif") || cacheKey.includes("restoran") || cacheKey.includes("kafe")) {
+    await ensureFallbackFoodDataLoaded();
+    const foodVenues = await fallbackFoodVenues();
+    if (foodVenues.length > 0) {
+      return foodVenues;
+    }
+  }
+
+  if (cacheKey.includes("kahvalti")) {
+    await ensureFallbackFoodDataLoaded();
+    return (await fallbackFoodVenues()).filter((item) => matchesFallbackFoodKeywords(item, [
       "kahvaltı",
-      "brunch",
-      "serpme",
+      "kahvalti",
+      "breakfast",
     ]));
   }
 
-  if (cacheKey.includes("keyif-kebap")) {
-    return fallbackFoodVenues().filter((item) => matchesFallbackFoodKeywords(item, [
+  if (cacheKey.includes("kebap")) {
+    await ensureFallbackFoodDataLoaded();
+    return (await fallbackFoodVenues()).filter((item) => matchesFallbackFoodKeywords(item, [
       "kebap",
-      "ocakbasi",
       "ocakbaşı",
-      "ciger",
-      "ciğer",
-      "izgara",
+      "ocakbasi",
+      "adana",
+      "urfa",
     ]));
   }
 
-  if (cacheKey.includes("keyif-doner")) {
-    return fallbackFoodVenues().filter((item) => matchesFallbackFoodKeywords(item, [
-      "doner",
+  if (cacheKey.includes("doner")) {
+    await ensureFallbackFoodDataLoaded();
+    return (await fallbackFoodVenues()).filter((item) => matchesFallbackFoodKeywords(item, [
       "döner",
+      "doner",
       "iskender",
     ]));
   }
 
-  if (cacheKey.includes("keyif-pide")) {
-    return fallbackFoodVenues().filter((item) => matchesFallbackFoodKeywords(item, [
+  if (cacheKey.includes("pide")) {
+    await ensureFallbackFoodDataLoaded();
+    return (await fallbackFoodVenues()).filter((item) => matchesFallbackFoodKeywords(item, [
       "pide",
       "lahmacun",
+      "kiymali",
+      "kıymalı",
     ]));
   }
 
-  if (cacheKey.includes("keyif-cigkofte")) {
-    return fallbackFoodVenues().filter((item) => matchesFallbackFoodKeywords(item, [
-      "cig kofte",
+  if (cacheKey.includes("cigkofte")) {
+    await ensureFallbackFoodDataLoaded();
+    return (await fallbackFoodVenues()).filter((item) => matchesFallbackFoodKeywords(item, [
       "çiğ köfte",
+      "cig kofte",
       "cigkofte",
-      "çiğköfte",
-      "komagene",
-      "oses",
     ]));
   }
 
-  if (cacheKey.includes("keyif")) {
-    const foodVenues = fallbackFoodVenues().filter((item) => matchesFallbackFoodKeywords(item, [
+  if (cacheKey.includes("meyhane")) {
+    await ensureFallbackFoodDataLoaded();
+    return (await fallbackFoodVenues()).filter((item) => matchesFallbackFoodKeywords(item, [
       "meyhane",
-      "taverna",
+      "rakı",
+      "raki",
       "meze",
-      "fasil",
-      "fasıl",
     ]));
-    return foodVenues.length > 0 ? foodVenues : fallbackFoodVenues();
   }
 
-  const isNobetciEczaneFile = /(?:^|\/)nobetci-eczane\.json(?:$|\?)/u.test(cacheKey);
-  const isEczaneFile = /(?:^|\/)eczane\.json(?:$|\?)/u.test(cacheKey);
+  if (cacheKey.includes("otel") || cacheKey.includes("hotel")) {
+    await ensureFallbackFoodDataLoaded();
+    const foodVenues = (await fallbackFoodVenues()).filter((item) => matchesFallbackFoodKeywords(item, [
+      "otel",
+      "hotel",
+      "konaklama",
+      "pansiyon",
+    ]));
 
-  if (
-    isNobetciEczaneFile &&
-    fallbackCategory &&
-    Array.isArray(fallbackCategory.nobetciEczane)
-  ) {
-    return fallbackCategory.nobetciEczane;
-  }
-
-  if (isEczaneFile && fallbackCategory && Array.isArray(fallbackCategory.eczane)) {
-    return fallbackCategory.eczane;
-  }
-
-  if (cacheKey.includes("kuafor") && fallback && Array.isArray(fallback.kuafor)) {
-    return fallback.kuafor;
-  }
-
-  if (cacheKey.includes("veteriner") && fallbackCategory && Array.isArray(fallbackCategory.veteriner)) {
-    return fallbackCategory.veteriner;
+    return foodVenues.length > 0 ? foodVenues : await fallbackFoodVenues();
   }
 
   return null;
-}
-
-function normalizeName(value) {
-  return String(value || "")
-    .trim()
-    .toLocaleLowerCase("tr")
-    .replaceAll("ı", "i")
-    .replaceAll("ğ", "g")
-    .replaceAll("ü", "u")
-    .replaceAll("ş", "s")
-    .replaceAll("ö", "o")
-    .replaceAll("ç", "c")
-    .replace(/[^a-z0-9]/g, "");
-}
-
-function normalizeSearchText(value) {
-  return String(value || "")
-    .toLocaleLowerCase("tr")
-    .replaceAll("ı", "i")
-    .replaceAll("ğ", "g")
-    .replaceAll("ü", "u")
-    .replaceAll("ş", "s")
-    .replaceAll("ö", "o")
-    .replaceAll("ç", "c");
-}
-
-function queryParams() {
-  const url = new URL(window.location.href);
-  return {
-    city: (url.searchParams.get("sehir") || url.searchParams.get("city") || "").trim(),
-    district: (url.searchParams.get("ilce") || url.searchParams.get("district") || "").trim(),
-    subcategorySource: (url.searchParams.get("tur") || url.searchParams.get("type") || "").trim(),
-    facilityType: (url.searchParams.get("tt") || url.searchParams.get("tesis") || url.searchParams.get("facilityType") || "").trim(),
-    venueName: (url.searchParams.get("mekan") || url.searchParams.get("venue") || "").trim(),
-    sourcePlaceId: (url.searchParams.get("pid") || "").trim(),
-  };
-}
-
-function normalizeFacilityType(value) {
-  return normalizeSearchText(value).replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-}
-
-function resolveVenueFacilityType(venue) {
-  return pickFirstText(venue?.sourceTesisTuru, venue?.type, venue?.cuisine);
-}
-
-function isCampingFacilityType(value) {
-  const normalized = normalizeFacilityType(value);
-  return normalized === "camping" || normalized === "kamping" || normalized === "kamp alani";
-}
-
-function isHotelFacilityType(value) {
-  const normalized = normalizeFacilityType(value);
-  return normalized === "otel" || normalized === "hotel";
-}
-
-function mapLegacyCampingVenueToDynamicVenue(venue) {
-  return {
-    ...venue,
-    cuisine: "Camping",
-    sourceTesisTuru: "Camping",
-    source: pickFirstText(venue?.source, "legacy-camping"),
-  };
-}
-
-function mapLegacyHotelVenueToDynamicVenue(venue) {
-  return {
-    ...venue,
-    cuisine: "Otel",
-    sourceTesisTuru: "Otel",
-    source: pickFirstText(venue?.source, "legacy-hotel"),
-  };
-}
-
-function stripDynamicNameNumericSuffix(value) {
-  const raw = String(value || "").trim();
-  if (!raw) {
-    return "";
-  }
-
-  const compact = raw
-    .replace(/(?:[\s-]+)\d{3,6}$/u, "")
-    .replace(/([A-Za-zÇĞİIÖŞÜçğıöşü])\d{3,6}$/u, "$1")
-    .replace(/\s+/g, " ")
-    .trim();
-  return compact || raw;
-}
-
-function dynamicVenueLocalityKey(venue) {
-  const cityKey = normalizeName(venue?.city);
-  const districtKey = normalizeName(venue?.district);
-  if (cityKey && districtKey) {
-    return `${cityKey}:${districtKey}`;
-  }
-  return cityKey || districtKey || "_";
-}
-
-function buildDynamicVenueNameSetByLocality(venues) {
-  const namesByLocality = new Map();
-
-  venues.forEach((venue) => {
-    const localityKey = dynamicVenueLocalityKey(venue);
-    const rawNameKey = normalizeName(venue?.name);
-    if (!rawNameKey) {
-      return;
-    }
-
-    const existing = namesByLocality.get(localityKey);
-    if (existing) {
-      existing.add(rawNameKey);
-      return;
-    }
-
-    namesByLocality.set(localityKey, new Set([rawNameKey]));
-  });
-
-  return namesByLocality;
-}
-
-function resolveDynamicVenueNameKey(venue, namesByLocality) {
-  const rawNameKey = normalizeName(venue?.name);
-  if (!rawNameKey) {
-    return "";
-  }
-
-  const strippedNameKey = normalizeName(stripDynamicNameNumericSuffix(venue?.name));
-  if (!strippedNameKey || strippedNameKey === rawNameKey) {
-    return rawNameKey;
-  }
-
-  const localityKey = dynamicVenueLocalityKey(venue);
-  const localityNames = namesByLocality.get(localityKey);
-  if (localityNames && localityNames.has(strippedNameKey)) {
-    return strippedNameKey;
-  }
-
-  return rawNameKey;
-}
-
-function scoreDynamicVenueForDedupe(venue, canonicalNameKey) {
-  const rawNameKey = normalizeName(venue?.name);
-  let score = venueInfoRichnessScore(venue);
-
-  if (rawNameKey && rawNameKey === canonicalNameKey) {
-    score += 100;
-  }
-
-  if (!/\d{3,6}\s*$/u.test(String(venue?.name || "").trim())) {
-    score += 2;
-  }
-
-  return score;
-}
-
-function dedupeDynamicTypeVenues(venues) {
-  if (!Array.isArray(venues) || venues.length === 0) {
-    return [];
-  }
-
-  const namesByLocality = buildDynamicVenueNameSetByLocality(venues);
-  const bestByKey = new Map();
-
-  venues.forEach((venue) => {
-    const canonicalNameKey = resolveDynamicVenueNameKey(venue, namesByLocality);
-    if (!canonicalNameKey) {
-      return;
-    }
-
-    const localityKey = dynamicVenueLocalityKey(venue);
-    const identityKey = `${localityKey}:${canonicalNameKey}`;
-    const existing = bestByKey.get(identityKey);
-
-    if (!existing) {
-      bestByKey.set(identityKey, venue);
-      return;
-    }
-
-    const existingScore = scoreDynamicVenueForDedupe(existing, canonicalNameKey);
-    const candidateScore = scoreDynamicVenueForDedupe(venue, canonicalNameKey);
-    if (candidateScore > existingScore) {
-      bestByKey.set(identityKey, venue);
-    }
-  });
-
-  return [...bestByKey.values()];
-}
-
-function filterDynamicTypeVenues(venues, requestedType) {
-  const typeText = String(requestedType || "").trim();
-  if (!typeText) {
-    return [];
-  }
-
-  const normalizedRequestedType = normalizeFacilityType(typeText);
-  if (!normalizedRequestedType) {
-    return [];
-  }
-
-  const filtered = venues.filter((venue) => {
-    const venueType = normalizeFacilityType(resolveVenueFacilityType(venue));
-    return venueType === normalizedRequestedType;
-  });
-
-  return dedupeDynamicTypeVenues(filtered);
-}
-
-function findNameMatch(queryValue, values) {
-  if (!queryValue) {
-    return "";
-  }
-
-  const normalizedQuery = normalizeName(queryValue);
-  if (!normalizedQuery) {
-    return "";
-  }
-
-  const exact = values.find((value) => value === queryValue);
-
-  if (exact) {
-    return exact;
-  }
-
-  const normalizedExact = values.find((value) => normalizeName(value) === normalizedQuery);
-  if (normalizedExact) {
-    return normalizedExact;
-  }
-
-  if (normalizedQuery.length < 3) {
-    return "";
-  }
-
-  return values.find((value) => {
-    const normalizedValue = normalizeName(value);
-    return normalizedValue.includes(normalizedQuery) || normalizedQuery.includes(normalizedValue);
-  }) || "";
-}
-
-function isCoordinateQuery(queryText) {
-  const compact = String(queryText || "").trim().replace(/\s+/g, "");
-  return /^-?\d{1,3}(?:\.\d+)?,-?\d{1,3}(?:\.\d+)?$/.test(compact);
-}
-
-function buildVenueQueryText(venue) {
-  const seen = new Set();
-  const parts = [];
-
-  [venue?.name, venue?.address, venue?.neighborhood, venue?.postalCode, venue?.district, venue?.city]
-    .map((value) => String(value || "").trim())
-    .filter(Boolean)
-    .forEach((value) => {
-      const key = normalizeName(value);
-      if (!key || seen.has(key)) {
-        return;
-      }
-
-      seen.add(key);
-      parts.push(value);
-    });
-
-  return parts.join(" ");
-}
-
-function buildMapsSearchUrl(venue) {
-  const mapsUrl = new URL("https://www.google.com/maps/search/");
-  mapsUrl.searchParams.set("api", "1");
-  mapsUrl.searchParams.set("query", buildVenueQueryText(venue));
-
-  if (typeof venue.sourcePlaceId === "string" && venue.sourcePlaceId.trim()) {
-    mapsUrl.searchParams.set("query_place_id", venue.sourcePlaceId.trim());
-  }
-
-  return mapsUrl.toString();
-}
-
-function buildMapsEmbedUrl(venue) {
-  const query = buildVenueQueryText(venue);
-  const mapsEmbed = new URL("https://www.google.com/maps");
-  mapsEmbed.searchParams.set("q", query);
-  mapsEmbed.searchParams.set("output", "embed");
-  return mapsEmbed.toString();
-}
-
-function sanitizeUrl(rawUrl) {
-  const raw = String(rawUrl || "").trim();
-  if (!raw) {
-    return "";
-  }
-
-  if (/^https?:\/\//i.test(raw)) {
-    return raw;
-  }
-
-  if (raw.startsWith("//")) {
-    return `https:${raw}`;
-  }
-
-  return "";
-}
-
-function pickFirstText(...values) {
-  for (const value of values) {
-    const text = String(value || "").trim();
-    if (text) {
-      return text;
-    }
-  }
-
-  return "";
 }
 
 function resolvePhoneText(payload) {
@@ -1536,6 +1590,67 @@ function resolvePhoneText(payload) {
     if (firstFromList) {
       return firstFromList;
     }
+  }
+
+  return "";
+}
+
+function isCoordinateQuery(queryText) {
+  const compact = String(queryText || "").trim().replace(/\s+/g, "");
+  return /^-?\d{1,3}(?:\.\d+)?,-?\d{1,3}(?:\.\d+)?$/.test(compact);
+}
+
+function buildVenueQueryText(venue) {
+  const seen = new Set();
+  const parts = [];
+
+  [venue?.name, venue?.address, venue?.neighborhood, venue?.postalCode, venue?.district, venue?.city]
+    .map((value) => String(value || "").trim())
+    .filter(Boolean)
+    .forEach((value) => {
+      const key = normalizeName(value);
+      if (!key || seen.has(key)) {
+        return;
+      }
+
+      seen.add(key);
+      parts.push(value);
+    });
+
+  return parts.join(" ");
+}
+
+function buildMapsSearchUrl(venue) {
+  const mapsUrl = new URL("https://www.google.com/maps/search/");
+  mapsUrl.searchParams.set("api", "1");
+  mapsUrl.searchParams.set("query", buildVenueQueryText(venue));
+
+  if (typeof venue.sourcePlaceId === "string" && venue.sourcePlaceId.trim()) {
+    mapsUrl.searchParams.set("query_place_id", venue.sourcePlaceId.trim());
+  }
+
+  return mapsUrl.toString();
+}
+
+function buildMapsEmbedUrl(venue) {
+  const mapsUrl = new URL("https://www.google.com/maps");
+  mapsUrl.searchParams.set("q", buildVenueQueryText(venue));
+  mapsUrl.searchParams.set("output", "embed");
+  return mapsUrl.toString();
+}
+
+function sanitizeUrl(rawUrl) {
+  const raw = String(rawUrl || "").trim();
+  if (!raw) {
+    return "";
+  }
+
+  if (/^https?:\/\//i.test(raw)) {
+    return raw;
+  }
+
+  if (raw.startsWith("//")) {
+    return `https:${raw}`;
   }
 
   return "";
@@ -2530,20 +2645,21 @@ async function loadDistrictMap() {
       return normalized;
     };
 
-    districtMapPromise = fetchJsonWithFallback(DISTRICTS_JSON_PATH, {})
-      .then((payload) => {
+    districtMapPromise = (async () => {
+      try {
+        const payload = await fetchJsonWithFallback(DISTRICTS_JSON_PATH, {});
         const normalized = normalizeDistrictMap(payload);
         if (Object.keys(normalized).length > 0) {
           return normalized;
         }
+      } catch (_error) {
+        // Use fallback below.
+      }
 
-        const fallback = readFallbackData();
-        return normalizeDistrictMap(fallback?.districts || {});
-      })
-      .catch(() => {
-        const fallback = readFallbackData();
-        return normalizeDistrictMap(fallback?.districts || {});
-      });
+      await ensureFallbackDataLoaded();
+      const fallback = readFallbackData();
+      return normalizeDistrictMap(fallback?.districts || {});
+    })();
   }
 
   return districtMapPromise;
@@ -2589,41 +2705,43 @@ async function loadCategoryDataFile(dataFilePath) {
   }
 
   if (!categoryDataPromiseCache.has(cacheKey)) {
-    const fallbackPayload = fallbackPayloadForDataFile(cacheKey);
-    if (Array.isArray(fallbackPayload)) {
-      categoryDataPromiseCache.set(cacheKey, Promise.resolve(fallbackPayload));
-      return categoryDataPromiseCache.get(cacheKey);
-    }
+    const mapPayload = (payload) => {
+      if (!Array.isArray(payload)) {
+        return [];
+      }
 
-    const promise = fetchJsonWithFallback(cacheKey, [])
-      .then((payload) => {
-        if (!Array.isArray(payload)) {
-          return [];
-        }
+      return payload.map((item) => ({
+        city: String(item.city || "").trim(),
+        district: String(item.district || "").trim(),
+        name: String(item.name || "").trim(),
+        cuisine: String(item.cuisine || item.category || "").trim(),
+        hospitalGroup: String(item.hospitalGroup || item.group || "").trim(),
+        address: String(item.address || "").trim(),
+        neighborhood: String(item.neighborhood || item.mahalle || "").trim(),
+        postalCode: String(item.postalCode || item.postcode || "").trim(),
+        mapsUrl: String(item.mapsUrl || "").trim(),
+        website: String(item.website || "").trim(),
+        phone: resolvePhoneText(item),
+        photoUrl: String(item.photoUrl || item.photoUri || item.imageUrl || item.image || item.coverImageUrl || "").trim(),
+        editorialSummary: String(item.editorialSummary || "").trim(),
+        instagram: String(item.instagram || "").trim(),
+        dutyInfo: String(item.dutyInfo || "").trim(),
+        dutyDate: String(item.dutyDate || "").trim(),
+        googleRating: String(item.googleRating || item.rating || item.score || item.stars || "").trim(),
+        googleReviewCount: String(item.googleReviewCount || item.reviewCount || item.reviews || "").trim(),
+        sourcePlaceId: String(item.sourcePlaceId || item.placeId || "").trim(),
+      }));
+    };
 
-        return payload.map((item) => ({
-          city: String(item.city || "").trim(),
-          district: String(item.district || "").trim(),
-          name: String(item.name || "").trim(),
-          cuisine: String(item.cuisine || item.category || "").trim(),
-          hospitalGroup: String(item.hospitalGroup || item.group || "").trim(),
-          address: String(item.address || "").trim(),
-          neighborhood: String(item.neighborhood || item.mahalle || "").trim(),
-          postalCode: String(item.postalCode || item.postcode || "").trim(),
-          mapsUrl: String(item.mapsUrl || "").trim(),
-          website: String(item.website || "").trim(),
-          phone: resolvePhoneText(item),
-          photoUrl: String(item.photoUrl || item.photoUri || item.imageUrl || item.image || item.coverImageUrl || "").trim(),
-          editorialSummary: String(item.editorialSummary || "").trim(),
-          instagram: String(item.instagram || "").trim(),
-          dutyInfo: String(item.dutyInfo || "").trim(),
-          dutyDate: String(item.dutyDate || "").trim(),
-          googleRating: String(item.googleRating || item.rating || item.score || item.stars || "").trim(),
-          googleReviewCount: String(item.googleReviewCount || item.reviewCount || item.reviews || "").trim(),
-          sourcePlaceId: String(item.sourcePlaceId || item.placeId || "").trim(),
-        }));
-      })
-      .catch(() => []);
+    const promise = (async () => {
+      const payload = await fetchJsonWithFallback(cacheKey, null);
+      if (Array.isArray(payload)) {
+        return mapPayload(payload);
+      }
+
+      const fallbackPayload = await fallbackPayloadForDataFile(cacheKey);
+      return mapPayload(fallbackPayload);
+    })().catch(() => []);
 
     categoryDataPromiseCache.set(cacheKey, promise);
   }
@@ -2638,17 +2756,15 @@ async function loadRawArrayDataFile(dataFilePath) {
   }
 
   if (!rawArrayDataPromiseCache.has(cacheKey)) {
-    const fallbackPayload = fallbackPayloadForDataFile(cacheKey);
-    if (Array.isArray(fallbackPayload)) {
-      rawArrayDataPromiseCache.set(cacheKey, Promise.resolve(fallbackPayload));
-      return rawArrayDataPromiseCache.get(cacheKey);
-    }
+    const promise = (async () => {
+      const payload = await fetchJsonWithFallback(cacheKey, null);
+      if (Array.isArray(payload)) {
+        return payload;
+      }
 
-    const promise = fetchJsonWithFallback(cacheKey, [])
-      .then((payload) => {
-        return Array.isArray(payload) ? payload : [];
-      })
-      .catch(() => []);
+      const fallbackPayload = await fallbackPayloadForDataFile(cacheKey);
+      return Array.isArray(fallbackPayload) ? fallbackPayload : [];
+    })().catch(() => []);
 
     rawArrayDataPromiseCache.set(cacheKey, promise);
   }
@@ -2850,11 +2966,8 @@ function renderRootPage(
       chips.append(chip);
     });
 
+    const shouldAppendDynamicToMainRow = staticDistrictLinkPages.length === 0;
     if (Array.isArray(dynamicTypeItems) && dynamicTypeItems.length > 0) {
-      const dynamicRow = document.createElement("article");
-      dynamicRow.className = "province-row";
-      dynamicRow.style.gridTemplateColumns = "1fr";
-
       const dynamicChips = document.createElement("div");
       dynamicChips.className = "province-cities";
 
@@ -2878,8 +2991,15 @@ function renderRootPage(
       });
 
       if (dynamicChips.childElementCount > 0) {
-        dynamicRow.append(dynamicChips);
-        groupGrid.append(dynamicRow);
+        if (shouldAppendDynamicToMainRow) {
+          chips.append(...Array.from(dynamicChips.children));
+        } else {
+          const dynamicRow = document.createElement("article");
+          dynamicRow.className = "province-row";
+          dynamicRow.style.gridTemplateColumns = "1fr";
+          dynamicRow.append(dynamicChips);
+          groupGrid.append(dynamicRow);
+        }
       }
     }
 
@@ -3022,7 +3142,7 @@ function renderCityPage(
       cityBreadcrumb.textContent = translateCategoryUiLabel(subcategoryDefinition.title);
     }
 
-    document.title = `arama bul | ${translateCategoryUiLabel(subcategoryDefinition.title)} ${translateCategoryUiLabel("İller")}`;
+    document.title = `aramabul | ${translateCategoryUiLabel(subcategoryDefinition.title)} ${translateCategoryUiLabel("İller")}`;
 
     if (cityNames.length === 0) {
       const empty = document.createElement("article");
@@ -3073,7 +3193,7 @@ function renderCityPage(
 
   if (!matchedCity) {
     if (cityTitle) {
-      cityTitle.textContent = "İlçeler";
+      cityTitle.textContent = translateCategoryUiLabel("İlçeler");
     }
 
     if (cityBreadcrumb) {
@@ -3096,14 +3216,14 @@ function renderCityPage(
   );
 
   if (cityTitle) {
-    cityTitle.textContent = `${matchedCity} İli`;
+    cityTitle.textContent = `${matchedCity} ${translateCategoryUiLabel("İli")}`;
   }
 
   if (cityBreadcrumb) {
     cityBreadcrumb.textContent = matchedCity;
   }
 
-  document.title = `arama bul | ${matchedCity} İli`;
+  document.title = `aramabul | ${matchedCity} ${translateCategoryUiLabel("İli")}`;
 
   if (districts.length === 0) {
     const empty = document.createElement("article");
@@ -3118,7 +3238,7 @@ function renderCityPage(
 
   const rowTitle = document.createElement("h4");
   rowTitle.className = "province-region";
-  rowTitle.textContent = "İlçeler";
+  rowTitle.textContent = translateCategoryUiLabel("İlçeler");
 
   const chips = document.createElement("div");
   chips.className = "province-cities";
@@ -3244,7 +3364,7 @@ function renderDistrictPage(
       districtTitle.textContent = `${matchedCity} ${translateCategoryUiLabel("İli")}`;
     }
 
-    document.title = `arama bul | ${matchedCity} ${translateCategoryUiLabel("İli")}`;
+    document.title = `aramabul | ${matchedCity} ${translateCategoryUiLabel("İli")}`;
 
     if (districts.length === 0) {
       const empty = document.createElement("article");
@@ -3367,10 +3487,10 @@ function renderDistrictPage(
     if (districtFamilyCenters.length > 0) {
       stats.push(`${districtFamilyCenters.length} adet aile sağlığı merkezi`);
     }
-    districtTitle.textContent = `${matchedDistrict} İlçesi (${stats.join(", ")})`;
+    districtTitle.textContent = `${matchedDistrict} ${translateCategoryUiLabel("İlçesi")} (${stats.join(", ")})`;
   }
 
-  document.title = `arama bul | ${matchedCity} İli / ${matchedDistrict} İlçesi ${definition.name}`;
+  document.title = `aramabul | ${formatProvinceDistrictHeading(matchedCity, matchedDistrict, definition.name)}`;
 
   if (
     mergedPrimaryVenues.length === 0
@@ -3401,21 +3521,27 @@ function renderDistrictPage(
 
     if (isTransitCategory && transitGroups) {
       if (transitGroups.fuel.length > 0) {
-        venueGrid.append(renderVenueRow("Akaryakıt İstasyonları", transitGroups.fuel, "", districtRowRenderOptions));
+        venueGrid.append(
+          renderVenueRow(translateCategoryUiLabel("Akaryakıt İstasyonları"), transitGroups.fuel, "", districtRowRenderOptions),
+        );
       }
       if (transitGroups.charge.length > 0) {
-        venueGrid.append(renderVenueRow("Şarj İstasyonları", transitGroups.charge, "", districtRowRenderOptions));
+        venueGrid.append(
+          renderVenueRow(translateCategoryUiLabel("Şarj İstasyonları"), transitGroups.charge, "", districtRowRenderOptions),
+        );
       }
       if (transitGroups.parking.length > 0) {
-        venueGrid.append(renderVenueRow("Otoparklar", transitGroups.parking, "", districtRowRenderOptions));
+        venueGrid.append(renderVenueRow(translateCategoryUiLabel("Otoparklar"), transitGroups.parking, "", districtRowRenderOptions));
       }
       if (transitGroups.other.length > 0) {
-        venueGrid.append(renderVenueRow("Diğer Ulaşım Noktaları", transitGroups.other, "", districtRowRenderOptions));
+        venueGrid.append(
+          renderVenueRow(translateCategoryUiLabel("Diğer Ulaşım Noktaları"), transitGroups.other, "", districtRowRenderOptions),
+        );
       }
       return;
     }
 
-    const primaryTitle = String(definition.primaryRowTitle || "Mekanlar").trim() || "Mekanlar";
+    const primaryTitle = translateCategoryUiLabel(String(definition.primaryRowTitle || "Mekanlar").trim() || "Mekanlar");
     venueGrid.append(renderVenueRow(primaryTitle, mergedPrimaryVenues, "", districtRowRenderOptions));
   };
 
@@ -3424,7 +3550,8 @@ function renderDistrictPage(
       return;
     }
 
-    const baseSecondaryTitle = String(definition.secondaryRowTitle || "Nöbetçi Eczaneler").trim() || "Nöbetçi Eczaneler";
+    const baseSecondaryTitle =
+      translateCategoryUiLabel(String(definition.secondaryRowTitle || "Nöbetçi Eczaneler").trim() || "Nöbetçi Eczaneler");
     venueGrid.append(renderVenueRow(baseSecondaryTitle, mergedSecondaryVenues, dutyDateLabel, districtRowRenderOptions));
   };
 
@@ -3434,7 +3561,9 @@ function renderDistrictPage(
     });
 
     if (districtFamilyCenters.length > 0) {
-      venueGrid.append(renderVenueRow("Aile Sağlığı Merkezleri", districtFamilyCenters, "", districtRowRenderOptions));
+      venueGrid.append(
+        renderVenueRow(translateCategoryUiLabel("Aile Sağlığı Merkezleri"), districtFamilyCenters, "", districtRowRenderOptions),
+      );
     }
   };
 
@@ -3511,7 +3640,7 @@ function renderDistrictLinkPage(
 
   if (!matchedCity || !matchedDistrict) {
     if (districtTitle) {
-      districtTitle.textContent = `İlçe ${definition.name} Türleri`;
+      districtTitle.textContent = `${translateCategoryUiLabel("İlçe")} ${translateCategoryUiLabel(definition.name)} ${translateCategoryUiLabel("Türler")}`;
     }
 
     const empty = document.createElement("article");
@@ -3601,16 +3730,17 @@ function renderDistrictLinkPage(
   }
 
   if (districtTitle) {
-    districtTitle.textContent = `${matchedCity} İli / ${matchedDistrict} İlçesi`;
+    districtTitle.textContent = formatProvinceDistrictHeading(matchedCity, matchedDistrict);
   }
 
-  document.title = `arama bul | ${matchedCity} İli / ${matchedDistrict} İlçesi ${definition.name}`;
+  document.title = `aramabul | ${formatProvinceDistrictHeading(matchedCity, matchedDistrict, definition.name)}`;
   const row = document.createElement("article");
   row.className = "province-row";
 
   const rowTitle = document.createElement("h4");
   rowTitle.className = "province-region";
-  rowTitle.textContent = String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler";
+  rowTitle.textContent =
+    translateCategoryUiLabel(String(definition.districtLinkHeading || `${definition.name} Türleri`).trim() || "Türler");
 
   const chips = document.createElement("div");
   chips.className = "province-cities";
@@ -3644,7 +3774,7 @@ function renderDistrictLinkPage(
     const chip = document.createElement("a");
     chip.className = "province-pill yemek-pill yemek-pill-link";
     chip.href = `${item.pagePath}?sehir=${encodeURIComponent(matchedCity)}&ilce=${encodeURIComponent(matchedDistrict)}`;
-    chip.textContent = `${item.title} (${sourceVenues.length})`;
+    chip.textContent = `${translateCategoryUiLabel(item.title)} (${sourceVenues.length})`;
     chip.setAttribute("aria-label", `${matchedDistrict} ilçesi ${item.title.toLocaleLowerCase("tr")} listesini aç`);
     chips.append(chip);
   });
@@ -3742,12 +3872,12 @@ function renderDistrictSubcategoryPage(
 
   if (!matchedCity || !matchedDistrict) {
     if (pageTitle) {
-      pageTitle.textContent = "İlçe Mekanları";
+      pageTitle.textContent = translateCategoryUiLabel("İlçe Mekanları");
     }
     if (breadcrumb) {
       breadcrumb.textContent = definition.rootSubcategoryFirst
         ? translateCategoryUiLabel("İlçe")
-        : "Mekanlar";
+        : translateCategoryUiLabel("Mekanlar");
     }
 
     const empty = document.createElement("article");
@@ -3787,17 +3917,18 @@ function renderDistrictSubcategoryPage(
       return normalizeName(venue.city) === normalizedCity && normalizeName(venue.district) === normalizedDistrict;
     }),
   );
+
   if (breadcrumb) {
     breadcrumb.textContent = definition.rootSubcategoryFirst
       ? matchedDistrict
-      : subcategoryDefinition.title;
+      : translateCategoryUiLabel(subcategoryDefinition.title);
   }
 
   if (pageTitle) {
-    pageTitle.textContent = `${matchedCity} İli / ${matchedDistrict} İlçesi ${subcategoryDefinition.title}`;
+    pageTitle.textContent = formatProvinceDistrictHeading(matchedCity, matchedDistrict, subcategoryDefinition.title);
   }
 
-  document.title = `arama bul | ${matchedCity} İli / ${matchedDistrict} İlçesi ${subcategoryDefinition.title}`;
+  document.title = `aramabul | ${formatProvinceDistrictHeading(matchedCity, matchedDistrict, subcategoryDefinition.title)}`;
 
   if (districtVenues.length === 0) {
     const empty = document.createElement("article");
@@ -3823,7 +3954,14 @@ function renderDistrictSubcategoryPage(
       adContext: { inserted: false },
     }
     : null;
-  venueGrid.append(renderVenueRow(subcategoryDefinition.title, orderedDistrictVenues, "", districtInlineAdOptions));
+  venueGrid.append(
+    renderVenueRow(
+      translateCategoryUiLabel(subcategoryDefinition.title),
+      orderedDistrictVenues,
+      "",
+      districtInlineAdOptions,
+    ),
+  );
   autoOpenRequestedVenue(orderedDistrictVenues);
 }
 
@@ -4027,6 +4165,7 @@ async function initCategoryPage() {
       undenaryVenues,
       dynamicTypeItems,
     );
+    applyCategoryPageTranslations();
     return;
   }
 
@@ -4048,6 +4187,7 @@ async function initCategoryPage() {
       undenaryVenues,
       dynamicTypeVenues,
     );
+    applyCategoryPageTranslations();
     return;
   }
 
@@ -4069,6 +4209,7 @@ async function initCategoryPage() {
       dynamicTypeVenues,
       navigationVenues,
     );
+    applyCategoryPageTranslations();
     return;
   }
 
@@ -4089,6 +4230,7 @@ async function initCategoryPage() {
       undenaryVenues,
       navigationVenues,
     );
+    applyCategoryPageTranslations();
     return;
   }
 
@@ -4110,6 +4252,7 @@ async function initCategoryPage() {
       dynamicTypeVenues,
       navigationVenues,
     );
+    applyCategoryPageTranslations();
   }
 }
 

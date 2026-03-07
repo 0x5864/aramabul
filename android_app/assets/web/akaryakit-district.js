@@ -132,8 +132,8 @@ function renderHeader() {
   }
 
   document.title = hasLocation
-    ? `arama bul | ${state.city} İli / ${state.district} İlçesi Akaryakıt İstasyonları`
-    : "arama bul | İlçe Akaryakıt İstasyonları";
+    ? `aramabul | ${state.city} İli / ${state.district} İlçesi Akaryakıt İstasyonları`
+    : "aramabul | İlçe Akaryakıt İstasyonları";
 }
 
 function renderPlaces() {
@@ -177,7 +177,7 @@ function renderPlaces() {
 }
 
 async function loadAkaryakitPlaces() {
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && Array.isArray(fallback.akaryakit)) {
     return fallback.akaryakit
       .map((item) => ({

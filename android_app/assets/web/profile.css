@@ -75,8 +75,15 @@
   margin: 0;
   display: grid;
   gap: 0.65rem;
-  padding: 0.65rem 0.65rem calc(6.7rem + env(safe-area-inset-bottom, 0px));
+  padding-top: 0.65rem;
+  padding-right: 0.65rem;
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  padding-left: 0;
   background: var(--bg);
+}
+
+.settings-dashboard-shell {
+  gap: 0.85rem;
 }
 
 .settings-shell * {
@@ -88,7 +95,7 @@
 }
 
 .settings-account-card {
-  margin-top: 0.15rem;
+  margin-top: 0;
 }
 
 .settings-menu-card {
@@ -97,6 +104,69 @@
 
 .settings-signout {
   margin-top: 0.3rem;
+}
+
+.settings-layout {
+  display: grid;
+  grid-template-columns: minmax(132px, 34vw) minmax(0, 1fr);
+  column-gap: 0;
+  row-gap: 0.85rem;
+  margin-inline-start: calc(var(--header-line-start) + 7.6rem);
+  align-items: start;
+}
+
+.settings-sidebar-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0.32rem 0;
+  overflow: visible;
+}
+
+.settings-panel-stack {
+  min-width: 0;
+}
+
+.settings-panel-stack .settings-card {
+  border-left-width: 0;
+}
+
+.settings-panel-stack .settings-card + .settings-card {
+  margin-top: 0;
+  border-top-width: 0;
+}
+
+.settings-panel-card {
+  padding: 1rem;
+  min-height: 30rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.settings-panel-stack .settings-account-card {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.settings-panel-card[hidden] {
+  display: none !important;
+}
+
+.settings-sidebar-card .settings-row {
+  border-radius: 0;
+}
+
+.settings-sidebar-card .settings-row:last-of-type {
+  border-bottom: 1px solid var(--line);
+}
+
+.settings-sidebar-card .settings-signout {
+  display: block;
+  width: max-content;
+  max-width: calc(100% - 1.4rem);
+  margin: 0.7rem 0.7rem 0.18rem auto;
+  padding-inline: 0.72rem;
 }
 
 .settings-signout:disabled {
@@ -125,11 +195,19 @@
 }
 
 .settings-signout:hover:not(:disabled) {
-  background: rgba(201, 42, 74, 0.08);
+  background: #384796;
 }
 
 .settings-signout:active:not(:disabled) {
-  background: rgba(201, 42, 74, 0.12);
+  background: #022746;
+}
+
+.settings-row.is-active {
+  background: rgba(44, 53, 49, 0.08);
+}
+
+.settings-row.is-active .settings-row-chevron {
+  color: rgba(22, 33, 35, 0.82);
 }
 
 .settings-card {
@@ -138,6 +216,32 @@
   background: #fffdf8;
   box-shadow: 0 8px 24px rgba(22, 33, 35, 0.08);
   overflow: hidden;
+}
+
+.settings-page .settings-card {
+  border-radius: 0;
+}
+
+.settings-page .settings-card,
+.settings-page .settings-row,
+.settings-page .settings-signout,
+.settings-page .settings-panel-link,
+.settings-page .language-option,
+.settings-page .account-secondary-btn,
+.settings-page .settings-signup-submit {
+  transition: none !important;
+  transform: none !important;
+}
+
+.settings-page .settings-row:hover,
+.settings-page .settings-row:active,
+.settings-page .settings-signout:hover,
+.settings-page .settings-signout:active,
+.settings-page .settings-panel-link:hover,
+.settings-page .language-option:hover,
+.settings-page .account-secondary-btn:hover,
+.settings-page .settings-signup-submit:hover {
+  transform: none !important;
 }
 
 .settings-account-head {
@@ -218,69 +322,29 @@
   font-weight: 400;
 }
 
+.settings-signup-field textarea {
+  min-height: 112px;
+  resize: vertical;
+  border: 1px solid rgba(22, 33, 35, 0.2);
+  border-radius: 0;
+  background: #ffffff;
+  color: var(--ink);
+  padding: 0.72rem;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 400;
+}
+
 .settings-signup-field input:focus-visible {
   outline: 2px solid rgba(30, 167, 255, 0.56);
   outline-offset: 1px;
   border-color: rgba(30, 167, 255, 0.68);
 }
 
-.settings-signup-message {
-  min-height: 1.1rem;
-  margin: 0.1rem 0 0;
-  font-size: 0.8rem;
-  color: #c92a4a;
-}
-
-.settings-signup-message.is-ok {
-  color: #237652;
-}
-
-.settings-signup-submit {
-  min-height: 42px;
-  border: 1px solid #2c3531;
-  border-radius: 12px;
-  background: #2c3531;
-  color: #eae7dc;
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 400;
-}
-
-.settings-signup-submit:disabled {
-  opacity: 0.7;
-}
-
-.settings-page.signup-mode .settings-menu-card,
-.settings-page.signup-mode #settingsSignOutBtn {
-  display: none;
-}
-
-.settings-row {
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0 0.95rem;
-  border-bottom: 1px solid var(--line);
-  text-decoration: none;
-  color: inherit;
-  background: #fffdf8;
-}
-
-.settings-row:last-child {
-  border-bottom: 0;
-}
-
-.settings-row-button {
-  width: 100%;
-  border: 0;
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
-}
-
-.settings-panel-card {
-  padding: 1rem;
+.settings-signup-field textarea:focus-visible {
+  outline: 2px solid rgba(30, 167, 255, 0.56);
+  outline-offset: 1px;
+  border-color: rgba(30, 167, 255, 0.68);
 }
 
 .settings-feedback-form-card .language-card-head {
@@ -290,6 +354,7 @@
 .settings-feedback-form-card .language-card-head h2 {
   margin: 0;
   font-size: 0.98rem;
+  font-weight: 700;
   line-height: 1.2;
 }
 
@@ -325,6 +390,7 @@
   padding: 0.62rem 0.74rem;
   font: inherit;
   font-size: 0.92rem;
+  font-weight: 400;
   line-height: 1.4;
   box-shadow: none;
 }
@@ -398,6 +464,7 @@
   padding: 0 0.72rem;
   font: inherit;
   font-size: 0.84rem;
+  font-weight: 400;
   line-height: 1;
 }
 
@@ -416,6 +483,10 @@
   gap: 0.8rem;
 }
 
+[data-settings-panel="help"] .language-card-head h2 {
+  font-weight: 700;
+}
+
 .settings-help-item strong {
   display: block;
   margin: 0;
@@ -429,6 +500,85 @@
   font-size: 0.84rem;
   line-height: 1.5;
   color: rgba(22, 33, 35, 0.72);
+}
+
+.settings-signup-message {
+  min-height: 1.1rem;
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  color: #c92a4a;
+}
+
+.settings-signup-message.is-ok {
+  color: #237652;
+}
+
+.settings-signup-submit {
+  min-height: 42px;
+  border: 1px solid #2c3531;
+  border-radius: 12px;
+  background: #2c3531;
+  color: #eae7dc;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.settings-signup-submit:disabled {
+  opacity: 0.7;
+}
+
+.settings-page.signup-mode .settings-menu-card,
+.settings-page.signup-mode #settingsSignOutBtn {
+  display: none;
+}
+
+.settings-row {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0 0.95rem;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  background: #fffdf8;
+}
+
+.settings-row:last-child {
+  border-bottom: 0;
+}
+
+.settings-row-button {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.settings-panel-link {
+  min-height: 42px;
+  width: fit-content;
+  margin-top: 0.9rem;
+  border: 1px solid rgba(22, 33, 35, 0.18);
+  border-radius: 12px;
+  background: #fffdf8;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.9rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.settings-panel-link:hover {
+  background: rgba(11, 92, 148, 0.05);
+}
+
+.settings-panel-link:focus-visible {
+  outline: 2px solid rgba(30, 167, 255, 0.72);
+  outline-offset: 2px;
 }
 
 .settings-row-icon {
@@ -473,18 +623,18 @@
 }
 
 .settings-signout {
-  min-height: 58px;
-  border: 1px solid rgba(201, 42, 74, 0.32);
-  border-radius: 16px;
-  background: #fffdf8;
-  color: #c92a4a;
+  min-height: 42px;
+  border: 1px solid #2c3531;
+  border-radius: 12px;
+  background: #2c3531;
+  color: #eae7dc;
   font: inherit;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 400;
 }
 
 .language-shell {
-  padding-top: 0.4rem;
+  padding-top: 0.65rem;
 }
 
 .language-card {
@@ -507,49 +657,56 @@
 .language-options {
   margin-top: 0.85rem;
   display: grid;
+  width: fit-content;
   gap: 0.58rem;
 }
 
 .language-option {
-  width: 100%;
-  min-height: 52px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #fffdf8;
-  color: var(--ink);
+  width: 10.5rem;
+  max-width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--box-border);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--box-text);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 0.7rem;
-  padding: 0.72rem 0.9rem;
+  padding: 0.62rem 0.74rem;
   font: inherit;
+  font-size: 0.92rem;
+  line-height: 1.4;
   text-align: left;
+  box-shadow: none;
 }
 
 .language-option:hover {
-  background: rgba(11, 92, 148, 0.05);
+  background: var(--paper);
 }
 
 .language-option:focus-visible {
-  outline: 2px solid rgba(30, 167, 255, 0.72);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--box-border);
+  box-shadow: none;
 }
 
 .language-option.active {
-  border-color: #2c3531;
-  background: rgba(44, 53, 49, 0.08);
+  border-color: var(--box-border);
+  background: var(--paper);
+  box-shadow: none;
 }
 
 .language-option-code {
-  min-width: 40px;
-  font-size: 0.82rem;
+  min-width: 2rem;
+  font-size: 0.78rem;
   letter-spacing: 0.08em;
-  color: rgba(22, 33, 35, 0.66);
+  color: rgba(22, 33, 35, 0.58);
 }
 
 .language-option-name {
-  flex: 1;
-  font-size: 0.9rem;
+  flex: 0 1 auto;
+  font-size: 0.92rem;
   font-weight: 400;
 }
 
@@ -561,7 +718,7 @@
 }
 
 .account-shell {
-  padding-top: 0.4rem;
+  padding-top: 0.65rem;
 }
 
 .account-editor-card {
@@ -570,8 +727,18 @@
 
 .account-settings-actions {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr) max-content;
   gap: 0.55rem;
+  align-items: center;
+}
+
+#accountSaveBtn {
+  grid-column: 2;
+  justify-self: end;
+}
+
+#accountSignupBtn {
+  grid-column: 1;
 }
 
 .account-secondary-btn {
@@ -654,9 +821,9 @@ body.theme-dark .settings-row-chevron {
 }
 
 body.theme-dark .settings-signout {
-  border-color: rgba(201, 42, 74, 0.32);
-  background: #fffdf8;
-  color: #c92a4a;
+  border-color: #2c3531;
+  background: #2c3531;
+  color: #eae7dc;
 }
 
 body.theme-dark .settings-inline-toast {
@@ -665,9 +832,41 @@ body.theme-dark .settings-inline-toast {
   color: var(--ink);
 }
 
+body.theme-dark .settings-row.is-active {
+  background: rgba(44, 53, 49, 0.08);
+}
+
 body.theme-dark .settings-signup-head p,
 body.theme-dark .settings-signup-field span {
   color: rgba(22, 33, 35, 0.72);
+}
+
+@media (min-width: 700px) {
+  .settings-dashboard-shell {
+    max-width: 1080px;
+    margin: 0;
+    padding-right: var(--header-line-start);
+  }
+
+  .settings-layout {
+    display: grid;
+    grid-template-columns: minmax(248px, 280px) minmax(0, 1fr);
+  }
+
+  .settings-sidebar-card {
+    position: static;
+    align-self: start;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .settings-panel-stack {
+    margin-left: 0;
+  }
+
+  .account-settings-actions {
+    grid-template-columns: minmax(0, 1fr) max-content;
+  }
 }
 
 body.theme-dark .language-card-head p,
@@ -705,6 +904,7 @@ body.theme-dark .settings-row:active {
     width: 100%;
     margin: 0;
     padding-inline: 0.55rem;
+    padding-inline-start: 0.55rem;
   }
 
   .settings-header {
@@ -713,6 +913,18 @@ body.theme-dark .settings-row:active {
 
   .settings-header h1 {
     font-size: 1rem;
+  }
+
+  .settings-panel-card {
+    min-height: 0;
+  }
+
+  .language-options {
+    width: 100%;
+  }
+
+  .language-option {
+    width: 100%;
   }
 
   .settings-feedback-grid {
@@ -729,4 +941,111 @@ body.theme-dark .settings-row:active {
   .settings-page .global-topline-inner {
     padding-top: 0.74rem;
   }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .settings-dashboard-shell {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .settings-layout {
+    grid-template-columns: 1fr !important;
+    margin-inline-start: 0 !important;
+    row-gap: 0.65rem !important;
+  }
+
+  .settings-sidebar-card {
+    border: 1px solid var(--line) !important;
+    border-radius: 18px !important;
+    background: #fffdf8 !important;
+    box-shadow: 0 8px 24px rgba(22, 33, 35, 0.08) !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .settings-panel-stack .settings-card {
+    border-left-width: 1px !important;
+  }
+
+  .settings-panel-stack .settings-card + .settings-card {
+    margin-top: 0.08rem !important;
+    border-top-width: 1px !important;
+  }
+
+  .settings-panel-card {
+    min-height: 0 !important;
+    border-top-left-radius: 18px !important;
+    border-bottom-left-radius: 18px !important;
+  }
+
+  .settings-panel-stack .settings-account-card {
+    border-top-left-radius: 18px !important;
+    border-bottom-left-radius: 18px !important;
+  }
+
+  .settings-sidebar-card .settings-signout {
+    width: calc(100% - 1.4rem) !important;
+    max-width: none !important;
+    margin: 0.7rem !important;
+    text-align: center !important;
+  }
+}
+
+body.settings-page.settings-force-mobile .settings-dashboard-shell {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.settings-page.settings-force-mobile .settings-layout {
+  grid-template-columns: 1fr !important;
+  margin-inline-start: 0 !important;
+  row-gap: 0.65rem !important;
+}
+
+body.settings-page.settings-force-mobile .settings-sidebar-card {
+  border: 1px solid var(--line) !important;
+  border-radius: 18px !important;
+  background: #fffdf8 !important;
+  box-shadow: 0 8px 24px rgba(22, 33, 35, 0.08) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-stack .settings-card {
+  border-left-width: 1px !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-stack .settings-card + .settings-card {
+  margin-top: 0.08rem !important;
+  border-top-width: 1px !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-card {
+  min-height: 0 !important;
+  border-top-left-radius: 18px !important;
+  border-bottom-left-radius: 18px !important;
+}
+
+body.settings-page.settings-force-mobile .settings-panel-stack .settings-account-card {
+  border-top-left-radius: 18px !important;
+  border-bottom-left-radius: 18px !important;
+}
+
+body.settings-page.settings-force-mobile .settings-sidebar-card .settings-signout {
+  width: calc(100% - 1.4rem) !important;
+  max-width: none !important;
+  margin: 0.7rem !important;
+  text-align: center !important;
+}
+
+body.settings-page.settings-force-mobile .settings-shell {
+  width: 100% !important;
+  margin: 0 !important;
+  padding-inline: 0.55rem !important;
+  padding-inline-start: 0.55rem !important;
 }

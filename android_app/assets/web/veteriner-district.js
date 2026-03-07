@@ -216,8 +216,8 @@ function renderHeader() {
   }
 
   document.title = hasLocation
-    ? `arama bul | ${state.city} İli / ${state.district} İlçesi Veteriner Klinikleri`
-    : "arama bul | İlçe Veterinerleri";
+    ? `aramabul | ${state.city} İli / ${state.district} İlçesi Veteriner Klinikleri`
+    : "aramabul | İlçe Veterinerleri";
 }
 
 function renderPlaces() {
@@ -261,7 +261,7 @@ function renderPlaces() {
 }
 
 async function loadVeterinerPlaces() {
-  const fallbackCategoryData = window.NEREDEYENIR_FALLBACK_CATEGORY_DATA;
+  const fallbackCategoryData = window.ARAMABUL_FALLBACK_CATEGORY_DATA;
   if (
     fallbackCategoryData &&
     typeof fallbackCategoryData === "object" &&
@@ -280,7 +280,7 @@ async function loadVeterinerPlaces() {
       .filter((item) => item.city && item.district && item.name);
   }
 
-  const fallbackData = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallbackData = window.ARAMABUL_FALLBACK_DATA;
   if (
     fallbackData &&
     typeof fallbackData === "object" &&

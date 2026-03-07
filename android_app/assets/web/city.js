@@ -6,8 +6,8 @@ const API_BASE_URL = (() => {
     return "";
   }
 
-  if (typeof window.NEREDEYENIR_API_BASE === "string" && window.NEREDEYENIR_API_BASE.trim()) {
-    return window.NEREDEYENIR_API_BASE.trim().replace(/\/+$/u, "");
+  if (typeof window.ARAMABUL_API_BASE === "string" && window.ARAMABUL_API_BASE.trim()) {
+    return window.ARAMABUL_API_BASE.trim().replace(/\/+$/u, "");
   }
 
   if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
@@ -17,19 +17,21 @@ const API_BASE_URL = (() => {
   return window.location.origin;
 })();
 const VENUES_API_ENDPOINT =
-  typeof window !== "undefined" && typeof window.NEREDEYENIR_VENUES_API === "string"
-    ? window.NEREDEYENIR_VENUES_API.trim()
+  typeof window !== "undefined" && typeof window.ARAMABUL_VENUES_API === "string"
+    ? window.ARAMABUL_VENUES_API.trim()
     : API_BASE_URL
       ? `${API_BASE_URL}/api/venues?limit=50000`
       : "";
 const DISTRICTS_API_ENDPOINT =
-  typeof window !== "undefined" && typeof window.NEREDEYENIR_DISTRICTS_API === "string"
-    ? window.NEREDEYENIR_DISTRICTS_API.trim()
+  typeof window !== "undefined" && typeof window.ARAMABUL_DISTRICTS_API === "string"
+    ? window.ARAMABUL_DISTRICTS_API.trim()
     : API_BASE_URL
       ? `${API_BASE_URL}/api/districts`
       : "";
-const AUTH_USERS_KEY = "neredeyenir.auth.users.v1";
-const AUTH_SESSION_KEY = "neredeyenir.auth.session.v1";
+const runtime = window.ARAMABUL_RUNTIME;
+const FALLBACK_FOOD_SCRIPT = "data/fallback-food-data.js?v=20260302-01";
+const AUTH_USERS_KEY = runtime.storageKeys.authUsers;
+const AUTH_SESSION_KEY = runtime.storageKeys.authSession;
 const VENUES_PER_PAGE = 50;
 
 const fallbackVenues = [
@@ -196,7 +198,7 @@ const authState = {
 const ORHANELI_DEMO_CITY = "Bursa";
 const ORHANELI_DEMO_DISTRICT = "Orhaneli";
 
-const LANGUAGE_STORAGE_KEY = "neredeyenir.selectedLanguage.v1";
+const LANGUAGE_STORAGE_KEY = runtime.storageKeys.language;
 const SUPPORTED_LANGUAGES = new Set(["TR", "EN", "RU", "DE", "ZH"]);
 const LANGUAGE_LOCALES = {
   TR: "tr-TR",
@@ -206,9 +208,21 @@ const LANGUAGE_LOCALES = {
   ZH: "zh-CN",
 };
 
+function readStorageValue(key) {
+  return runtime.readStorageValue(key);
+}
+
+function writeStorageValue(key, value) {
+  runtime.writeStorageValue(key, value);
+}
+
+function removeStorageValue(key) {
+  runtime.removeStorageValue(key);
+}
+
 const CITY_I18N = {
   TR: {
-    title: "arama bul | {city} Restoranları",
+    title: "aramabul | {city} Restoranları",
     cityTitle: "{city} Restoranları",
     toplineHome: "Anasayfa",
     toplineFood: "Keyif",
@@ -257,13 +271,13 @@ const CITY_I18N = {
     footerPartnerTitle: "İş ortaklığımız",
     footerAddPrice: "Yer ekle",
     footerCollab: "İş birliği",
-    footerCopyright: "© 2026 arama bul",
+    footerCopyright: "© 2026 aramabul",
     footerSocial: "Sosyal",
     footerSearchAria: "Ara",
     footerWorldAria: "Dünya",
   },
   EN: {
-    title: "arama bul | {city} Restaurants",
+    title: "aramabul | {city} Restaurants",
     cityTitle: "{city} Restaurants",
     toplineHome: "Home",
     toplineFood: "Keyif",
@@ -312,13 +326,13 @@ const CITY_I18N = {
     footerPartnerTitle: "Partnership",
     footerAddPrice: "Add place",
     footerCollab: "Collaboration",
-    footerCopyright: "© 2026 arama bul",
+    footerCopyright: "© 2026 aramabul",
     footerSocial: "Social",
     footerSearchAria: "Search",
     footerWorldAria: "World",
   },
   RU: {
-    title: "arama bul | Рестораны {city}",
+    title: "aramabul | Рестораны {city}",
     cityTitle: "Рестораны {city}",
     toplineHome: "Главная",
     toplineFood: "Keyif",
@@ -367,13 +381,13 @@ const CITY_I18N = {
     footerPartnerTitle: "Партнерство",
     footerAddPrice: "Добавить место",
     footerCollab: "Сотрудничество",
-    footerCopyright: "© 2026 arama bul",
+    footerCopyright: "© 2026 aramabul",
     footerSocial: "Соцсети",
     footerSearchAria: "Поиск",
     footerWorldAria: "Мир",
   },
   DE: {
-    title: "arama bul | Restaurants in {city}",
+    title: "aramabul | Restaurants in {city}",
     cityTitle: "{city} Restaurants",
     toplineHome: "Startseite",
     toplineFood: "Keyif",
@@ -422,13 +436,13 @@ const CITY_I18N = {
     footerPartnerTitle: "Partnerschaft",
     footerAddPrice: "Ort hinzufügen",
     footerCollab: "Zusammenarbeit",
-    footerCopyright: "© 2026 arama bul",
+    footerCopyright: "© 2026 aramabul",
     footerSocial: "Sozial",
     footerSearchAria: "Suche",
     footerWorldAria: "Welt",
   },
   ZH: {
-    title: "arama bul | {city} 餐厅",
+    title: "aramabul | {city} 餐厅",
     cityTitle: "{city} 餐厅",
     toplineHome: "首页",
     toplineFood: "Keyif",
@@ -476,7 +490,7 @@ const CITY_I18N = {
     footerPartnerTitle: "合作伙伴",
     footerAddPrice: "添加地点",
     footerCollab: "合作",
-    footerCopyright: "© 2026 arama bul",
+    footerCopyright: "© 2026 aramabul",
     footerSocial: "社交",
     footerSearchAria: "搜索",
     footerWorldAria: "世界",
@@ -492,15 +506,15 @@ function normalizeLanguageCode(code) {
 
 function readLanguageFromStorage() {
   try {
-    return normalizeLanguageCode(localStorage.getItem(LANGUAGE_STORAGE_KEY));
+    return normalizeLanguageCode(readStorageValue(LANGUAGE_STORAGE_KEY));
   } catch (_error) {
     return "TR";
   }
 }
 
 function getCurrentLanguage() {
-  if (typeof window.NEREDEYENIR_GET_LANGUAGE === "function") {
-    return normalizeLanguageCode(window.NEREDEYENIR_GET_LANGUAGE());
+  if (typeof window.ARAMABUL_GET_LANGUAGE === "function") {
+    return normalizeLanguageCode(window.ARAMABUL_GET_LANGUAGE());
   }
 
   return activeLanguage;
@@ -508,6 +522,21 @@ function getCurrentLanguage() {
 
 function currentLocale() {
   return LANGUAGE_LOCALES[getCurrentLanguage()] || LANGUAGE_LOCALES.TR;
+}
+
+function applyHeaderStaticTranslations() {
+  const headerI18n = window.ARAMABUL_HEADER_I18N;
+  if (!headerI18n || typeof headerI18n !== "object") {
+    return;
+  }
+
+  if (typeof headerI18n.applyStaticPageTranslations === "function") {
+    headerI18n.applyStaticPageTranslations();
+  }
+
+  if (typeof headerI18n.normalizeFooterUi === "function") {
+    headerI18n.normalizeFooterUi();
+  }
 }
 
 function cityT(key, replacements = {}) {
@@ -1057,6 +1086,23 @@ async function fetchJson(url) {
   }
 }
 
+async function ensureFallbackFoodData() {
+  if (window.ARAMABUL_FALLBACK_FOOD_DATA) {
+    return true;
+  }
+
+  if (!runtime || typeof runtime.loadScriptOnce !== "function") {
+    return false;
+  }
+
+  try {
+    await runtime.loadScriptOnce(FALLBACK_FOOD_SCRIPT);
+  } catch (_error) {
+    return false;
+  }
+
+  return Boolean(window.ARAMABUL_FALLBACK_FOOD_DATA);
+}
 function dedupeVenueRecords(records) {
   const seen = new Set();
 
@@ -1073,8 +1119,9 @@ function dedupeVenueRecords(records) {
   });
 }
 
-function readFallbackFoodRecords() {
-  const payload = window.NEREDEYENIR_FALLBACK_FOOD_DATA;
+async function readFallbackFoodRecords() {
+  await ensureFallbackFoodData();
+  const payload = window.ARAMABUL_FALLBACK_FOOD_DATA;
   if (!payload || typeof payload !== "object") {
     return [];
   }
@@ -1091,7 +1138,7 @@ async function loadBundledVenueCollections() {
     return foodRecords;
   }
 
-  const fallbackRecords = readFallbackFoodRecords();
+  const fallbackRecords = await readFallbackFoodRecords();
   if (fallbackRecords.length > 0) {
     return fallbackRecords;
   }
@@ -1791,6 +1838,8 @@ function renderSidebarCategories() {
 
     categoryFlyoutList.append(button);
   });
+
+  applyHeaderStaticTranslations();
 }
 
 function renderEmptyState() {
@@ -1977,7 +2026,7 @@ function renderVenues() {
 
 function parseStorageJson(key, fallbackValue) {
   try {
-    const rawValue = localStorage.getItem(key);
+    const rawValue = readStorageValue(key);
 
     if (!rawValue) {
       return fallbackValue;
@@ -2030,7 +2079,7 @@ function loadAuthUsers() {
 }
 
 function saveAuthUsers(users) {
-  localStorage.setItem(AUTH_USERS_KEY, JSON.stringify(users));
+  writeStorageValue(AUTH_USERS_KEY, JSON.stringify(users));
 }
 
 function loadSession() {
@@ -2052,7 +2101,7 @@ function loadSession() {
 }
 
 function saveSession(user) {
-  localStorage.setItem(
+  writeStorageValue(
     AUTH_SESSION_KEY,
     JSON.stringify({
       name: user.name,
@@ -2062,7 +2111,7 @@ function saveSession(user) {
 }
 
 function clearSession() {
-  localStorage.removeItem(AUTH_SESSION_KEY);
+  removeStorageValue(AUTH_SESSION_KEY);
 }
 
 function setAuthMessage(message, isError = false) {
@@ -2414,13 +2463,14 @@ async function initializeCityPage() {
   attachFilterEvents();
 }
 
-document.addEventListener("neredeyenir:languagechange", (event) => {
+const handleCityLanguageChange = (event) => {
   const requestedLanguage =
     event && event.detail && typeof event.detail.language === "string"
       ? event.detail.language
       : "TR";
   activeLanguage = normalizeLanguageCode(requestedLanguage);
   applyCityLanguage();
-});
+};
+document.addEventListener("aramabul:languagechange", handleCityLanguageChange);
 
 initializeCityPage();

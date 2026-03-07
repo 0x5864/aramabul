@@ -473,8 +473,8 @@ const API_BASE_URL = (() => {
     return "";
   }
 
-  if (typeof window.NEREDEYENIR_API_BASE === "string" && window.NEREDEYENIR_API_BASE.trim()) {
-    return window.NEREDEYENIR_API_BASE.trim().replace(/\/+$/u, "");
+  if (typeof window.ARAMABUL_API_BASE === "string" && window.ARAMABUL_API_BASE.trim()) {
+    return window.ARAMABUL_API_BASE.trim().replace(/\/+$/u, "");
   }
 
   if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
@@ -484,20 +484,21 @@ const API_BASE_URL = (() => {
   return window.location.origin;
 })();
 const VENUES_API_ENDPOINT =
-  typeof window !== "undefined" && typeof window.NEREDEYENIR_VENUES_API === "string"
-    ? window.NEREDEYENIR_VENUES_API.trim()
+  typeof window !== "undefined" && typeof window.ARAMABUL_VENUES_API === "string"
+    ? window.ARAMABUL_VENUES_API.trim()
     : API_BASE_URL
       ? `${API_BASE_URL}/api/venues?limit=50000`
       : "";
 const DISTRICTS_API_ENDPOINT =
-  typeof window !== "undefined" && typeof window.NEREDEYENIR_DISTRICTS_API === "string"
-    ? window.NEREDEYENIR_DISTRICTS_API.trim()
+  typeof window !== "undefined" && typeof window.ARAMABUL_DISTRICTS_API === "string"
+    ? window.ARAMABUL_DISTRICTS_API.trim()
     : API_BASE_URL
       ? `${API_BASE_URL}/api/districts`
       : "";
-const AUTH_USERS_KEY = "neredeyenir.auth.users.v1";
-const AUTH_SESSION_KEY = "neredeyenir.auth.session.v1";
-const USER_CITY_CACHE_KEY = "neredeyenir.user.city.cache.v1";
+const runtime = window.ARAMABUL_RUNTIME;
+const AUTH_USERS_KEY = runtime.storageKeys.authUsers;
+const AUTH_SESSION_KEY = runtime.storageKeys.authSession;
+const USER_CITY_CACHE_KEY = runtime.storageKeys.userCityCache;
 const USER_CITY_CACHE_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
 
 const state = {
@@ -513,7 +514,7 @@ const authState = {
   mode: "login",
 };
 
-const LANGUAGE_STORAGE_KEY = "neredeyenir.selectedLanguage.v1";
+const LANGUAGE_STORAGE_KEY = runtime.storageKeys.language;
 const SUPPORTED_LANGUAGES = new Set(["TR", "EN", "RU", "DE", "ZH"]);
 const LANGUAGE_LOCALES = {
   TR: "tr-TR",
@@ -523,12 +524,24 @@ const LANGUAGE_LOCALES = {
   ZH: "zh-CN",
 };
 
+function readStorageValue(key) {
+  return runtime.readStorageValue(key);
+}
+
+function writeStorageValue(key, value) {
+  runtime.writeStorageValue(key, value);
+}
+
+function removeStorageValue(key) {
+  runtime.removeStorageValue(key);
+}
+
 const UI_TRANSLATIONS = {
   TR: {
-    "meta.title": "arama bul | Yemek",
+    "meta.title": "aramabul | Yemek",
     "meta.description":
       "Türkiye'nin 81 ilinde yemek yenilecek yerleri keşfet. Şehir, mutfak ve bütçe filtresi ile en iyi mekanları bul.",
-    "brand.ariaLabel": "arama bul",
+    "brand.ariaLabel": "aramabul",
     "search.formAria": "Restoran arama",
     "search.inputLabel": "Restoran adı",
     "search.placeholder": "Restoran ara",
@@ -580,7 +593,7 @@ const UI_TRANSLATIONS = {
     "footer.partnerTitle": "İş ortaklığımız",
     "footer.addPrice": "Yer ekle",
     "footer.collab": "İş birliği",
-    "footer.copyright": "© 2026 arama bul",
+    "footer.copyright": "© 2026 aramabul",
     "footer.socialAria": "Sosyal",
     "footer.searchAria": "Ara",
     "footer.worldAria": "Dünya",
@@ -597,10 +610,10 @@ const UI_TRANSLATIONS = {
     "share.copied": "Link kopyalandı",
   },
   EN: {
-    "meta.title": "arama bul | Food",
+    "meta.title": "aramabul | Food",
     "meta.description":
       "Discover places to eat in all 81 cities of Turkey. Find the best spots with city, cuisine, and budget filters.",
-    "brand.ariaLabel": "arama bul",
+    "brand.ariaLabel": "aramabul",
     "search.formAria": "Restaurant search",
     "search.inputLabel": "Restaurant name",
     "search.placeholder": "Search restaurant",
@@ -652,7 +665,7 @@ const UI_TRANSLATIONS = {
     "footer.partnerTitle": "Partnership",
     "footer.addPrice": "Add place",
     "footer.collab": "Collaboration",
-    "footer.copyright": "© 2026 arama bul",
+    "footer.copyright": "© 2026 aramabul",
     "footer.socialAria": "Social",
     "footer.searchAria": "Search",
     "footer.worldAria": "World",
@@ -668,10 +681,10 @@ const UI_TRANSLATIONS = {
     "share.copied": "Link copied",
   },
   RU: {
-    "meta.title": "arama bul | Гастрокарта Турции",
+    "meta.title": "aramabul | Гастрокарта Турции",
     "meta.description":
       "Откройте места для еды во всех 81 провинциях Турции. Фильтруйте по городу, кухне и бюджету.",
-    "brand.ariaLabel": "arama bul",
+    "brand.ariaLabel": "aramabul",
     "search.formAria": "Поиск ресторана",
     "search.inputLabel": "Название ресторана",
     "search.placeholder": "Найти ресторан",
@@ -720,7 +733,7 @@ const UI_TRANSLATIONS = {
     "footer.partnerTitle": "Партнерство",
     "footer.addPrice": "Добавить место",
     "footer.collab": "Сотрудничество",
-    "footer.copyright": "© 2026 arama bul",
+    "footer.copyright": "© 2026 aramabul",
     "footer.socialAria": "Соцсети",
     "footer.searchAria": "Поиск",
     "footer.worldAria": "Мир",
@@ -735,10 +748,10 @@ const UI_TRANSLATIONS = {
     "share.copied": "Ссылка скопирована",
   },
   DE: {
-    "meta.title": "arama bul | Genusskarte der Türkei",
+    "meta.title": "aramabul | Genusskarte der Türkei",
     "meta.description":
       "Entdecke Essensorte in allen 81 Provinzen der Türkei. Filtere nach Stadt, Küche und Budget.",
-    "brand.ariaLabel": "arama bul",
+    "brand.ariaLabel": "aramabul",
     "search.formAria": "Restaurantsuche",
     "search.inputLabel": "Restaurantname",
     "search.placeholder": "Restaurant suchen",
@@ -787,7 +800,7 @@ const UI_TRANSLATIONS = {
     "footer.partnerTitle": "Partnerschaft",
     "footer.addPrice": "Ort hinzufügen",
     "footer.collab": "Zusammenarbeit",
-    "footer.copyright": "© 2026 arama bul",
+    "footer.copyright": "© 2026 aramabul",
     "footer.socialAria": "Sozial",
     "footer.searchAria": "Suche",
     "footer.worldAria": "Welt",
@@ -802,10 +815,10 @@ const UI_TRANSLATIONS = {
     "share.copied": "Link kopiert",
   },
   ZH: {
-    "meta.title": "arama bul | 土耳其美食地图",
+    "meta.title": "aramabul | 土耳其美食地图",
     "meta.description":
       "探索土耳其81个城市的餐厅。可按城市、菜系和预算筛选优质餐厅。",
-    "brand.ariaLabel": "arama bul",
+    "brand.ariaLabel": "aramabul",
     "search.formAria": "餐厅搜索",
     "search.inputLabel": "餐厅名称",
     "search.placeholder": "搜索餐厅",
@@ -854,7 +867,7 @@ const UI_TRANSLATIONS = {
     "footer.partnerTitle": "合作伙伴",
     "footer.addPrice": "添加地点",
     "footer.collab": "合作",
-    "footer.copyright": "© 2026 arama bul",
+    "footer.copyright": "© 2026 aramabul",
     "footer.socialAria": "社交",
     "footer.searchAria": "搜索",
     "footer.worldAria": "世界",
@@ -1048,15 +1061,15 @@ function normalizeLanguageCode(code) {
 
 function readLanguageFromStorage() {
   try {
-    return normalizeLanguageCode(localStorage.getItem(LANGUAGE_STORAGE_KEY));
+    return normalizeLanguageCode(readStorageValue(LANGUAGE_STORAGE_KEY));
   } catch (_error) {
     return "TR";
   }
 }
 
 function currentLanguage() {
-  if (typeof window.NEREDEYENIR_GET_LANGUAGE === "function") {
-    return normalizeLanguageCode(window.NEREDEYENIR_GET_LANGUAGE());
+  if (typeof window.ARAMABUL_GET_LANGUAGE === "function") {
+    return normalizeLanguageCode(window.ARAMABUL_GET_LANGUAGE());
   }
 
   return activeLanguage;
@@ -1509,7 +1522,7 @@ async function loadDistrictData(records) {
 
 function parseJsonStorage(key, fallbackValue) {
   try {
-    const rawValue = localStorage.getItem(key);
+    const rawValue = readStorageValue(key);
 
     if (!rawValue) {
       return fallbackValue;
@@ -1578,7 +1591,7 @@ function loadCachedUserCity() {
 }
 
 function saveCachedUserCity(city) {
-  localStorage.setItem(
+  writeStorageValue(
     USER_CITY_CACHE_KEY,
     JSON.stringify({
       city,
@@ -1740,7 +1753,7 @@ function loadAuthUsers() {
 }
 
 function saveAuthUsers(users) {
-  localStorage.setItem(AUTH_USERS_KEY, JSON.stringify(users));
+  writeStorageValue(AUTH_USERS_KEY, JSON.stringify(users));
 }
 
 function loadSessionUser() {
@@ -1762,14 +1775,14 @@ function loadSessionUser() {
 }
 
 function saveSessionUser(user) {
-  localStorage.setItem(
+  writeStorageValue(
     AUTH_SESSION_KEY,
     JSON.stringify({ name: user.name, email: user.email }),
   );
 }
 
 function clearSessionUser() {
-  localStorage.removeItem(AUTH_SESSION_KEY);
+  removeStorageValue(AUTH_SESSION_KEY);
 }
 
 function setAuthMessage(text, isError = false) {
@@ -2820,11 +2833,12 @@ function applyLanguageToPage() {
   }
 }
 
-document.addEventListener("neredeyenir:languagechange", (event) => {
+const handleLanguageChange = (event) => {
   const requested = event && event.detail ? event.detail.language : "TR";
   activeLanguage = normalizeLanguageCode(requested);
   applyLanguageToPage();
-});
+};
+document.addEventListener("aramabul:languagechange", handleLanguageChange);
 
 async function initializeApp() {
   activeLanguage = currentLanguage() || readLanguageFromStorage();

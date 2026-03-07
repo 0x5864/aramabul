@@ -20,6 +20,7 @@
 }
 
 .city-topbar {
+  padding-inline-start: var(--header-line-start);
   margin-bottom: 0.9rem;
 }
 
@@ -29,8 +30,18 @@
 }
 
 .city-topline {
-  border-top: 2px solid #797252;
+  position: relative;
   background: inherit;
+}
+
+.city-topline::before {
+  content: "";
+  position: absolute;
+  left: var(--header-line-start);
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: #797252;
 }
 
 .city-topline-inner {
@@ -40,7 +51,7 @@
   gap: 0.48rem;
   font-size: 0.92rem;
   color: rgba(22, 33, 35, 0.78);
-  padding: 0 0.25rem;
+  padding: 0 0.25rem 0 var(--header-line-start);
 }
 
 .city-topline-inner a {
@@ -49,7 +60,7 @@
 }
 
 .city-shell {
-  padding: 1rem 0 2rem;
+  padding: 1rem 0 2rem var(--header-line-start);
 }
 
 .city-layout {

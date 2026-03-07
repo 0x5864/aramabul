@@ -6,7 +6,7 @@
     <meta name="google-adsense-account" content="ca-pub-3016888060216617" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3016888060216617" crossorigin="anonymous"></script>
     <meta name="theme-color" content="#2c3531" />
-    <title>arama bul | Ayarlar</title>
+    <title>aramabul | Ayarlar</title>
     <meta name="description" content="Hesap bilgilerin ve uygulama ayarların." />
     <link rel="icon" type="image/png" href="assets/fav.png?v=20260227" />
     <link rel="shortcut icon" type="image/png" href="assets/fav.png?v=20260227" />
@@ -17,16 +17,16 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260307-20" />
-    <link rel="stylesheet" href="profile.css?v=20260307-05" />
+    <link rel="stylesheet" href="styles.css?v=20260307-27" />
+    <link rel="stylesheet" href="profile.css?v=20260307-48" />
   </head>
   <body class="profile-page settings-page">
     <div class="texture"></div>
 
     <header class="global-header-band" role="banner">
       <nav class="topbar global-topbar">
-        <a class="brand" href="index.html" aria-label="arama bul">
-          <span class="brand-wordmark">arama bul</span>
+        <a class="brand" href="index.html" aria-label="aramabul">
+          <span class="brand-wordmark">aramabul</span>
         </a>
       </nav>
       <div class="global-topline">
@@ -44,118 +44,133 @@
       <button class="header-search-btn" type="submit">Bul</button>
     </form>
 
-    <main class="settings-shell">
-      <section class="settings-card settings-account-card">
-        <div class="settings-account-head">
-          <div class="settings-avatar" id="settingsAvatar" aria-hidden="true">M</div>
-          <div>
-            <h2 id="settingsName">Misafir</h2>
-          </div>
-        </div>
-      </section>
+    <main class="settings-shell settings-dashboard-shell">
+      <div class="settings-layout">
+        <aside class="settings-card settings-sidebar-card" aria-label="Ayar bölümleri">
+          <a class="settings-row" href="account-settings.html" aria-label="Hesap">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8.2" r="3.3"></circle>
+                <path d="M5 18.5c1-3 3.5-4.8 7-4.8s6 1.8 7 4.8"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Hesap</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
 
-      <section id="settingsSignupCard" class="settings-card settings-signup-card is-hidden" aria-label="Kayıt ol">
-        <div class="settings-signup-head">
-          <h2>Kayıt ol</h2>
-        </div>
-        <form id="settingsSignupForm" class="settings-signup-form" novalidate>
-          <label class="settings-signup-field">
-            <span>Ad Soyad</span>
-            <input id="settingsSignupName" type="text" name="name" autocomplete="name" required />
-          </label>
-          <label class="settings-signup-field">
-            <span>E-posta</span>
-            <input id="settingsSignupEmail" type="email" name="email" autocomplete="email" required />
-          </label>
-          <label class="settings-signup-field">
-            <span>Şifre</span>
-            <input id="settingsSignupPassword" type="password" name="password" autocomplete="new-password" minlength="6" required />
-          </label>
-          <label class="settings-signup-field">
-            <span>Şifre tekrar</span>
-            <input
-              id="settingsSignupPasswordRepeat"
-              type="password"
-              name="password_repeat"
-              autocomplete="new-password"
-              minlength="6"
-              required
-            />
-          </label>
-          <p id="settingsSignupMessage" class="settings-signup-message" aria-live="polite"></p>
-          <button class="settings-signup-submit" type="submit">Kayıt ol</button>
-        </form>
-      </section>
+          <a class="settings-row" href="feedback-settings.html" aria-label="Geribildirim">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v5A2.5 2.5 0 0 1 16.5 15H11l-4 4v-4H7.5A2.5 2.5 0 0 1 5 12.5z"></path>
+                <path d="M9 9.5h6"></path>
+                <path d="M9 12h4"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Geribildirim</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
 
-      <section class="settings-card settings-menu-card">
-        <a class="settings-row" href="account-settings.html" aria-label="Hesap">
-          <span class="settings-row-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="8.2" r="3.3"></circle>
-              <path d="M5 18.5c1-3 3.5-4.8 7-4.8s6 1.8 7 4.8"></path>
-            </svg>
-          </span>
-          <span class="settings-row-label">Hesap</span>
-          <span class="settings-row-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="m9 5 7 7-7 7"></path>
-            </svg>
-          </span>
-        </a>
+          <a class="settings-row" href="help-settings.html" aria-label="Yardım">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8"></circle>
+                <path d="M9.8 9.7a2.5 2.5 0 0 1 4.4 1.6c0 1.8-2.2 2.1-2.2 3.5"></path>
+                <path d="M12 17h.1"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Yardım</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
 
-        <a class="settings-row" href="feedback-settings.html" aria-label="Geribildirim">
-          <span class="settings-row-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M5 7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v5A2.5 2.5 0 0 1 16.5 15H11l-4 4v-4H7.5A2.5 2.5 0 0 1 5 12.5z"></path>
-              <path d="M9 9.5h6"></path>
-              <path d="M9 12h4"></path>
-            </svg>
-          </span>
-          <span class="settings-row-label">Geribildirim</span>
-          <span class="settings-row-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="m9 5 7 7-7 7"></path>
-            </svg>
-          </span>
-        </a>
+          <a class="settings-row" href="about-settings.html" aria-label="Hakkımızda">
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="4" width="14" height="16" rx="2"></rect>
+                <path d="M12 8h.1"></path>
+                <path d="M10.9 12H12v3"></path>
+              </svg>
+            </span>
+            <span class="settings-row-label">Hakkımızda</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
 
-        <a class="settings-row" href="help-settings.html" aria-label="Yardım">
-          <span class="settings-row-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="8"></circle>
-              <path d="M9.8 9.7a2.5 2.5 0 0 1 4.4 1.6c0 1.8-2.2 2.1-2.2 3.5"></path>
-              <path d="M12 17h.1"></path>
-            </svg>
-          </span>
-          <span class="settings-row-label">Yardım</span>
-          <span class="settings-row-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="m9 5 7 7-7 7"></path>
-            </svg>
-          </span>
-        </a>
+          <button id="settingsSignOutBtn" class="settings-signout" type="button">Çıkış yap</button>
+        </aside>
 
-        <a class="settings-row" href="about-settings.html" aria-label="Hakkında">
-          <span class="settings-row-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <rect x="5" y="4" width="14" height="16" rx="2"></rect>
-              <path d="M12 8h.1"></path>
-              <path d="M10.9 12H12v3"></path>
-            </svg>
-          </span>
-          <span class="settings-row-label">Hakkında</span>
-          <span class="settings-row-chevron" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="m9 5 7 7-7 7"></path>
-            </svg>
-          </span>
-        </a>
-      </section>
-
-      <button id="settingsSignOutBtn" class="settings-signout" type="button">Çıkış yap</button>
+      </div>
     </main>
 
-    <script src="header-search.js?v=20260307-23"></script>
-    <script src="profile.js"></script>
+    <footer class="yr-footer global-footer" aria-label="Alt bilgi">
+      <div class="yr-footer-inner">
+        <div class="yr-footer-grid">
+          <section class="yr-footer-col">
+            <h4>İndirin</h4>
+            <a class="store-badge" href="#" aria-label="App Store">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">App Store</span>
+            </a>
+            <a class="store-badge" href="#" aria-label="Google Play">
+              <span class="store-badge-top">Hemen indirin</span>
+              <span class="store-badge-name">Google Play</span>
+            </a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>aramabul'u keşfet</h4>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="yer-ekle.html">Yer ekle</a>
+            <a href="iletisim.html">İletişim</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>Yardım mı lazım?</h4>
+            <a href="sss.html">Sıkça Sorulan Sorular</a>
+            <a href="cerez-politikasi.html">Çerez Politikası</a>
+          </section>
+
+          <section class="yr-footer-col">
+            <h4>Kurumsal</h4>
+            <a href="kullanim-kosullari.html">Kullanım Koşulları</a>
+            <a href="kvkk.html">Kişisel Verilerin Korunması</a>
+            <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
+          </section>
+        </div>
+
+        <div class="yr-footer-bottom">
+          <p>© 2026 aramabul</p>
+          <div class="yr-footer-social" aria-label="Sosyal">
+            <a href="#" aria-label="Instagram">○</a>
+            <a href="#" aria-label="Ara">◌</a>
+            <a href="#" aria-label="Dünya">◍</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="web-runtime.js?v=20260302-01"></script>
+    <script src="header-state.js?v=20260302-01"></script>
+  <script src="header-i18n.js?v=20260307-11"></script>
+  <script src="header-nav.js?v=20260307-08"></script>
+  <script src="header-shell.js?v=20260302-02"></script>
+  <script src="header-search-ui.js?v=20260303-04"></script>
+  <script src="header-search-data.js?v=20260303-06"></script>
+    <script src="header-search.js?v=20260307-24"></script>
+    <script src="profile.js?v=20260307-10"></script>
   </body>
 </html>

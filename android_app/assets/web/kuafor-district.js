@@ -191,8 +191,8 @@ function renderHeader() {
   }
 
   document.title = hasLocation
-    ? `arama bul | ${state.city} İli / ${state.district} İlçesi Kuaför Salonları`
-    : "arama bul | İlçe Kuaförleri";
+    ? `aramabul | ${state.city} İli / ${state.district} İlçesi Kuaför Salonları`
+    : "aramabul | İlçe Kuaförleri";
 }
 
 function renderPlaces() {
@@ -236,7 +236,7 @@ function renderPlaces() {
 }
 
 async function loadKuaforPlaces() {
-  const fallback = window.NEREDEYENIR_FALLBACK_DATA;
+  const fallback = window.ARAMABUL_FALLBACK_DATA;
   if (fallback && Array.isArray(fallback.kuafor)) {
     return fallback.kuafor
       .map((item) => ({

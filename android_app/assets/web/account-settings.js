@@ -1,7 +1,8 @@
 (() => {
-  const AUTH_USERS_KEY = "neredeyenir.auth.users.v1";
-  const AUTH_SESSION_KEY = "neredeyenir.auth.session.v1";
-  const THEME_STORAGE_KEY = "neredeyenir.theme.v1";
+  const runtime = window.ARAMABUL_RUNTIME;
+  const AUTH_USERS_KEY = runtime.storageKeys.authUsers;
+  const AUTH_SESSION_KEY = runtime.storageKeys.authSession;
+  const THEME_STORAGE_KEY = runtime.storageKeys.theme;
 
   const accountAvatar = document.querySelector("#accountAvatar");
   const accountDisplayName = document.querySelector("#accountDisplayName");
@@ -19,9 +20,31 @@
     return String(value || "").trim().toLocaleLowerCase("en-US");
   }
 
+  function translateUi(text) {
+    const i18n = window.ARAMABUL_HEADER_I18N;
+    const source = String(text || "");
+    if (i18n && typeof i18n.getStaticUiTranslation === "function") {
+      const lang = typeof window.ARAMABUL_GET_LANGUAGE === "function" ? window.ARAMABUL_GET_LANGUAGE() : "TR";
+      return i18n.getStaticUiTranslation(source, lang);
+    }
+    return source;
+  }
+
+  function readStorageValue(key) {
+    return runtime.readStorageValue(key);
+  }
+
+  function writeStorageValue(key, value) {
+    runtime.writeStorageValue(key, value);
+  }
+
+  function dispatchCompatEvent(name, detail = {}) {
+    runtime.dispatch(name, detail);
+  }
+
   function readTheme() {
     try {
-      const raw = String(window.localStorage.getItem(THEME_STORAGE_KEY) || "").trim().toLowerCase();
+      const raw = String(readStorageValue(THEME_STORAGE_KEY) || "").trim().toLowerCase();
       return raw === "light" ? "light" : "dark";
     } catch (_error) {
       return "dark";
@@ -30,8 +53,8 @@
 
   function applyTheme(theme) {
     const nextTheme = theme === "light" ? "light" : "dark";
-    if (typeof window.NEREDEYENIR_SET_THEME === "function") {
-      window.NEREDEYENIR_SET_THEME(nextTheme);
+    if (typeof window.ARAMABUL_SET_THEME === "function") {
+      window.ARAMABUL_SET_THEME(nextTheme);
       return;
     }
 
@@ -42,7 +65,7 @@
 
   function readSession() {
     try {
-      const raw = window.localStorage.getItem(AUTH_SESSION_KEY);
+      const raw = readStorageValue(AUTH_SESSION_KEY);
       if (!raw) {
         return null;
       }
@@ -66,35 +89,55 @@
 
   function readUsers() {
     try {
-      const raw = window.localStorage.getItem(AUTH_USERS_KEY);
+      const raw = readStorageValue(AUTH_USERS_KEY);
       const parsed = JSON.parse(raw || "[]");
-      return Array.isArray(parsed) ? parsed : [];
+      if (!Array.isArray(parsed)) {
+        return [];
+      }
+      return parsed.filter(
+        (user) =>
+          user &&
+          typeof user === "object" &&
+          typeof user.name === "string" &&
+          typeof user.email === "string" &&
+          typeof user.passwordHash === "string",
+      );
     } catch (_error) {
       return [];
     }
   }
 
   function writeUsers(users) {
-    window.localStorage.setItem(AUTH_USERS_KEY, JSON.stringify(users));
+    const safeUsers = Array.isArray(users)
+      ? users.filter(
+          (user) =>
+            user &&
+            typeof user === "object" &&
+            typeof user.name === "string" &&
+            typeof user.email === "string" &&
+            typeof user.passwordHash === "string",
+        )
+      : [];
+    writeStorageValue(AUTH_USERS_KEY, JSON.stringify(safeUsers));
   }
 
   function writeSession(session) {
-    window.localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
-    document.dispatchEvent(new CustomEvent("neredeyenir:authchange"));
+    writeStorageValue(AUTH_SESSION_KEY, JSON.stringify(session));
+    dispatchCompatEvent("aramabul:authchange");
   }
 
   function toHandleText(session) {
     if (!session?.email) {
-      return "@giris-yapilmadi";
+      return "@giriş-yapılmadı";
     }
 
     const raw = session.email.split("@")[0] || session.email;
     const slug = raw
       .toLocaleLowerCase("tr")
-      .replace(/[^a-z0-9._-]/g, "-")
+      .replace(/[^a-z0-9._-çğıöşü]/g, "-")
       .replace(/-+/g, "-")
       .replace(/^-|-$/g, "");
-    return `@${slug || "kullanici"}.neredeyenir`;
+    return `@${slug || "kullanıcı"}.aramabul`;
   }
 
   function goToSettings() {
@@ -143,7 +186,7 @@
       accountSignupBtn.hidden = Boolean(session);
     }
     if (!session) {
-      setMessage("Kayıtlı oturum yok. Önce kayıt ol.");
+      setMessage(translateUi("Kayıtlı oturum yok. Önce kayıt ol."));
       return;
     }
 
@@ -179,38 +222,42 @@
       const email = normalizeEmail(accountEmailInput instanceof HTMLInputElement ? accountEmailInput.value : "");
 
       if (name.length < 2) {
-        setMessage("Ad soyad en az 2 karakter olmalı.", true);
+        setMessage(translateUi("Ad soyad en az 2 karakter olmalı."), true);
         return;
       }
 
       if (!email.includes("@") || email.length < 6) {
-        setMessage("Geçerli bir e-posta gir.", true);
+        setMessage(translateUi("Geçerli bir e-posta gir."), true);
         return;
       }
 
       const users = readUsers();
       const currentEmail = normalizeEmail(currentSession.email);
-      const duplicate = users.some((user) => {
-        if (!user || typeof user !== "object") {
-          return false;
-        }
+      const currentName = String(currentSession.name || "").trim();
+      const exactUser = users.find((user) => normalizeEmail(user.email) === currentEmail) || null;
+      const byNameCandidates = users.filter((user) => String(user.name || "").trim() === currentName);
+      const fallbackUser = !exactUser && byNameCandidates.length === 1 ? byNameCandidates[0] : null;
+      const sourceUser = exactUser || fallbackUser;
+      const sourceEmail = sourceUser ? normalizeEmail(sourceUser.email) : currentEmail;
 
+      if (!sourceUser) {
+        setMessage(translateUi("Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap."), true);
+        return;
+      }
+
+      const duplicate = users.some((user) => {
         const userEmail = normalizeEmail(user.email);
-        return userEmail === email && userEmail !== currentEmail;
+        return userEmail === email && userEmail !== sourceEmail;
       });
 
       if (duplicate) {
-        setMessage("Bu e-posta başka bir hesapta kayıtlı.", true);
+        setMessage(translateUi("Bu e-posta başka bir hesapta kayıtlı."), true);
         return;
       }
 
       const nextUsers = users.map((user) => {
-        if (!user || typeof user !== "object") {
-          return user;
-        }
-
         const userEmail = normalizeEmail(user.email);
-        if (userEmail !== currentEmail) {
+        if (userEmail !== sourceEmail) {
           return user;
         }
 
@@ -218,24 +265,26 @@
           ...user,
           name,
           email,
+          passwordHash: sourceUser.passwordHash,
         };
       });
 
-      if (!nextUsers.some((user) => user && typeof user === "object" && normalizeEmail(user.email) === email)) {
-        nextUsers.push({ name, email });
+      if (!nextUsers.some((user) => normalizeEmail(user.email) === email)) {
+        nextUsers.push({ name, email, passwordHash: sourceUser.passwordHash });
       }
 
       writeUsers(nextUsers);
       writeSession({ name, email });
       renderAccount();
-      setMessage("Hesap bilgileri kaydedildi.");
+      setMessage(translateUi("Hesap bilgileri kaydedildi."));
     });
   }
 
   applyTheme(readTheme());
   renderAccount();
 
-  document.addEventListener("neredeyenir:authchange", () => {
+  const syncAccount = () => {
     renderAccount();
-  });
+  };
+  document.addEventListener("aramabul:authchange", syncAccount);
 })();

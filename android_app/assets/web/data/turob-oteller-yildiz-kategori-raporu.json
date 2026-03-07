@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-03-05T14:45:16.088Z",
+  "dryRun": false,
+  "categories": [
+    {
+      "slug": "5-yildizli-oteller",
+      "stars": 5,
+      "count": 114,
+      "outputFile": "gezi-oteller-5-yildiz.json"
+    },
+    {
+      "slug": "4-yildizli-oteller",
+      "stars": 4,
+      "count": 100,
+      "outputFile": "gezi-oteller-4-yildiz.json"
+    },
+    {
+      "slug": "3-yildizli-oteller",
+      "stars": 3,
+      "count": 49,
+      "outputFile": "gezi-oteller-3-yildiz.json"
+    },
+    {
+      "slug": "2-yildizli-oteller",
+      "stars": 2,
+      "count": 6,
+      "outputFile": "gezi-oteller-2-yildiz.json"
+    },
+    {
+      "slug": "1-yildizli-oteller",
+      "stars": 1,
+      "count": 3,
+      "outputFile": "gezi-oteller-1-yildiz.json"
+    }
+  ]
+}

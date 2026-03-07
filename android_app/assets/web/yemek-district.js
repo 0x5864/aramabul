@@ -1,6 +1,8 @@
-const ASSET_VERSION = "20260227-13";
+const ASSET_VERSION = "20260302-01";
 const YEMEK_JSON_PATH = "data/keyif-food.json";
 const CATEGORY_VENUES_JSON_PATH = "data/venues.json";
+const runtime = window.ARAMABUL_RUNTIME;
+const FALLBACK_FOOD_SCRIPT = "data/fallback-food-data.js?v=20260302-01";
 
 const yemekDistrictTitle = document.querySelector("#yemekDistrictTitle");
 const yemekDistrictBreadcrumb = document.querySelector("#yemekDistrictBreadcrumb");
@@ -15,6 +17,22 @@ const state = {
 
 const CAFE_KEYWORDS = ["kafe", "cafe", "kahve", "coffee", "espresso"];
 let venueMetaLookupPromise = null;
+
+async function ensureFallbackFoodData() {
+  if (window.ARAMABUL_FALLBACK_FOOD_DATA) {
+    return;
+  }
+
+  if (!runtime || typeof runtime.loadScriptOnce !== "function") {
+    return;
+  }
+
+  try {
+    await runtime.loadScriptOnce(FALLBACK_FOOD_SCRIPT);
+  } catch (_error) {
+    // Use fetch fallback below if the script cannot be loaded.
+  }
+}
 
 function normalizeName(value) {
   return String(value || "")
@@ -466,8 +484,8 @@ function renderDistrictHeader() {
   }
 
   document.title = state.city && state.district
-    ? `arama bul | ${state.city} İli / ${state.district} İlçesi Restoranları`
-    : "arama bul | İlçe Restoranları";
+    ? `aramabul | ${state.city} İli / ${state.district} İlçesi Restoranları`
+    : "aramabul | İlçe Restoranları";
 }
 
 function renderVenueGrid() {
@@ -513,7 +531,9 @@ function renderVenueGrid() {
 
 async function loadVenues() {
   const metaLookup = await loadVenueMetaLookup();
-  const fallbackPayload = window.NEREDEYENIR_FALLBACK_FOOD_DATA;
+  await ensureFallbackFoodData();
+
+  const fallbackPayload = window.ARAMABUL_FALLBACK_FOOD_DATA;
   if (
     fallbackPayload &&
     typeof fallbackPayload === "object" &&
