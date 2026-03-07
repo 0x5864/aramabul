@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aramabul.com/sitemap.xml

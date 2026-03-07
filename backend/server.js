@@ -987,6 +987,24 @@ app.use(
   }),
 );
 
+const footerPagePath = path.join(STATIC_ROOT, "footer-page.html");
+const footerPageAliasToQuery = Object.freeze({
+  "/hakkimizda.html": "hakkimizda",
+  "/iletisim.html": "iletisim",
+  "/sss.html": "sss",
+  "/kvkk.html": "kvkk",
+  "/gizlilik-politikasi.html": "gizlilik",
+  "/kullanim-kosullari.html": "kosullar",
+  "/cerez-politikasi.html": "cerez",
+  "/yer-ekle.html": "yer-ekle",
+});
+
+Object.entries(footerPageAliasToQuery).forEach(([routePath, pageKey]) => {
+  app.get(routePath, (_req, res) => {
+    res.redirect(302, `/footer-page.html?sayfa=${encodeURIComponent(pageKey)}`);
+  });
+});
+
 app.get("/", (_req, res) => {
   res.sendFile(path.join(STATIC_ROOT, "index.html"));
 });

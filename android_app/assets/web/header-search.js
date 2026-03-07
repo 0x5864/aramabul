@@ -902,7 +902,7 @@
       return;
     }
 
-    const shouldShow = isHomePage() && window.matchMedia("(max-width: 1200px)").matches;
+    const shouldShow = isHomePage();
     homeAltbar.style.display = shouldShow ? "flex" : "none";
   }
 
