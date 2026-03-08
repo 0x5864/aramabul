@@ -144,14 +144,22 @@ function parsePositiveInteger(value, fallbackValue) {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallbackValue;
 }
 
+function isAdToggleDisabled(value) {
+  if (value === false) {
+    return true;
+  }
+
+  const normalized = String(value ?? "").trim().toLowerCase();
+  return normalized === "off" || normalized === "false" || normalized === "0" || normalized === "no";
+}
+
 function resolveDistrictInlineAdConfig() {
   const body = document.body;
   const runtimeConfig = window.ARAMABUL_ADS_CONFIG && typeof window.ARAMABUL_ADS_CONFIG === "object"
     ? window.ARAMABUL_ADS_CONFIG
     : {};
-  const enabledFromBody = String(body?.dataset?.districtAdEnabled || "").trim().toLowerCase();
-  const enabledFromRuntime = String(runtimeConfig.districtInlineEnabled || "").trim().toLowerCase();
-  const enabled = enabledFromBody !== "off" && enabledFromRuntime !== "off" && enabledFromRuntime !== "false";
+  const enabled = !isAdToggleDisabled(body?.dataset?.districtAdEnabled)
+    && !isAdToggleDisabled(runtimeConfig.districtInlineEnabled);
   if (!enabled) {
     return null;
   }
@@ -174,9 +182,8 @@ function resolveCategoryRootAdConfig() {
   const runtimeConfig = window.ARAMABUL_ADS_CONFIG && typeof window.ARAMABUL_ADS_CONFIG === "object"
     ? window.ARAMABUL_ADS_CONFIG
     : {};
-  const enabledFromBody = String(body?.dataset?.categoryRootAdEnabled || "").trim().toLowerCase();
-  const enabledFromRuntime = String(runtimeConfig.categoryRootAdEnabled || "").trim().toLowerCase();
-  const enabled = enabledFromBody !== "off" && enabledFromRuntime !== "off" && enabledFromRuntime !== "false";
+  const enabled = !isAdToggleDisabled(body?.dataset?.categoryRootAdEnabled)
+    && !isAdToggleDisabled(runtimeConfig.categoryRootAdEnabled);
   if (!enabled) {
     return null;
   }
