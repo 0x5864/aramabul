@@ -5,9 +5,9 @@
 
   window.ARAMABUL_ADS_CONFIG = {
     ...current,
-    categoryRootAdEnabled: true,
+    categoryRootAdEnabled: false,
     categoryRootAdSlot: "3244140507",
-    districtInlineEnabled: true,
+    districtInlineEnabled: false,
     districtInlineAdAfter: 6,
     adsenseClient: "ca-pub-3016888060216617",
     districtInlineAdSlot: "3244140507",

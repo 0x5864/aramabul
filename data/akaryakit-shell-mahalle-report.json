@@ -1,0 +1,14 @@
+{
+  "timestamp": "20260308-221444",
+  "shellTotal": 1328,
+  "shellProblemTotal": 589,
+  "shellMahalleAdded": 1,
+  "shellCadastralReplaced": 481,
+  "shellPrefixed": 1326,
+  "shellLongFirmaRenamed": 17,
+  "shellMapsUrlUpdated": 1325,
+  "shellReverseCalls": 7,
+  "shellReverseFailures": 0,
+  "poPrefixed": 0,
+  "cachePath": "/Users/metintuncgenc/Documents/aramabul/data/shell-geocode-cache.json"
+}
