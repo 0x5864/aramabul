@@ -1118,6 +1118,7 @@ const RAW_REGION_GROUPS = [
 ];
 
 const ALL_PROVINCES = RAW_REGION_GROUPS.flatMap((group) => group.provinces);
+const ALL_PROVINCE_NAME_SET = new Set(ALL_PROVINCES.map((provinceName) => normalizeName(provinceName)));
 
 let allVenuesPromise = null;
 const categoryDataPromiseCache = new Map();
@@ -2717,7 +2718,7 @@ async function loadCategoryDataFile(dataFilePath) {
         return [];
       }
 
-      return payload.map((item) => ({
+      const mappedVenues = payload.map((item) => ({
         city: String(item.city || "").trim(),
         district: String(item.district || "").trim(),
         name: String(item.name || "").trim(),
@@ -2738,6 +2739,14 @@ async function loadCategoryDataFile(dataFilePath) {
         googleReviewCount: String(item.googleReviewCount || item.reviewCount || item.reviews || "").trim(),
         sourcePlaceId: String(item.sourcePlaceId || item.placeId || "").trim(),
       }));
+
+      if (!cacheKey.includes("akaryakit")) {
+        return mappedVenues;
+      }
+
+      return mappedVenues.filter((venue) => {
+        return ALL_PROVINCE_NAME_SET.has(normalizeName(venue.city));
+      });
     };
 
     const promise = (async () => {

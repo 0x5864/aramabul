@@ -1,0 +1,11 @@
+{
+  "timestamp": "20260308-230633",
+  "sourceUrl": "https://www.lukoil.com.tr/Station/GetAllStationsAjax",
+  "rawRowsFetched": 386,
+  "activeRowsFetched": 386,
+  "normalizedLukoilRows": 386,
+  "existingWebBefore": 6605,
+  "existingAndroidBefore": 6605,
+  "webWithoutLukoil": 6605,
+  "mergedAfter": 6991
+}

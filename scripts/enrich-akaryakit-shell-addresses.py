@@ -311,12 +311,12 @@ def main() -> None:
         if source == "opet_api":
             neighborhood: str = extract_neighborhood_from_address(normalize_text(row.get("address")))
             base_name: str = strip_prefix(name, "OPET")
+            if normalize_text(base_name).lower().startswith("firma"):
+                base_name = ""
             if is_long_firm_name(base_name):
-                base_name = f"Firma {neighborhood}" if neighborhood else "Firma"
+                base_name = ""
                 opet_long_firma_renamed += 1
-            if not base_name:
-                base_name = "İstasyon"
-            new_opet_name: str = f"OPET {base_name}"
+            new_opet_name: str = f"OPET {base_name}".strip()
             if normalize_text(row.get("name")) != new_opet_name:
                 row["name"] = new_opet_name
                 opet_prefixed += 1

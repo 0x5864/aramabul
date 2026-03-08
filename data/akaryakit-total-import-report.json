@@ -1,0 +1,10 @@
+{
+  "timestamp": "20260308-224119",
+  "sourceUrl": "https://istasyonlar.totalenerji.com.tr/fetch_stations.php",
+  "rawRowsFetched": 832,
+  "normalizedTotalRows": 827,
+  "existingWebBefore": 5778,
+  "existingAndroidBefore": 5778,
+  "webWithoutTotal": 5778,
+  "mergedAfter": 6605
+}
