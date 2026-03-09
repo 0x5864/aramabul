@@ -24,6 +24,10 @@ const FALLBACK_SCRIPTS = Object.freeze({
   food: "data/fallback-food-data.js?v=20260302-01",
   category: "data/fallback-category-data.js?v=20260302-01",
 });
+const LOCAL_DEV_HOSTNAMES = new Set(["localhost", "127.0.0.1"]);
+const JSON_FETCH_CACHE_MODE = LOCAL_DEV_HOSTNAMES.has(String(window.location.hostname || "").trim())
+  ? "no-store"
+  : "force-cache";
 
 function withVersion(path) {
   const source = String(path || "").trim();
@@ -71,7 +75,7 @@ async function fetchJsonWithFallback(path, fallbackValue) {
 
   for (const candidate of candidates) {
     try {
-      const response = await fetch(candidate, { cache: "no-store" });
+      const response = await fetch(candidate, { cache: JSON_FETCH_CACHE_MODE });
       if (!response.ok) {
         continue;
       }
@@ -338,15 +342,18 @@ function renderRootCategoryMarqueeSection() {
       image.className = "home-image-marquee-item";
       image.src = item.src;
       image.alt = hideFromAssistiveTech ? "" : item.alt;
-      image.loading = "lazy";
+      image.loading = "eager";
       image.decoding = "async";
+      if (hideFromAssistiveTech) {
+        image.fetchPriority = "low";
+      }
       strip.append(image);
     });
 
     return strip;
   };
 
-  track.append(createStrip(false), createStrip(true));
+  track.append(createStrip(false), createStrip(true), createStrip(true));
   section.append(track);
   return section;
 }
@@ -4052,7 +4059,6 @@ async function initCategoryPage() {
 
   const categoryKey = String(body.dataset.categoryKey || "").trim();
   const pageType = String(body.dataset.categoryPage || "").trim();
-  await ensureDistrictInlineAdConfigLoaded();
   const params = queryParams();
   const requestedSubcategorySource = params.subcategorySource;
   const requestedFacilityType = params.facilityType;
@@ -4064,7 +4070,9 @@ async function initCategoryPage() {
     return;
   }
 
-  const districtMap = definition.useDistrictCatalog ? await loadDistrictMap() : null;
+  const adConfigPromise = ensureDistrictInlineAdConfigLoaded();
+  const districtMapPromise = definition.useDistrictCatalog ? loadDistrictMap() : Promise.resolve(null);
+  const districtMap = await districtMapPromise;
   const canUseDistrictCatalog = definition.useDistrictCatalog && hasUsableDistrictCatalog(districtMap);
   const requiresVenueBackedNavigation = Boolean(definition.preferVenueBackedDistricts)
     && (pageType === "city" || pageType === "district-links");
@@ -4137,48 +4145,65 @@ async function initCategoryPage() {
     Boolean(definition.dynamicTypeVenueDataFile)
     && (pageType === "city" || pageType === "district" || pageType === "district-subcategory")
     && subcategorySource === "dynamic";
-  const venues = loadPrimaryVenues ? await loadCategoryVenues(categoryKey) : [];
-  const secondaryVenues = loadSecondaryVenues && definition.secondaryDataFile
-    ? await loadCategoryDataFile(definition.secondaryDataFile)
-    : [];
-  const tertiaryVenues = loadTertiaryVenues && definition.tertiaryDataFile
-    ? await loadCategoryDataFile(definition.tertiaryDataFile)
-    : [];
-  const quaternaryVenues = loadQuaternaryVenues && definition.quaternaryDataFile
-    ? await loadCategoryDataFile(definition.quaternaryDataFile)
-    : [];
-  const quinaryVenues = loadQuinaryVenues && definition.quinaryDataFile
-    ? await loadCategoryDataFile(definition.quinaryDataFile)
-    : [];
-  const senaryVenues = loadSenaryVenues && definition.senaryDataFile
-    ? await loadCategoryDataFile(definition.senaryDataFile)
-    : [];
-  const septenaryVenues = loadSeptenaryVenues && definition.septenaryDataFile
-    ? await loadCategoryDataFile(definition.septenaryDataFile)
-    : [];
-  const octonaryVenues = loadOctonaryVenues && definition.octonaryDataFile
-    ? await loadCategoryDataFile(definition.octonaryDataFile)
-    : [];
-  const nonaryVenues = loadNonaryVenues && definition.nonaryDataFile
-    ? await loadCategoryDataFile(definition.nonaryDataFile)
-    : [];
-  const denaryVenues = loadDenaryVenues && definition.denaryDataFile
-    ? await loadCategoryDataFile(definition.denaryDataFile)
-    : [];
-  const undenaryVenues = loadUndenaryVenues && definition.undenaryDataFile
-    ? await loadCategoryDataFile(definition.undenaryDataFile)
-    : [];
-  const dynamicTypeItems = loadDynamicTypeItems && definition.dynamicTypeDataFile
-    ? (await loadRawArrayDataFile(definition.dynamicTypeDataFile))
-      .map((item) => ({
-        type: String(item?.type || "").trim(),
-        count: Number(item?.count) || 0,
-      }))
-      .filter((item) => item.type && item.count > 0)
-    : [];
-  const rawDynamicTypeVenues = loadDynamicTypeVenues && definition.dynamicTypeVenueDataFile
-    ? await loadCategoryDataFile(definition.dynamicTypeVenueDataFile)
-    : [];
+  const [
+    venues,
+    secondaryVenues,
+    tertiaryVenues,
+    quaternaryVenues,
+    quinaryVenues,
+    senaryVenues,
+    septenaryVenues,
+    octonaryVenues,
+    nonaryVenues,
+    denaryVenues,
+    undenaryVenues,
+    rawDynamicTypeItems,
+    rawDynamicTypeVenues,
+  ] = await Promise.all([
+    loadPrimaryVenues ? loadCategoryVenues(categoryKey) : Promise.resolve([]),
+    loadSecondaryVenues && definition.secondaryDataFile
+      ? loadCategoryDataFile(definition.secondaryDataFile)
+      : Promise.resolve([]),
+    loadTertiaryVenues && definition.tertiaryDataFile
+      ? loadCategoryDataFile(definition.tertiaryDataFile)
+      : Promise.resolve([]),
+    loadQuaternaryVenues && definition.quaternaryDataFile
+      ? loadCategoryDataFile(definition.quaternaryDataFile)
+      : Promise.resolve([]),
+    loadQuinaryVenues && definition.quinaryDataFile
+      ? loadCategoryDataFile(definition.quinaryDataFile)
+      : Promise.resolve([]),
+    loadSenaryVenues && definition.senaryDataFile
+      ? loadCategoryDataFile(definition.senaryDataFile)
+      : Promise.resolve([]),
+    loadSeptenaryVenues && definition.septenaryDataFile
+      ? loadCategoryDataFile(definition.septenaryDataFile)
+      : Promise.resolve([]),
+    loadOctonaryVenues && definition.octonaryDataFile
+      ? loadCategoryDataFile(definition.octonaryDataFile)
+      : Promise.resolve([]),
+    loadNonaryVenues && definition.nonaryDataFile
+      ? loadCategoryDataFile(definition.nonaryDataFile)
+      : Promise.resolve([]),
+    loadDenaryVenues && definition.denaryDataFile
+      ? loadCategoryDataFile(definition.denaryDataFile)
+      : Promise.resolve([]),
+    loadUndenaryVenues && definition.undenaryDataFile
+      ? loadCategoryDataFile(definition.undenaryDataFile)
+      : Promise.resolve([]),
+    loadDynamicTypeItems && definition.dynamicTypeDataFile
+      ? loadRawArrayDataFile(definition.dynamicTypeDataFile)
+      : Promise.resolve([]),
+    loadDynamicTypeVenues && definition.dynamicTypeVenueDataFile
+      ? loadCategoryDataFile(definition.dynamicTypeVenueDataFile)
+      : Promise.resolve([]),
+  ]);
+  const dynamicTypeItems = rawDynamicTypeItems
+    .map((item) => ({
+      type: String(item?.type || "").trim(),
+      count: Number(item?.count) || 0,
+    }))
+    .filter((item) => item.type && item.count > 0);
   let dynamicTypeVenues = rawDynamicTypeVenues;
 
   if (definition.key === "seyahat" && subcategorySource === "dynamic") {
@@ -4225,6 +4250,8 @@ async function initCategoryPage() {
       ...undenaryVenues,
     ])
     : venues;
+
+  await adConfigPromise;
 
   if (pageType === "root") {
     renderRootPage(
