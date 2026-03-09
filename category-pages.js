@@ -825,19 +825,45 @@ async function resolveNearbyVenuesForCurrentLocation(venues, limit = NEARBY_VENU
 
   const resolvedLocation = await resolveNearbyLocationByCoordinates(latitude, longitude);
   const cityNames = [...new Set(dedupedVenues.map((venue) => String(venue?.city || "").trim()).filter(Boolean))];
-  const matchedCity = findNameMatch(resolvedLocation.city, cityNames) || findNameMatch(resolvedLocation.district, cityNames);
+  const matchedCity = findNameMatch(resolvedLocation.city, cityNames);
   const cityMatchedVenues = matchedCity
     ? dedupedVenues.filter((venue) => normalizeName(venue.city) === normalizeName(matchedCity))
-    : dedupedVenues;
+    : [];
   const districtNames = [...new Set(cityMatchedVenues.map((venue) => String(venue?.district || "").trim()).filter(Boolean))];
   const matchedDistrict = findNameMatch(resolvedLocation.district, districtNames)
     || findNameMatch(resolvedLocation.neighborhood, districtNames);
+  if (!matchedCity || !matchedDistrict) {
+    return {
+      venues: [],
+      matchedCity,
+      matchedDistrict,
+      resolvedLocation,
+    };
+  }
+
+  const districtMatchedVenues = cityMatchedVenues.filter((venue) => {
+    return normalizeName(venue?.district) === normalizeName(matchedDistrict);
+  });
+
+  if (districtMatchedVenues.length === 0) {
+    return {
+      venues: [],
+      matchedCity,
+      matchedDistrict,
+      resolvedLocation,
+    };
+  }
+
+  const parsedLimit = Number.parseInt(String(limit), 10);
+  const safeLimit = Number.isFinite(parsedLimit) && parsedLimit > 0
+    ? parsedLimit
+    : NEARBY_VENUE_RESULT_LIMIT;
   const ranked = rankNearbyVenues(
-    cityMatchedVenues,
+    districtMatchedVenues,
     matchedCity,
     matchedDistrict || resolvedLocation.district,
     resolvedLocation.neighborhood,
-  ).slice(0, Math.max(1, Number.parseInt(String(limit), 10) || NEARBY_VENUE_RESULT_LIMIT));
+  ).slice(0, safeLimit);
 
   return {
     venues: ranked,
@@ -2335,7 +2361,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
 
   const heading = document.createElement("h4");
   heading.className = "nearby-action-title";
-  heading.textContent = `Yakınında ${normalizedTitle}`;
+  heading.textContent = `Yakınındaki ${normalizedTitle}`;
 
   const description = document.createElement("p");
   description.className = "nearby-action-description";
@@ -2360,7 +2386,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
     try {
       const nearbyResult = await resolveNearbyVenuesForCurrentLocation(citySourceVenues, NEARBY_VENUE_RESULT_LIMIT);
       if (!Array.isArray(nearbyResult.venues) || nearbyResult.venues.length === 0) {
-        status.textContent = "Konumuna yakın sonuç bulunamadı.";
+        status.textContent = "Listelenecek mekan bulunmamıştır.";
         return;
       }
 
@@ -2384,7 +2410,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
         venues: nearbyResult.venues,
       });
 
-      status.textContent = `${nearbyResult.venues.length} işletme listelendi.`;
+      status.textContent = "";
     } catch (error) {
       status.textContent = String(error?.message || "Konum bulunamadı.");
     } finally {
