@@ -1,6 +1,14 @@
 const ASSET_VERSION = "20260305-03";
 const CATEGORY_VENUES_JSON_PATH = "data/venues.json";
 const DISTRICTS_JSON_PATH = "data/districts.json";
+const ROOT_MARQUEE_IMAGES = Object.freeze([
+  { src: "assets/yemek.png", alt: "Keyif görseli" },
+  { src: "assets/gezi.png", alt: "Gezi görseli" },
+  { src: "assets/sac.png", alt: "Hizmetler görseli" },
+  { src: "assets/saglik.png", alt: "Sağlık görseli" },
+  { src: "assets/kultur.png", alt: "Kültür görseli" },
+  { src: "assets/sanat.png", alt: "Sanat görseli" },
+]);
 const DISTRICT_INLINE_AD_INSERT_AFTER = 6;
 const DISTRICT_INLINE_AD_SCRIPT_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
 const DISTRICT_INLINE_AD_CONFIG_SCRIPT_PATH = "ads-config.js";
@@ -308,6 +316,59 @@ function renderCategoryRootInlineAdCard(config) {
   card.append(label, body);
   requestDistrictInlineAdFill(adElement, config);
   return card;
+}
+
+function renderRootCategoryMarqueeSection() {
+  const section = document.createElement("section");
+  section.className = "home-image-marquee";
+  section.setAttribute("aria-label", "Kategori görsel bandı");
+
+  const track = document.createElement("div");
+  track.className = "home-image-marquee-track";
+
+  const createStrip = (hideFromAssistiveTech) => {
+    const strip = document.createElement("div");
+    strip.className = "home-image-marquee-strip";
+    if (hideFromAssistiveTech) {
+      strip.setAttribute("aria-hidden", "true");
+    }
+
+    ROOT_MARQUEE_IMAGES.forEach((item) => {
+      const image = document.createElement("img");
+      image.className = "home-image-marquee-item";
+      image.src = item.src;
+      image.alt = hideFromAssistiveTech ? "" : item.alt;
+      image.loading = "lazy";
+      image.decoding = "async";
+      strip.append(image);
+    });
+
+    return strip;
+  };
+
+  track.append(createStrip(false), createStrip(true));
+  section.append(track);
+  return section;
+}
+
+function ensureRootCategoryMarquee() {
+  const pageType = String(document.body?.dataset?.categoryPage || "").trim();
+  if (pageType !== "root") {
+    return;
+  }
+
+  const groupGrid = document.querySelector("#categoryGroupGrid");
+  if (!groupGrid || !groupGrid.parentElement) {
+    return;
+  }
+
+  const existing = groupGrid.parentElement.querySelector(".home-image-marquee");
+  if (existing) {
+    return;
+  }
+
+  const marqueeSection = renderRootCategoryMarqueeSection();
+  groupGrid.parentElement.insertBefore(marqueeSection, groupGrid);
 }
 
 function queryParams() {
@@ -2920,6 +2981,7 @@ function renderRootPage(
     return;
   }
 
+  ensureRootCategoryMarquee();
   groupGrid.innerHTML = "";
 
   if (definition.rootSubcategoryFirst) {
