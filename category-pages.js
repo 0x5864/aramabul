@@ -3667,6 +3667,8 @@ function renderCityPage(
       return;
     }
 
+    renderNearbyQuickAction(districtGrid, subcategoryDefinition.title, citySourceVenues);
+
     const row = document.createElement("article");
     row.className = "province-row";
 

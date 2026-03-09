@@ -1699,7 +1699,7 @@ main > * {
 }
 
 .nearby-action-card {
-  border: 1px solid var(--box-border);
+  border: 0;
   border-radius: 16px;
   background: linear-gradient(145deg, rgba(255, 252, 244, 0.94), rgba(224, 240, 228, 0.74));
   padding: clamp(0.82rem, 1.9vw, 1rem);
