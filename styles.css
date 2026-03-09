@@ -1700,11 +1700,11 @@ main > * {
 
 .nearby-action-card {
   border: 0;
-  border-radius: 16px;
-  background: linear-gradient(145deg, rgba(255, 252, 244, 0.94), rgba(224, 240, 228, 0.74));
-  padding: clamp(0.82rem, 1.9vw, 1rem);
-  box-shadow: 0 10px 26px rgba(15, 27, 24, 0.08);
-  margin-bottom: 0.26rem;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  margin-bottom: 0.5rem;
 }
 
 .nearby-action-title {
