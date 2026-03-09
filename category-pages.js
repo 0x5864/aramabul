@@ -2339,7 +2339,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
 
   const description = document.createElement("p");
   description.className = "nearby-action-description";
-  description.textContent = "Konumunu kullanmama izin ver, sana en yakın restoranları listeleyeyim.";
+  description.textContent = `Konumunu kullanmama izin ver, sana en yakın ${normalizedTitle} listeleyeyim.`;
 
   const actionRow = document.createElement("div");
   actionRow.className = "nearby-action-row";
