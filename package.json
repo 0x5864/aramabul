@@ -48,7 +48,6 @@
     "build:health:data": "node scripts/build-health-from-saglikkurumlari.js && node scripts/merge-eah-hospitals.js && node scripts/merge-istanbul-asm.js",
     "build:health:eah": "node scripts/merge-eah-hospitals.js",
     "build:health:istanbul-asm": "node scripts/merge-istanbul-asm.js",
-    "build:eczane:data": "node scripts/build-category-data.js --category eczane",
     "build:atm:data": "node scripts/build-category-data.js --category atm",
     "build:kargo:data": "node scripts/build-category-data.js --category kargo",
     "build:noter:data": "node scripts/build-category-data.js --category noter",
@@ -63,6 +62,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
+    "nodemailer": "^6.10.1",
     "pg": "^8.16.3"
   }
 }

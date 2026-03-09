@@ -725,6 +725,24 @@
   padding: 1rem;
 }
 
+.account-email-verification-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.account-email-verification-status {
+  margin: 0;
+  min-height: 1rem;
+}
+
+.account-verify-btn {
+  min-height: 40px;
+  padding: 0.45rem 0.8rem;
+  white-space: nowrap;
+}
+
 .account-settings-actions {
   display: grid;
   grid-template-columns: minmax(0, 1fr) max-content;
@@ -940,6 +958,15 @@ body.theme-dark .settings-row:active {
   .settings-feedback-phone-group {
     grid-template-columns: 52px 76px minmax(0, 1fr);
     gap: 0.4rem;
+  }
+
+  .account-email-verification-box {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .account-verify-btn {
+    width: 100%;
   }
 }
 

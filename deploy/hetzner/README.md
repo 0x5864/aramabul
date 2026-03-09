@@ -51,6 +51,8 @@ sudo -u aramabul -H bash -lc "cd /var/www/aramabul && npm ci --omit=dev"
 - Copy `deploy/hetzner/.env.production.example` to `.env`
 - Fill the real database password
 - Fill the real domain in `CORS_ALLOWED_ORIGINS`
+- Set `APP_ORIGIN` to your live domain (`https://aramabul.com`)
+- Add SMTP values (`EMAIL_FROM`, `EMAIL_SMTP_*`) for account e-posta doğrulama
 
 ## 6. Create PostgreSQL database
 
@@ -71,6 +73,8 @@ Then run:
 ```bash
 npm run db:migrate
 ```
+
+This will also create e-posta doğrulama tables.
 
 If needed, import venue data:
 

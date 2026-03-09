@@ -9,12 +9,22 @@
   const accountDisplayHandle = document.querySelector("#accountDisplayHandle");
   const accountNameInput = document.querySelector("#accountNameInput");
   const accountEmailInput = document.querySelector("#accountEmailInput");
+  const accountEmailVerificationStatus = document.querySelector("#accountEmailVerificationStatus");
+  const accountEmailVerifyBtn = document.querySelector("#accountEmailVerifyBtn");
   const accountSettingsForm = document.querySelector("#accountSettingsForm");
   const accountSettingsMessage = document.querySelector("#accountSettingsMessage");
   const accountSaveBtn = document.querySelector("#accountSaveBtn");
   const accountSignupBtn = document.querySelector("#accountSignupBtn");
   const accountBackBtn = document.querySelector("#accountBackBtn");
   const accountHomeLink = document.querySelector(".settings-home-link");
+  const emailVerificationState = {
+    email: "",
+    verified: false,
+    loading: false,
+    sending: false,
+    messageText: "",
+    messageIsError: false,
+  };
 
   function normalizeEmail(value) {
     return String(value || "").trim().toLocaleLowerCase("en-US");
@@ -156,6 +166,184 @@
     accountSettingsMessage.classList.toggle("is-ok", !isError);
   }
 
+  function setVerificationMessage(text, isError = false) {
+    if (!accountEmailVerificationStatus) {
+      return;
+    }
+    accountEmailVerificationStatus.textContent = text;
+    accountEmailVerificationStatus.classList.toggle("is-ok", !isError && Boolean(text));
+  }
+
+  function renderEmailVerification(session) {
+    if (!(accountEmailVerifyBtn instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    if (!session?.email) {
+      accountEmailVerifyBtn.disabled = true;
+      accountEmailVerifyBtn.hidden = true;
+      setVerificationMessage("");
+      return;
+    }
+
+    accountEmailVerifyBtn.hidden = false;
+    const inputEmail = normalizeEmail(accountEmailInput instanceof HTMLInputElement ? accountEmailInput.value : "");
+    const sessionEmail = normalizeEmail(session.email);
+    const hasUnsavedEmail = Boolean(inputEmail && inputEmail !== sessionEmail);
+
+    if (hasUnsavedEmail) {
+      accountEmailVerifyBtn.disabled = true;
+      accountEmailVerifyBtn.textContent = translateUi("Önce kaydet");
+      setVerificationMessage(translateUi("E-posta değişikliği için önce Kaydet'e bas."), false);
+      return;
+    }
+
+    if (emailVerificationState.sending) {
+      accountEmailVerifyBtn.disabled = true;
+      accountEmailVerifyBtn.textContent = translateUi("Gönderiliyor...");
+      setVerificationMessage(translateUi("Doğrulama e-postası gönderiliyor..."), false);
+      return;
+    }
+
+    if (emailVerificationState.loading) {
+      accountEmailVerifyBtn.disabled = true;
+      accountEmailVerifyBtn.textContent = translateUi("Kontrol ediliyor...");
+      setVerificationMessage(translateUi("Doğrulama durumu kontrol ediliyor..."), false);
+      return;
+    }
+
+    if (emailVerificationState.verified && emailVerificationState.email === sessionEmail) {
+      accountEmailVerifyBtn.disabled = true;
+      accountEmailVerifyBtn.textContent = translateUi("Doğrulandı");
+      setVerificationMessage(translateUi("E-posta adresin doğrulandı."), false);
+      return;
+    }
+
+    if (emailVerificationState.messageText) {
+      accountEmailVerifyBtn.disabled = false;
+      accountEmailVerifyBtn.textContent = translateUi("Doğrulama e-postası gönder");
+      setVerificationMessage(emailVerificationState.messageText, emailVerificationState.messageIsError);
+      return;
+    }
+
+    accountEmailVerifyBtn.disabled = false;
+    accountEmailVerifyBtn.textContent = translateUi("Doğrulama e-postası gönder");
+    setVerificationMessage(translateUi("E-posta adresin henüz doğrulanmadı."), false);
+  }
+
+  async function refreshEmailVerificationStatus(email, force = false) {
+    const normalizedEmail = normalizeEmail(email);
+    if (!normalizedEmail || !normalizedEmail.includes("@")) {
+      emailVerificationState.email = "";
+      emailVerificationState.verified = false;
+      emailVerificationState.loading = false;
+      emailVerificationState.sending = false;
+      emailVerificationState.messageText = "";
+      emailVerificationState.messageIsError = false;
+      renderEmailVerification(readSession());
+      return;
+    }
+
+    if (
+      !force
+      && emailVerificationState.email === normalizedEmail
+      && !emailVerificationState.loading
+      && !emailVerificationState.sending
+    ) {
+      renderEmailVerification(readSession());
+      return;
+    }
+
+    emailVerificationState.email = normalizedEmail;
+    emailVerificationState.loading = true;
+    emailVerificationState.messageText = "";
+    emailVerificationState.messageIsError = false;
+    renderEmailVerification(readSession());
+
+    try {
+      const response = await fetch(`/api/auth/email-verification/status?email=${encodeURIComponent(normalizedEmail)}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("status_failed");
+      }
+
+      const payload = await response.json();
+      emailVerificationState.verified = Boolean(payload?.ok && payload.verified);
+      emailVerificationState.messageText = "";
+      emailVerificationState.messageIsError = false;
+    } catch (_error) {
+      emailVerificationState.verified = false;
+      emailVerificationState.messageText = translateUi("Doğrulama durumu alınamadı. Tekrar dene.");
+      emailVerificationState.messageIsError = true;
+    } finally {
+      emailVerificationState.loading = false;
+      renderEmailVerification(readSession());
+    }
+  }
+
+  async function sendVerificationEmail() {
+    const session = readSession();
+    if (!session?.email) {
+      goToSignup();
+      return;
+    }
+
+    const inputEmail = normalizeEmail(accountEmailInput instanceof HTMLInputElement ? accountEmailInput.value : "");
+    const sessionEmail = normalizeEmail(session.email);
+    if (inputEmail && inputEmail !== sessionEmail) {
+      setVerificationMessage(translateUi("Önce e-posta değişikliğini kaydet."), true);
+      return;
+    }
+
+    emailVerificationState.sending = true;
+    emailVerificationState.messageText = "";
+    emailVerificationState.messageIsError = false;
+    renderEmailVerification(session);
+
+    try {
+      const response = await fetch("/api/auth/email-verification/request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ email: sessionEmail }),
+      });
+
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload?.ok) {
+        if (response.status === 429) {
+          throw new Error("Doğrulama e-postası sınırına ulaşıldı. Biraz sonra tekrar dene.");
+        }
+        if (response.status === 503) {
+          throw new Error("E-posta servisi şu an kullanılamıyor.");
+        }
+        throw new Error("Doğrulama e-postası gönderilemedi.");
+      }
+
+      if (payload.alreadyVerified) {
+        emailVerificationState.verified = true;
+        emailVerificationState.messageText = "";
+        emailVerificationState.messageIsError = false;
+      } else {
+        emailVerificationState.messageText = translateUi("Doğrulama bağlantısı e-posta adresine gönderildi.");
+        emailVerificationState.messageIsError = false;
+      }
+    } catch (error) {
+      const text = String(error?.message || "Doğrulama e-postası gönderilemedi.");
+      emailVerificationState.messageText = translateUi(text);
+      emailVerificationState.messageIsError = true;
+    } finally {
+      emailVerificationState.sending = false;
+      renderEmailVerification(readSession());
+    }
+  }
+
   function renderAccount() {
     const session = readSession();
     const userName = session?.name || "Misafir";
@@ -187,10 +375,13 @@
     }
     if (!session) {
       setMessage(translateUi("Kayıtlı oturum yok. Önce kayıt ol."));
+      renderEmailVerification(null);
       return;
     }
 
     setMessage("");
+    renderEmailVerification(session);
+    void refreshEmailVerificationStatus(session.email);
   }
 
   if (accountBackBtn) {
@@ -206,6 +397,18 @@
 
   if (accountSignupBtn) {
     accountSignupBtn.addEventListener("click", goToSignup);
+  }
+
+  if (accountEmailInput instanceof HTMLInputElement) {
+    accountEmailInput.addEventListener("input", () => {
+      renderEmailVerification(readSession());
+    });
+  }
+
+  if (accountEmailVerifyBtn instanceof HTMLButtonElement) {
+    accountEmailVerifyBtn.addEventListener("click", () => {
+      void sendVerificationEmail();
+    });
   }
 
   if (accountSettingsForm) {
@@ -275,6 +478,10 @@
 
       writeUsers(nextUsers);
       writeSession({ name, email });
+      emailVerificationState.email = "";
+      emailVerificationState.verified = false;
+      emailVerificationState.messageText = "";
+      emailVerificationState.messageIsError = false;
       renderAccount();
       setMessage(translateUi("Hesap bilgileri kaydedildi."));
     });
@@ -287,4 +494,10 @@
     renderAccount();
   };
   document.addEventListener("aramabul:authchange", syncAccount);
+  window.addEventListener("focus", () => {
+    const session = readSession();
+    if (session?.email) {
+      void refreshEmailVerificationStatus(session.email, true);
+    }
+  });
 })();

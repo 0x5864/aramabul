@@ -23,6 +23,7 @@
     "/language-settings.html",
     "/feedback-settings.html",
     "/restaurant.html",
+    "/verify-email.html",
   ]);
   const canonicalParamSources = Object.freeze({
     sayfa: ["sayfa", "page", "key"],

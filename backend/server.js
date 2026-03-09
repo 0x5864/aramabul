@@ -1,6 +1,7 @@
 "use strict";
 
 const path = require("node:path");
+const crypto = require("node:crypto");
 const express = require("express");
 const cors = require("cors");
 const { createPool } = require("./db");
@@ -12,9 +13,24 @@ const MAX_LIMIT = 100_000;
 const STATIC_ROOT = path.resolve(__dirname, "..");
 const HTML_PREVIEW_TIMEOUT_MS = 8000;
 const HTML_PREVIEW_MAX_LENGTH = 750_000;
+const EMAIL_VERIFICATION_TOKEN_TTL_MINUTES = 30;
+const EMAIL_VERIFICATION_EMAIL_LIMIT_PER_HOUR = 5;
+const EMAIL_VERIFICATION_IP_LIMIT_PER_HOUR = 20;
+const EMAIL_VERIFICATION_TOKEN_MAX_AGE_DAYS = 14;
 
 const pool = createPool();
 const app = express();
+let nodemailer = null;
+let mailTransporter = null;
+let mailTransporterKey = "";
+
+try {
+  // Optional dependency: only required when email verification mail is enabled.
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+  nodemailer = require("nodemailer");
+} catch (_error) {
+  nodemailer = null;
+}
 
 function parseOriginList(rawValue) {
   if (typeof rawValue !== "string") {
@@ -83,7 +99,7 @@ const corsMiddleware = cors({
     callback(new Error("cors_not_allowed"));
   },
   credentials: false,
-  methods: ["GET", "OPTIONS"],
+  methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Accept"],
   maxAge: 600,
 });
@@ -169,6 +185,180 @@ function cleanText(value, maxLength = 120) {
   }
 
   return cleaned.slice(0, maxLength);
+}
+
+function normalizeAccountEmail(value) {
+  return cleanText(value, 320).toLocaleLowerCase("en-US");
+}
+
+function isValidAccountEmail(email) {
+  const value = normalizeAccountEmail(email);
+  if (!value || value.length < 6 || value.length > 254) {
+    return false;
+  }
+
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function parseBooleanEnv(value) {
+  const normalized = cleanText(value, 20).toLowerCase();
+  return normalized === "1" || normalized === "true" || normalized === "yes";
+}
+
+function resolveRequestIp(req) {
+  const rawIp = cleanText(req.ip || "", 80).toLowerCase();
+  if (!rawIp) {
+    return null;
+  }
+
+  if (/^::ffff:\d{1,3}(?:\.\d{1,3}){3}$/.test(rawIp)) {
+    return rawIp.replace("::ffff:", "");
+  }
+
+  if (/^\d{1,3}(?:\.\d{1,3}){3}$/.test(rawIp)) {
+    return rawIp;
+  }
+
+  if (/^[a-f0-9:]+$/.test(rawIp)) {
+    return rawIp;
+  }
+
+  return null;
+}
+
+function hashEmailVerificationToken(rawToken) {
+  return crypto.createHash("sha256").update(String(rawToken || "")).digest("hex");
+}
+
+function safePublicOrigin(rawValue) {
+  const source = cleanText(rawValue || "", 600);
+  if (!source) {
+    return "";
+  }
+
+  try {
+    const parsed = new URL(source);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      return "";
+    }
+    return parsed.origin;
+  } catch (_error) {
+    return "";
+  }
+}
+
+const configuredAppOrigin = safePublicOrigin(process.env.APP_ORIGIN || process.env.PUBLIC_APP_ORIGIN || "");
+
+function resolveAppOrigin(req) {
+  if (configuredAppOrigin) {
+    return configuredAppOrigin;
+  }
+
+  if (NODE_ENV === "production") {
+    return "https://aramabul.com";
+  }
+
+  const host = cleanText(req.get("host") || "", 200);
+  if (!host || /[^a-z0-9.:[\]-]/i.test(host)) {
+    return "http://127.0.0.1:8787";
+  }
+
+  const protocol = req.protocol === "https" ? "https" : "http";
+  return `${protocol}://${host}`;
+}
+
+function getMailTransporter() {
+  if (!nodemailer) {
+    return null;
+  }
+
+  const smtpUrl = cleanText(process.env.EMAIL_SMTP_URL || "", 1500);
+  const smtpHost = cleanText(process.env.EMAIL_SMTP_HOST || "", 180);
+  const smtpPort = Number.parseInt(cleanText(process.env.EMAIL_SMTP_PORT || "", 10), 10);
+  const smtpUser = cleanText(process.env.EMAIL_SMTP_USER || "", 240);
+  const smtpPass = cleanText(process.env.EMAIL_SMTP_PASS || "", 500);
+  const smtpSecure = parseBooleanEnv(process.env.EMAIL_SMTP_SECURE || "");
+
+  const configKey = JSON.stringify({
+    smtpUrl,
+    smtpHost,
+    smtpPort,
+    smtpUser,
+    smtpPass,
+    smtpSecure,
+  });
+
+  if (mailTransporter && configKey === mailTransporterKey) {
+    return mailTransporter;
+  }
+
+  if (smtpUrl) {
+    mailTransporter = nodemailer.createTransport(smtpUrl);
+    mailTransporterKey = configKey;
+    return mailTransporter;
+  }
+
+  if (!smtpHost || !Number.isFinite(smtpPort) || smtpPort <= 0) {
+    return null;
+  }
+
+  const auth = smtpUser || smtpPass
+    ? {
+        user: smtpUser,
+        pass: smtpPass,
+      }
+    : undefined;
+
+  mailTransporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpSecure || smtpPort === 465,
+    auth,
+  });
+  mailTransporterKey = configKey;
+  return mailTransporter;
+}
+
+function getEmailFromAddress() {
+  return cleanText(process.env.EMAIL_FROM || "", 320);
+}
+
+async function sendEmailVerificationMessage({ toEmail, verificationUrl }) {
+  const fromAddress = getEmailFromAddress();
+  if (!fromAddress) {
+    throw new Error("email_from_missing");
+  }
+
+  const transporter = getMailTransporter();
+  if (!transporter) {
+    throw new Error("smtp_not_configured");
+  }
+
+  const expiresText = `${EMAIL_VERIFICATION_TOKEN_TTL_MINUTES} dakika`;
+  const textBody = [
+    "Merhaba,",
+    "",
+    "Aramabul hesabı e-posta doğrulama bağlantın hazır.",
+    `Bağlantı (${expiresText} geçerli):`,
+    verificationUrl,
+    "",
+    "Bu işlemi sen yapmadıysan bu mesajı yok sayabilirsin.",
+  ].join("\n");
+
+  const htmlBody = [
+    "<p>Merhaba,</p>",
+    "<p>Aramabul hesabı e-posta doğrulama bağlantın hazır.</p>",
+    `<p>Bağlantı (<strong>${expiresText}</strong> geçerli):<br /><a href="${verificationUrl}">${verificationUrl}</a></p>`,
+    "<p>Bu işlemi sen yapmadıysan bu mesajı yok sayabilirsin.</p>",
+  ].join("");
+
+  await transporter.sendMail({
+    from: fromAddress,
+    to: toEmail,
+    subject: "Aramabul e-posta doğrulama bağlantısı",
+    text: textBody,
+    html: htmlBody,
+  });
 }
 
 function normalizeCategory(value) {
@@ -974,6 +1164,266 @@ app.get("/api/places/preview-image", async (req, res, next) => {
   }
 });
 
+app.get("/api/auth/email-verification/status", async (req, res, next) => {
+  try {
+    res.setHeader("Cache-Control", "no-store");
+    const email = normalizeAccountEmail(req.query.email || "");
+    if (!isValidAccountEmail(email)) {
+      res.status(400).json({
+        ok: false,
+        message: "invalid_email",
+      });
+      return;
+    }
+
+    const { rows } = await pool.query(
+      `
+        SELECT verified_at AS "verifiedAt"
+        FROM account_email_verification_status
+        WHERE email = $1
+        LIMIT 1
+      `,
+      [email],
+    );
+
+    const verifiedAt = rows[0]?.verifiedAt ? new Date(rows[0].verifiedAt).toISOString() : null;
+    res.json({
+      ok: true,
+      email,
+      verified: Boolean(verifiedAt),
+      verifiedAt,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/api/auth/email-verification/request", async (req, res, next) => {
+  try {
+    res.setHeader("Cache-Control", "no-store");
+
+    const email = normalizeAccountEmail(req.body?.email || "");
+    if (!isValidAccountEmail(email)) {
+      res.status(400).json({
+        ok: false,
+        message: "invalid_email",
+      });
+      return;
+    }
+
+    const fromAddress = getEmailFromAddress();
+    if (!fromAddress || !getMailTransporter()) {
+      res.status(503).json({
+        ok: false,
+        message: "email_service_unavailable",
+      });
+      return;
+    }
+
+    const { rows: statusRows } = await pool.query(
+      `
+        SELECT verified_at AS "verifiedAt"
+        FROM account_email_verification_status
+        WHERE email = $1
+        LIMIT 1
+      `,
+      [email],
+    );
+
+    const isAlreadyVerified = Boolean(statusRows[0]?.verifiedAt);
+    if (isAlreadyVerified) {
+      res.json({
+        ok: true,
+        alreadyVerified: true,
+      });
+      return;
+    }
+
+    const requestIp = resolveRequestIp(req);
+    const userAgent = cleanText(req.get("user-agent") || "", 300);
+
+    const emailRateResult = await pool.query(
+      `
+        SELECT COUNT(*)::int AS count
+        FROM account_email_verification_tokens
+        WHERE email = $1
+          AND created_at >= NOW() - INTERVAL '1 hour'
+      `,
+      [email],
+    );
+    const emailAttemptCount = Number(emailRateResult.rows[0]?.count || 0);
+    if (emailAttemptCount >= EMAIL_VERIFICATION_EMAIL_LIMIT_PER_HOUR) {
+      res.status(429).json({
+        ok: false,
+        message: "verification_rate_limited",
+      });
+      return;
+    }
+
+    if (requestIp) {
+      const ipRateResult = await pool.query(
+        `
+          SELECT COUNT(*)::int AS count
+          FROM account_email_verification_tokens
+          WHERE request_ip = $1::inet
+            AND created_at >= NOW() - INTERVAL '1 hour'
+        `,
+        [requestIp],
+      );
+      const ipAttemptCount = Number(ipRateResult.rows[0]?.count || 0);
+      if (ipAttemptCount >= EMAIL_VERIFICATION_IP_LIMIT_PER_HOUR) {
+        res.status(429).json({
+          ok: false,
+          message: "verification_rate_limited",
+        });
+        return;
+      }
+    }
+
+    const rawToken = crypto.randomBytes(32).toString("base64url");
+    const tokenHash = hashEmailVerificationToken(rawToken);
+    const expiresAt = new Date(Date.now() + EMAIL_VERIFICATION_TOKEN_TTL_MINUTES * 60 * 1000);
+
+    await pool.query(
+      `
+        INSERT INTO account_email_verification_tokens (
+          email,
+          token_hash,
+          expires_at,
+          request_ip,
+          user_agent
+        )
+        VALUES ($1, $2, $3, $4::inet, $5)
+      `,
+      [email, tokenHash, expiresAt.toISOString(), requestIp, userAgent || null],
+    );
+
+    const appOrigin = resolveAppOrigin(req);
+    const verificationUrl = `${appOrigin}/verify-email.html#token=${encodeURIComponent(rawToken)}`;
+
+    try {
+      await sendEmailVerificationMessage({
+        toEmail: email,
+        verificationUrl,
+      });
+    } catch (mailError) {
+      await pool.query(
+        `
+          DELETE FROM account_email_verification_tokens
+          WHERE token_hash = $1
+        `,
+        [tokenHash],
+      );
+      throw mailError;
+    }
+
+    await pool.query(
+      `
+        DELETE FROM account_email_verification_tokens
+        WHERE created_at < NOW() - ($1::int * INTERVAL '1 day')
+      `,
+      [EMAIL_VERIFICATION_TOKEN_MAX_AGE_DAYS],
+    );
+
+    res.json({
+      ok: true,
+      alreadyVerified: false,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/api/auth/email-verification/confirm", async (req, res, next) => {
+  let client;
+  try {
+    res.setHeader("Cache-Control", "no-store");
+
+    const token = cleanText(req.body?.token || "", 800);
+    if (!token || token.length < 24) {
+      res.status(400).json({
+        ok: false,
+        message: "invalid_token",
+      });
+      return;
+    }
+
+    const tokenHash = hashEmailVerificationToken(token);
+    client = await pool.connect();
+    await client.query("BEGIN");
+
+    const { rows } = await client.query(
+      `
+        SELECT id, email, expires_at AS "expiresAt", consumed_at AS "consumedAt"
+        FROM account_email_verification_tokens
+        WHERE token_hash = $1
+        LIMIT 1
+        FOR UPDATE
+      `,
+      [tokenHash],
+    );
+
+    const row = rows[0];
+    if (!row) {
+      await client.query("ROLLBACK");
+      res.status(400).json({
+        ok: false,
+        message: "invalid_or_expired_token",
+      });
+      return;
+    }
+
+    const expiresAtMs = new Date(row.expiresAt).getTime();
+    if (!Number.isFinite(expiresAtMs) || expiresAtMs < Date.now() || row.consumedAt) {
+      await client.query("ROLLBACK");
+      res.status(400).json({
+        ok: false,
+        message: "invalid_or_expired_token",
+      });
+      return;
+    }
+
+    await client.query(
+      `
+        UPDATE account_email_verification_tokens
+        SET consumed_at = NOW()
+        WHERE id = $1
+      `,
+      [row.id],
+    );
+
+    await client.query(
+      `
+        INSERT INTO account_email_verification_status (email, verified_at)
+        VALUES ($1, NOW())
+        ON CONFLICT (email)
+        DO UPDATE SET verified_at = EXCLUDED.verified_at
+      `,
+      [row.email],
+    );
+
+    await client.query("COMMIT");
+
+    res.json({
+      ok: true,
+      email: row.email,
+    });
+  } catch (error) {
+    if (client) {
+      try {
+        await client.query("ROLLBACK");
+      } catch (_rollbackError) {
+        // Ignore rollback error.
+      }
+    }
+    next(error);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+});
+
 const seoNoindexPaths = new Set([
   "/ads-test.html",
   "/search.html",
@@ -982,6 +1432,7 @@ const seoNoindexPaths = new Set([
   "/language-settings.html",
   "/feedback-settings.html",
   "/restaurant.html",
+  "/verify-email.html",
 ]);
 
 const canonicalParamSources = Object.freeze({
@@ -1137,6 +1588,14 @@ app.use((req, res, next) => {
 app.use((error, _req, res, _next) => {
   if (error && error.message === "cors_not_allowed") {
     res.status(403).json({ ok: false, message: "cors_blocked" });
+    return;
+  }
+
+  if (
+    error
+    && (error.message === "email_from_missing" || error.message === "smtp_not_configured")
+  ) {
+    res.status(503).json({ ok: false, message: "email_service_unavailable" });
     return;
   }
 

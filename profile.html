@@ -18,7 +18,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css?v=20260309-08" />
-    <link rel="stylesheet" href="profile.css?v=20260307-49" />
+    <link rel="stylesheet" href="profile.css?v=20260309-01" />
   </head>
   <body class="profile-page settings-page">
     <div class="texture"></div>
@@ -149,6 +149,10 @@
                 <span>E-posta</span>
                 <input id="accountEmailInput" type="email" name="email" autocomplete="email" required />
               </label>
+              <div class="account-email-verification-box" aria-live="polite">
+                <p id="accountEmailVerificationStatus" class="settings-signup-message account-email-verification-status"></p>
+                <button id="accountEmailVerifyBtn" class="account-secondary-btn account-verify-btn" type="button">Doğrulama e-postası gönder</button>
+              </div>
               <p id="accountSettingsMessage" class="settings-signup-message" aria-live="polite"></p>
               <div class="account-settings-actions">
                 <button id="accountSaveBtn" class="settings-signup-submit" type="submit">Kaydet</button>
@@ -296,6 +300,6 @@
   <script src="header-search-ui.js?v=20260303-04"></script>
   <script src="header-search-data.js?v=20260303-06"></script>
     <script src="header-search.js?v=20260307-24"></script>
-    <script src="profile.js?v=20260307-11"></script>
+    <script src="profile.js?v=20260309-01"></script>
   </body>
 </html>
