@@ -2339,7 +2339,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
 
   const description = document.createElement("p");
   description.className = "nearby-action-description";
-  description.textContent = "Konumunu kulanmama izin ver, sana en yakın restoranları listeleyeyim.";
+  description.textContent = "Konumunu kullanmama izin ver, sana en yakın restoranları listeleyeyim.";
 
   const actionRow = document.createElement("div");
   actionRow.className = "nearby-action-row";
@@ -3666,8 +3666,6 @@ function renderCityPage(
       districtGrid.append(empty);
       return;
     }
-
-    renderNearbyQuickAction(districtGrid, subcategoryDefinition.title, citySourceVenues);
 
     const row = document.createElement("article");
     row.className = "province-row";
