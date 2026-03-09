@@ -1001,7 +1001,7 @@ const footerPageAliasToQuery = Object.freeze({
 
 Object.entries(footerPageAliasToQuery).forEach(([routePath, pageKey]) => {
   app.get(routePath, (_req, res) => {
-    res.redirect(302, `/footer-page.html?sayfa=${encodeURIComponent(pageKey)}`);
+    res.redirect(301, `/footer-page.html?sayfa=${encodeURIComponent(pageKey)}`);
   });
 });
 
