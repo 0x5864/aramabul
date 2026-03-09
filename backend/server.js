@@ -974,7 +974,115 @@ app.get("/api/places/preview-image", async (req, res, next) => {
   }
 });
 
+const seoNoindexPaths = new Set([
+  "/ads-test.html",
+  "/search.html",
+  "/profile.html",
+  "/account-settings.html",
+  "/language-settings.html",
+  "/feedback-settings.html",
+  "/restaurant.html",
+]);
+
+const canonicalParamSources = Object.freeze({
+  sayfa: ["sayfa", "page", "key"],
+  tur: ["tur", "type"],
+  sehir: ["sehir", "city"],
+  ilce: ["ilce", "district"],
+  tt: ["tt", "tesis", "facilityType"],
+  il: ["il"],
+  kategori: ["kategori"],
+});
+
+function canonicalParamKeysForPath(pathname) {
+  const fileName = pathname.split("/").pop() || "";
+  if (fileName === "footer-page.html") {
+    return ["sayfa"];
+  }
+  if (fileName === "city.html") {
+    return ["il", "ilce", "kategori"];
+  }
+  if (fileName.endsWith("-city.html")) {
+    return ["tur", "sehir"];
+  }
+  if (fileName.endsWith("-district.html")) {
+    return ["tur", "sehir", "ilce"];
+  }
+  if (fileName.endsWith("-mekanlar.html")) {
+    return ["tur", "sehir", "ilce", "tt"];
+  }
+  return [];
+}
+
+function pickCanonicalParamValue(searchParams, canonicalKey) {
+  const aliases = canonicalParamSources[canonicalKey] || [canonicalKey];
+  for (const key of aliases) {
+    const value = String(searchParams.get(key) || "").trim();
+    if (value) {
+      return value;
+    }
+  }
+  return "";
+}
+
+function buildCanonicalUrlFromRequest(pathname, searchParams) {
+  const normalizedPath = pathname === "/index.html" ? "/" : pathname;
+  const canonicalParams = new URLSearchParams();
+  const allowedKeys = canonicalParamKeysForPath(normalizedPath);
+
+  allowedKeys.forEach((key) => {
+    let value = pickCanonicalParamValue(searchParams, key);
+    if (!value && normalizedPath === "/footer-page.html" && key === "sayfa") {
+      value = "hakkimizda";
+    }
+    if (value) {
+      canonicalParams.set(key, value);
+    }
+  });
+
+  const query = canonicalParams.toString();
+  return `https://aramabul.com${normalizedPath}${query ? `?${query}` : ""}`;
+}
+
 const staticCacheMaxAge = NODE_ENV === "production" ? "1h" : 0;
+app.use((req, res, next) => {
+  if ((req.method === "GET" || req.method === "HEAD") && req.path === "/index.html") {
+    const queryStartIndex = req.originalUrl.indexOf("?");
+    const query = queryStartIndex >= 0 ? req.originalUrl.slice(queryStartIndex) : "";
+    res.redirect(301, `/${query}`);
+    return;
+  }
+  next();
+});
+
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    next();
+    return;
+  }
+  if (req.path.startsWith("/api/")) {
+    next();
+    return;
+  }
+
+  const pathname = req.path === "/index.html" ? "/" : req.path;
+  const isHtmlPath = pathname === "/" || pathname.endsWith(".html");
+  if (!isHtmlPath) {
+    next();
+    return;
+  }
+
+  const requestUrl = new URL(req.originalUrl, "https://aramabul.com");
+  const canonicalUrl = buildCanonicalUrlFromRequest(pathname, requestUrl.searchParams);
+  res.setHeader("Link", `<${canonicalUrl}>; rel="canonical"`);
+
+  if (seoNoindexPaths.has(pathname)) {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  }
+
+  next();
+});
+
 app.use(
   express.static(STATIC_ROOT, {
     index: false,

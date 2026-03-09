@@ -15,6 +15,129 @@
     DE: "de",
     ZH: "zh",
   });
+  const seoNoindexPaths = new Set([
+    "/ads-test.html",
+    "/search.html",
+    "/profile.html",
+    "/account-settings.html",
+    "/language-settings.html",
+    "/feedback-settings.html",
+    "/restaurant.html",
+  ]);
+  const canonicalParamSources = Object.freeze({
+    sayfa: ["sayfa", "page", "key"],
+    tur: ["tur", "type"],
+    sehir: ["sehir", "city"],
+    ilce: ["ilce", "district"],
+    tt: ["tt", "tesis", "facilityType"],
+    il: ["il"],
+    kategori: ["kategori"],
+  });
+
+  function normalizePathname(pathname) {
+    const value = String(pathname || "/").trim() || "/";
+    if (value === "/index.html") {
+      return "/";
+    }
+    return value;
+  }
+
+  function canonicalOrigin() {
+    const host = String(window.location.hostname || "").toLowerCase();
+    if (host === "aramabul.com" || host === "www.aramabul.com") {
+      return "https://aramabul.com";
+    }
+    return window.location.origin;
+  }
+
+  function canonicalParamKeysForPath(pathname) {
+    const fileName = pathname.split("/").pop() || "";
+    if (fileName === "footer-page.html") {
+      return ["sayfa"];
+    }
+    if (fileName === "city.html") {
+      return ["il", "ilce", "kategori"];
+    }
+    if (fileName.endsWith("-city.html")) {
+      return ["tur", "sehir"];
+    }
+    if (fileName.endsWith("-district.html")) {
+      return ["tur", "sehir", "ilce"];
+    }
+    if (fileName.endsWith("-mekanlar.html")) {
+      return ["tur", "sehir", "ilce", "tt"];
+    }
+    return [];
+  }
+
+  function pickQueryValue(searchParams, canonicalKey) {
+    const aliases = canonicalParamSources[canonicalKey] || [canonicalKey];
+    for (const key of aliases) {
+      const value = String(searchParams.get(key) || "").trim();
+      if (value) {
+        return value;
+      }
+    }
+    return "";
+  }
+
+  function upsertMetaByName(name, content) {
+    if (!name) {
+      return;
+    }
+    let node = document.head.querySelector(`meta[name="${name}"]`);
+    if (!(node instanceof HTMLMetaElement)) {
+      node = document.createElement("meta");
+      node.setAttribute("name", name);
+      document.head.appendChild(node);
+    }
+    node.setAttribute("content", content);
+  }
+
+  function upsertCanonicalLink(href) {
+    if (!href) {
+      return;
+    }
+    let node = document.head.querySelector('link[rel="canonical"]');
+    if (!(node instanceof HTMLLinkElement)) {
+      node = document.createElement("link");
+      node.setAttribute("rel", "canonical");
+      document.head.appendChild(node);
+    }
+    node.setAttribute("href", href);
+  }
+
+  function buildCanonicalHref() {
+    const pathname = normalizePathname(window.location.pathname);
+    const searchParams = new URLSearchParams(window.location.search);
+    const canonicalParams = new URLSearchParams();
+    const allowedKeys = canonicalParamKeysForPath(pathname);
+
+    allowedKeys.forEach((key) => {
+      let value = pickQueryValue(searchParams, key);
+      if (!value && pathname.endsWith("/footer-page.html") && key === "sayfa") {
+        value = "hakkimizda";
+      }
+      if (value) {
+        canonicalParams.set(key, value);
+      }
+    });
+
+    const query = canonicalParams.toString();
+    return `${canonicalOrigin()}${pathname}${query ? `?${query}` : ""}`;
+  }
+
+  function applySeoDefaults() {
+    if (!document.head) {
+      return;
+    }
+
+    const pathname = normalizePathname(window.location.pathname);
+    upsertCanonicalLink(buildCanonicalHref());
+
+    const robotsValue = seoNoindexPaths.has(pathname) ? "noindex,nofollow" : "index,follow";
+    upsertMetaByName("robots", robotsValue);
+  }
 
   function readStorageValue(key) {
     try {
@@ -199,5 +322,8 @@
     clearAuthSession,
     readAuthUsers,
     writeAuthUsers,
+    applySeoDefaults,
   };
+
+  applySeoDefaults();
 })();
