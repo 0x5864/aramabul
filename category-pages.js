@@ -2339,7 +2339,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
 
   const description = document.createElement("p");
   description.className = "nearby-action-description";
-  description.textContent = "Konumunu paylaş, en yakın 10 işletmeyi açılır pencerede hemen görelim.";
+  description.textContent = "Konumunu kulanmama izin ver, sana en yakın restoranları listeleyeyim.";
 
   const actionRow = document.createElement("div");
   actionRow.className = "nearby-action-row";
@@ -2347,7 +2347,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
   const triggerButton = document.createElement("button");
   triggerButton.type = "button";
   triggerButton.className = "nearby-action-btn";
-  triggerButton.textContent = "Yakındaki 10 işletmeyi göster";
+  triggerButton.textContent = "Listele";
 
   const status = document.createElement("p");
   status.className = "nearby-action-status";
