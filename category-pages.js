@@ -8,6 +8,12 @@ const ROOT_MARQUEE_IMAGES = Object.freeze([
   { src: "assets/saglik.png", alt: "Sağlık görseli" },
   { src: "assets/kultur.png", alt: "Kültür görseli" },
   { src: "assets/sanat.png", alt: "Sanat görseli" },
+  { src: "assets/eczane.png", alt: "Eczane görseli" },
+  { src: "assets/kafe.png", alt: "Kafe görseli" },
+  { src: "assets/keyif.png", alt: "Keyif görseli" },
+  { src: "assets/otel.png", alt: "Otel görseli" },
+  { src: "assets/pompa.png", alt: "Akaryakıt görseli" },
+  { src: "assets/veteriner.png", alt: "Veteriner görseli" },
 ]);
 const DISTRICT_INLINE_AD_INSERT_AFTER = 6;
 const DISTRICT_INLINE_AD_SCRIPT_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
