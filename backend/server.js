@@ -152,6 +152,23 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  if (!canonicalWebOrigin || redirectWebHostNames.size === 0) {
+    next();
+    return;
+  }
+
+  const hostName = cleanText(String(req.hostname || req.get("host") || ""), 240).toLowerCase();
+  if (!hostName || !redirectWebHostNames.has(hostName)) {
+    next();
+    return;
+  }
+
+  const targetUrl = `${canonicalWebOrigin}${req.originalUrl || "/"}`;
+  const redirectCode = req.method === "GET" || req.method === "HEAD" ? 301 : 308;
+  res.redirect(redirectCode, targetUrl);
+});
+
 app.use(express.json({ limit: "1mb" }));
 app.use("/api", corsMiddleware);
 app.options("/api/*", corsMiddleware);
@@ -248,6 +265,28 @@ function safePublicOrigin(rawValue) {
 }
 
 const configuredAppOrigin = safePublicOrigin(process.env.APP_ORIGIN || process.env.PUBLIC_APP_ORIGIN || "");
+const canonicalWebOrigin = safePublicOrigin(
+  process.env.CANONICAL_WEB_ORIGIN
+    || configuredAppOrigin
+    || (NODE_ENV === "production" ? "https://aramabul.com" : ""),
+);
+const canonicalWebHostName = (() => {
+  if (!canonicalWebOrigin) {
+    return "";
+  }
+
+  try {
+    return new URL(canonicalWebOrigin).hostname.toLowerCase();
+  } catch (_error) {
+    return "";
+  }
+})();
+const redirectWebHostNames = new Set(
+  String(process.env.REDIRECT_WEB_HOSTS || (canonicalWebHostName ? `www.${canonicalWebHostName}` : ""))
+    .split(",")
+    .map((item) => cleanText(item, 240).toLowerCase())
+    .filter(Boolean),
+);
 
 function resolveAppOrigin(req) {
   if (configuredAppOrigin) {

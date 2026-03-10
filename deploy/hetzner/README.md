@@ -94,6 +94,7 @@ Run the printed `pm2 startup` command as root.
 
 - Copy `deploy/hetzner/nginx-aramabul.conf` to `/etc/nginx/sites-available/aramabul`
 - Replace `example.com` with your real domain
+- Keep one main domain. This config redirects `www` to the main domain.
 
 Then run:
 
