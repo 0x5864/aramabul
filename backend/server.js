@@ -1615,6 +1615,10 @@ app.post("/api/auth/password-change/request", async (req, res, next) => {
 
     res.json({
       ok: true,
+      requestMeta: {
+        requestedAt: new Date().toISOString(),
+        requestIp: requestIp || null,
+      },
     });
   } catch (error) {
     next(error);

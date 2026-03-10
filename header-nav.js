@@ -30,6 +30,8 @@
       resetBackToLogin: "Girişe dön",
       forgotPasswordSending: "Bağlantı gönderiliyor...",
       forgotPasswordSent: "Şifre değişikliği bağlantısı e-posta adresine gönderildi.",
+      forgotPasswordLogAt: "Zaman",
+      forgotPasswordLogIp: "IP",
       forgotPasswordRateLimited: "Çok fazla istek gönderildi. Biraz sonra tekrar dene.",
       forgotPasswordServiceUnavailable: "E-posta servisi şu an kullanılamıyor.",
       forgotPasswordFailed: "Şifre değişikliği bağlantısı gönderilemedi.",
@@ -74,6 +76,8 @@
       resetBackToLogin: "Back to sign in",
       forgotPasswordSending: "Sending reset link...",
       forgotPasswordSent: "Password change link has been sent to your email.",
+      forgotPasswordLogAt: "Time",
+      forgotPasswordLogIp: "IP",
       forgotPasswordRateLimited: "Too many requests. Please try again later.",
       forgotPasswordServiceUnavailable: "Email service is currently unavailable.",
       forgotPasswordFailed: "Failed to send password change link.",
@@ -118,6 +122,8 @@
       resetBackToLogin: "Назад ко входу",
       forgotPasswordSending: "Отправка ссылки...",
       forgotPasswordSent: "Ссылка для смены пароля отправлена на ваш e-mail.",
+      forgotPasswordLogAt: "Время",
+      forgotPasswordLogIp: "IP",
       forgotPasswordRateLimited: "Слишком много запросов. Попробуйте позже.",
       forgotPasswordServiceUnavailable: "Почтовый сервис временно недоступен.",
       forgotPasswordFailed: "Не удалось отправить ссылку для смены пароля.",
@@ -162,6 +168,8 @@
       resetBackToLogin: "Zurück zur Anmeldung",
       forgotPasswordSending: "Link wird gesendet...",
       forgotPasswordSent: "Der Link zur Passwortaenderung wurde an deine E-Mail gesendet.",
+      forgotPasswordLogAt: "Zeit",
+      forgotPasswordLogIp: "IP",
       forgotPasswordRateLimited: "Zu viele Anfragen. Bitte spaeter erneut versuchen.",
       forgotPasswordServiceUnavailable: "E-Mail-Dienst ist derzeit nicht verfuegbar.",
       forgotPasswordFailed: "Link zur Passwortaenderung konnte nicht gesendet werden.",
@@ -206,6 +214,8 @@
       resetBackToLogin: "返回登录",
       forgotPasswordSending: "正在发送链接...",
       forgotPasswordSent: "密码修改链接已发送到你的邮箱。",
+      forgotPasswordLogAt: "时间",
+      forgotPasswordLogIp: "IP",
       forgotPasswordRateLimited: "请求过多，请稍后再试。",
       forgotPasswordServiceUnavailable: "邮件服务暂时不可用。",
       forgotPasswordFailed: "发送密码修改链接失败。",
@@ -243,6 +253,23 @@
 
   function authText() {
     return AUTH_COPY[currentLanguage()] || AUTH_COPY.TR;
+  }
+
+  function authLocale() {
+    const language = currentLanguage();
+    if (language === "EN") {
+      return "en-US";
+    }
+    if (language === "RU") {
+      return "ru-RU";
+    }
+    if (language === "DE") {
+      return "de-DE";
+    }
+    if (language === "ZH") {
+      return "zh-CN";
+    }
+    return "tr-TR";
   }
 
   function readUsers() {
@@ -845,7 +872,27 @@
           return;
         }
 
-        setMessage(copy.forgotPasswordSent, false);
+        const requestedAtRaw = String(payload?.requestMeta?.requestedAt || "").trim();
+        const requestIpRaw = String(payload?.requestMeta?.requestIp || "").trim();
+        let requestedAtText = "-";
+        if (requestedAtRaw) {
+          const timestamp = new Date(requestedAtRaw);
+          if (!Number.isNaN(timestamp.getTime())) {
+            requestedAtText = new Intl.DateTimeFormat(authLocale(), {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            }).format(timestamp);
+          }
+        }
+        const requestIpText = requestIpRaw || "-";
+        setMessage(
+          `${copy.forgotPasswordSent} ${copy.forgotPasswordLogAt}: ${requestedAtText} | ${copy.forgotPasswordLogIp}: ${requestIpText}`,
+          false,
+        );
       } catch (_error) {
         setMessage(copy.forgotPasswordFailed, true);
       } finally {
