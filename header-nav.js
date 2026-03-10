@@ -293,6 +293,24 @@
     return String(value || "").trim().toLocaleLowerCase("en-US");
   }
 
+  function passwordEyeIconMarkup(isVisible) {
+    if (isVisible) {
+      return `
+        <svg class="auth-password-toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6"></path>
+          <circle cx="12" cy="12" r="2.8"></circle>
+        </svg>
+      `;
+    }
+
+    return `
+      <svg class="auth-password-toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6"></path>
+        <path d="M4 4l16 16"></path>
+      </svg>
+    `;
+  }
+
   async function hashPassword(password) {
     if (!window.crypto?.subtle) {
       return null;
@@ -332,7 +350,7 @@
                 type="button"
                 aria-pressed="false"
                 aria-label="${copy.passwordToggleShowLabel}"
-              >${copy.passwordToggleShow}</button>
+              >${passwordEyeIconMarkup(false)}</button>
             </div>
           </label>
           <div class="auth-form-inline-row">
@@ -473,7 +491,7 @@
       const nextVisible = Boolean(isVisible);
       state.loginPasswordVisible = nextVisible;
       loginPassword.type = nextVisible ? "text" : "password";
-      loginPasswordToggle.textContent = nextVisible ? copy.passwordToggleHide : copy.passwordToggleShow;
+      loginPasswordToggle.innerHTML = passwordEyeIconMarkup(nextVisible);
       loginPasswordToggle.setAttribute(
         "aria-label",
         nextVisible ? copy.passwordToggleHideLabel : copy.passwordToggleShowLabel,
