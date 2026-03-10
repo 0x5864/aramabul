@@ -34,6 +34,11 @@
     il: ["il"],
     kategori: ["kategori"],
   });
+  const structuredDataScriptIds = Object.freeze({
+    organization: "aramabul-seo-organization",
+    website: "aramabul-seo-website",
+    breadcrumb: "aramabul-seo-breadcrumb",
+  });
 
   function normalizePathname(pathname) {
     const value = String(pathname || "/").trim() || "/";
@@ -108,6 +113,24 @@
     node.setAttribute("href", href);
   }
 
+  function toAbsoluteSeoUrl(rawHref) {
+    const href = String(rawHref || "").trim();
+    if (!href) {
+      return "";
+    }
+    try {
+      const baseUrl = `${canonicalOrigin()}${normalizePathname(window.location.pathname)}`;
+      const resolved = new URL(href, baseUrl);
+      if (resolved.pathname === "/index.html") {
+        resolved.pathname = "/";
+      }
+      resolved.hash = "";
+      return resolved.toString();
+    } catch (_error) {
+      return "";
+    }
+  }
+
   function buildCanonicalHref() {
     const pathname = normalizePathname(window.location.pathname);
     const searchParams = new URLSearchParams(window.location.search);
@@ -128,6 +151,168 @@
     return `${canonicalOrigin()}${pathname}${query ? `?${query}` : ""}`;
   }
 
+  function hasDynamicSeoContext(pathname) {
+    return (
+      pathname === "/city.html"
+      || pathname === "/footer-page.html"
+      || pathname.endsWith("-city.html")
+      || pathname.endsWith("-district.html")
+      || pathname.endsWith("-mekanlar.html")
+    );
+  }
+
+  function readPageTitleLabel() {
+    return String(document.title || "")
+      .replace(/^aramabul\s*\|\s*/i, "")
+      .trim();
+  }
+
+  function buildDynamicDescription(pathname) {
+    const titleLabel = readPageTitleLabel();
+    if (!titleLabel) {
+      return "";
+    }
+    if (pathname.endsWith("-mekanlar.html")) {
+      return `${titleLabel} için güncel mekan listesi, adres bilgileri ve konum bağlantılarını aramabul'da inceleyin.`;
+    }
+    if (pathname.endsWith("-district.html")) {
+      return `${titleLabel} için ilçe bazlı alt kategori sayfaları ve mekan geçişlerini aramabul'da görüntüleyin.`;
+    }
+    if (pathname.endsWith("-city.html") || pathname === "/city.html") {
+      return `${titleLabel} için il ve ilçe bazlı kategori listelerini aramabul'da keşfedin.`;
+    }
+    if (pathname === "/footer-page.html") {
+      return `${titleLabel} sayfasındaki güncel bilgileri aramabul üzerinden okuyun.`;
+    }
+    return `${titleLabel} için güncel kategori ve mekan bilgilerini aramabul'da inceleyin.`;
+  }
+
+  function applyDynamicDescription(pathname) {
+    const currentDescriptionNode = document.head.querySelector('meta[name="description"]');
+    const currentDescription = currentDescriptionNode instanceof HTMLMetaElement
+      ? String(currentDescriptionNode.getAttribute("content") || "").trim()
+      : "";
+    const nextDescription = buildDynamicDescription(pathname);
+    if (!nextDescription) {
+      return;
+    }
+    if (!currentDescription || hasDynamicSeoContext(pathname)) {
+      upsertMetaByName("description", nextDescription);
+    }
+  }
+
+  function upsertStructuredDataScript(scriptId, payload) {
+    if (!scriptId) {
+      return;
+    }
+    let node = document.getElementById(scriptId);
+    if (!(node instanceof HTMLScriptElement)) {
+      node = document.createElement("script");
+      node.type = "application/ld+json";
+      node.id = scriptId;
+      document.head.appendChild(node);
+    }
+    node.textContent = JSON.stringify(payload);
+  }
+
+  function removeStructuredDataScript(scriptId) {
+    const node = document.getElementById(scriptId);
+    if (node && node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
+  }
+
+  function applyOrganizationStructuredData() {
+    upsertStructuredDataScript(structuredDataScriptIds.organization, {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "aramabul",
+      url: `${canonicalOrigin()}/`,
+      logo: toAbsoluteSeoUrl("/assets/fav.png?v=20260227"),
+    });
+  }
+
+  function applyWebsiteStructuredData(pathname) {
+    if (pathname !== "/") {
+      removeStructuredDataScript(structuredDataScriptIds.website);
+      return;
+    }
+    upsertStructuredDataScript(structuredDataScriptIds.website, {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "aramabul",
+      url: `${canonicalOrigin()}/`,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${canonicalOrigin()}/search.html?mekan={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    });
+  }
+
+  function collectBreadcrumbItems() {
+    const container = document.querySelector(".global-topline-inner, .city-topline-inner");
+    if (!(container instanceof HTMLElement)) {
+      return [];
+    }
+    const rawNodes = [...container.querySelectorAll("a, span")];
+    const canonicalCurrentUrl = buildCanonicalHref();
+    const items = [];
+
+    rawNodes.forEach((node) => {
+      const name = String(node.textContent || "").replace(/\s+/g, " ").trim();
+      if (!name || name === "/") {
+        return;
+      }
+      let itemUrl = "";
+      if (node.tagName === "A") {
+        itemUrl = toAbsoluteSeoUrl(node.getAttribute("href"));
+      } else {
+        itemUrl = canonicalCurrentUrl;
+      }
+      if (items.length > 0 && items[items.length - 1].name === name) {
+        return;
+      }
+      items.push({ name, item: itemUrl });
+    });
+
+    return items;
+  }
+
+  function applyBreadcrumbStructuredData(pathname) {
+    if (pathname === "/") {
+      removeStructuredDataScript(structuredDataScriptIds.breadcrumb);
+      return;
+    }
+    const items = collectBreadcrumbItems();
+    if (items.length < 2) {
+      removeStructuredDataScript(structuredDataScriptIds.breadcrumb);
+      return;
+    }
+    const itemListElement = items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.item || buildCanonicalHref(),
+    }));
+    upsertStructuredDataScript(structuredDataScriptIds.breadcrumb, {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement,
+    });
+  }
+
+  function applyStructuredData(pathname) {
+    if (seoNoindexPaths.has(pathname)) {
+      removeStructuredDataScript(structuredDataScriptIds.website);
+      removeStructuredDataScript(structuredDataScriptIds.breadcrumb);
+      return;
+    }
+    applyOrganizationStructuredData();
+    applyWebsiteStructuredData(pathname);
+    applyBreadcrumbStructuredData(pathname);
+  }
+
   function applySeoDefaults() {
     if (!document.head) {
       return;
@@ -138,6 +323,8 @@
 
     const robotsValue = seoNoindexPaths.has(pathname) ? "noindex,nofollow" : "index,follow";
     upsertMetaByName("robots", robotsValue);
+    applyDynamicDescription(pathname);
+    applyStructuredData(pathname);
   }
 
   function readStorageValue(key) {
@@ -327,4 +514,16 @@
   };
 
   applySeoDefaults();
+  window.addEventListener("pageshow", applySeoDefaults, { passive: true });
+  const titleNode = document.head ? document.head.querySelector("title") : null;
+  if (titleNode) {
+    const titleObserver = new MutationObserver(() => {
+      window.requestAnimationFrame(applySeoDefaults);
+    });
+    titleObserver.observe(titleNode, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  }
 })();
