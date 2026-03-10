@@ -2031,8 +2031,12 @@ function ensureMapFocusModal() {
         <div class="map-focus-head-text">
           <p class="map-focus-eyebrow">Harita Odağı</p>
           <h3 id="mapFocusTitle" class="map-focus-title">Mekan</h3>
+          <p class="map-focus-subtitle"></p>
         </div>
-        <button class="map-focus-close" type="button" aria-label="Kapat">Kapat</button>
+        <div class="map-focus-head-actions">
+          <a class="map-focus-external" href="#" target="_blank" rel="noopener noreferrer">Haritada izle</a>
+          <button class="map-focus-close" type="button" aria-label="Kapat">Kapat</button>
+        </div>
       </header>
       <div class="map-focus-body">
         <aside class="map-focus-info-card" aria-label="Mekan bilgileri">
@@ -2069,10 +2073,6 @@ function ensureMapFocusModal() {
           ></iframe>
         </div>
       </div>
-      <footer class="map-focus-foot">
-        <p class="map-focus-subtitle"></p>
-        <a class="map-focus-external" href="#" target="_blank" rel="noopener noreferrer">Google Maps'te aç</a>
-      </footer>
     </article>
   `;
 
@@ -2292,16 +2292,15 @@ function ensureNearbyVenuesModal() {
       const item = document.createElement("li");
       item.className = "nearby-venues-item";
 
-      const rank = document.createElement("span");
-      rank.className = "nearby-venues-rank";
-      rank.textContent = `${index + 1}`;
-
       const body = document.createElement("div");
       body.className = "nearby-venues-item-body";
 
+      const headLine = document.createElement("div");
+      headLine.className = "nearby-venues-item-head";
+
       const titleLine = document.createElement("h4");
       titleLine.className = "nearby-venues-item-title";
-      titleLine.textContent = String(venue?.name || "").trim() || "Mekan";
+      titleLine.textContent = `${index + 1}. ${String(venue?.name || "").trim() || "Mekan"}`;
 
       const metaLine = document.createElement("p");
       metaLine.className = "nearby-venues-item-meta";
@@ -2321,16 +2320,10 @@ function ensureNearbyVenuesModal() {
         openVenueMapFocus(venue);
       });
 
-      const mapsLink = document.createElement("a");
-      mapsLink.className = "nearby-venues-maps-link";
-      mapsLink.href = mapsPlaceUrl(venue);
-      mapsLink.target = "_blank";
-      mapsLink.rel = "noopener noreferrer";
-      mapsLink.textContent = "Google Maps";
-
-      actions.append(previewButton, mapsLink);
-      body.append(titleLine, metaLine, actions);
-      item.append(rank, body);
+      actions.append(previewButton);
+      headLine.append(titleLine, actions);
+      body.append(headLine, metaLine);
+      item.append(body);
       listNode.append(item);
     });
 
