@@ -19,7 +19,7 @@
         "Kişisel verileriniz, Kişisel Verilerin Korunması Metni kapsamında işlenmektedir. “Kayıt ol” butonuna basarak Gizlilik Politikası’nı okuduğunuzu ve kabul ettiğinizi onaylıyorsunuz.",
       loginSubmit: "Giriş yap",
       forgotPassword: "Şifremi unuttum",
-      rememberEmail: "Beni hatırla (e-posta)",
+      rememberEmail: "E-postamı hatırla",
       passwordToggleShow: "Göster",
       passwordToggleHide: "Gizle",
       passwordToggleShowLabel: "Şifreyi göster",
