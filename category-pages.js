@@ -2034,7 +2034,6 @@ function ensureMapFocusModal() {
           <p class="map-focus-subtitle"></p>
         </div>
         <div class="map-focus-head-actions">
-          <a class="map-focus-external" href="#" target="_blank" rel="noopener noreferrer">Haritada izle</a>
           <button class="map-focus-close" type="button" aria-label="Kapat">Kapat</button>
         </div>
       </header>
@@ -2079,7 +2078,6 @@ function ensureMapFocusModal() {
   const titleNode = modal.querySelector(".map-focus-title");
   const subtitleNode = modal.querySelector(".map-focus-subtitle");
   const iframeNode = modal.querySelector(".map-focus-frame");
-  const externalNode = modal.querySelector(".map-focus-external");
   const closeNode = modal.querySelector(".map-focus-close");
   const backdropNode = modal.querySelector(".map-focus-backdrop");
   const infoPhonePrimaryNode = modal.querySelector('[data-info-field="phone-primary"]');
@@ -2119,9 +2117,6 @@ function ensureMapFocusModal() {
     if (subtitleNode) {
       subtitleNode.textContent = subtitle;
       subtitleNode.hidden = !subtitle;
-    }
-    if (externalNode instanceof HTMLAnchorElement) {
-      externalNode.href = externalUrl;
     }
 
     const info = payload?.info && typeof payload.info === "object" ? payload.info : {};
