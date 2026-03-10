@@ -639,7 +639,7 @@ main {
 }
 
 .auth-modal-panel {
-  width: min(460px, 100%);
+  width: min(322px, 100%);
   border-radius: 0;
   border: 1px solid rgba(22, 33, 35, 0.2);
   background: #ffffff;
@@ -669,6 +669,13 @@ main {
   font-size: 1.35rem;
   line-height: 1;
   cursor: pointer;
+}
+
+.auth-modal-close:hover,
+.auth-modal-close:focus-visible {
+  border-color: #0281c2;
+  color: #0281c2;
+  outline: none;
 }
 
 .auth-modal-text {
@@ -704,6 +711,12 @@ main {
   background: #ffffff;
   color: #116466;
   box-shadow: 0 0 0 1px rgba(22, 33, 35, 0.12);
+}
+
+.auth-mode-tab:hover,
+.auth-mode-tab:focus-visible {
+  color: #0281c2;
+  outline: none;
 }
 
 .auth-form {
@@ -765,7 +778,7 @@ main {
 
 .auth-password-toggle:hover,
 .auth-password-toggle:focus-visible {
-  color: #011d36;
+  color: #0281c2;
   outline: none;
 }
 
@@ -815,8 +828,16 @@ main {
   transition: background-color 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
 }
 
+#globalLoginSubmit,
+#globalSignupSubmit {
+  justify-self: start;
+  width: auto;
+  min-width: 0;
+  padding-inline: 0.58rem;
+}
+
 .auth-submit:hover {
-  background: #384796;
+  background: #0281c2;
   transform: none;
   box-shadow: none;
   outline: none;
@@ -824,16 +845,16 @@ main {
 
 .auth-submit:focus-visible {
   border: 0;
-  background: #022746;
+  background: #0281c2;
   color: #e1e1e1;
-  transform: translateY(-1px);
+  transform: none;
   box-shadow: 0 0 0 2px var(--hover-blue-soft);
   outline: none;
 }
 
 .auth-signup-legal-note {
   margin: 0.2rem 0 0;
-  font-size: 6px;
+  font-size: 8px;
   line-height: 1.35;
   color: rgba(22, 33, 35, 0.72);
 }
@@ -859,7 +880,7 @@ main {
 
 .auth-inline-link:hover,
 .auth-inline-link:focus-visible {
-  color: #0f7f62;
+  color: #0281c2;
   outline: none;
 }
 
