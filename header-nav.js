@@ -984,23 +984,6 @@
           </span>
           <span class="visually-hidden desktop-auth-link-text">${labels.signin}</span>
         </a>
-        <a
-          class="desktop-auth-link desktop-auth-link-signup"
-          data-desktop-auth="signup"
-          href="#signup"
-          aria-label="${labels.signup}"
-          title="${labels.signup}"
-        >
-          <span class="desktop-auth-link-icon-wrap" aria-hidden="true">
-            <svg class="desktop-auth-link-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="10" cy="8.3" r="3.2"></circle>
-              <path d="M4.8 18.3c.7-2.8 2.8-4.6 5.2-4.6s4.5 1.8 5.2 4.6"></path>
-              <path d="M18 7.5v5"></path>
-              <path d="M15.5 10h5"></path>
-            </svg>
-          </span>
-          <span class="visually-hidden desktop-auth-link-text">${labels.signup}</span>
-        </a>
         <div class="lang-switch desktop-lang-switch" data-lang-switch>
           <button
             class="lang-switch-btn"
@@ -1038,7 +1021,6 @@
     }
 
     const signinLink = authNav.querySelector('[data-desktop-auth="signin"]');
-    const signupLink = authNav.querySelector('[data-desktop-auth="signup"]');
     const settingsLink = authNav.querySelector('[data-desktop-auth="settings"]');
 
     function updateDesktopAuthLabels() {
@@ -1049,15 +1031,10 @@
       authNav.setAttribute("aria-label", labels.nav);
       const settingsLabel = labels.settings || labels.profile || copy.profile;
       setDesktopLinkLabel(signinLink, labels.signin);
-      setDesktopLinkLabel(signupLink, labels.signup);
       setDesktopLinkLabel(settingsLink, settingsLabel);
 
       if (signinLink instanceof HTMLElement) {
         signinLink.classList.toggle("is-hidden", hasSession);
-      }
-
-      if (signupLink instanceof HTMLElement) {
-        signupLink.classList.toggle("is-hidden", hasSession);
       }
 
       if (settingsLink instanceof HTMLAnchorElement) {
@@ -1069,13 +1046,6 @@
       signinLink.addEventListener("click", (event) => {
         event.preventDefault();
         openAuthModal("login", signinLink);
-      });
-    }
-
-    if (signupLink instanceof HTMLAnchorElement) {
-      signupLink.addEventListener("click", (event) => {
-        event.preventDefault();
-        openAuthModal("signup", signupLink);
       });
     }
 
