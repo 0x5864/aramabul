@@ -640,7 +640,7 @@ main {
 
 .auth-modal-panel {
   width: min(460px, 100%);
-  border-radius: 18px;
+  border-radius: 0;
   border: 1px solid rgba(22, 33, 35, 0.2);
   background: #ffffff;
   box-shadow: 0 22px 56px rgba(11, 30, 38, 0.24);
@@ -661,7 +661,7 @@ main {
   right: 0.55rem;
   width: 32px;
   height: 32px;
-  border-radius: 999px;
+  border-radius: 0;
   border: 1px solid rgba(22, 33, 35, 0.16);
   background: #ffffff;
   color: rgba(22, 33, 35, 0.74);
@@ -684,7 +684,7 @@ main {
   margin: 0 0 0.82rem;
   padding: 0.2rem;
   border: 1px solid rgba(22, 33, 35, 0.12);
-  border-radius: 10px;
+  border-radius: 0;
   background: #f6f8f9;
 }
 
@@ -693,7 +693,7 @@ main {
   border: 0;
   background: transparent;
   color: rgba(22, 33, 35, 0.75);
-  border-radius: 8px;
+  border-radius: 0;
   min-height: 36px;
   font: inherit;
   font-size: 0.9rem;
@@ -720,7 +720,7 @@ main {
 .auth-form input {
   width: 100%;
   border: 1px solid rgba(22, 33, 35, 0.2);
-  border-radius: 10px;
+  border-radius: 0;
   min-height: 42px;
   font: inherit;
   padding: 0.62rem 0.74rem;
@@ -787,13 +787,20 @@ main {
 .auth-submit {
   margin-top: 0.3rem;
   border: 1px solid #6fc5de;
-  border-radius: 999px;
+  border-radius: 0;
   min-height: 40px;
   background: #7ec8dd;
   color: #116466;
   font: inherit;
   font-size: 0.94rem;
   cursor: pointer;
+}
+
+.auth-signup-legal-note {
+  margin: 0.2rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: rgba(22, 33, 35, 0.72);
 }
 
 .auth-inline-link {

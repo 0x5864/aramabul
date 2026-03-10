@@ -9,11 +9,14 @@
       loginTitle: "Giriş yap",
       loginText: "Kayıtlı hesabınla devam et.",
       loginNeedsSignup: "Kayıtlı değilseniz, giriş yapmak için önce kayıt olun.",
-      name: "Ad Soyad",
+      firstName: "Ad",
+      lastName: "Soyad",
       email: "E-posta",
       password: "Şifre",
       passwordRepeat: "Şifre tekrar",
       signupSubmit: "Kayıt ol",
+      signupLegalNote:
+        "Kişisel verileriniz, Kişisel Verilerin Korunması Metni kapsamında işlenmektedir. “Kayıt ol” butonuna basarak Gizlilik Politikası’nı okuduğunuzu ve kabul ettiğinizi onaylıyorsunuz.",
       loginSubmit: "Giriş yap",
       forgotPassword: "Şifremi unuttum",
       rememberEmail: "Beni hatırla (e-posta)",
@@ -25,7 +28,7 @@
       resetText: "E-posta adresini doğrulayarak yeni şifreni belirle.",
       resetSubmit: "Şifreyi sıfırla",
       resetBackToLogin: "Girişe dön",
-      errorNameMin: "Ad soyad en az 2 karakter olmalı.",
+      errorNameMin: "Ad ve soyad en az 2 karakter olmalı.",
       errorInvalidEmail: "Geçerli bir e-posta gir.",
       errorPasswordMin: "Şifre en az 6 karakter olmalı.",
       errorPasswordRepeat: "Şifreler eşleşmiyor.",
@@ -45,11 +48,14 @@
       loginTitle: "Sign in",
       loginText: "Continue with your saved account.",
       loginNeedsSignup: "Not registered yet? Sign up first to sign in.",
-      name: "Full name",
+      firstName: "First name",
+      lastName: "Last name",
       email: "Email",
       password: "Password",
       passwordRepeat: "Repeat password",
       signupSubmit: "Sign up",
+      signupLegalNote:
+        "Your personal data is processed under the Personal Data Protection notice. By pressing “Sign up”, you confirm that you read and accepted the Privacy Policy.",
       loginSubmit: "Sign in",
       forgotPassword: "Forgot password",
       rememberEmail: "Remember me (email)",
@@ -61,7 +67,7 @@
       resetText: "Confirm your email and set a new password.",
       resetSubmit: "Reset password",
       resetBackToLogin: "Back to sign in",
-      errorNameMin: "Your name must be at least 2 characters.",
+      errorNameMin: "First name and last name must be at least 2 characters.",
       errorInvalidEmail: "Enter a valid email.",
       errorPasswordMin: "Password must be at least 6 characters.",
       errorPasswordRepeat: "Passwords do not match.",
@@ -81,11 +87,14 @@
       loginTitle: "Войти",
       loginText: "Продолжите с вашим аккаунтом.",
       loginNeedsSignup: "Если вы не зарегистрированы, сначала зарегистрируйтесь.",
-      name: "Имя и фамилия",
+      firstName: "Имя",
+      lastName: "Фамилия",
       email: "Эл. почта",
       password: "Пароль",
       passwordRepeat: "Повторите пароль",
       signupSubmit: "Регистрация",
+      signupLegalNote:
+        "Ваши персональные данные обрабатываются в рамках уведомления о защите персональных данных. Нажимая «Регистрация», вы подтверждаете, что прочитали и приняли Политику конфиденциальности.",
       loginSubmit: "Войти",
       forgotPassword: "Забыли пароль",
       rememberEmail: "Запомнить e-mail",
@@ -97,7 +106,7 @@
       resetText: "Подтвердите e-mail и задайте новый пароль.",
       resetSubmit: "Сбросить пароль",
       resetBackToLogin: "Назад ко входу",
-      errorNameMin: "Имя должно быть не короче 2 символов.",
+      errorNameMin: "Имя и фамилия должны быть не короче 2 символов.",
       errorInvalidEmail: "Введите корректный email.",
       errorPasswordMin: "Пароль должен быть не короче 6 символов.",
       errorPasswordRepeat: "Пароли не совпадают.",
@@ -117,11 +126,14 @@
       loginTitle: "Anmelden",
       loginText: "Mit deinem Konto weitermachen.",
       loginNeedsSignup: "Noch nicht registriert? Bitte zuerst registrieren.",
-      name: "Vor- und Nachname",
+      firstName: "Vorname",
+      lastName: "Nachname",
       email: "E-Mail",
       password: "Passwort",
       passwordRepeat: "Passwort wiederholen",
       signupSubmit: "Registrieren",
+      signupLegalNote:
+        "Deine personenbezogenen Daten werden im Rahmen des Hinweises zum Schutz personenbezogener Daten verarbeitet. Mit Klick auf „Registrieren“ bestaetigst du, dass du die Datenschutzerklaerung gelesen und akzeptiert hast.",
       loginSubmit: "Anmelden",
       forgotPassword: "Passwort vergessen",
       rememberEmail: "E-Mail merken",
@@ -133,7 +145,7 @@
       resetText: "Bestätige deine E-Mail und lege ein neues Passwort fest.",
       resetSubmit: "Passwort zurücksetzen",
       resetBackToLogin: "Zurück zur Anmeldung",
-      errorNameMin: "Der Name muss mindestens 2 Zeichen lang sein.",
+      errorNameMin: "Vorname und Nachname muessen mindestens 2 Zeichen lang sein.",
       errorInvalidEmail: "Gib eine gueltige E-Mail ein.",
       errorPasswordMin: "Das Passwort muss mindestens 6 Zeichen lang sein.",
       errorPasswordRepeat: "Die Passwoerter stimmen nicht ueberein.",
@@ -153,11 +165,14 @@
       loginTitle: "登录",
       loginText: "使用已有账号继续。",
       loginNeedsSignup: "如果你还未注册，请先注册再登录。",
-      name: "姓名",
+      firstName: "名字",
+      lastName: "姓氏",
       email: "邮箱",
       password: "密码",
       passwordRepeat: "重复密码",
       signupSubmit: "注册",
+      signupLegalNote:
+        "你的个人数据将根据个人数据保护说明进行处理。点击“注册”即表示你已阅读并接受隐私政策。",
       loginSubmit: "登录",
       forgotPassword: "忘记密码",
       rememberEmail: "记住我（邮箱）",
@@ -169,7 +184,7 @@
       resetText: "确认邮箱后设置新密码。",
       resetSubmit: "重置密码",
       resetBackToLogin: "返回登录",
-      errorNameMin: "姓名至少需要 2 个字符。",
+      errorNameMin: "名字和姓氏都至少需要 2 个字符。",
       errorInvalidEmail: "请输入有效邮箱。",
       errorPasswordMin: "密码至少需要 6 个字符。",
       errorPasswordRepeat: "两次密码不一致。",
@@ -296,7 +311,7 @@
     modal.className = "auth-modal is-hidden";
     modal.setAttribute("aria-hidden", "true");
     modal.innerHTML = `
-      <div class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="globalAuthModalTitle">
+      <div class="auth-modal-panel" role="dialog" aria-modal="true" aria-label="${copy.brand}">
         <button id="globalAuthModalClose" class="auth-modal-close" type="button" aria-label="${copy.close}">×</button>
         <div id="globalAuthModeTabs" class="auth-mode-tabs" role="tablist" aria-label="${copy.brand}">
           <button id="globalAuthTabLogin" class="auth-mode-tab" type="button" role="tab">${copy.loginTitle}</button>
@@ -354,8 +369,12 @@
         </button>
         <form id="globalSignupForm" class="auth-form" novalidate>
           <label>
-            <span id="globalSignupNameLabel">${copy.name}</span>
-            <input id="globalSignupName" type="text" autocomplete="name" required />
+            <span id="globalSignupFirstNameLabel">${copy.firstName}</span>
+            <input id="globalSignupFirstName" type="text" autocomplete="given-name" required />
+          </label>
+          <label>
+            <span id="globalSignupLastNameLabel">${copy.lastName}</span>
+            <input id="globalSignupLastName" type="text" autocomplete="family-name" required />
           </label>
           <label>
             <span id="globalSignupEmailLabel">${copy.email}</span>
@@ -370,6 +389,7 @@
             <input id="globalSignupPasswordRepeat" type="password" autocomplete="new-password" minlength="6" required />
           </label>
           <button id="globalSignupSubmit" class="auth-submit" type="submit">${copy.signupSubmit}</button>
+          <p id="globalSignupLegalNote" class="auth-signup-legal-note">${copy.signupLegalNote}</p>
         </form>
         <p id="globalAuthMessage" class="auth-message" aria-live="polite"></p>
       </div>
@@ -404,10 +424,12 @@
     const resetPasswordRepeat = modal.querySelector("#globalResetPasswordRepeat");
     const resetSubmit = modal.querySelector("#globalResetSubmit");
     const resetBackToLogin = modal.querySelector("#globalResetBackToLogin");
-    const signupName = modal.querySelector("#globalSignupName");
+    const signupFirstName = modal.querySelector("#globalSignupFirstName");
+    const signupLastName = modal.querySelector("#globalSignupLastName");
     const signupEmail = modal.querySelector("#globalSignupEmail");
     const signupPassword = modal.querySelector("#globalSignupPassword");
     const signupPasswordRepeat = modal.querySelector("#globalSignupPasswordRepeat");
+    const signupLegalNote = modal.querySelector("#globalSignupLegalNote");
     const loginSubmit = modal.querySelector("#globalLoginSubmit");
     const loginSignupHint = modal.querySelector("#globalLoginSignupHint");
     const signupSubmit = modal.querySelector("#globalSignupSubmit");
@@ -420,7 +442,8 @@
       resetEmail: modal.querySelector("#globalResetEmailLabel"),
       resetPassword: modal.querySelector("#globalResetPasswordLabel"),
       resetPasswordRepeat: modal.querySelector("#globalResetPasswordRepeatLabel"),
-      signupName: modal.querySelector("#globalSignupNameLabel"),
+      signupFirstName: modal.querySelector("#globalSignupFirstNameLabel"),
+      signupLastName: modal.querySelector("#globalSignupLastNameLabel"),
       signupEmail: modal.querySelector("#globalSignupEmailLabel"),
       signupPassword: modal.querySelector("#globalSignupPasswordLabel"),
       signupPasswordRepeat: modal.querySelector("#globalSignupPasswordRepeatLabel"),
@@ -536,8 +559,11 @@
       if (labelNodes.resetPasswordRepeat instanceof HTMLElement) {
         labelNodes.resetPasswordRepeat.textContent = copy.passwordRepeat;
       }
-      if (labelNodes.signupName instanceof HTMLElement) {
-        labelNodes.signupName.textContent = copy.name;
+      if (labelNodes.signupFirstName instanceof HTMLElement) {
+        labelNodes.signupFirstName.textContent = copy.firstName;
+      }
+      if (labelNodes.signupLastName instanceof HTMLElement) {
+        labelNodes.signupLastName.textContent = copy.lastName;
       }
       if (labelNodes.signupEmail instanceof HTMLElement) {
         labelNodes.signupEmail.textContent = copy.email;
@@ -563,6 +589,9 @@
       if (signupSubmit instanceof HTMLElement) {
         signupSubmit.textContent = copy.signupSubmit;
       }
+      if (signupLegalNote instanceof HTMLElement) {
+        signupLegalNote.textContent = copy.signupLegalNote;
+      }
       if (authTabLogin instanceof HTMLElement) {
         authTabLogin.textContent = copy.loginTitle;
       }
@@ -584,8 +613,8 @@
         return;
       }
 
-      if (signupName instanceof HTMLInputElement) {
-        signupName.focus();
+      if (signupFirstName instanceof HTMLInputElement) {
+        signupFirstName.focus();
       }
     }
 
@@ -737,7 +766,8 @@
       event.preventDefault();
 
       if (
-        !(signupName instanceof HTMLInputElement) ||
+        !(signupFirstName instanceof HTMLInputElement) ||
+        !(signupLastName instanceof HTMLInputElement) ||
         !(signupEmail instanceof HTMLInputElement) ||
         !(signupPassword instanceof HTMLInputElement) ||
         !(signupPasswordRepeat instanceof HTMLInputElement)
@@ -746,12 +776,14 @@
       }
 
       const copy = authText();
-      const name = signupName.value.trim().slice(0, 40);
+      const firstName = signupFirstName.value.trim().slice(0, 20);
+      const lastName = signupLastName.value.trim().slice(0, 20);
+      const name = `${firstName} ${lastName}`.trim();
       const email = normalizeEmail(signupEmail.value);
       const password = String(signupPassword.value || "");
       const repeated = String(signupPasswordRepeat.value || "");
 
-      if (name.length < 2) {
+      if (firstName.length < 2 || lastName.length < 2) {
         setMessage(copy.errorNameMin, true);
         return;
       }
