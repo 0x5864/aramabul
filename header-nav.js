@@ -281,6 +281,10 @@
         <p class="eyebrow auth-modal-brand">${copy.brand}</p>
         <h2 id="globalAuthModalTitle" class="auth-modal-title">${copy.signupTitle}</h2>
         <p id="globalAuthModalText" class="auth-modal-text">${copy.signupText}</p>
+        <div id="globalAuthModeTabs" class="auth-mode-tabs" role="tablist" aria-label="${copy.brand}">
+          <button id="globalAuthTabLogin" class="auth-mode-tab" type="button" role="tab">${copy.loginTitle}</button>
+          <button id="globalAuthTabSignup" class="auth-mode-tab" type="button" role="tab">${copy.signupTitle}</button>
+        </div>
         <form id="globalLoginForm" class="auth-form is-hidden" novalidate>
           <label>
             <span id="globalLoginEmailLabel">${copy.email}</span>
@@ -358,6 +362,9 @@
     const title = modal.querySelector("#globalAuthModalTitle");
     const text = modal.querySelector("#globalAuthModalText");
     const message = modal.querySelector("#globalAuthMessage");
+    const authModeTabs = modal.querySelector("#globalAuthModeTabs");
+    const authTabLogin = modal.querySelector("#globalAuthTabLogin");
+    const authTabSignup = modal.querySelector("#globalAuthTabSignup");
     const loginForm = modal.querySelector("#globalLoginForm");
     const resetForm = modal.querySelector("#globalResetForm");
     const signupForm = modal.querySelector("#globalSignupForm");
@@ -436,7 +443,21 @@
         text.classList.toggle("is-hidden", nextText.length === 0);
       }
       if (loginSignupHint instanceof HTMLElement) {
-        loginSignupHint.classList.toggle("is-hidden", !isLoginMode);
+        loginSignupHint.classList.add("is-hidden");
+      }
+
+      if (authModeTabs instanceof HTMLElement) {
+        authModeTabs.classList.toggle("is-hidden", isResetMode);
+      }
+      if (authTabLogin instanceof HTMLButtonElement) {
+        authTabLogin.classList.toggle("is-active", isLoginMode);
+        authTabLogin.setAttribute("aria-selected", isLoginMode ? "true" : "false");
+        authTabLogin.setAttribute("tabindex", isLoginMode ? "0" : "-1");
+      }
+      if (authTabSignup instanceof HTMLButtonElement) {
+        authTabSignup.classList.toggle("is-active", isSignupMode);
+        authTabSignup.setAttribute("aria-selected", isSignupMode ? "true" : "false");
+        authTabSignup.setAttribute("tabindex", isSignupMode ? "0" : "-1");
       }
 
       setMessage("");
@@ -495,6 +516,12 @@
       }
       if (signupSubmit instanceof HTMLElement) {
         signupSubmit.textContent = copy.signupSubmit;
+      }
+      if (authTabLogin instanceof HTMLElement) {
+        authTabLogin.textContent = copy.loginTitle;
+      }
+      if (authTabSignup instanceof HTMLElement) {
+        authTabSignup.textContent = copy.signupTitle;
       }
 
       setMode(state.mode);
@@ -734,6 +761,18 @@
 
     if (loginForm instanceof HTMLFormElement) {
       loginForm.addEventListener("submit", handleLoginSubmit);
+    }
+    if (authTabLogin instanceof HTMLButtonElement) {
+      authTabLogin.addEventListener("click", () => {
+        setMode("login");
+        window.requestAnimationFrame(focusCurrentField);
+      });
+    }
+    if (authTabSignup instanceof HTMLButtonElement) {
+      authTabSignup.addEventListener("click", () => {
+        setMode("signup");
+        window.requestAnimationFrame(focusCurrentField);
+      });
     }
     if (resetForm instanceof HTMLFormElement) {
       resetForm.addEventListener("submit", handleResetSubmit);
