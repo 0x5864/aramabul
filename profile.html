@@ -183,13 +183,12 @@
           <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="password" aria-label="Şifre değişikliği" hidden>
             <div class="language-card-head">
               <h2>Şifre değişikliği</h2>
-              <p>Hesabını korumak için mevcut şifreni doğrulayıp yeni şifre belirle.</p>
+              <p>Önce e-posta bağlantısı al, bağlantıdan açılan ekranda yeni şifreni belirle.</p>
             </div>
-            <form id="accountPasswordForm" class="settings-signup-form" novalidate>
-              <label class="settings-signup-field">
-                <span>Mevcut şifre</span>
-                <input id="accountCurrentPasswordInput" type="password" autocomplete="current-password" required />
-              </label>
+            <div id="accountPasswordRequestBlock" class="settings-signup-form">
+              <button id="accountPasswordRequestBtn" class="settings-signup-submit" type="button">Şifre değişikliği e-postası gönder</button>
+            </div>
+            <form id="accountPasswordForm" class="settings-signup-form" novalidate hidden>
               <label class="settings-signup-field">
                 <span>Yeni şifre</span>
                 <input id="accountNewPasswordInput" type="password" autocomplete="new-password" minlength="6" required />
@@ -203,6 +202,7 @@
                 <button id="accountPasswordSaveBtn" class="settings-signup-submit" type="submit">Şifreyi güncelle</button>
               </div>
             </form>
+            <p id="accountPasswordTokenHint" class="settings-signup-message" aria-live="polite"></p>
           </section>
 
           <section class="settings-card settings-panel-card account-editor-card settings-feedback-form-card" data-settings-panel="feedback" aria-label="Geribildirim" hidden>

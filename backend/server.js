@@ -17,6 +17,10 @@ const EMAIL_VERIFICATION_TOKEN_TTL_MINUTES = 30;
 const EMAIL_VERIFICATION_EMAIL_LIMIT_PER_HOUR = 5;
 const EMAIL_VERIFICATION_IP_LIMIT_PER_HOUR = 20;
 const EMAIL_VERIFICATION_TOKEN_MAX_AGE_DAYS = 14;
+const PASSWORD_CHANGE_TOKEN_TTL_MINUTES = 20;
+const PASSWORD_CHANGE_EMAIL_LIMIT_PER_HOUR = 5;
+const PASSWORD_CHANGE_IP_LIMIT_PER_HOUR = 20;
+const PASSWORD_CHANGE_TOKEN_MAX_AGE_DAYS = 14;
 
 const pool = createPool();
 const app = express();
@@ -243,7 +247,7 @@ function resolveRequestIp(req) {
   return null;
 }
 
-function hashEmailVerificationToken(rawToken) {
+function hashAuthToken(rawToken) {
   return crypto.createHash("sha256").update(String(rawToken || "")).digest("hex");
 }
 
@@ -395,6 +399,44 @@ async function sendEmailVerificationMessage({ toEmail, verificationUrl }) {
     from: fromAddress,
     to: toEmail,
     subject: "Aramabul e-posta doğrulama bağlantısı",
+    text: textBody,
+    html: htmlBody,
+  });
+}
+
+async function sendPasswordChangeMessage({ toEmail, changeUrl }) {
+  const fromAddress = getEmailFromAddress();
+  if (!fromAddress) {
+    throw new Error("email_from_missing");
+  }
+
+  const transporter = getMailTransporter();
+  if (!transporter) {
+    throw new Error("smtp_not_configured");
+  }
+
+  const expiresText = `${PASSWORD_CHANGE_TOKEN_TTL_MINUTES} dakika`;
+  const textBody = [
+    "Merhaba,",
+    "",
+    "Aramabul hesabın için şifre değişikliği bağlantın hazır.",
+    `Bağlantı (${expiresText} geçerli):`,
+    changeUrl,
+    "",
+    "Bu işlemi sen başlatmadıysan mesajı yok sayabilirsin.",
+  ].join("\n");
+
+  const htmlBody = [
+    "<p>Merhaba,</p>",
+    "<p>Aramabul hesabın için şifre değişikliği bağlantın hazır.</p>",
+    `<p>Bağlantı (<strong>${expiresText}</strong> geçerli):<br /><a href="${changeUrl}">${changeUrl}</a></p>`,
+    "<p>Bu işlemi sen başlatmadıysan mesajı yok sayabilirsin.</p>",
+  ].join("");
+
+  await transporter.sendMail({
+    from: fromAddress,
+    to: toEmail,
+    subject: "Aramabul şifre değişikliği bağlantısı",
     text: textBody,
     html: htmlBody,
   });
@@ -1320,7 +1362,7 @@ app.post("/api/auth/email-verification/request", async (req, res, next) => {
     }
 
     const rawToken = crypto.randomBytes(32).toString("base64url");
-    const tokenHash = hashEmailVerificationToken(rawToken);
+    const tokenHash = hashAuthToken(rawToken);
     const expiresAt = new Date(Date.now() + EMAIL_VERIFICATION_TOKEN_TTL_MINUTES * 60 * 1000);
 
     await pool.query(
@@ -1387,7 +1429,7 @@ app.post("/api/auth/email-verification/confirm", async (req, res, next) => {
       return;
     }
 
-    const tokenHash = hashEmailVerificationToken(token);
+    const tokenHash = hashAuthToken(token);
     client = await pool.connect();
     await client.query("BEGIN");
 
@@ -1439,6 +1481,202 @@ app.post("/api/auth/email-verification/confirm", async (req, res, next) => {
         DO UPDATE SET verified_at = EXCLUDED.verified_at
       `,
       [row.email],
+    );
+
+    await client.query("COMMIT");
+
+    res.json({
+      ok: true,
+      email: row.email,
+    });
+  } catch (error) {
+    if (client) {
+      try {
+        await client.query("ROLLBACK");
+      } catch (_rollbackError) {
+        // Ignore rollback error.
+      }
+    }
+    next(error);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+});
+
+app.post("/api/auth/password-change/request", async (req, res, next) => {
+  try {
+    res.setHeader("Cache-Control", "no-store");
+
+    const email = normalizeAccountEmail(req.body?.email || "");
+    if (!isValidAccountEmail(email)) {
+      res.status(400).json({
+        ok: false,
+        message: "invalid_email",
+      });
+      return;
+    }
+
+    const fromAddress = getEmailFromAddress();
+    if (!fromAddress || !getMailTransporter()) {
+      res.status(503).json({
+        ok: false,
+        message: "email_service_unavailable",
+      });
+      return;
+    }
+
+    const requestIp = resolveRequestIp(req);
+    const userAgent = cleanText(req.get("user-agent") || "", 300);
+
+    const emailRateResult = await pool.query(
+      `
+        SELECT COUNT(*)::int AS count
+        FROM account_password_change_tokens
+        WHERE email = $1
+          AND created_at >= NOW() - INTERVAL '1 hour'
+      `,
+      [email],
+    );
+    const emailAttemptCount = Number(emailRateResult.rows[0]?.count || 0);
+    if (emailAttemptCount >= PASSWORD_CHANGE_EMAIL_LIMIT_PER_HOUR) {
+      res.status(429).json({
+        ok: false,
+        message: "password_change_rate_limited",
+      });
+      return;
+    }
+
+    if (requestIp) {
+      const ipRateResult = await pool.query(
+        `
+          SELECT COUNT(*)::int AS count
+          FROM account_password_change_tokens
+          WHERE request_ip = $1::inet
+            AND created_at >= NOW() - INTERVAL '1 hour'
+        `,
+        [requestIp],
+      );
+      const ipAttemptCount = Number(ipRateResult.rows[0]?.count || 0);
+      if (ipAttemptCount >= PASSWORD_CHANGE_IP_LIMIT_PER_HOUR) {
+        res.status(429).json({
+          ok: false,
+          message: "password_change_rate_limited",
+        });
+        return;
+      }
+    }
+
+    const rawToken = crypto.randomBytes(32).toString("base64url");
+    const tokenHash = hashAuthToken(rawToken);
+    const expiresAt = new Date(Date.now() + PASSWORD_CHANGE_TOKEN_TTL_MINUTES * 60 * 1000);
+
+    await pool.query(
+      `
+        INSERT INTO account_password_change_tokens (
+          email,
+          token_hash,
+          expires_at,
+          request_ip,
+          user_agent
+        )
+        VALUES ($1, $2, $3, $4::inet, $5)
+      `,
+      [email, tokenHash, expiresAt.toISOString(), requestIp, userAgent || null],
+    );
+
+    const appOrigin = resolveAppOrigin(req);
+    const changeUrl = `${appOrigin}/profile.html?action=password#pwtoken=${encodeURIComponent(rawToken)}`;
+
+    try {
+      await sendPasswordChangeMessage({
+        toEmail: email,
+        changeUrl,
+      });
+    } catch (mailError) {
+      await pool.query(
+        `
+          DELETE FROM account_password_change_tokens
+          WHERE token_hash = $1
+        `,
+        [tokenHash],
+      );
+      throw mailError;
+    }
+
+    await pool.query(
+      `
+        DELETE FROM account_password_change_tokens
+        WHERE created_at < NOW() - ($1::int * INTERVAL '1 day')
+      `,
+      [PASSWORD_CHANGE_TOKEN_MAX_AGE_DAYS],
+    );
+
+    res.json({
+      ok: true,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/api/auth/password-change/consume", async (req, res, next) => {
+  let client;
+  try {
+    res.setHeader("Cache-Control", "no-store");
+
+    const token = cleanText(req.body?.token || "", 800);
+    if (!token || token.length < 24) {
+      res.status(400).json({
+        ok: false,
+        message: "invalid_token",
+      });
+      return;
+    }
+
+    const tokenHash = hashAuthToken(token);
+    client = await pool.connect();
+    await client.query("BEGIN");
+
+    const { rows } = await client.query(
+      `
+        SELECT id, email, expires_at AS "expiresAt", consumed_at AS "consumedAt"
+        FROM account_password_change_tokens
+        WHERE token_hash = $1
+        LIMIT 1
+        FOR UPDATE
+      `,
+      [tokenHash],
+    );
+
+    const row = rows[0];
+    if (!row) {
+      await client.query("ROLLBACK");
+      res.status(400).json({
+        ok: false,
+        message: "invalid_or_expired_token",
+      });
+      return;
+    }
+
+    const expiresAtMs = new Date(row.expiresAt).getTime();
+    if (!Number.isFinite(expiresAtMs) || expiresAtMs < Date.now() || row.consumedAt) {
+      await client.query("ROLLBACK");
+      res.status(400).json({
+        ok: false,
+        message: "invalid_or_expired_token",
+      });
+      return;
+    }
+
+    await client.query(
+      `
+        UPDATE account_password_change_tokens
+        SET consumed_at = NOW()
+        WHERE id = $1
+      `,
+      [row.id],
     );
 
     await client.query("COMMIT");

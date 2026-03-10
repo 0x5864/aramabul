@@ -17,11 +17,13 @@
   const accountSettingsMessage = document.querySelector("#accountSettingsMessage");
   const accountSaveBtn = document.querySelector("#accountSaveBtn");
   const accountSignupBtn = document.querySelector("#accountSignupBtn");
+  const accountPasswordRequestBlock = document.querySelector("#accountPasswordRequestBlock");
+  const accountPasswordRequestBtn = document.querySelector("#accountPasswordRequestBtn");
   const accountPasswordForm = document.querySelector("#accountPasswordForm");
-  const accountCurrentPasswordInput = document.querySelector("#accountCurrentPasswordInput");
   const accountNewPasswordInput = document.querySelector("#accountNewPasswordInput");
   const accountNewPasswordRepeatInput = document.querySelector("#accountNewPasswordRepeatInput");
   const accountPasswordMessage = document.querySelector("#accountPasswordMessage");
+  const accountPasswordTokenHint = document.querySelector("#accountPasswordTokenHint");
   const accountPasswordSaveBtn = document.querySelector("#accountPasswordSaveBtn");
   const feedbackForm = document.querySelector("#settingsFeedbackForm");
   const feedbackName = document.querySelector("#settingsFeedbackName");
@@ -42,6 +44,15 @@
     sending: false,
     messageText: "",
     messageIsError: false,
+  };
+  const passwordChangeState = {
+    sending: false,
+    consuming: false,
+    saving: false,
+    tokenEmail: "",
+    attemptedToken: "",
+    hintText: "",
+    hintIsError: false,
   };
   const FEEDBACK_TARGETS = Object.freeze({
     destek: {
@@ -214,6 +225,14 @@
     }
     accountPasswordMessage.textContent = text;
     accountPasswordMessage.classList.toggle("is-ok", !isError && Boolean(text));
+  }
+
+  function setPasswordTokenHint(text, isError = false) {
+    if (!accountPasswordTokenHint) {
+      return;
+    }
+    accountPasswordTokenHint.textContent = text;
+    accountPasswordTokenHint.classList.toggle("is-ok", !isError && Boolean(text));
   }
 
   function setVerificationMessage(text, isError = false) {
@@ -438,6 +457,193 @@
     openSignup();
   }
 
+  function readPasswordChangeTokenFromLocation() {
+    const hashRaw = String(window.location.hash || "").replace(/^#/, "").trim();
+    if (hashRaw) {
+      const hashParams = new URLSearchParams(hashRaw);
+      const hashToken = String(hashParams.get("pwtoken") || "").trim();
+      if (hashToken) {
+        return hashToken;
+      }
+    }
+
+    const searchParams = new URLSearchParams(window.location.search);
+    return String(searchParams.get("pwtoken") || "").trim();
+  }
+
+  function clearPasswordChangeTokenFromLocation() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("pwtoken");
+
+    const hashRaw = String(url.hash || "").replace(/^#/, "").trim();
+    if (hashRaw) {
+      const hashParams = new URLSearchParams(hashRaw);
+      hashParams.delete("pwtoken");
+      const nextHash = hashParams.toString();
+      url.hash = nextHash ? `#${nextHash}` : "";
+    }
+
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  }
+
+  function renderPasswordChangeControls(session) {
+    const hasSession = Boolean(session?.email);
+    const hasValidToken = Boolean(passwordChangeState.tokenEmail);
+    const isBusy = passwordChangeState.consuming || passwordChangeState.saving;
+
+    if (accountPasswordRequestBlock instanceof HTMLElement) {
+      accountPasswordRequestBlock.hidden = hasValidToken;
+    }
+
+    if (accountPasswordForm instanceof HTMLFormElement) {
+      accountPasswordForm.hidden = !hasValidToken;
+    }
+
+    if (accountPasswordRequestBtn instanceof HTMLButtonElement) {
+      accountPasswordRequestBtn.disabled = !hasSession || passwordChangeState.sending || hasValidToken || isBusy;
+      accountPasswordRequestBtn.textContent = passwordChangeState.sending
+        ? translateUi("Gönderiliyor...")
+        : translateUi("Şifre değişikliği e-postası gönder");
+    }
+
+    if (accountNewPasswordInput instanceof HTMLInputElement) {
+      accountNewPasswordInput.disabled = !hasValidToken || isBusy;
+    }
+    if (accountNewPasswordRepeatInput instanceof HTMLInputElement) {
+      accountNewPasswordRepeatInput.disabled = !hasValidToken || isBusy;
+    }
+    if (accountPasswordSaveBtn instanceof HTMLButtonElement) {
+      accountPasswordSaveBtn.disabled = !hasValidToken || isBusy;
+    }
+
+    if (passwordChangeState.consuming) {
+      setPasswordTokenHint(translateUi("Bağlantı doğrulanıyor..."), false);
+      return;
+    }
+
+    if (passwordChangeState.hintText) {
+      setPasswordTokenHint(passwordChangeState.hintText, passwordChangeState.hintIsError);
+      return;
+    }
+
+    if (hasValidToken) {
+      setPasswordTokenHint(translateUi("Bağlantı doğrulandı. Yeni şifreni belirleyebilirsin."), false);
+      return;
+    }
+
+    if (!hasSession) {
+      setPasswordTokenHint(translateUi("Şifre değişikliği için önce giriş yap."), true);
+      return;
+    }
+
+    setPasswordTokenHint(translateUi("E-posta bağlantısı 20 dakika boyunca geçerlidir."), false);
+  }
+
+  async function sendPasswordChangeEmail() {
+    const session = readSession();
+    if (!session?.email) {
+      openSignup();
+      return;
+    }
+
+    const email = normalizeEmail(session.email);
+    if (!email.includes("@") || email.length < 6) {
+      setPasswordTokenHint(translateUi("Geçerli bir e-posta bulunamadı."), true);
+      return;
+    }
+
+    passwordChangeState.sending = true;
+    passwordChangeState.hintText = "";
+    passwordChangeState.hintIsError = false;
+    renderPasswordChangeControls(session);
+
+    try {
+      const response = await fetch("/api/auth/password-change/request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok || !payload?.ok) {
+        if (response.status === 429) {
+          throw new Error("Çok fazla istek gönderildi. Biraz sonra tekrar dene.");
+        }
+        if (response.status === 503) {
+          throw new Error("E-posta servisi şu an kullanılamıyor.");
+        }
+        throw new Error("Şifre değişikliği e-postası gönderilemedi.");
+      }
+
+      passwordChangeState.hintText = translateUi("Şifre değişikliği bağlantısı e-posta adresine gönderildi.");
+      passwordChangeState.hintIsError = false;
+      setPasswordMessage("");
+    } catch (error) {
+      passwordChangeState.hintText = translateUi(String(error?.message || "Şifre değişikliği e-postası gönderilemedi."));
+      passwordChangeState.hintIsError = true;
+    } finally {
+      passwordChangeState.sending = false;
+      renderPasswordChangeControls(readSession());
+    }
+  }
+
+  async function consumePasswordChangeTokenFromLocation() {
+    const token = readPasswordChangeTokenFromLocation();
+    if (!token || passwordChangeState.attemptedToken === token || passwordChangeState.consuming) {
+      return;
+    }
+
+    passwordChangeState.consuming = true;
+    passwordChangeState.attemptedToken = token;
+    passwordChangeState.hintText = "";
+    passwordChangeState.hintIsError = false;
+    renderPasswordChangeControls(readSession());
+
+    try {
+      const response = await fetch("/api/auth/password-change/consume", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ token }),
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok || !payload?.ok) {
+        if (response.status === 400) {
+          throw new Error("Bağlantı geçersiz veya süresi dolmuş. Yeni bağlantı iste.");
+        }
+        throw new Error("Bağlantı doğrulanamadı. Lütfen tekrar dene.");
+      }
+
+      const tokenEmail = normalizeEmail(payload.email);
+      if (!tokenEmail.includes("@") || tokenEmail.length < 6) {
+        throw new Error("Bağlantı doğrulandı ancak e-posta bilgisi alınamadı.");
+      }
+
+      passwordChangeState.tokenEmail = tokenEmail;
+      passwordChangeState.hintText = translateUi("Bağlantı doğrulandı. Yeni şifreni belirleyebilirsin.");
+      passwordChangeState.hintIsError = false;
+      clearPasswordChangeTokenFromLocation();
+      activatePanel("password");
+      setPasswordMessage("");
+      if (accountPasswordForm instanceof HTMLFormElement) {
+        accountPasswordForm.reset();
+      }
+    } catch (error) {
+      passwordChangeState.tokenEmail = "";
+      passwordChangeState.hintText = translateUi(String(error?.message || "Bağlantı doğrulanamadı."));
+      passwordChangeState.hintIsError = true;
+    } finally {
+      passwordChangeState.consuming = false;
+      renderPasswordChangeControls(readSession());
+    }
+  }
+
   function initialPanelFromRoute() {
     const params = new URLSearchParams(window.location.search);
     const action = String(params.get("action") || "").trim().toLocaleLowerCase("tr");
@@ -527,26 +733,15 @@
     if (accountSaveBtn instanceof HTMLButtonElement) {
       accountSaveBtn.disabled = !session;
     }
-    if (accountCurrentPasswordInput instanceof HTMLInputElement) {
-      accountCurrentPasswordInput.disabled = !session;
-      if (!session) {
-        accountCurrentPasswordInput.value = "";
-      }
-    }
     if (accountNewPasswordInput instanceof HTMLInputElement) {
-      accountNewPasswordInput.disabled = !session;
-      if (!session) {
+      if (!passwordChangeState.tokenEmail) {
         accountNewPasswordInput.value = "";
       }
     }
     if (accountNewPasswordRepeatInput instanceof HTMLInputElement) {
-      accountNewPasswordRepeatInput.disabled = !session;
-      if (!session) {
+      if (!passwordChangeState.tokenEmail) {
         accountNewPasswordRepeatInput.value = "";
       }
-    }
-    if (accountPasswordSaveBtn instanceof HTMLButtonElement) {
-      accountPasswordSaveBtn.disabled = !session;
     }
     if (accountSignupBtn instanceof HTMLButtonElement) {
       accountSignupBtn.hidden = Boolean(session);
@@ -564,14 +759,20 @@
 
     if (!session) {
       setAccountMessage(translateUi("Kayıtlı oturum yok. Önce kayıt ol."));
-      setPasswordMessage(translateUi("Şifre değiştirmek için önce giriş yap."), true);
+      if (!passwordChangeState.tokenEmail) {
+        setPasswordMessage(translateUi("Şifre değiştirmek için önce giriş yap."), true);
+      }
       renderEmailVerification(null);
+      renderPasswordChangeControls(null);
       return;
     }
 
     setAccountMessage("");
-    setPasswordMessage("");
+    if (!passwordChangeState.tokenEmail) {
+      setPasswordMessage("");
+    }
     renderEmailVerification(session);
+    renderPasswordChangeControls(session);
     void refreshEmailVerificationStatus(session.email);
   }
 
@@ -611,6 +812,12 @@
   if (accountEmailVerifyBtn instanceof HTMLButtonElement) {
     accountEmailVerifyBtn.addEventListener("click", () => {
       void sendVerificationEmail();
+    });
+  }
+
+  if (accountPasswordRequestBtn instanceof HTMLButtonElement) {
+    accountPasswordRequestBtn.addEventListener("click", () => {
+      void sendPasswordChangeEmail();
     });
   }
 
@@ -688,24 +895,15 @@
     accountPasswordForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      const currentSession = readSession();
-      if (!currentSession) {
-        openSignup();
+      if (!passwordChangeState.tokenEmail) {
+        setPasswordMessage(translateUi("Önce e-postadaki bağlantıyı aç."), true);
         return;
       }
 
-      const currentPassword = String(
-        accountCurrentPasswordInput instanceof HTMLInputElement ? accountCurrentPasswordInput.value : "",
-      );
       const nextPassword = String(accountNewPasswordInput instanceof HTMLInputElement ? accountNewPasswordInput.value : "");
       const repeatPassword = String(
         accountNewPasswordRepeatInput instanceof HTMLInputElement ? accountNewPasswordRepeatInput.value : "",
       );
-
-      if (!currentPassword) {
-        setPasswordMessage(translateUi("Mevcut şifreni gir."), true);
-        return;
-      }
 
       if (nextPassword.length < 6) {
         setPasswordMessage(translateUi("Yeni şifre en az 6 karakter olmalı."), true);
@@ -718,53 +916,61 @@
       }
 
       const users = readUsers();
-      const resolvedUser = resolveSessionUser(users, currentSession);
-      if (!resolvedUser) {
-        setPasswordMessage(translateUi("Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap."), true);
+      const tokenEmail = normalizeEmail(passwordChangeState.tokenEmail);
+      const userIndex = users.findIndex((user) => normalizeEmail(user.email) === tokenEmail);
+      if (userIndex < 0) {
+        setPasswordMessage(translateUi("Bu e-posta için kayıtlı yerel hesap bulunamadı."), true);
         return;
       }
 
-      const { sourceUser, sourceEmail } = resolvedUser;
-      const currentPasswordHash = await hashPassword(currentPassword);
-      if (!currentPasswordHash) {
-        setPasswordMessage(translateUi("Tarayıcı güvenlik desteği bulunamadı."), true);
-        return;
-      }
+      const sourceUser = users[userIndex];
 
-      if (currentPasswordHash !== sourceUser.passwordHash) {
-        setPasswordMessage(translateUi("Mevcut şifre hatalı."), true);
-        return;
-      }
-
-      const nextPasswordHash = await hashPassword(nextPassword);
-      if (!nextPasswordHash) {
-        setPasswordMessage(translateUi("Tarayıcı güvenlik desteği bulunamadı."), true);
-        return;
-      }
-
-      if (nextPasswordHash === sourceUser.passwordHash) {
-        setPasswordMessage(translateUi("Yeni şifre mevcut şifre ile aynı olamaz."), true);
-        return;
-      }
-
-      const nextUsers = users.map((user) => {
-        const userEmail = normalizeEmail(user.email);
-        if (userEmail !== sourceEmail) {
-          return user;
+      passwordChangeState.saving = true;
+      renderPasswordChangeControls(readSession());
+      try {
+        const nextPasswordHash = await hashPassword(nextPassword);
+        if (!nextPasswordHash) {
+          setPasswordMessage(translateUi("Tarayıcı güvenlik desteği bulunamadı."), true);
+          return;
         }
-        return {
-          ...user,
-          passwordHash: nextPasswordHash,
-        };
-      });
 
-      writeUsers(nextUsers);
+        if (nextPasswordHash === sourceUser.passwordHash) {
+          setPasswordMessage(translateUi("Yeni şifre mevcut şifre ile aynı olamaz."), true);
+          return;
+        }
 
-      if (accountPasswordForm instanceof HTMLFormElement) {
-        accountPasswordForm.reset();
+        const nextUsers = users.map((user) => {
+          if (normalizeEmail(user.email) !== tokenEmail) {
+            return user;
+          }
+          return {
+            ...user,
+            passwordHash: nextPasswordHash,
+          };
+        });
+
+        writeUsers(nextUsers);
+
+        const currentSession = readSession();
+        if (currentSession && normalizeEmail(currentSession.email) === tokenEmail) {
+          writeSession({
+            name: currentSession.name,
+            email: tokenEmail,
+          });
+        }
+
+        if (accountPasswordForm instanceof HTMLFormElement) {
+          accountPasswordForm.reset();
+        }
+
+        passwordChangeState.tokenEmail = "";
+        passwordChangeState.hintText = translateUi("Şifre güncellendi. Gerekirse yeni bağlantı isteyebilirsin.");
+        passwordChangeState.hintIsError = false;
+        setPasswordMessage(translateUi("Şifren güncellendi. Yeni şifrenle giriş yapabilirsin."));
+      } finally {
+        passwordChangeState.saving = false;
+        renderPasswordChangeControls(readSession());
       }
-
-      setPasswordMessage(translateUi("Şifren güncellendi."));
     });
   }
 
@@ -831,6 +1037,7 @@
   renderAccount();
   normalizeLegacySignupRoute();
   activatePanel(initialPanelFromRoute());
+  void consumePasswordChangeTokenFromLocation();
 
   window.addEventListener("resize", applyForcedMobileLayoutClass, { passive: true });
   window.addEventListener("orientationchange", applyForcedMobileLayoutClass);
