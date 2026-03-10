@@ -28,6 +28,11 @@
       resetText: "E-posta adresini doğrulayarak yeni şifreni belirle.",
       resetSubmit: "Şifreyi sıfırla",
       resetBackToLogin: "Girişe dön",
+      forgotPasswordSending: "Bağlantı gönderiliyor...",
+      forgotPasswordSent: "Şifre değişikliği bağlantısı e-posta adresine gönderildi.",
+      forgotPasswordRateLimited: "Çok fazla istek gönderildi. Biraz sonra tekrar dene.",
+      forgotPasswordServiceUnavailable: "E-posta servisi şu an kullanılamıyor.",
+      forgotPasswordFailed: "Şifre değişikliği bağlantısı gönderilemedi.",
       errorNameMin: "Ad ve soyad en az 2 karakter olmalı.",
       errorInvalidEmail: "Geçerli bir e-posta gir.",
       errorPasswordMin: "Şifre en az 6 karakter olmalı.",
@@ -67,6 +72,11 @@
       resetText: "Confirm your email and set a new password.",
       resetSubmit: "Reset password",
       resetBackToLogin: "Back to sign in",
+      forgotPasswordSending: "Sending reset link...",
+      forgotPasswordSent: "Password change link has been sent to your email.",
+      forgotPasswordRateLimited: "Too many requests. Please try again later.",
+      forgotPasswordServiceUnavailable: "Email service is currently unavailable.",
+      forgotPasswordFailed: "Failed to send password change link.",
       errorNameMin: "First name and last name must be at least 2 characters.",
       errorInvalidEmail: "Enter a valid email.",
       errorPasswordMin: "Password must be at least 6 characters.",
@@ -106,6 +116,11 @@
       resetText: "Подтвердите e-mail и задайте новый пароль.",
       resetSubmit: "Сбросить пароль",
       resetBackToLogin: "Назад ко входу",
+      forgotPasswordSending: "Отправка ссылки...",
+      forgotPasswordSent: "Ссылка для смены пароля отправлена на ваш e-mail.",
+      forgotPasswordRateLimited: "Слишком много запросов. Попробуйте позже.",
+      forgotPasswordServiceUnavailable: "Почтовый сервис временно недоступен.",
+      forgotPasswordFailed: "Не удалось отправить ссылку для смены пароля.",
       errorNameMin: "Имя и фамилия должны быть не короче 2 символов.",
       errorInvalidEmail: "Введите корректный email.",
       errorPasswordMin: "Пароль должен быть не короче 6 символов.",
@@ -145,6 +160,11 @@
       resetText: "Bestätige deine E-Mail und lege ein neues Passwort fest.",
       resetSubmit: "Passwort zurücksetzen",
       resetBackToLogin: "Zurück zur Anmeldung",
+      forgotPasswordSending: "Link wird gesendet...",
+      forgotPasswordSent: "Der Link zur Passwortaenderung wurde an deine E-Mail gesendet.",
+      forgotPasswordRateLimited: "Zu viele Anfragen. Bitte spaeter erneut versuchen.",
+      forgotPasswordServiceUnavailable: "E-Mail-Dienst ist derzeit nicht verfuegbar.",
+      forgotPasswordFailed: "Link zur Passwortaenderung konnte nicht gesendet werden.",
       errorNameMin: "Vorname und Nachname muessen mindestens 2 Zeichen lang sein.",
       errorInvalidEmail: "Gib eine gueltige E-Mail ein.",
       errorPasswordMin: "Das Passwort muss mindestens 6 Zeichen lang sein.",
@@ -184,6 +204,11 @@
       resetText: "确认邮箱后设置新密码。",
       resetSubmit: "重置密码",
       resetBackToLogin: "返回登录",
+      forgotPasswordSending: "正在发送链接...",
+      forgotPasswordSent: "密码修改链接已发送到你的邮箱。",
+      forgotPasswordRateLimited: "请求过多，请稍后再试。",
+      forgotPasswordServiceUnavailable: "邮件服务暂时不可用。",
+      forgotPasswordFailed: "发送密码修改链接失败。",
       errorNameMin: "名字和姓氏都至少需要 2 个字符。",
       errorInvalidEmail: "请输入有效邮箱。",
       errorPasswordMin: "密码至少需要 6 个字符。",
@@ -780,6 +805,54 @@
       setMessage(copy.resetSuccess);
     }
 
+    async function requestPasswordChangeByEmail() {
+      if (!(loginEmail instanceof HTMLInputElement) || !(forgotPasswordButton instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const copy = authText();
+      const email = normalizeEmail(loginEmail.value);
+      if (!email.includes("@") || email.length < 6) {
+        setMessage(copy.errorInvalidEmail, true);
+        loginEmail.focus();
+        return;
+      }
+
+      forgotPasswordButton.disabled = true;
+      setMessage(copy.forgotPasswordSending, false);
+
+      try {
+        const response = await fetch("/api/auth/password-change/request", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ email }),
+        });
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok || !payload?.ok) {
+          if (response.status === 429) {
+            setMessage(copy.forgotPasswordRateLimited, true);
+            return;
+          }
+          if (response.status === 503) {
+            setMessage(copy.forgotPasswordServiceUnavailable, true);
+            return;
+          }
+          setMessage(copy.forgotPasswordFailed, true);
+          return;
+        }
+
+        setMessage(copy.forgotPasswordSent, false);
+      } catch (_error) {
+        setMessage(copy.forgotPasswordFailed, true);
+      } finally {
+        forgotPasswordButton.disabled = false;
+      }
+    }
+
     async function handleSignupSubmit(event) {
       event.preventDefault();
 
@@ -887,17 +960,7 @@
     }
     if (forgotPasswordButton instanceof HTMLButtonElement) {
       forgotPasswordButton.addEventListener("click", () => {
-        if (resetEmail instanceof HTMLInputElement && loginEmail instanceof HTMLInputElement) {
-          resetEmail.value = normalizeEmail(loginEmail.value);
-        }
-        if (resetPassword instanceof HTMLInputElement) {
-          resetPassword.value = "";
-        }
-        if (resetPasswordRepeat instanceof HTMLInputElement) {
-          resetPasswordRepeat.value = "";
-        }
-        setMode("reset");
-        window.requestAnimationFrame(focusCurrentField);
+        void requestPasswordChangeByEmail();
       });
     }
     if (resetBackToLogin instanceof HTMLButtonElement) {
