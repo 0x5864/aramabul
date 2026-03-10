@@ -389,6 +389,146 @@
       "Mahalle": "Viertel",
       "Posta kodu": "Postleitzahl"
     },
+    ZH: {
+      "İş ortaklığı": "合作伙伴",
+      "Mobil uygulama": "移动应用",
+      "Destek": "支持",
+      "Yardım": "帮助",
+      "Yasal": "法律",
+      "Sosyal": "社交",
+      "Kısa not": "简短说明",
+      "Yeni bir işletme veya hizmet noktası eklemek için aşağıdaki formu doldurup gönder tuşuna basınız.":
+        "如需新增商家或服务点，请填写下方表单并点击提交。",
+      "Bilgiler alındı. Adres alanlarını PTT kaynağıyla eşleştirdiysen inceleme daha hızlı ilerler.":
+        "信息已收到。如已按 PTT 地址源匹配地址字段，审核会更快。",
+      "Aramabul, kullanıcının bir yeri ararken, en kısa yoldan ve net bilgi bulmasını amaçlayan sade tasarımlı bir yardımcıdır.":
+        "Aramabul 是一个简洁工具，帮助用户用最短路径找到地点并获得清晰信息。",
+      "İnsanlar çoğu zaman bir yerin adını değil, ihtiyacını bilir. Biz de aramayı ihtiyaçtan başlatıyoruz.":
+        "很多人先知道需求，而不是地点名称。我们从需求开始搜索。",
+      "Amaç, gereksiz kalabalığı ve çabayı azaltarak, ihtiyaç duyduğunuz hizmet ve ürüne daha hızlı ulaşmanızı sağlamak.":
+        "我们的目标是减少不必要的复杂与操作，让你更快到达所需服务或产品。",
+      "Kategori, şehir ve ilçe katmanları sırasıyla, önce alt kategoriler, son olarak da hizmet mekanları seçenekleri ile sizi buluşturuyoruz.":
+        "通过分类、城市和区县分层，先到子分类，再到具体服务地点。",
+      "Bilgiyi kutu yapısında sunarak, kullanıcıyı uzun sayfalarda dolaştırmadan net karar alanına ulaştırıyoruz. İhtiyaç duyduğunuz hizmeti alacağınız mekanı, tüm ulaşım ve iletişim bilgileri ile, en kullanıcı dostu biçimde görmenizi sağlıyoruz.":
+        "我们用卡片方式展示信息，避免在长页面中来回查找，帮助你更快做决定。你可清晰看到目标地点及其交通与联系方式。",
+      "Basit arayüz": "简洁界面",
+      "Açık bilgi": "清晰信息",
+      "Hızlı ve ayrıntılı yönlendirme": "快速且详细的指引",
+      "Soru, öneri ve iş talepleriniz için aşağıdaki formu doldurunuz.":
+        "如有问题、建议或商务需求，请填写下方表单。",
+      "Mesajın hazırlandı. İlgili ekibe en kısa sürede yönlendireceğiz.":
+        "消息已准备好，我们会尽快转给相关团队。",
+      "Mesajını konu ve kısa bağlamla gönderirsen doğru ekibe daha hızlı yönlendirebiliriz.":
+        "如果你附上主题和简短背景，我们可以更快转到正确团队。",
+      "En çok sorulan temel konuları kısa ve kolay anlaşılır cevaplarla bir araya getirdik.":
+        "我们将最常见问题整理为简短易懂的回答。",
+      "Nasıl arama yaparım?": "如何搜索？",
+      "Üst arama alanından doğrudan mekan adı yazabilir ya da anasayfadan kategori seçebilirsin.":
+        "你可以在顶部搜索框直接输入地点名称，或在首页选择分类。",
+      "Kategori sayfalarında şehir ve ilçe adımı ile sonuçları daraltabilirsin.":
+        "在分类页可通过城市和区县步骤缩小结果范围。",
+      "Bilgi yanlışsa ne yapmalıyım?": "如果信息有误怎么办？",
+      "Bize sayfa bağlantısı ile birlikte doğru bilgiyi gönder.": "请把正确信息连同页面链接发给我们。",
+      "İnceleme sonrası içerik güncellenir.": "审核后会更新内容。",
+      "Hesap şart mı?": "必须要账户吗？",
+      "Temel gezinme için hesap gerekmez.": "基础浏览不需要账户。",
+      "Favori, kayıt ve kişisel tercih akışları için hesap alanı sonraki adımlarda daha görünür hale gelecek.":
+        "后续版本中，账户区域会更突出，用于收藏、保存和个性偏好。",
+      "Bu metin, kullanıcı verisine nasıl yaklaştığımızı sade dil ile anlatan ilk çerçevedir.":
+        "这段文字是我们如何处理用户数据的第一版简明说明。",
+      "Hangi veriler olabilir?": "可能涉及哪些数据？",
+      "Neden işlenir?": "为何处理这些数据？",
+      "Kullanıcı hakları": "用户权利",
+      "Ad ve e-posta gibi temel hesap bilgileri": "姓名、邮箱等基础账户信息",
+      "Tercih ve dil ayarları": "偏好和语言设置",
+      "Hata ve kullanım kayıtları": "错误与使用记录",
+      "Hesabı çalıştırmak, tercihleri korumak ve hizmeti iyileştirmek için sınırlı veri kullanılır.":
+        "我们仅使用有限数据来运行账户、保留偏好并改进服务。",
+      "İhtiyaç dışı veri toplamak ana yaklaşımımız değildir.": "收集非必要数据不是我们的原则。",
+      "Bilgi isteme, düzeltme talep etme ve silme isteği gönderme hakkın vardır.":
+        "你有权申请查询、更正和删除数据。",
+      "Gizlilik yaklaşımımız, gereksiz veri toplamadan temel hizmeti açık biçimde sunmaktır.":
+        "我们的隐私原则是在不收集不必要数据的前提下清晰提供核心服务。",
+      "Topladığımız veriler": "我们收集的数据",
+      "Toplamadığımız şeyler": "我们不收集的内容",
+      "Paylaşım ilkesi": "共享原则",
+      "Hesap alanı kullanılırsa temel profil bilgileri tutulabilir.": "若使用账户区，可能会保存基础资料信息。",
+      "Yerel ayarlar ve dil tercihi gibi küçük bilgiler cihaz tarafında saklanabilir.":
+        "如本地设置和语言偏好等小型信息可能保存在设备端。",
+      "Gereksiz kişisel profil verisi, ilgisiz belge veya kapsam dışı hassas bilgi istemeyiz.":
+        "我们不会索取不必要的个人资料、无关文件或范围外敏感信息。",
+      "Yasal zorunluluk olmadıkça kullanıcı verisini açık ve sınırsız biçimde üçüncü taraflara açmayız.":
+        "除法律要求外，我们不会公开、无限制地向第三方共享用户数据。",
+      "Kullanım sınırları": "使用边界",
+      "Yanıltıcı bilgi göndermeme": "不得提交误导信息",
+      "Sistemi bozacak yoğun kötü kullanım yapmama": "不得以滥用方式影响系统稳定",
+      "Başkalarına ait içeriği izinsiz kopyalamama": "未经许可不得复制他人内容",
+      "İçerik güncellemeleri": "内容更新",
+      "Sayfadaki içerikler zaman içinde güncellenebilir, taşınabilir veya yeniden düzenlenebilir.":
+        "本页内容可能会随时间更新、迁移或重新整理。",
+      "Bu sayfa, sitemizde kullanılan çerezlerin ne işe yaradığını, ne kadar süre kaldığını ve tercihlerini nasıl yönetebileceğini sade dille açıklar.":
+        "本页用简明语言说明本站 Cookie 的用途、保存时长及你如何管理偏好。",
+      "Çerez nedir?": "什么是 Cookie？",
+      "Kullandığımız başlıca türler": "我们主要使用的类型",
+      "Hangi amaçlarla kullanılır?": "用于哪些目的？",
+      "Saklama süresi ve üçüncü taraflar": "保存时长与第三方",
+      "Kontrol sende": "控制权在你手中",
+      "Çerezler, ziyaret sırasında tarayıcına bırakılan küçük veri dosyalarıdır.":
+        "Cookie 是访问网站时写入浏览器的小型数据文件。",
+      "Bazı ayarlar ise çerez yerine tarayıcının yerel kayıt alanında tutulabilir. Amaç, siteyi her seferinde baştan kurmadan daha düzenli çalıştırmaktır.":
+        "部分设置会存于浏览器本地存储而非 Cookie，目的是让网站无需每次重置也能稳定运行。",
+      "Zorunlu çerezler: oturum, güvenlik ve temel sayfa akışı için":
+        "必要 Cookie：用于会话、安全和基础页面流程",
+      "Tercih çerezleri: dil, tema ve benzer seçimleri hatırlamak için":
+        "偏好 Cookie：用于记住语言、主题和类似选择",
+      "Ölçüm çerezleri: hangi alanların daha çok kullanıldığını anlamak için":
+        "分析 Cookie：用于了解哪些区域使用更多",
+      "Üçüncü taraf çerezleri: harici bir araç kullanılırsa o hizmetin teknik kaydı için":
+        "第三方 Cookie：使用外部工具时用于该服务的技术记录",
+      "Dil tercihini hatırlamak": "记住语言偏好",
+      "Tema seçimini korumak": "保留主题选择",
+      "Oturum akışını yönetmek": "管理会话流程",
+      "Sayfa hatalarını ve performans sorunlarını görmek": "查看页面错误与性能问题",
+      "Kötüye kullanımı sınırlamaya yardımcı olmak": "帮助限制滥用行为",
+      "Bazı çerezler sadece oturum açıkken kalır, bazıları ise belirli bir süre cihazında tutulur. Süre, çerezin amacına göre değişir.":
+        "有些 Cookie 仅在会话期间有效，有些会在设备上保留一段时间，时长取决于用途。",
+      "Harici bir analiz, giriş veya medya aracı kullanılırsa ilgili hizmet kendi çerezini oluşturabilir. Bu durumda o hizmetin kendi politikası da devreye girer.":
+        "若使用外部分析、登录或媒体工具，该服务可能写入自己的 Cookie，此时其自身政策也适用。",
+      "Tarayıcı ayarlarından çerezleri silebilir, engelleyebilir veya sadece belirli siteler için izin verebilirsin.":
+        "你可在浏览器设置中删除、屏蔽 Cookie，或仅对特定站点放行。",
+      "Çerezleri kapatman halinde bazı tercih alanları sıfırlanabilir ve bazı sayfa işlevleri beklenen gibi çalışmayabilir.":
+        "关闭 Cookie 后，部分偏好可能被重置，某些页面功能可能无法按预期工作。",
+      "Zorunlu olmayan yeni çerezler eklenirse bu metni ve varsa tercih ekranını aynı anda güncelleriz.":
+        "若新增非必要 Cookie，我们会同步更新本说明及（若有）偏好设置页。",
+      "Gönder": "提交",
+      "Ad Soyad": "姓名",
+      "E-posta": "邮箱",
+      "Konu": "主题",
+      "Genel Konular": "一般问题",
+      "İş Birliği": "合作",
+      "İçerik Düzeltmeleri": "内容修正",
+      "Alan kodu": "区号",
+      "Telefon numarası": "电话号码",
+      "Mesaj": "消息",
+      "Telefon bilgisi": "电话信息",
+      "İşletme adı": "商家名称",
+      "İl": "省",
+      "İlçe": "区县",
+      "Mahalle": "街区",
+      "Sokak / Cadde / Bulvar": "街道 / 大道",
+      "Bina no / Kapı no": "楼号 / 门牌号",
+      "Sokak / Cadde": "街道 / 大道",
+      "Bina / Kapı no": "楼号 / 门牌号",
+      "Posta kodu": "邮编",
+      "Web sitesi (varsa)": "网站（可选）",
+      "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "请填写姓名、邮箱、主题和消息。",
+      "Lütfen konu seçimini tamamla.": "请完成主题选择。",
+      "İl, ilçe ve mahalle için veri kaynağı tanımlanmadı.": "省、区县和街区未配置数据源。",
+      "İl, ilçe veya mahalle verisi yüklenemedi. Adresi PTT kaynağından kontrol ederek elle tamamlamalısın.":
+        "省、区县或街区数据加载失败。请根据 PTT 地址源手动补全地址。",
+      "Lütfen zorunlu alanları eksiksiz doldur, adres seçimlerini tamamla ve posta kodu otomatik gelmezse 5 hane olarak gir.":
+        "请完整填写必填项并完成地址选择；若邮编未自动填入，请手动输入 5 位数字。"
+    },
   });
 
   function footerPageLanguage() {
