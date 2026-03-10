@@ -644,7 +644,7 @@ main {
   border: 1px solid rgba(22, 33, 35, 0.2);
   background: #ffffff;
   box-shadow: 0 22px 56px rgba(11, 30, 38, 0.24);
-  padding: 1.8rem 1rem 1.1rem;
+  padding: 1rem 1rem 1.1rem;
   position: relative;
 }
 
@@ -656,9 +656,10 @@ main {
 }
 
 .auth-modal-close {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.55rem;
+  position: static;
+  display: block;
+  margin-left: auto;
+  margin-bottom: 0.45rem;
   width: 32px;
   height: 32px;
   border-radius: 0;
@@ -689,7 +690,6 @@ main {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.35rem;
   margin: 0 0 0.82rem;
-  margin-right: 2.35rem;
   padding: 0.2rem;
   border: 1px solid rgba(22, 33, 35, 0.12);
   border-radius: 0;
