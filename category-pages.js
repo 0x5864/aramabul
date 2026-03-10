@@ -1779,6 +1779,32 @@ function translateCategoryUiTemplate(template, params) {
   });
 }
 
+function currentCategoryUiLanguage() {
+  if (typeof window.ARAMABUL_GET_LANGUAGE === "function") {
+    return String(window.ARAMABUL_GET_LANGUAGE() || "TR").trim().toUpperCase();
+  }
+  return "TR";
+}
+
+function formatNearbyTitleLabel(title) {
+  const normalizedTitle = String(title || "").trim();
+  const lang = currentCategoryUiLanguage();
+
+  if (lang === "EN") {
+    return `Nearby ${normalizedTitle}`;
+  }
+  if (lang === "RU") {
+    return `${normalizedTitle} рядом с вами`;
+  }
+  if (lang === "DE") {
+    return `${normalizedTitle} in deiner Nähe`;
+  }
+  if (lang === "ZH") {
+    return `你附近的${normalizedTitle}`;
+  }
+  return `Yakınındaki ${normalizedTitle}`;
+}
+
 function formatProvinceDistrictHeading(cityName, districtName, suffixText = "") {
   const city = String(cityName || "").trim();
   const district = String(districtName || "").trim();
@@ -2473,7 +2499,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
 
   const heading = document.createElement("h4");
   heading.className = "nearby-action-title";
-  heading.textContent = translateCategoryUiTemplate("Yakınındaki {title}", { title: translatedTitle });
+  heading.textContent = formatNearbyTitleLabel(translatedTitle);
 
   const description = document.createElement("p");
   description.className = "nearby-action-description";
@@ -2520,7 +2546,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
         .join(" / ");
 
       modalApi.open({
-        title: translateCategoryUiTemplate("Yakınındaki {title}", { title: translatedTitle }),
+        title: formatNearbyTitleLabel(translatedTitle),
         subtitle: locationLabel
           ? translateCategoryUiTemplate("{location} çevresine göre sıralandı", { location: locationLabel })
           : translateCategoryUiLabel("Konumuna göre sıralandı"),
