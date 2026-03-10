@@ -17,6 +17,12 @@
   const accountSettingsMessage = document.querySelector("#accountSettingsMessage");
   const accountSaveBtn = document.querySelector("#accountSaveBtn");
   const accountSignupBtn = document.querySelector("#accountSignupBtn");
+  const accountPasswordForm = document.querySelector("#accountPasswordForm");
+  const accountCurrentPasswordInput = document.querySelector("#accountCurrentPasswordInput");
+  const accountNewPasswordInput = document.querySelector("#accountNewPasswordInput");
+  const accountNewPasswordRepeatInput = document.querySelector("#accountNewPasswordRepeatInput");
+  const accountPasswordMessage = document.querySelector("#accountPasswordMessage");
+  const accountPasswordSaveBtn = document.querySelector("#accountPasswordSaveBtn");
   const feedbackForm = document.querySelector("#settingsFeedbackForm");
   const feedbackName = document.querySelector("#settingsFeedbackName");
   const feedbackEmail = document.querySelector("#settingsFeedbackEmail");
@@ -70,6 +76,17 @@
 
   function normalizeEmail(value) {
     return String(value || "").trim().toLocaleLowerCase("en-US");
+  }
+
+  async function hashPassword(password) {
+    if (!window.crypto?.subtle) {
+      return null;
+    }
+
+    const encoded = new TextEncoder().encode(String(password || ""));
+    const digest = await window.crypto.subtle.digest("SHA-256", encoded);
+    const bytes = Array.from(new Uint8Array(digest));
+    return bytes.map((byte) => byte.toString(16).padStart(2, "0")).join("");
   }
 
   function translateUi(text) {
@@ -191,6 +208,14 @@
     accountSettingsMessage.classList.toggle("is-ok", !isError);
   }
 
+  function setPasswordMessage(text, isError = false) {
+    if (!accountPasswordMessage) {
+      return;
+    }
+    accountPasswordMessage.textContent = text;
+    accountPasswordMessage.classList.toggle("is-ok", !isError && Boolean(text));
+  }
+
   function setVerificationMessage(text, isError = false) {
     if (!accountEmailVerificationStatus) {
       return;
@@ -254,6 +279,31 @@
     accountEmailVerifyBtn.disabled = false;
     accountEmailVerifyBtn.textContent = translateUi("Doğrulama e-postası gönder");
     setVerificationMessage(translateUi("E-posta adresin henüz doğrulanmadı."), false);
+  }
+
+  function resolveSessionUser(users, session) {
+    if (!Array.isArray(users) || !session) {
+      return null;
+    }
+
+    const currentEmail = normalizeEmail(session.email);
+    const currentName = String(session.name || "").trim();
+    const exactUser = users.find((user) => normalizeEmail(user.email) === currentEmail) || null;
+    const byNameCandidates = users.filter((user) => String(user.name || "").trim() === currentName);
+    const fallbackUser = !exactUser && byNameCandidates.length === 1 ? byNameCandidates[0] : null;
+    const sourceUser = exactUser || fallbackUser;
+    const sourceEmail = sourceUser ? normalizeEmail(sourceUser.email) : currentEmail;
+
+    if (!sourceUser) {
+      return null;
+    }
+
+    return {
+      sourceUser,
+      sourceEmail,
+      currentEmail,
+      currentName,
+    };
   }
 
   async function refreshEmailVerificationStatus(email, force = false) {
@@ -388,6 +438,15 @@
     openSignup();
   }
 
+  function initialPanelFromRoute() {
+    const params = new URLSearchParams(window.location.search);
+    const action = String(params.get("action") || "").trim().toLocaleLowerCase("tr");
+    if (action === "feedback" || action === "help" || action === "about" || action === "password") {
+      return action;
+    }
+    return "account";
+  }
+
   function setFeedbackStatus(text, isError = false) {
     if (feedbackStatus) {
       feedbackStatus.textContent = text;
@@ -396,7 +455,9 @@
   }
 
   function activatePanel(panelKey) {
-    const nextPanel = panelKey === "feedback" || panelKey === "help" || panelKey === "about" ? panelKey : "account";
+    const nextPanel = panelKey === "feedback" || panelKey === "help" || panelKey === "about" || panelKey === "password"
+      ? panelKey
+      : "account";
 
     panelButtons.forEach((button) => {
       const key = String(button.dataset.settingsPanelTrigger || "");
@@ -466,6 +527,27 @@
     if (accountSaveBtn instanceof HTMLButtonElement) {
       accountSaveBtn.disabled = !session;
     }
+    if (accountCurrentPasswordInput instanceof HTMLInputElement) {
+      accountCurrentPasswordInput.disabled = !session;
+      if (!session) {
+        accountCurrentPasswordInput.value = "";
+      }
+    }
+    if (accountNewPasswordInput instanceof HTMLInputElement) {
+      accountNewPasswordInput.disabled = !session;
+      if (!session) {
+        accountNewPasswordInput.value = "";
+      }
+    }
+    if (accountNewPasswordRepeatInput instanceof HTMLInputElement) {
+      accountNewPasswordRepeatInput.disabled = !session;
+      if (!session) {
+        accountNewPasswordRepeatInput.value = "";
+      }
+    }
+    if (accountPasswordSaveBtn instanceof HTMLButtonElement) {
+      accountPasswordSaveBtn.disabled = !session;
+    }
     if (accountSignupBtn instanceof HTMLButtonElement) {
       accountSignupBtn.hidden = Boolean(session);
     }
@@ -482,11 +564,13 @@
 
     if (!session) {
       setAccountMessage(translateUi("Kayıtlı oturum yok. Önce kayıt ol."));
+      setPasswordMessage(translateUi("Şifre değiştirmek için önce giriş yap."), true);
       renderEmailVerification(null);
       return;
     }
 
     setAccountMessage("");
+    setPasswordMessage("");
     renderEmailVerification(session);
     void refreshEmailVerificationStatus(session.email);
   }
@@ -554,18 +638,12 @@
       }
 
       const users = readUsers();
-      const currentEmail = normalizeEmail(currentSession.email);
-      const currentName = String(currentSession.name || "").trim();
-      const exactUser = users.find((user) => normalizeEmail(user.email) === currentEmail) || null;
-      const byNameCandidates = users.filter((user) => String(user.name || "").trim() === currentName);
-      const fallbackUser = !exactUser && byNameCandidates.length === 1 ? byNameCandidates[0] : null;
-      const sourceUser = exactUser || fallbackUser;
-      const sourceEmail = sourceUser ? normalizeEmail(sourceUser.email) : currentEmail;
-
-      if (!sourceUser) {
+      const resolvedUser = resolveSessionUser(users, currentSession);
+      if (!resolvedUser) {
         setAccountMessage(translateUi("Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap."), true);
         return;
       }
+      const { sourceUser, sourceEmail } = resolvedUser;
 
       const duplicate = users.some((user) => {
         const userEmail = normalizeEmail(user.email);
@@ -603,6 +681,90 @@
       emailVerificationState.messageIsError = false;
       renderAccount();
       setAccountMessage(translateUi("Hesap bilgileri kaydedildi."));
+    });
+  }
+
+  if (accountPasswordForm) {
+    accountPasswordForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const currentSession = readSession();
+      if (!currentSession) {
+        openSignup();
+        return;
+      }
+
+      const currentPassword = String(
+        accountCurrentPasswordInput instanceof HTMLInputElement ? accountCurrentPasswordInput.value : "",
+      );
+      const nextPassword = String(accountNewPasswordInput instanceof HTMLInputElement ? accountNewPasswordInput.value : "");
+      const repeatPassword = String(
+        accountNewPasswordRepeatInput instanceof HTMLInputElement ? accountNewPasswordRepeatInput.value : "",
+      );
+
+      if (!currentPassword) {
+        setPasswordMessage(translateUi("Mevcut şifreni gir."), true);
+        return;
+      }
+
+      if (nextPassword.length < 6) {
+        setPasswordMessage(translateUi("Yeni şifre en az 6 karakter olmalı."), true);
+        return;
+      }
+
+      if (nextPassword !== repeatPassword) {
+        setPasswordMessage(translateUi("Yeni şifreler eşleşmiyor."), true);
+        return;
+      }
+
+      const users = readUsers();
+      const resolvedUser = resolveSessionUser(users, currentSession);
+      if (!resolvedUser) {
+        setPasswordMessage(translateUi("Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap."), true);
+        return;
+      }
+
+      const { sourceUser, sourceEmail } = resolvedUser;
+      const currentPasswordHash = await hashPassword(currentPassword);
+      if (!currentPasswordHash) {
+        setPasswordMessage(translateUi("Tarayıcı güvenlik desteği bulunamadı."), true);
+        return;
+      }
+
+      if (currentPasswordHash !== sourceUser.passwordHash) {
+        setPasswordMessage(translateUi("Mevcut şifre hatalı."), true);
+        return;
+      }
+
+      const nextPasswordHash = await hashPassword(nextPassword);
+      if (!nextPasswordHash) {
+        setPasswordMessage(translateUi("Tarayıcı güvenlik desteği bulunamadı."), true);
+        return;
+      }
+
+      if (nextPasswordHash === sourceUser.passwordHash) {
+        setPasswordMessage(translateUi("Yeni şifre mevcut şifre ile aynı olamaz."), true);
+        return;
+      }
+
+      const nextUsers = users.map((user) => {
+        const userEmail = normalizeEmail(user.email);
+        if (userEmail !== sourceEmail) {
+          return user;
+        }
+        return {
+          ...user,
+          passwordHash: nextPasswordHash,
+        };
+      });
+
+      writeUsers(nextUsers);
+
+      if (accountPasswordForm instanceof HTMLFormElement) {
+        accountPasswordForm.reset();
+      }
+
+      setPasswordMessage(translateUi("Şifren güncellendi."));
     });
   }
 
@@ -668,7 +830,7 @@
   applyForcedMobileLayoutClass();
   renderAccount();
   normalizeLegacySignupRoute();
-  activatePanel("account");
+  activatePanel(initialPanelFromRoute());
 
   window.addEventListener("resize", applyForcedMobileLayoutClass, { passive: true });
   window.addEventListener("orientationchange", applyForcedMobileLayoutClass);

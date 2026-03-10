@@ -68,6 +68,27 @@
 
           <a
             class="settings-row settings-row-button"
+            href="profile.html?action=password"
+            data-settings-panel-trigger="password"
+            aria-label="Şifre Değişikliği"
+          >
+            <span class="settings-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+                <path d="M8.5 10V7.8a3.5 3.5 0 1 1 7 0V10"></path>
+                <circle cx="12" cy="15" r="1"></circle>
+              </svg>
+            </span>
+            <span class="settings-row-label">Şifre Değişikliği</span>
+            <span class="settings-row-chevron" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
+
+          <a
+            class="settings-row settings-row-button"
             href="feedback-settings.html"
             data-settings-panel-trigger="feedback"
             aria-label="Geribildirim"
@@ -155,6 +176,31 @@
               <div class="account-settings-actions">
                 <button id="accountSaveBtn" class="settings-signup-submit" type="submit">Kaydet</button>
                 <button id="accountSignupBtn" class="account-secondary-btn" type="button">Kayıt ol</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="password" aria-label="Şifre değişikliği" hidden>
+            <div class="language-card-head">
+              <h2>Şifre değişikliği</h2>
+              <p>Hesabını korumak için mevcut şifreni doğrulayıp yeni şifre belirle.</p>
+            </div>
+            <form id="accountPasswordForm" class="settings-signup-form" novalidate>
+              <label class="settings-signup-field">
+                <span>Mevcut şifre</span>
+                <input id="accountCurrentPasswordInput" type="password" autocomplete="current-password" required />
+              </label>
+              <label class="settings-signup-field">
+                <span>Yeni şifre</span>
+                <input id="accountNewPasswordInput" type="password" autocomplete="new-password" minlength="6" required />
+              </label>
+              <label class="settings-signup-field">
+                <span>Yeni şifre tekrar</span>
+                <input id="accountNewPasswordRepeatInput" type="password" autocomplete="new-password" minlength="6" required />
+              </label>
+              <p id="accountPasswordMessage" class="settings-signup-message" aria-live="polite"></p>
+              <div class="account-settings-actions account-password-actions">
+                <button id="accountPasswordSaveBtn" class="settings-signup-submit" type="submit">Şifreyi güncelle</button>
               </div>
             </form>
           </section>

@@ -17,6 +17,10 @@
       loginSubmit: "Giriş yap",
       forgotPassword: "Şifremi unuttum",
       rememberEmail: "Beni hatırla (e-posta)",
+      passwordToggleShow: "Göster",
+      passwordToggleHide: "Gizle",
+      passwordToggleShowLabel: "Şifreyi göster",
+      passwordToggleHideLabel: "Şifreyi gizle",
       resetTitle: "Şifreyi sıfırla",
       resetText: "E-posta adresini doğrulayarak yeni şifreni belirle.",
       resetSubmit: "Şifreyi sıfırla",
@@ -49,6 +53,10 @@
       loginSubmit: "Sign in",
       forgotPassword: "Forgot password",
       rememberEmail: "Remember me (email)",
+      passwordToggleShow: "Show",
+      passwordToggleHide: "Hide",
+      passwordToggleShowLabel: "Show password",
+      passwordToggleHideLabel: "Hide password",
       resetTitle: "Reset password",
       resetText: "Confirm your email and set a new password.",
       resetSubmit: "Reset password",
@@ -81,6 +89,10 @@
       loginSubmit: "Войти",
       forgotPassword: "Забыли пароль",
       rememberEmail: "Запомнить e-mail",
+      passwordToggleShow: "Показать",
+      passwordToggleHide: "Скрыть",
+      passwordToggleShowLabel: "Показать пароль",
+      passwordToggleHideLabel: "Скрыть пароль",
       resetTitle: "Сбросить пароль",
       resetText: "Подтвердите e-mail и задайте новый пароль.",
       resetSubmit: "Сбросить пароль",
@@ -113,6 +125,10 @@
       loginSubmit: "Anmelden",
       forgotPassword: "Passwort vergessen",
       rememberEmail: "E-Mail merken",
+      passwordToggleShow: "Anzeigen",
+      passwordToggleHide: "Verbergen",
+      passwordToggleShowLabel: "Passwort anzeigen",
+      passwordToggleHideLabel: "Passwort verbergen",
       resetTitle: "Passwort zurücksetzen",
       resetText: "Bestätige deine E-Mail und lege ein neues Passwort fest.",
       resetSubmit: "Passwort zurücksetzen",
@@ -145,6 +161,10 @@
       loginSubmit: "登录",
       forgotPassword: "忘记密码",
       rememberEmail: "记住我（邮箱）",
+      passwordToggleShow: "显示",
+      passwordToggleHide: "隐藏",
+      passwordToggleShowLabel: "显示密码",
+      passwordToggleHideLabel: "隐藏密码",
       resetTitle: "重置密码",
       resetText: "确认邮箱后设置新密码。",
       resetSubmit: "重置密码",
@@ -278,9 +298,6 @@
     modal.innerHTML = `
       <div class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="globalAuthModalTitle">
         <button id="globalAuthModalClose" class="auth-modal-close" type="button" aria-label="${copy.close}">×</button>
-        <p class="eyebrow auth-modal-brand">${copy.brand}</p>
-        <h2 id="globalAuthModalTitle" class="auth-modal-title">${copy.signupTitle}</h2>
-        <p id="globalAuthModalText" class="auth-modal-text">${copy.signupText}</p>
         <div id="globalAuthModeTabs" class="auth-mode-tabs" role="tablist" aria-label="${copy.brand}">
           <button id="globalAuthTabLogin" class="auth-mode-tab" type="button" role="tab">${copy.loginTitle}</button>
           <button id="globalAuthTabSignup" class="auth-mode-tab" type="button" role="tab">${copy.signupTitle}</button>
@@ -292,7 +309,16 @@
           </label>
           <label>
             <span id="globalLoginPasswordLabel">${copy.password}</span>
-            <input id="globalLoginPassword" type="password" autocomplete="current-password" required />
+            <div class="auth-password-field">
+              <input id="globalLoginPassword" type="password" autocomplete="current-password" required />
+              <button
+                id="globalLoginPasswordToggle"
+                class="auth-password-toggle"
+                type="button"
+                aria-pressed="false"
+                aria-label="${copy.passwordToggleShowLabel}"
+              >${copy.passwordToggleShow}</button>
+            </div>
           </label>
           <div class="auth-form-inline-row">
             <label class="auth-checkbox-label" for="globalLoginRememberEmail">
@@ -370,6 +396,7 @@
     const signupForm = modal.querySelector("#globalSignupForm");
     const loginEmail = modal.querySelector("#globalLoginEmail");
     const loginPassword = modal.querySelector("#globalLoginPassword");
+    const loginPasswordToggle = modal.querySelector("#globalLoginPasswordToggle");
     const loginRememberEmail = modal.querySelector("#globalLoginRememberEmail");
     const forgotPasswordButton = modal.querySelector("#globalForgotPasswordBtn");
     const resetEmail = modal.querySelector("#globalResetEmail");
@@ -402,6 +429,7 @@
     const state = {
       mode: "signup",
       lastTrigger: null,
+      loginPasswordVisible: false,
     };
 
     function setMessage(value, isError = false) {
@@ -411,6 +439,23 @@
 
       message.textContent = value;
       message.classList.toggle("auth-message-error", isError);
+    }
+
+    function setLoginPasswordVisibility(isVisible, copyOverride = null) {
+      if (!(loginPassword instanceof HTMLInputElement) || !(loginPasswordToggle instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const copy = copyOverride || authText();
+      const nextVisible = Boolean(isVisible);
+      state.loginPasswordVisible = nextVisible;
+      loginPassword.type = nextVisible ? "text" : "password";
+      loginPasswordToggle.textContent = nextVisible ? copy.passwordToggleHide : copy.passwordToggleShow;
+      loginPasswordToggle.setAttribute(
+        "aria-label",
+        nextVisible ? copy.passwordToggleHideLabel : copy.passwordToggleShowLabel,
+      );
+      loginPasswordToggle.setAttribute("aria-pressed", nextVisible ? "true" : "false");
     }
 
     function setMode(mode) {
@@ -460,6 +505,7 @@
         authTabSignup.setAttribute("tabindex", isSignupMode ? "0" : "-1");
       }
 
+      setLoginPasswordVisibility(false, copy);
       setMessage("");
     }
 
@@ -761,6 +807,15 @@
 
     if (loginForm instanceof HTMLFormElement) {
       loginForm.addEventListener("submit", handleLoginSubmit);
+    }
+    if (loginPasswordToggle instanceof HTMLButtonElement) {
+      loginPasswordToggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        setLoginPasswordVisibility(!state.loginPasswordVisible);
+        if (loginPassword instanceof HTMLInputElement) {
+          loginPassword.focus({ preventScroll: true });
+        }
+      });
     }
     if (authTabLogin instanceof HTMLButtonElement) {
       authTabLogin.addEventListener("click", () => {

@@ -718,11 +718,44 @@ main {
 }
 
 .auth-form input {
+  width: 100%;
   border: 1px solid rgba(22, 33, 35, 0.2);
   border-radius: 10px;
   min-height: 42px;
   font: inherit;
   padding: 0.62rem 0.74rem;
+}
+
+.auth-password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-password-field input {
+  padding-right: 4.6rem;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: #116466;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.2rem 0.3rem;
+  cursor: pointer;
+}
+
+.auth-password-toggle:hover,
+.auth-password-toggle:focus-visible {
+  color: #0f7f62;
+  outline: none;
 }
 
 .auth-form-inline-row {

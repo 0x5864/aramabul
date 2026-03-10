@@ -750,6 +750,15 @@
   align-items: center;
 }
 
+.account-password-actions {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.account-password-actions #accountPasswordSaveBtn {
+  grid-column: 1;
+  justify-self: end;
+}
+
 #accountSaveBtn {
   grid-column: 2;
   justify-self: end;
