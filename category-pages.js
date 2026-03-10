@@ -660,7 +660,7 @@ function requestNearbyCurrentPosition() {
       || !navigator.geolocation
       || typeof navigator.geolocation.getCurrentPosition !== "function"
     ) {
-      reject(new Error("Tarayıcı konum özelliği desteklenmiyor."));
+      reject(new Error(translateCategoryUiLabel("Tarayıcı konum özelliği desteklenmiyor.")));
       return;
     }
 
@@ -668,16 +668,16 @@ function requestNearbyCurrentPosition() {
       (position) => resolve(position),
       (error) => {
         if (error && error.code === 1) {
-          reject(new Error("Konum izni kapalı. Tarayıcıdan izin verip tekrar dene."));
+          reject(new Error(translateCategoryUiLabel("Konum izni kapalı. Tarayıcıdan izin verip tekrar dene.")));
           return;
         }
 
         if (error && error.code === 3) {
-          reject(new Error("Konum alınamadı. Bağlantını kontrol edip tekrar dene."));
+          reject(new Error(translateCategoryUiLabel("Konum alınamadı. Bağlantını kontrol edip tekrar dene.")));
           return;
         }
 
-        reject(new Error("Konum bilgisi alınamadı."));
+        reject(new Error(translateCategoryUiLabel("Konum bilgisi alınamadı.")));
       },
       {
         enableHighAccuracy: false,
@@ -1677,6 +1677,20 @@ function translateCategoryUiLabel(value) {
   return (fallbackMap && fallbackMap[text]) || text;
 }
 
+function translateCategoryUiTemplate(template, params) {
+  const translatedTemplate = translateCategoryUiLabel(template);
+  if (!params || typeof params !== "object") {
+    return translatedTemplate;
+  }
+
+  return translatedTemplate.replace(/\{([a-zA-Z0-9_]+)\}/g, (match, key) => {
+    if (!Object.prototype.hasOwnProperty.call(params, key)) {
+      return match;
+    }
+    return String(params[key] ?? "");
+  });
+}
+
 function formatProvinceDistrictHeading(cityName, districtName, suffixText = "") {
   const city = String(cityName || "").trim();
   const district = String(districtName || "").trim();
@@ -2099,7 +2113,7 @@ function ensureMapFocusModal() {
   };
 
   const open = (payload) => {
-    const title = String(payload?.title || "").trim() || "Mekan";
+    const title = String(payload?.title || "").trim() || translateCategoryUiLabel("Mekan");
     const subtitle = String(payload?.subtitle || "").trim();
     const embedUrl = String(payload?.embedUrl || "").trim();
     const externalUrl = String(payload?.externalUrl || "").trim() || embedUrl;
@@ -2204,7 +2218,7 @@ function openVenueMapFocus(venue) {
   }
 
   api.open({
-    title: String(venue.name || "").trim() || "Mekan",
+    title: String(venue.name || "").trim() || translateCategoryUiLabel("Mekan"),
     subtitle,
     embedUrl,
     externalUrl,
@@ -2233,15 +2247,15 @@ function ensureNearbyVenuesModal() {
   modal.className = "nearby-venues-modal";
   modal.hidden = true;
   modal.innerHTML = `
-    <button class="nearby-venues-backdrop" type="button" aria-label="Yakındaki mekanlar penceresini kapat"></button>
+    <button class="nearby-venues-backdrop" type="button"></button>
     <article class="nearby-venues-panel" role="dialog" aria-modal="true" aria-labelledby="nearbyVenuesTitle">
       <header class="nearby-venues-head">
         <div class="nearby-venues-head-copy">
-          <p class="nearby-venues-eyebrow">Yakındaki Öneriler</p>
-          <h3 id="nearbyVenuesTitle" class="nearby-venues-title">Yakındaki Mekanlar</h3>
+          <p class="nearby-venues-eyebrow"></p>
+          <h3 id="nearbyVenuesTitle" class="nearby-venues-title"></h3>
           <p class="nearby-venues-subtitle"></p>
         </div>
-        <button class="nearby-venues-close" type="button" aria-label="Kapat">Kapat</button>
+        <button class="nearby-venues-close" type="button"></button>
       </header>
       <div class="nearby-venues-body">
         <ol class="nearby-venues-list"></ol>
@@ -2254,6 +2268,22 @@ function ensureNearbyVenuesModal() {
   const listNode = modal.querySelector(".nearby-venues-list");
   const closeNode = modal.querySelector(".nearby-venues-close");
   const backdropNode = modal.querySelector(".nearby-venues-backdrop");
+  const eyebrowNode = modal.querySelector(".nearby-venues-eyebrow");
+
+  if (eyebrowNode) {
+    eyebrowNode.textContent = translateCategoryUiLabel("Yakındaki Öneriler");
+  }
+  if (titleNode) {
+    titleNode.textContent = translateCategoryUiLabel("Yakındaki Mekanlar");
+  }
+  if (closeNode) {
+    const closeLabel = translateCategoryUiLabel("Kapat");
+    closeNode.textContent = closeLabel;
+    closeNode.setAttribute("aria-label", closeLabel);
+  }
+  if (backdropNode) {
+    backdropNode.setAttribute("aria-label", translateCategoryUiLabel("Yakındaki mekanlar penceresini kapat"));
+  }
 
   const close = () => {
     modal.hidden = true;
@@ -2264,7 +2294,7 @@ function ensureNearbyVenuesModal() {
   };
 
   const open = (payload) => {
-    const title = String(payload?.title || "").trim() || "Yakındaki Mekanlar";
+    const title = String(payload?.title || "").trim() || translateCategoryUiLabel("Yakındaki Mekanlar");
     const subtitle = String(payload?.subtitle || "").trim();
     const venues = Array.isArray(payload?.venues) ? payload.venues : [];
 
@@ -2295,7 +2325,7 @@ function ensureNearbyVenuesModal() {
 
       const titleLine = document.createElement("h4");
       titleLine.className = "nearby-venues-item-title";
-      titleLine.textContent = `${index + 1}. ${String(venue?.name || "").trim() || "Mekan"}`;
+      titleLine.textContent = `${index + 1}. ${String(venue?.name || "").trim() || translateCategoryUiLabel("Mekan")}`;
 
       const metaLine = document.createElement("p");
       metaLine.className = "nearby-venues-item-meta";
@@ -2310,7 +2340,7 @@ function ensureNearbyVenuesModal() {
       const previewButton = document.createElement("button");
       previewButton.type = "button";
       previewButton.className = "nearby-venues-preview-btn";
-      previewButton.textContent = "Haritada Önizle";
+      previewButton.textContent = translateCategoryUiLabel("Haritada Önizle");
       previewButton.addEventListener("click", () => {
         openVenueMapFocus(venue);
       });
@@ -2349,17 +2379,20 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
     return;
   }
 
-  const normalizedTitle = translateCategoryUiLabel(subcategoryTitle).toLocaleLowerCase("tr");
+  const translatedTitle = translateCategoryUiLabel(subcategoryTitle);
   const panel = document.createElement("article");
   panel.className = "nearby-action-card";
 
   const heading = document.createElement("h4");
   heading.className = "nearby-action-title";
-  heading.textContent = `Yakınındaki ${normalizedTitle}`;
+  heading.textContent = translateCategoryUiTemplate("Yakınındaki {title}", { title: translatedTitle });
 
   const description = document.createElement("p");
   description.className = "nearby-action-description";
-  description.textContent = `Konumunu kullanmama izin ver, sana en yakın ${normalizedTitle} listeleyeyim.`;
+  description.textContent = translateCategoryUiTemplate(
+    "Konumunu kullanmama izin ver, sana en yakın {title} listeleyeyim.",
+    { title: translatedTitle },
+  );
 
   const actionRow = document.createElement("div");
   actionRow.className = "nearby-action-row";
@@ -2367,7 +2400,7 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
   const triggerButton = document.createElement("button");
   triggerButton.type = "button";
   triggerButton.className = "nearby-action-btn";
-  triggerButton.textContent = "Listele";
+  triggerButton.textContent = translateCategoryUiLabel("Listele");
 
   const status = document.createElement("p");
   status.className = "nearby-action-status";
@@ -2375,18 +2408,18 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
 
   triggerButton.addEventListener("click", async () => {
     triggerButton.disabled = true;
-    status.textContent = "Konum alınıyor...";
+    status.textContent = translateCategoryUiLabel("Konum alınıyor...");
 
     try {
       const nearbyResult = await resolveNearbyVenuesForCurrentLocation(citySourceVenues, NEARBY_VENUE_RESULT_LIMIT);
       if (!Array.isArray(nearbyResult.venues) || nearbyResult.venues.length === 0) {
-        status.textContent = "Listelenecek mekan bulunmamıştır.";
+        status.textContent = translateCategoryUiLabel("Listelenecek mekan bulunmamıştır.");
         return;
       }
 
       const modalApi = ensureNearbyVenuesModal();
       if (!modalApi) {
-        status.textContent = "Liste penceresi açılamadı.";
+        status.textContent = translateCategoryUiLabel("Liste penceresi açılamadı.");
         return;
       }
 
@@ -2399,14 +2432,16 @@ function renderNearbyQuickAction(districtGrid, subcategoryTitle, citySourceVenue
         .join(" / ");
 
       modalApi.open({
-        title: `Yakınındaki ${normalizedTitle}`,
-        subtitle: locationLabel ? `${locationLabel} çevresine göre sıralandı` : "Konumuna göre sıralandı",
+        title: translateCategoryUiTemplate("Yakınındaki {title}", { title: translatedTitle }),
+        subtitle: locationLabel
+          ? translateCategoryUiTemplate("{location} çevresine göre sıralandı", { location: locationLabel })
+          : translateCategoryUiLabel("Konumuna göre sıralandı"),
         venues: nearbyResult.venues,
       });
 
       status.textContent = "";
     } catch (error) {
-      status.textContent = String(error?.message || "Konum bulunamadı.");
+      status.textContent = String(error?.message || translateCategoryUiLabel("Konum bulunamadı."));
     } finally {
       triggerButton.disabled = false;
     }
