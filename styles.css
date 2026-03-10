@@ -696,6 +696,32 @@ main {
   padding: 0.62rem 0.74rem;
 }
 
+.auth-form-inline-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.auth-checkbox-label {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.38rem;
+  margin: 0;
+  font-size: 0.82rem;
+  color: rgba(22, 33, 35, 0.9);
+}
+
+.auth-checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  margin: 0;
+  accent-color: #116466;
+  padding: 0;
+}
+
 .auth-submit {
   margin-top: 0.3rem;
   border: 1px solid #6fc5de;
@@ -720,6 +746,11 @@ main {
   text-align: left;
   padding: 0;
   cursor: pointer;
+}
+
+.auth-inline-link-compact {
+  margin-top: 0;
+  font-size: 0.82rem;
 }
 
 .auth-inline-link:hover,

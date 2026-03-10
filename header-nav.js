@@ -3,6 +3,7 @@
     TR: Object.freeze({
       brand: "aramabul",
       profile: "Profil",
+      close: "Kapat",
       signupTitle: "Kayıt ol",
       signupText: "",
       loginTitle: "Giriş yap",
@@ -14,18 +15,27 @@
       passwordRepeat: "Şifre tekrar",
       signupSubmit: "Kayıt ol",
       loginSubmit: "Giriş yap",
+      forgotPassword: "Şifremi unuttum",
+      rememberEmail: "Beni hatırla (e-posta)",
+      resetTitle: "Şifreyi sıfırla",
+      resetText: "E-posta adresini doğrulayarak yeni şifreni belirle.",
+      resetSubmit: "Şifreyi sıfırla",
+      resetBackToLogin: "Girişe dön",
       errorNameMin: "Ad soyad en az 2 karakter olmalı.",
       errorInvalidEmail: "Geçerli bir e-posta gir.",
       errorPasswordMin: "Şifre en az 6 karakter olmalı.",
       errorPasswordRepeat: "Şifreler eşleşmiyor.",
       errorEmailExists: "Bu e-posta zaten kayıtlı.",
       errorInvalidCredentials: "E-posta veya şifre hatalı.",
+      errorResetUserNotFound: "Bu e-posta ile kayıtlı hesap bulunamadı.",
       errorSecurity: "Tarayıcı güvenlik desteği bulunamadı.",
+      resetSuccess: "Şifre güncellendi. Yeni şifrenle giriş yapabilirsin.",
       alreadyRegisteredUser: "Kayıtlı kullanıcı",
     }),
     EN: Object.freeze({
       brand: "aramabul",
       profile: "Profile",
+      close: "Close",
       signupTitle: "Sign up",
       signupText: "",
       loginTitle: "Sign in",
@@ -37,18 +47,27 @@
       passwordRepeat: "Repeat password",
       signupSubmit: "Sign up",
       loginSubmit: "Sign in",
+      forgotPassword: "Forgot password",
+      rememberEmail: "Remember me (email)",
+      resetTitle: "Reset password",
+      resetText: "Confirm your email and set a new password.",
+      resetSubmit: "Reset password",
+      resetBackToLogin: "Back to sign in",
       errorNameMin: "Your name must be at least 2 characters.",
       errorInvalidEmail: "Enter a valid email.",
       errorPasswordMin: "Password must be at least 6 characters.",
       errorPasswordRepeat: "Passwords do not match.",
       errorEmailExists: "This email is already registered.",
       errorInvalidCredentials: "Email or password is incorrect.",
+      errorResetUserNotFound: "No account is registered with this email.",
       errorSecurity: "Security support is not available in this browser.",
+      resetSuccess: "Password updated. You can sign in with your new password.",
       alreadyRegisteredUser: "Registered user",
     }),
     RU: Object.freeze({
       brand: "aramabul",
       profile: "Профиль",
+      close: "Закрыть",
       signupTitle: "Регистрация",
       signupText: "",
       loginTitle: "Войти",
@@ -60,18 +79,27 @@
       passwordRepeat: "Повторите пароль",
       signupSubmit: "Регистрация",
       loginSubmit: "Войти",
+      forgotPassword: "Забыли пароль",
+      rememberEmail: "Запомнить e-mail",
+      resetTitle: "Сбросить пароль",
+      resetText: "Подтвердите e-mail и задайте новый пароль.",
+      resetSubmit: "Сбросить пароль",
+      resetBackToLogin: "Назад ко входу",
       errorNameMin: "Имя должно быть не короче 2 символов.",
       errorInvalidEmail: "Введите корректный email.",
       errorPasswordMin: "Пароль должен быть не короче 6 символов.",
       errorPasswordRepeat: "Пароли не совпадают.",
       errorEmailExists: "Этот email уже зарегистрирован.",
       errorInvalidCredentials: "Неверный email или пароль.",
+      errorResetUserNotFound: "Аккаунт с таким e-mail не найден.",
       errorSecurity: "В браузере нет нужной защиты.",
+      resetSuccess: "Пароль обновлен. Теперь вы можете войти с новым паролем.",
       alreadyRegisteredUser: "Зарегистрированный пользователь",
     }),
     DE: Object.freeze({
       brand: "aramabul",
       profile: "Profil",
+      close: "Schließen",
       signupTitle: "Registrieren",
       signupText: "",
       loginTitle: "Anmelden",
@@ -83,18 +111,27 @@
       passwordRepeat: "Passwort wiederholen",
       signupSubmit: "Registrieren",
       loginSubmit: "Anmelden",
+      forgotPassword: "Passwort vergessen",
+      rememberEmail: "E-Mail merken",
+      resetTitle: "Passwort zurücksetzen",
+      resetText: "Bestätige deine E-Mail und lege ein neues Passwort fest.",
+      resetSubmit: "Passwort zurücksetzen",
+      resetBackToLogin: "Zurück zur Anmeldung",
       errorNameMin: "Der Name muss mindestens 2 Zeichen lang sein.",
       errorInvalidEmail: "Gib eine gueltige E-Mail ein.",
       errorPasswordMin: "Das Passwort muss mindestens 6 Zeichen lang sein.",
       errorPasswordRepeat: "Die Passwoerter stimmen nicht ueberein.",
       errorEmailExists: "Diese E-Mail ist schon registriert.",
       errorInvalidCredentials: "E-Mail oder Passwort ist falsch.",
+      errorResetUserNotFound: "Kein Konto mit dieser E-Mail gefunden.",
       errorSecurity: "Sicherheitsunterstuetzung ist nicht verfuegbar.",
+      resetSuccess: "Passwort aktualisiert. Du kannst dich jetzt mit dem neuen Passwort anmelden.",
       alreadyRegisteredUser: "Registrierter Benutzer",
     }),
     ZH: Object.freeze({
       brand: "aramabul",
       profile: "个人资料",
+      close: "关闭",
       signupTitle: "注册",
       signupText: "",
       loginTitle: "登录",
@@ -106,18 +143,27 @@
       passwordRepeat: "重复密码",
       signupSubmit: "注册",
       loginSubmit: "登录",
+      forgotPassword: "忘记密码",
+      rememberEmail: "记住我（邮箱）",
+      resetTitle: "重置密码",
+      resetText: "确认邮箱后设置新密码。",
+      resetSubmit: "重置密码",
+      resetBackToLogin: "返回登录",
       errorNameMin: "姓名至少需要 2 个字符。",
       errorInvalidEmail: "请输入有效邮箱。",
       errorPasswordMin: "密码至少需要 6 个字符。",
       errorPasswordRepeat: "两次密码不一致。",
       errorEmailExists: "该邮箱已被注册。",
       errorInvalidCredentials: "邮箱或密码错误。",
+      errorResetUserNotFound: "未找到该邮箱对应的账号。",
       errorSecurity: "当前浏览器缺少安全支持。",
+      resetSuccess: "密码已更新。你现在可以使用新密码登录。",
       alreadyRegisteredUser: "已注册用户",
     }),
   });
 
   let authController = null;
+  const REMEMBERED_LOGIN_EMAIL_KEY = "aramabul.auth.login.rememberedEmail.v1";
 
   function runtime() {
     return window.ARAMABUL_RUNTIME || null;
@@ -184,6 +230,30 @@
     appRuntime.writeAuthSession(session, true);
   }
 
+  function readRememberedLoginEmail() {
+    const appRuntime = runtime();
+    if (!appRuntime || typeof appRuntime.readStorageValue !== "function") {
+      return "";
+    }
+    return normalizeEmail(appRuntime.readStorageValue(REMEMBERED_LOGIN_EMAIL_KEY) || "");
+  }
+
+  function writeRememberedLoginEmail(email) {
+    const appRuntime = runtime();
+    if (!appRuntime || typeof appRuntime.writeStorageValue !== "function") {
+      return;
+    }
+    appRuntime.writeStorageValue(REMEMBERED_LOGIN_EMAIL_KEY, normalizeEmail(email));
+  }
+
+  function clearRememberedLoginEmail() {
+    const appRuntime = runtime();
+    if (!appRuntime || typeof appRuntime.removeStorageValue !== "function") {
+      return;
+    }
+    appRuntime.removeStorageValue(REMEMBERED_LOGIN_EMAIL_KEY);
+  }
+
   function normalizeEmail(value) {
     return String(value || "").trim().toLocaleLowerCase("en-US");
   }
@@ -207,7 +277,7 @@
     modal.setAttribute("aria-hidden", "true");
     modal.innerHTML = `
       <div class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="globalAuthModalTitle">
-        <button id="globalAuthModalClose" class="auth-modal-close" type="button" aria-label="Close">×</button>
+        <button id="globalAuthModalClose" class="auth-modal-close" type="button" aria-label="${copy.close}">×</button>
         <p class="eyebrow auth-modal-brand">${copy.brand}</p>
         <h2 id="globalAuthModalTitle" class="auth-modal-title">${copy.signupTitle}</h2>
         <p id="globalAuthModalText" class="auth-modal-text">${copy.signupText}</p>
@@ -220,7 +290,34 @@
             <span id="globalLoginPasswordLabel">${copy.password}</span>
             <input id="globalLoginPassword" type="password" autocomplete="current-password" required />
           </label>
+          <div class="auth-form-inline-row">
+            <label class="auth-checkbox-label" for="globalLoginRememberEmail">
+              <input id="globalLoginRememberEmail" type="checkbox" />
+              <span id="globalLoginRememberEmailLabel">${copy.rememberEmail}</span>
+            </label>
+            <button id="globalForgotPasswordBtn" class="auth-inline-link auth-inline-link-compact" type="button">
+              ${copy.forgotPassword}
+            </button>
+          </div>
           <button id="globalLoginSubmit" class="auth-submit" type="submit">${copy.loginSubmit}</button>
+        </form>
+        <form id="globalResetForm" class="auth-form is-hidden" novalidate>
+          <label>
+            <span id="globalResetEmailLabel">${copy.email}</span>
+            <input id="globalResetEmail" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            <span id="globalResetPasswordLabel">${copy.password}</span>
+            <input id="globalResetPassword" type="password" autocomplete="new-password" minlength="6" required />
+          </label>
+          <label>
+            <span id="globalResetPasswordRepeatLabel">${copy.passwordRepeat}</span>
+            <input id="globalResetPasswordRepeat" type="password" autocomplete="new-password" minlength="6" required />
+          </label>
+          <button id="globalResetSubmit" class="auth-submit" type="submit">${copy.resetSubmit}</button>
+          <button id="globalResetBackToLogin" class="auth-inline-link" type="button">
+            ${copy.resetBackToLogin}
+          </button>
         </form>
         <button id="globalLoginSignupHint" class="auth-inline-link is-hidden" type="button">
           ${copy.loginNeedsSignup}
@@ -262,9 +359,17 @@
     const text = modal.querySelector("#globalAuthModalText");
     const message = modal.querySelector("#globalAuthMessage");
     const loginForm = modal.querySelector("#globalLoginForm");
+    const resetForm = modal.querySelector("#globalResetForm");
     const signupForm = modal.querySelector("#globalSignupForm");
     const loginEmail = modal.querySelector("#globalLoginEmail");
     const loginPassword = modal.querySelector("#globalLoginPassword");
+    const loginRememberEmail = modal.querySelector("#globalLoginRememberEmail");
+    const forgotPasswordButton = modal.querySelector("#globalForgotPasswordBtn");
+    const resetEmail = modal.querySelector("#globalResetEmail");
+    const resetPassword = modal.querySelector("#globalResetPassword");
+    const resetPasswordRepeat = modal.querySelector("#globalResetPasswordRepeat");
+    const resetSubmit = modal.querySelector("#globalResetSubmit");
+    const resetBackToLogin = modal.querySelector("#globalResetBackToLogin");
     const signupName = modal.querySelector("#globalSignupName");
     const signupEmail = modal.querySelector("#globalSignupEmail");
     const signupPassword = modal.querySelector("#globalSignupPassword");
@@ -276,10 +381,16 @@
       close: closeButton,
       loginEmail: modal.querySelector("#globalLoginEmailLabel"),
       loginPassword: modal.querySelector("#globalLoginPasswordLabel"),
+      loginRememberEmail: modal.querySelector("#globalLoginRememberEmailLabel"),
+      forgotPassword: forgotPasswordButton,
+      resetEmail: modal.querySelector("#globalResetEmailLabel"),
+      resetPassword: modal.querySelector("#globalResetPasswordLabel"),
+      resetPasswordRepeat: modal.querySelector("#globalResetPasswordRepeatLabel"),
       signupName: modal.querySelector("#globalSignupNameLabel"),
       signupEmail: modal.querySelector("#globalSignupEmailLabel"),
       signupPassword: modal.querySelector("#globalSignupPasswordLabel"),
       signupPasswordRepeat: modal.querySelector("#globalSignupPasswordRepeatLabel"),
+      resetBackToLogin,
     };
     const state = {
       mode: "signup",
@@ -297,20 +408,30 @@
 
     function setMode(mode) {
       const copy = authText();
-      const isLoginMode = mode === "login";
-      state.mode = isLoginMode ? "login" : "signup";
+      const normalizedMode = mode === "login" || mode === "reset" ? mode : "signup";
+      const isLoginMode = normalizedMode === "login";
+      const isResetMode = normalizedMode === "reset";
+      const isSignupMode = normalizedMode === "signup";
+      state.mode = normalizedMode;
 
       if (loginForm instanceof HTMLElement) {
         loginForm.classList.toggle("is-hidden", !isLoginMode);
       }
+      if (resetForm instanceof HTMLElement) {
+        resetForm.classList.toggle("is-hidden", !isResetMode);
+      }
       if (signupForm instanceof HTMLElement) {
-        signupForm.classList.toggle("is-hidden", isLoginMode);
+        signupForm.classList.toggle("is-hidden", !isSignupMode);
       }
       if (title instanceof HTMLElement) {
-        title.textContent = isLoginMode ? copy.loginTitle : copy.signupTitle;
+        title.textContent = isLoginMode
+          ? copy.loginTitle
+          : (isResetMode ? copy.resetTitle : copy.signupTitle);
       }
       if (text instanceof HTMLElement) {
-        const nextText = isLoginMode ? copy.loginText : copy.signupText;
+        const nextText = isLoginMode
+          ? copy.loginText
+          : (isResetMode ? copy.resetText : copy.signupText);
         text.textContent = nextText;
         text.classList.toggle("is-hidden", nextText.length === 0);
       }
@@ -325,13 +446,28 @@
       const copy = authText();
 
       if (labelNodes.close instanceof HTMLElement) {
-        labelNodes.close.setAttribute("aria-label", "Close");
+        labelNodes.close.setAttribute("aria-label", copy.close || "Close");
       }
       if (labelNodes.loginEmail instanceof HTMLElement) {
         labelNodes.loginEmail.textContent = copy.email;
       }
       if (labelNodes.loginPassword instanceof HTMLElement) {
         labelNodes.loginPassword.textContent = copy.password;
+      }
+      if (labelNodes.loginRememberEmail instanceof HTMLElement) {
+        labelNodes.loginRememberEmail.textContent = copy.rememberEmail;
+      }
+      if (labelNodes.forgotPassword instanceof HTMLElement) {
+        labelNodes.forgotPassword.textContent = copy.forgotPassword;
+      }
+      if (labelNodes.resetEmail instanceof HTMLElement) {
+        labelNodes.resetEmail.textContent = copy.email;
+      }
+      if (labelNodes.resetPassword instanceof HTMLElement) {
+        labelNodes.resetPassword.textContent = copy.password;
+      }
+      if (labelNodes.resetPasswordRepeat instanceof HTMLElement) {
+        labelNodes.resetPasswordRepeat.textContent = copy.passwordRepeat;
       }
       if (labelNodes.signupName instanceof HTMLElement) {
         labelNodes.signupName.textContent = copy.name;
@@ -348,6 +484,12 @@
       if (loginSubmit instanceof HTMLElement) {
         loginSubmit.textContent = copy.loginSubmit;
       }
+      if (resetSubmit instanceof HTMLElement) {
+        resetSubmit.textContent = copy.resetSubmit;
+      }
+      if (labelNodes.resetBackToLogin instanceof HTMLElement) {
+        labelNodes.resetBackToLogin.textContent = copy.resetBackToLogin;
+      }
       if (loginSignupHint instanceof HTMLElement) {
         loginSignupHint.textContent = copy.loginNeedsSignup;
       }
@@ -361,6 +503,11 @@
     function focusCurrentField() {
       if (state.mode === "login" && loginEmail instanceof HTMLInputElement) {
         loginEmail.focus();
+        return;
+      }
+
+      if (state.mode === "reset" && resetEmail instanceof HTMLInputElement) {
+        resetEmail.focus();
         return;
       }
 
@@ -391,6 +538,20 @@
 
       state.lastTrigger = trigger instanceof HTMLElement ? trigger : document.activeElement;
       setMode(mode);
+
+      if (state.mode === "login") {
+        const rememberedEmail = readRememberedLoginEmail();
+        if (loginEmail instanceof HTMLInputElement) {
+          loginEmail.value = rememberedEmail || "";
+        }
+        if (loginRememberEmail instanceof HTMLInputElement) {
+          loginRememberEmail.checked = Boolean(rememberedEmail);
+        }
+        if (loginPassword instanceof HTMLInputElement) {
+          loginPassword.value = "";
+        }
+      }
+
       modal.classList.remove("is-hidden");
       modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
@@ -406,6 +567,10 @@
 
       const copy = authText();
       const email = normalizeEmail(loginEmail.value);
+      if (!email.includes("@") || email.length < 6) {
+        setMessage(copy.errorInvalidEmail, true);
+        return;
+      }
       const passwordHash = await hashPassword(loginPassword.value);
       if (!passwordHash) {
         setMessage(copy.errorSecurity, true);
@@ -420,11 +585,79 @@
         return;
       }
 
+      if (loginRememberEmail instanceof HTMLInputElement && loginRememberEmail.checked) {
+        writeRememberedLoginEmail(email);
+      } else {
+        clearRememberedLoginEmail();
+      }
+
       writeSession({
         name: matchedUser.name.trim().slice(0, 40),
         email: normalizeEmail(matchedUser.email),
       });
       close();
+    }
+
+    async function handleResetSubmit(event) {
+      event.preventDefault();
+
+      if (
+        !(resetEmail instanceof HTMLInputElement) ||
+        !(resetPassword instanceof HTMLInputElement) ||
+        !(resetPasswordRepeat instanceof HTMLInputElement)
+      ) {
+        return;
+      }
+
+      const copy = authText();
+      const email = normalizeEmail(resetEmail.value);
+      const password = String(resetPassword.value || "");
+      const repeated = String(resetPasswordRepeat.value || "");
+
+      if (!email.includes("@") || email.length < 6) {
+        setMessage(copy.errorInvalidEmail, true);
+        return;
+      }
+      if (password.length < 6) {
+        setMessage(copy.errorPasswordMin, true);
+        return;
+      }
+      if (password !== repeated) {
+        setMessage(copy.errorPasswordRepeat, true);
+        return;
+      }
+
+      const users = readUsers();
+      const index = users.findIndex((user) => normalizeEmail(user.email) === email);
+      if (index < 0) {
+        setMessage(copy.errorResetUserNotFound, true);
+        return;
+      }
+
+      const passwordHash = await hashPassword(password);
+      if (!passwordHash) {
+        setMessage(copy.errorSecurity, true);
+        return;
+      }
+
+      users[index] = {
+        ...users[index],
+        passwordHash,
+      };
+      writeUsers(users);
+
+      setMode("login");
+      if (loginEmail instanceof HTMLInputElement) {
+        loginEmail.value = email;
+      }
+      if (loginPassword instanceof HTMLInputElement) {
+        loginPassword.value = "";
+      }
+      if (loginRememberEmail instanceof HTMLInputElement) {
+        loginRememberEmail.checked = Boolean(readRememberedLoginEmail());
+      }
+
+      setMessage(copy.resetSuccess);
     }
 
     async function handleSignupSubmit(event) {
@@ -502,8 +735,35 @@
     if (loginForm instanceof HTMLFormElement) {
       loginForm.addEventListener("submit", handleLoginSubmit);
     }
+    if (resetForm instanceof HTMLFormElement) {
+      resetForm.addEventListener("submit", handleResetSubmit);
+    }
     if (signupForm instanceof HTMLFormElement) {
       signupForm.addEventListener("submit", handleSignupSubmit);
+    }
+    if (forgotPasswordButton instanceof HTMLButtonElement) {
+      forgotPasswordButton.addEventListener("click", () => {
+        if (resetEmail instanceof HTMLInputElement && loginEmail instanceof HTMLInputElement) {
+          resetEmail.value = normalizeEmail(loginEmail.value);
+        }
+        if (resetPassword instanceof HTMLInputElement) {
+          resetPassword.value = "";
+        }
+        if (resetPasswordRepeat instanceof HTMLInputElement) {
+          resetPasswordRepeat.value = "";
+        }
+        setMode("reset");
+        window.requestAnimationFrame(focusCurrentField);
+      });
+    }
+    if (resetBackToLogin instanceof HTMLButtonElement) {
+      resetBackToLogin.addEventListener("click", () => {
+        if (resetEmail instanceof HTMLInputElement && loginEmail instanceof HTMLInputElement) {
+          loginEmail.value = normalizeEmail(resetEmail.value);
+        }
+        setMode("login");
+        window.requestAnimationFrame(focusCurrentField);
+      });
     }
     if (loginSignupHint instanceof HTMLButtonElement) {
       loginSignupHint.addEventListener("click", () => {
