@@ -605,6 +605,20 @@ const CATEGORY_DEFINITIONS = {
         title: "Akaryakıt İstasyonları",
         countLabel: "akaryakıt istasyonu",
       },
+      {
+        source: "quaternary",
+        title: "Bankalar",
+        countLabel: "banka",
+        href: "banka.html",
+        showCount: false,
+      },
+      {
+        source: "quinary",
+        title: "Marketler",
+        countLabel: "market",
+        href: "market.html",
+        showCount: false,
+      },
     ],
     useDistrictCatalog: true,
     matcherKeywords: [
@@ -1223,6 +1237,7 @@ const DYNAMIC_CATEGORY_LABEL_TRANSLATIONS = {
     "Yat Limanı": "Marina",
     "Yat Yanaşma Yeri": "Yacht Berthing Area",
     "Deniz Turizmi Araçları": "Marine Tourism Vehicles",
+    Marketler: "Markets",
   },
   RU: {
     "Resmi Tesis Türleri": "Официальные типы объектов",
@@ -1258,6 +1273,7 @@ const DYNAMIC_CATEGORY_LABEL_TRANSLATIONS = {
     "Yat Limanı": "Марина",
     "Yat Yanaşma Yeri": "Место швартовки яхт",
     "Deniz Turizmi Araçları": "Средства морского туризма",
+    Marketler: "Маркеты",
   },
   DE: {
     "Resmi Tesis Türleri": "Offizielle Anlagetypen",
@@ -1293,6 +1309,7 @@ const DYNAMIC_CATEGORY_LABEL_TRANSLATIONS = {
     "Yat Limanı": "Yachthafen",
     "Yat Yanaşma Yeri": "Yacht-Anlegestelle",
     "Deniz Turizmi Araçları": "Fahrzeuge für Meerestourismus",
+    Marketler: "Märkte",
   },
   ZH: {
     "Resmi Tesis Türleri": "官方设施类型",
@@ -1328,6 +1345,7 @@ const DYNAMIC_CATEGORY_LABEL_TRANSLATIONS = {
     "Yat Limanı": "游艇码头",
     "Yat Yanaşma Yeri": "游艇靠泊点",
     "Deniz Turizmi Araçları": "海上旅游载具",
+    Marketler: "市场",
   },
 };
 
@@ -2976,9 +2994,19 @@ function renderRootPage(
                     : venues;
       const chip = document.createElement("a");
       chip.className = "province-pill yemek-pill yemek-pill-link";
-      chip.href = `${definition.pageBase}-city.html?tur=${encodeURIComponent(item.source)}`;
-      chip.textContent = `${translateCategoryUiLabel(item.title)} (${sourceVenues.length})`;
-      chip.setAttribute("aria-label", `${item.title} listesini aç`);
+      const explicitHref = String(item.href || "").trim();
+      const translatedTitle = translateCategoryUiLabel(item.title);
+      const shouldShowCount = item.showCount !== false;
+      chip.href = explicitHref || `${definition.pageBase}-city.html?tur=${encodeURIComponent(item.source)}`;
+      chip.textContent = shouldShowCount
+        ? `${translatedTitle} (${sourceVenues.length})`
+        : translatedTitle;
+      chip.setAttribute(
+        "aria-label",
+        shouldShowCount
+          ? `${item.title} listesini aç`
+          : `${item.title} sayfasını aç`,
+      );
       chips.append(chip);
     });
 

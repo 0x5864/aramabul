@@ -214,7 +214,7 @@
 
     if (emailVerificationState.verified && emailVerificationState.email === sessionEmail) {
       accountEmailVerifyBtn.disabled = true;
-      accountEmailVerifyBtn.textContent = translateUi("Doğrulandı");
+      accountEmailVerifyBtn.hidden = true;
       setVerificationMessage(translateUi("E-posta adresin doğrulandı."), false);
       return;
     }
