@@ -618,6 +618,7 @@ const CATEGORY_DEFINITIONS = {
         countLabel: "market",
         href: "market.html",
         showCount: false,
+        newTab: true,
       },
     ],
     useDistrictCatalog: true,
@@ -2998,6 +2999,10 @@ function renderRootPage(
       const translatedTitle = translateCategoryUiLabel(item.title);
       const shouldShowCount = item.showCount !== false;
       chip.href = explicitHref || `${definition.pageBase}-city.html?tur=${encodeURIComponent(item.source)}`;
+      if (item.newTab === true) {
+        chip.target = "_blank";
+        chip.rel = "noopener noreferrer";
+      }
       chip.textContent = shouldShowCount
         ? `${translatedTitle} (${sourceVenues.length})`
         : translatedTitle;

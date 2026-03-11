@@ -198,6 +198,7 @@
       "Geçerli bir e-posta gir.": "Enter a valid email.",
       "Bu e-posta başka bir hesapta kayıtlı.": "This email is already used by another account.",
       "Hesap bilgileri kaydedildi.": "Account details saved.",
+      "E-posta adresin doğrulandı.": "Your email address has been verified.",
       "Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap.":
         "Account security could not be verified. Please sign out and sign in again.",
       "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "Please fill in name, email, subject, and message.",
@@ -404,6 +405,7 @@
       "Geçerli bir e-posta gir.": "Введите корректный e-mail.",
       "Bu e-posta başka bir hesapta kayıtlı.": "Этот e-mail уже используется в другом аккаунте.",
       "Hesap bilgileri kaydedildi.": "Данные аккаунта сохранены.",
+      "E-posta adresin doğrulandı.": "Ваш адрес электронной почты подтвержден.",
       "Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap.":
         "Безопасность аккаунта не подтверждена. Выйдите и войдите снова.",
       "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "Заполните поля: имя, e-mail, тема и сообщение.",
@@ -610,6 +612,7 @@
       "Geçerli bir e-posta gir.": "Bitte gib eine gültige E-Mail ein.",
       "Bu e-posta başka bir hesapta kayıtlı.": "Diese E-Mail wird bereits von einem anderen Konto verwendet.",
       "Hesap bilgileri kaydedildi.": "Kontodaten gespeichert.",
+      "E-posta adresin doğrulandı.": "Deine E-Mail-Adresse wurde bestätigt.",
       "Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap.":
         "Kontosicherheit konnte nicht bestätigt werden. Bitte abmelden und erneut anmelden.",
       "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "Bitte fülle Name, E-Mail, Betreff und Nachricht aus.",
@@ -816,6 +819,7 @@
       "Geçerli bir e-posta gir.": "请输入有效邮箱。",
       "Bu e-posta başka bir hesapta kayıtlı.": "该邮箱已被其他账号使用。",
       "Hesap bilgileri kaydedildi.": "账户信息已保存。",
+      "E-posta adresin doğrulandı.": "你的电子邮件地址已验证。",
       "Hesap güvenliği doğrulanamadı. Lütfen çıkış yapıp yeniden giriş yap.":
         "无法验证账户安全。请退出后重新登录。",
       "Lütfen ad, e-posta, konu ve mesaj alanlarını doldur.": "请填写姓名、邮箱、主题和消息。",
