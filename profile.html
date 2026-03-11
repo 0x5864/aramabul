@@ -71,6 +71,7 @@
             href="profile.html?action=password"
             data-settings-panel-trigger="password"
             aria-label="Şifre Değişikliği"
+            data-i18n-aria-label="Şifre Değişikliği"
           >
             <span class="settings-row-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
@@ -79,7 +80,7 @@
                 <circle cx="12" cy="15" r="1"></circle>
               </svg>
             </span>
-            <span class="settings-row-label">Şifre Değişikliği</span>
+            <span class="settings-row-label" data-i18n="Şifre Değişikliği">Şifre Değişikliği</span>
             <span class="settings-row-chevron" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="m9 5 7 7-7 7"></path>
@@ -180,26 +181,26 @@
             </form>
           </section>
 
-          <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="password" aria-label="Şifre değişikliği" hidden>
+          <section class="settings-card settings-panel-card account-editor-card" data-settings-panel="password" aria-label="Şifre değişikliği" data-i18n-aria-label="Şifre değişikliği" hidden>
             <div class="language-card-head">
-              <h2>Şifre değişikliği</h2>
-              <p>Önce e-posta bağlantısı al, bağlantıdan açılan ekranda yeni şifreni belirle.</p>
+              <h2 data-i18n="Şifre değişikliği">Şifre değişikliği</h2>
+              <p data-i18n="Önce e-posta bağlantısı al, bağlantıdan açılan ekranda yeni şifreni belirle.">Önce e-posta bağlantısı al, bağlantıdan açılan ekranda yeni şifreni belirle.</p>
             </div>
             <div id="accountPasswordRequestBlock" class="settings-signup-form">
-              <button id="accountPasswordRequestBtn" class="settings-signup-submit" type="button">Şifre değişikliği e-postası gönder</button>
+              <button id="accountPasswordRequestBtn" class="settings-signup-submit" type="button" data-i18n="Şifre değişikliği e-postası gönder">Şifre değişikliği e-postası gönder</button>
             </div>
             <form id="accountPasswordForm" class="settings-signup-form" novalidate hidden>
               <label class="settings-signup-field">
-                <span>Yeni şifre</span>
+                <span data-i18n="Yeni şifre">Yeni şifre</span>
                 <input id="accountNewPasswordInput" type="password" autocomplete="new-password" minlength="6" required />
               </label>
               <label class="settings-signup-field">
-                <span>Yeni şifre tekrar</span>
+                <span data-i18n="Yeni şifre tekrar">Yeni şifre tekrar</span>
                 <input id="accountNewPasswordRepeatInput" type="password" autocomplete="new-password" minlength="6" required />
               </label>
               <p id="accountPasswordMessage" class="settings-signup-message" aria-live="polite"></p>
               <div class="account-settings-actions account-password-actions">
-                <button id="accountPasswordSaveBtn" class="settings-signup-submit" type="submit">Şifreyi güncelle</button>
+                <button id="accountPasswordSaveBtn" class="settings-signup-submit" type="submit" data-i18n="Şifreyi güncelle">Şifreyi güncelle</button>
               </div>
             </form>
             <p id="accountPasswordTokenHint" class="settings-signup-message" aria-live="polite"></p>

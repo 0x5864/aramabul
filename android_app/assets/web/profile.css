@@ -228,6 +228,10 @@
   border-color: #fffdf8;
 }
 
+.settings-page .settings-panel-stack .settings-card {
+  border-color: #fffdf8;
+}
+
 .settings-page .settings-card,
 .settings-page .settings-row,
 .settings-page .settings-signout,
@@ -839,6 +843,10 @@ body.theme-dark .settings-row {
   border-color: var(--line);
 }
 
+body.theme-dark .settings-page .settings-panel-stack .settings-card {
+  border-color: #fffdf8;
+}
+
 body.theme-dark .settings-account-head p {
   color: rgba(22, 33, 35, 0.66);
 }
@@ -1016,6 +1024,7 @@ body.theme-dark .settings-row:active {
 
   .settings-panel-stack .settings-card {
     border-left-width: 1px !important;
+    border-color: #fffdf8 !important;
   }
 
   .settings-panel-stack .settings-card + .settings-card {
@@ -1066,6 +1075,7 @@ body.settings-page.settings-force-mobile .settings-sidebar-card {
 
 body.settings-page.settings-force-mobile .settings-panel-stack .settings-card {
   border-left-width: 1px !important;
+  border-color: #fffdf8 !important;
 }
 
 body.settings-page.settings-force-mobile .settings-panel-stack .settings-card + .settings-card {

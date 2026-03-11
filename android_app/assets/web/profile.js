@@ -54,6 +54,140 @@
     hintText: "",
     hintIsError: false,
   };
+  const PROFILE_TRANSLATIONS = Object.freeze({
+    EN: Object.freeze({
+      "Şifre Değişikliği": "Password Change",
+      "Şifre değişikliği": "Password change",
+      "Önce e-posta bağlantısı al, bağlantıdan açılan ekranda yeni şifreni belirle.": "First get an email link, then set your new password on the page opened by that link.",
+      "Şifre değişikliği e-postası gönder": "Send password change email",
+      "Yeni şifre": "New password",
+      "Yeni şifre tekrar": "Repeat new password",
+      "Şifreyi güncelle": "Update password",
+      "Gönderiliyor...": "Sending...",
+      "Bağlantı doğrulanıyor...": "Verifying link...",
+      "Bağlantı doğrulandı. Yeni şifreni belirleyebilirsin.": "Link verified. You can set your new password.",
+      "Şifre değişikliği için önce giriş yap.": "Sign in first to change your password.",
+      "E-posta bağlantısı 20 dakika boyunca geçerlidir.": "Email link is valid for 20 minutes.",
+      "Geçerli bir e-posta bulunamadı.": "A valid email address was not found.",
+      "Çok fazla istek gönderildi. Biraz sonra tekrar dene.": "Too many requests. Try again shortly.",
+      "E-posta servisi şu an kullanılamıyor.": "Email service is currently unavailable.",
+      "Şifre değişikliği e-postası gönderilemedi.": "Password change email could not be sent.",
+      "Şifre değişikliği bağlantısı e-posta adresine gönderildi.": "Password change link was sent to your email address.",
+      "Bağlantı geçersiz veya süresi dolmuş. Yeni bağlantı iste.": "Link is invalid or expired. Request a new one.",
+      "Bağlantı doğrulanamadı. Lütfen tekrar dene.": "Could not verify the link. Please try again.",
+      "Bağlantı doğrulandı ancak e-posta bilgisi alınamadı.": "Link was verified but email information could not be read.",
+      "Bağlantı doğrulanamadı.": "Link could not be verified.",
+      "Kayıtlı oturum yok. Önce kayıt ol.": "No active session. Sign up first.",
+      "Şifre değiştirmek için önce giriş yap.": "Sign in first to change your password.",
+      "Önce e-postadaki bağlantıyı aç.": "Open the link in your email first.",
+      "Yeni şifre en az 6 karakter olmalı.": "New password must be at least 6 characters.",
+      "Yeni şifreler eşleşmiyor.": "New passwords do not match.",
+      "Bu e-posta için kayıtlı yerel hesap bulunamadı.": "No local account found for this email.",
+      "Tarayıcı güvenlik desteği bulunamadı.": "Browser security support is not available.",
+      "Yeni şifre mevcut şifre ile aynı olamaz.": "New password cannot be the same as the current password.",
+      "Şifre güncellendi. Gerekirse yeni bağlantı isteyebilirsin.": "Password updated. You can request a new link if needed.",
+      "Şifren güncellendi. Yeni şifrenle giriş yapabilirsin.": "Your password was updated. You can sign in with your new password.",
+    }),
+    RU: Object.freeze({
+      "Şifre Değişikliği": "Смена пароля",
+      "Şifre değişikliği": "Смена пароля",
+      "Önce e-posta bağlantısı al, bağlantıdan açılan ekranda yeni şifreni belirle.": "Сначала получите ссылку по e-mail, затем задайте новый пароль на открывшейся странице.",
+      "Şifre değişikliği e-postası gönder": "Отправить письмо для смены пароля",
+      "Yeni şifre": "Новый пароль",
+      "Yeni şifre tekrar": "Повторите новый пароль",
+      "Şifreyi güncelle": "Обновить пароль",
+      "Gönderiliyor...": "Отправка...",
+      "Bağlantı doğrulanıyor...": "Проверка ссылки...",
+      "Bağlantı doğrulandı. Yeni şifreni belirleyebilirsin.": "Ссылка подтверждена. Теперь можно задать новый пароль.",
+      "Şifre değişikliği için önce giriş yap.": "Сначала войдите, чтобы сменить пароль.",
+      "E-posta bağlantısı 20 dakika boyunca geçerlidir.": "Ссылка из e-mail действует 20 минут.",
+      "Geçerli bir e-posta bulunamadı.": "Не найден корректный e-mail.",
+      "Çok fazla istek gönderildi. Biraz sonra tekrar dene.": "Слишком много запросов. Попробуйте позже.",
+      "E-posta servisi şu an kullanılamıyor.": "Почтовый сервис сейчас недоступен.",
+      "Şifre değişikliği e-postası gönderilemedi.": "Не удалось отправить письмо для смены пароля.",
+      "Şifre değişikliği bağlantısı e-posta adresine gönderildi.": "Ссылка для смены пароля отправлена на ваш e-mail.",
+      "Bağlantı geçersiz veya süresi dolmuş. Yeni bağlantı iste.": "Ссылка недействительна или истекла. Запросите новую.",
+      "Bağlantı doğrulanamadı. Lütfen tekrar dene.": "Не удалось проверить ссылку. Попробуйте снова.",
+      "Bağlantı doğrulandı ancak e-posta bilgisi alınamadı.": "Ссылка подтверждена, но e-mail не удалось получить.",
+      "Bağlantı doğrulanamadı.": "Ссылка не проверена.",
+      "Kayıtlı oturum yok. Önce kayıt ol.": "Активной сессии нет. Сначала зарегистрируйтесь.",
+      "Şifre değiştirmek için önce giriş yap.": "Сначала войдите, чтобы сменить пароль.",
+      "Önce e-postadaki bağlantıyı aç.": "Сначала откройте ссылку из письма.",
+      "Yeni şifre en az 6 karakter olmalı.": "Новый пароль должен быть не короче 6 символов.",
+      "Yeni şifreler eşleşmiyor.": "Новые пароли не совпадают.",
+      "Bu e-posta için kayıtlı yerel hesap bulunamadı.": "Для этого e-mail не найден локальный аккаунт.",
+      "Tarayıcı güvenlik desteği bulunamadı.": "В браузере недоступна поддержка безопасности.",
+      "Yeni şifre mevcut şifre ile aynı olamaz.": "Новый пароль не может совпадать с текущим.",
+      "Şifre güncellendi. Gerekirse yeni bağlantı isteyebilirsin.": "Пароль обновлён. При необходимости запросите новую ссылку.",
+      "Şifren güncellendi. Yeni şifrenle giriş yapabilirsin.": "Пароль обновлён. Теперь можно войти с новым паролем.",
+    }),
+    DE: Object.freeze({
+      "Şifre Değişikliği": "Passwort ändern",
+      "Şifre değişikliği": "Passwort ändern",
+      "Önce e-posta bağlantısı al, bağlantıdan açılan ekranda yeni şifreni belirle.": "Hole zuerst einen E-Mail-Link und lege dann auf der geöffneten Seite dein neues Passwort fest.",
+      "Şifre değişikliği e-postası gönder": "E-Mail zum Passwort ändern senden",
+      "Yeni şifre": "Neues Passwort",
+      "Yeni şifre tekrar": "Neues Passwort wiederholen",
+      "Şifreyi güncelle": "Passwort aktualisieren",
+      "Gönderiliyor...": "Wird gesendet...",
+      "Bağlantı doğrulanıyor...": "Link wird geprüft...",
+      "Bağlantı doğrulandı. Yeni şifreni belirleyebilirsin.": "Link bestätigt. Du kannst dein neues Passwort festlegen.",
+      "Şifre değişikliği için önce giriş yap.": "Melde dich zuerst an, um das Passwort zu ändern.",
+      "E-posta bağlantısı 20 dakika boyunca geçerlidir.": "Der E-Mail-Link ist 20 Minuten gültig.",
+      "Geçerli bir e-posta bulunamadı.": "Keine gültige E-Mail gefunden.",
+      "Çok fazla istek gönderildi. Biraz sonra tekrar dene.": "Zu viele Anfragen. Bitte später erneut versuchen.",
+      "E-posta servisi şu an kullanılamıyor.": "E-Mail-Dienst ist derzeit nicht verfügbar.",
+      "Şifre değişikliği e-postası gönderilemedi.": "E-Mail zum Passwort ändern konnte nicht gesendet werden.",
+      "Şifre değişikliği bağlantısı e-posta adresine gönderildi.": "Der Link zum Passwort ändern wurde an deine E-Mail gesendet.",
+      "Bağlantı geçersiz veya süresi dolmuş. Yeni bağlantı iste.": "Link ist ungültig oder abgelaufen. Fordere einen neuen an.",
+      "Bağlantı doğrulanamadı. Lütfen tekrar dene.": "Link konnte nicht bestätigt werden. Bitte erneut versuchen.",
+      "Bağlantı doğrulandı ancak e-posta bilgisi alınamadı.": "Link bestätigt, aber E-Mail-Information konnte nicht gelesen werden.",
+      "Bağlantı doğrulanamadı.": "Link konnte nicht bestätigt werden.",
+      "Kayıtlı oturum yok. Önce kayıt ol.": "Keine aktive Sitzung. Bitte zuerst registrieren.",
+      "Şifre değiştirmek için önce giriş yap.": "Melde dich zuerst an, um das Passwort zu ändern.",
+      "Önce e-postadaki bağlantıyı aç.": "Öffne zuerst den Link in deiner E-Mail.",
+      "Yeni şifre en az 6 karakter olmalı.": "Neues Passwort muss mindestens 6 Zeichen lang sein.",
+      "Yeni şifreler eşleşmiyor.": "Neue Passwörter stimmen nicht überein.",
+      "Bu e-posta için kayıtlı yerel hesap bulunamadı.": "Kein lokales Konto für diese E-Mail gefunden.",
+      "Tarayıcı güvenlik desteği bulunamadı.": "Browser-Sicherheitsunterstützung ist nicht verfügbar.",
+      "Yeni şifre mevcut şifre ile aynı olamaz.": "Neues Passwort darf nicht mit dem aktuellen übereinstimmen.",
+      "Şifre güncellendi. Gerekirse yeni bağlantı isteyebilirsin.": "Passwort aktualisiert. Bei Bedarf kannst du einen neuen Link anfordern.",
+      "Şifren güncellendi. Yeni şifrenle giriş yapabilirsin.": "Dein Passwort wurde aktualisiert. Du kannst dich mit dem neuen Passwort anmelden.",
+    }),
+    ZH: Object.freeze({
+      "Şifre Değişikliği": "修改密码",
+      "Şifre değişikliği": "修改密码",
+      "Önce e-posta bağlantısı al, bağlantıdan açılan ekranda yeni şifreni belirle.": "请先获取邮件链接，然后在打开的页面设置新密码。",
+      "Şifre değişikliği e-postası gönder": "发送修改密码邮件",
+      "Yeni şifre": "新密码",
+      "Yeni şifre tekrar": "再次输入新密码",
+      "Şifreyi güncelle": "更新密码",
+      "Gönderiliyor...": "发送中...",
+      "Bağlantı doğrulanıyor...": "正在验证链接...",
+      "Bağlantı doğrulandı. Yeni şifreni belirleyebilirsin.": "链接已验证。你现在可以设置新密码。",
+      "Şifre değişikliği için önce giriş yap.": "请先登录后再修改密码。",
+      "E-posta bağlantısı 20 dakika boyunca geçerlidir.": "邮件链接有效期为20分钟。",
+      "Geçerli bir e-posta bulunamadı.": "未找到有效邮箱地址。",
+      "Çok fazla istek gönderildi. Biraz sonra tekrar dene.": "请求过多，请稍后再试。",
+      "E-posta servisi şu an kullanılamıyor.": "邮件服务当前不可用。",
+      "Şifre değişikliği e-postası gönderilemedi.": "无法发送修改密码邮件。",
+      "Şifre değişikliği bağlantısı e-posta adresine gönderildi.": "修改密码链接已发送到你的邮箱。",
+      "Bağlantı geçersiz veya süresi dolmuş. Yeni bağlantı iste.": "链接无效或已过期，请重新申请新链接。",
+      "Bağlantı doğrulanamadı. Lütfen tekrar dene.": "无法验证链接，请重试。",
+      "Bağlantı doğrulandı ancak e-posta bilgisi alınamadı.": "链接已验证，但无法读取邮箱信息。",
+      "Bağlantı doğrulanamadı.": "链接验证失败。",
+      "Kayıtlı oturum yok. Önce kayıt ol.": "没有活动会话，请先注册。",
+      "Şifre değiştirmek için önce giriş yap.": "请先登录后再修改密码。",
+      "Önce e-postadaki bağlantıyı aç.": "请先打开邮件中的链接。",
+      "Yeni şifre en az 6 karakter olmalı.": "新密码至少需要6个字符。",
+      "Yeni şifreler eşleşmiyor.": "两次新密码不一致。",
+      "Bu e-posta için kayıtlı yerel hesap bulunamadı.": "未找到该邮箱对应的本地账户。",
+      "Tarayıcı güvenlik desteği bulunamadı.": "浏览器不支持所需安全功能。",
+      "Yeni şifre mevcut şifre ile aynı olamaz.": "新密码不能与当前密码相同。",
+      "Şifre güncellendi. Gerekirse yeni bağlantı isteyebilirsin.": "密码已更新，如有需要可重新申请链接。",
+      "Şifren güncellendi. Yeni şifrenle giriş yapabilirsin.": "密码已更新，你可以使用新密码登录。",
+    }),
+  });
   const FEEDBACK_TARGETS = Object.freeze({
     destek: {
       address: "destek@aramabul.com",
@@ -103,11 +237,35 @@
   function translateUi(text) {
     const i18n = window.ARAMABUL_HEADER_I18N;
     const source = String(text || "");
+    const lang = typeof window.ARAMABUL_GET_LANGUAGE === "function"
+      ? String(window.ARAMABUL_GET_LANGUAGE() || "TR").toUpperCase()
+      : "TR";
+    const localPack = PROFILE_TRANSLATIONS[lang];
+    if (localPack && Object.prototype.hasOwnProperty.call(localPack, source)) {
+      return localPack[source];
+    }
     if (i18n && typeof i18n.getStaticUiTranslation === "function") {
-      const lang = typeof window.ARAMABUL_GET_LANGUAGE === "function" ? window.ARAMABUL_GET_LANGUAGE() : "TR";
       return i18n.getStaticUiTranslation(source, lang);
     }
     return source;
+  }
+
+  function applyStaticTranslations() {
+    document.querySelectorAll("[data-i18n]").forEach((node) => {
+      const key = node.getAttribute("data-i18n");
+      if (!key) {
+        return;
+      }
+      node.textContent = translateUi(key);
+    });
+
+    document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+      const key = node.getAttribute("data-i18n-aria-label");
+      if (!key) {
+        return;
+      }
+      node.setAttribute("aria-label", translateUi(key));
+    });
   }
 
   function readTheme() {
@@ -1033,6 +1191,7 @@
   });
 
   applyTheme(readTheme(), false);
+  applyStaticTranslations();
   applyForcedMobileLayoutClass();
   renderAccount();
   normalizeLegacySignupRoute();
@@ -1043,6 +1202,10 @@
   window.addEventListener("orientationchange", applyForcedMobileLayoutClass);
 
   document.addEventListener("aramabul:authchange", () => {
+    renderAccount();
+  });
+  document.addEventListener("aramabul:languagechange", () => {
+    applyStaticTranslations();
     renderAccount();
   });
   window.addEventListener("focus", () => {
