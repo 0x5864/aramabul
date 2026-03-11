@@ -22,6 +22,8 @@
     "/account-settings.html",
     "/language-settings.html",
     "/feedback-settings.html",
+    "/help-settings.html",
+    "/about-settings.html",
     "/restaurant.html",
     "/verify-email.html",
   ]);

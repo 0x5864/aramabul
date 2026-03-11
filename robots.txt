@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /android_app/
+Disallow: /data/
 
 Sitemap: https://aramabul.com/sitemap.xml

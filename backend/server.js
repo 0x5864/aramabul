@@ -1712,8 +1712,13 @@ const seoNoindexPaths = new Set([
   "/account-settings.html",
   "/language-settings.html",
   "/feedback-settings.html",
+  "/help-settings.html",
+  "/about-settings.html",
   "/restaurant.html",
   "/verify-email.html",
+]);
+const blockedPublicPathPrefixes = Object.freeze([
+  "/android_app/",
 ]);
 
 const canonicalParamSources = Object.freeze({
@@ -1788,6 +1793,20 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+  if (blockedPublicPathPrefixes.some((prefix) => req.path.startsWith(prefix))) {
+    res.status(404).type("text/plain").send("Sayfa bulunamadı");
+    return;
+  }
+
+  if (req.path.startsWith("/data/") && req.path.endsWith(".html")) {
+    res.status(404).type("text/plain").send("Sayfa bulunamadı");
+    return;
+  }
+
+  next();
+});
+
+app.use((req, res, next) => {
   if (req.method !== "GET" && req.method !== "HEAD") {
     next();
     return;
@@ -1820,6 +1839,10 @@ app.use(
     index: false,
     maxAge: staticCacheMaxAge,
     setHeaders(res, filePath) {
+      const normalizedPath = filePath.split(path.sep).join("/");
+      if (normalizedPath.includes("/data/")) {
+        res.setHeader("X-Robots-Tag", "noindex, nofollow");
+      }
       if (filePath.endsWith(".html") || filePath.endsWith(".js") || filePath.endsWith(".json")) {
         res.setHeader("Cache-Control", "no-store");
       }
