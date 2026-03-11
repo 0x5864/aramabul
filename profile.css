@@ -155,6 +155,7 @@
 
 .settings-sidebar-card .settings-row {
   border-radius: 0;
+  background: var(--bg);
 }
 
 .settings-sidebar-card .settings-row:last-of-type {
