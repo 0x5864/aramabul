@@ -108,15 +108,15 @@ const MARKET_WEBSITES = {
   Metromall: "https://www.metromall.com.tr",
   "Gürmar": "https://www.gurmar.com.tr",
   "Pehlivanoğlu": "https://www.pehlivanoglu.com.tr",
-  "Meydan AVM Market": "https://www.google.com/search?q=Meydan+AVM+Market+resmi+web+sitesi",
-  "Sarıyer Market": "https://www.google.com/search?q=Sar%C4%B1yer+Market+resmi+web+sitesi",
+  "Meydan AVM Market": "https://www.meydanavmshop.com",
+  "Sarıyer Market": "https://www.sariyermarket.com",
   "Kiler Market": "https://www.kiler.com.tr",
   "İsmar": "https://www.ismar.com.tr",
   Seyhanlar: "https://www.seyhanlar.com.tr",
   "Özdilek Hipermarket": "https://www.ozdilekteyim.com",
   "Makro Market": "https://www.makromarket.com.tr",
   "Yimpaş Market": "https://www.yimpas.com.tr",
-  "Yöre Market": "https://www.google.com/search?q=Y%C3%B6re+Market+resmi+web+sitesi",
+  "Yöre Market": "https://www.yoremarket.com",
   "Mopaş Gross": "https://www.mopas.com.tr",
 };
 
@@ -195,7 +195,7 @@ function renderMarketGroups() {
       const chip = document.createElement("a");
       chip.className = "province-pill market-pill market-pill-link";
       chip.href = marketWebsiteUrl(marketName);
-      chip.target = "_self";
+      chip.target = "_blank";
       chip.rel = "noopener noreferrer";
       chip.textContent = marketName;
       chip.setAttribute("aria-label", `${marketName} web sitesini yeni sekmede aç`);
