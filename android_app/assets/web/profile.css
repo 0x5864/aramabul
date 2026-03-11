@@ -156,10 +156,11 @@
 .settings-sidebar-card .settings-row {
   border-radius: 0;
   background: var(--bg);
+  border-color: #fffdf8;
 }
 
 .settings-sidebar-card .settings-row:last-of-type {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid #fffdf8;
 }
 
 .settings-sidebar-card .settings-signout {
@@ -221,6 +222,10 @@
 
 .settings-page .settings-card {
   border-radius: 0;
+}
+
+.settings-page .settings-panel-card {
+  border-color: #fffdf8;
 }
 
 .settings-page .settings-card,
