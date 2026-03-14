@@ -148,7 +148,7 @@ main {
 }
 
 .global-topbar .brand-wordmark {
-  font-size: clamp(2.05rem, 3.45vw, 3.05rem);
+  font-size: 2.3rem;
   letter-spacing: -0.038em;
 }
 
@@ -422,7 +422,7 @@ main {
   font-family: "Plus Jakarta Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   font-style: normal;
   font-weight: 800;
-  font-size: clamp(2.35rem, 5.2vw, 4.05rem);
+  font-size: 2.3rem;
   line-height: 0.9;
   letter-spacing: -0.045em;
   color: #797152;
@@ -443,7 +443,7 @@ main {
 
 @media (max-width: 620px) {
   .brand-wordmark {
-    font-size: clamp(2rem, 9vw, 2.8rem);
+    font-size: 2.3rem;
   }
 }
 
@@ -3433,7 +3433,7 @@ body.nearby-venues-open {
 
   .global-topbar .brand-wordmark,
   .brand-wordmark {
-    font-size: clamp(1.62rem, 7.2vw, 2.22rem);
+    font-size: 2.3rem;
     letter-spacing: -0.03em;
   }
 
@@ -3620,7 +3620,7 @@ body.nearby-venues-open {
 
   .global-topbar .brand-wordmark,
   .brand-wordmark {
-    font-size: clamp(1.42rem, 6.4vw, 2.02rem);
+    font-size: 2.3rem;
   }
 }
 
@@ -3765,6 +3765,6 @@ body.mobile-chrome-browser.mobile-force-layout .desktop-lang-switch .lang-switch
 
 body.mobile-chrome-browser.mobile-force-layout .global-topbar .brand-wordmark,
 body.mobile-chrome-browser.mobile-force-layout .brand-wordmark {
-  font-size: clamp(1.42rem, 6.4vw, 2.02rem);
+  font-size: 2.3rem;
   letter-spacing: -0.03em;
 }
